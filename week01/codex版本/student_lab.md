@@ -2,7 +2,7 @@
 
 適用對象：已學過基本 C# WinForms、變數、流程控制與方法呼叫的大二學生。
 
-本週使用 JDK 21、VS Code＋Extension Pack for Java、IntelliJ IDEA，以及 Git／GitHub。依序完成 A–F；G 為課後延伸。請在每個「待填」處留下自己的觀察，不只貼上成功畫面。
+本週使用 JDK 21、VS Code＋Extension Pack for Java、IntelliJ IDEA，以及 GitHub Desktop／GitHub。依序完成 A–F；G 為課後延伸。請在每個「待填」處留下自己的觀察，不只貼上成功畫面。
 
 ## 課前與檔案準備：還原卡教室
 
@@ -12,37 +12,29 @@
 
 GitHub → New repository → 名稱 `115_1_Java` → 依教師要求設定可見性（未指定時建議 Private）→ **勾選 Add a README file** → 建立。確認預設分支為 main，複製 Code → HTTPS 網址。私人 repo 依教師公告授予存取權限。
 
-### 每次上課前
+### 每次上課前：GitHub Desktop
 
-在教師指定的本機工作位置開啟 PowerShell，以自己的帳號取代 YOUR_ACCOUNT：
+1. 開啟 GitHub Desktop，選 **File → Options → Accounts**，使用瀏覽器登入自己的 GitHub 帳號，再返回 Desktop。
+2. 選 **File → Clone repository → GitHub.com**，選自己的 `115_1_Java`；或在 URL 分頁貼上自己的 HTTPS repo 網址。
+3. 設定 **Local path** 為教師指定位置下的 `115_1_Java`，按 **Clone**。確認最後路徑沒有重複的 `115_1_Java/115_1_Java`。
+4. 確認 **Current repository：115_1_Java**、**Current branch：main**。用 **Repository → Show in Explorer** 確認實際位置。
+5. 在 **File → Options → Git** 確認自己的 Name、Email，可使用 GitHub Settings → Emails 提供的 noreply 信箱。若 **Repository → Repository settings → Git Config** 有本機覆寫，也須確認是本人資料。
 
-```powershell
-git clone https://github.com/YOUR_ACCOUNT/115_1_Java.git
-cd 115_1_Java
-git remote -v
-git branch --show-current
-git config user.name "Your Name"
-git config user.email "YOUR_GITHUB_EMAIL"
-```
+作者設定不等於登入；設定不隨 clone 帶回，還原後須重新確認。clone 已建立 `.git` 與 origin，不再使用 New repository，也不在日期／專案內建立 repo。
 
-作者與信箱請填本人資料，可用 GitHub Settings → Emails 的 noreply 信箱；設定不隨 clone 帶回，還原後需重新確認。HTTPS 依 GCM 提示登入；不要把憑證放進指令網址或作業。clone 已設定 .git、origin 與分支追蹤，不再 git init 或 remote add。
+若目標目錄已存在，先檢查未保存工作，不覆蓋或刪除；已有本機 repo 可用 **File → Add local repository** 加入 Desktop，再依 E3 同步。
 
-若目標 115_1_Java 已存在，先確認是否有未保存內容，不要直接覆蓋、刪除或在其中再 clone。一台尚未還原、已有乾淨 repo 的電腦，可用 pull 同步。
+本講義的版本操作全部使用 Desktop；[Git 指令補充](git_cli_reference.md) 僅供選讀，不必重做一次。
 
 ### 第一週資料夾
 
-在 repo 根目錄建立：
-
-```powershell
-New-Item -ItemType Directory -Path 2026_09_18/java-01/src -Force
-```
+在 Desktop 選 **Repository → Show in Explorer**，於 repo 根目錄依序新增 `2026_09_18`、`java-01`、`src` 資料夾。
 
 - `examples/HelloCourse.java`、`starter/GreetingApp.java` 複製至 `2026_09_18/java-01/src`。
 - `starter/.gitignore` 複製至 **repo 根目錄**，下一週沿用。
 - 本講義另存為 `2026_09_18/LAB_REPORT.md`，AI 範本另存為 `2026_09_18/AI_USAGE.md`。
 - 專案的執行說明存於 `2026_09_18/java-01/README.md`；學期根 README 用作日期索引。
-- 所有 Git 指令固定在 `115_1_Java` 根目錄；編譯／執行指令固定在 `115_1_Java/2026_09_18/java-01`。
-- 專案內 `cd ../..` 回 repo 根目錄；repo 內 `cd 2026_09_18/java-01` 進入專案。
+- Desktop 管理整個 `115_1_Java`；編譯／執行指令固定在 `115_1_Java/2026_09_18/java-01`。
 
 | 基本資料 | 填寫 |
 |---|---|
@@ -79,7 +71,6 @@ java -version
 javac -version
 where.exe java
 where.exe javac
-git --version
 ```
 
 | 檢查 | 實際結果 | 判斷與處理 |
@@ -87,7 +78,7 @@ git --version
 | `java` 主版本 | 待填 | 待填 |
 | `javac` 主版本 | 待填 | 待填 |
 | `java`／`javac` 實際路徑 | 待填 | 待填 |
-| Git 版本（本講義使用 Git 2.28+） | 待填 | 待填 |
+| GitHub Desktop 可開啟、登入且選對 repo | 待填 | 待填 |
 
 若版本不一致，先檢查 PATH 與 IDE 指定的 JDK；調整後重新開啟終端機。`JAVA_HOME` 應指向 JDK 根目錄，PATH 所需的執行檔位於該目錄的 `bin`。
 
@@ -202,7 +193,7 @@ java -cp out GreetingApp
 
 ### D1. README 與忽略規則
 
-在 `2026_09_18/java-01/README.md` 寫明用途、JDK、兩支程式的執行指令與預期輸出。根目錄 README 可加上日期索引。根目錄 `.gitignore` 應包含：
+可複製教師提供的 `examples/README.md` 至 `2026_09_18/java-01/README.md`，填入自己的資訊；寫明用途、JDK、兩支程式的執行指令與預期輸出。根目錄 README 可加上日期索引。根目錄 `.gitignore` 應包含：
 
 ```gitignore
 *.class
@@ -217,103 +208,92 @@ out/
 - 為什麼 .java 要保存，out 與 .class 可以不保存？待填。
 - repo 根 README 與 java-01/README.md 的用途有何不同？待填。
 
-### D2. 第一筆課堂提交與中途 push
+### D2. 第一筆課堂提交與中途 Push
 
-在 java-01 確認兩支程式可執行，填寫目前紀錄；再從專案目錄執行 `cd ../..` 回 **115_1_Java**：
+1. 在 java-01 確認兩支程式可執行，填寫紀錄並儲存所有檔案。
+2. 回 Desktop，確認 repo 是 `115_1_Java`、分支是 `main`。
+3. 在 **Changes** 點選每個檔案閱讀差異，勾選根 `.gitignore`、有修改的根 README、當日程式與紀錄。不要包含編譯產物或憑證。
+4. 在 **Summary** 填 `2026_09_18: add java-01 greeting baseline`，按 **Commit to main**。
+5. 按 **Push origin**，等待成功，再選 **Repository → View on GitHub** 核對遠端。
 
-```powershell
-git status --short
-git add -- .gitignore README.md 2026_09_18
-git diff --cached
-git commit -m "2026_09_18: add java-01 greeting baseline"
-git push origin main
-```
+勾選表示納入這次提交；取消勾選不會刪除檔案。勾選後若又編輯，請再次儲存並檢查 Changes，再提交。不要把勾選視為凍結當下內容。
 
-此清單也包含根 README；沒有變更的檔案不會產生額外差異。commit 前檢查暫存區，確定原始碼、當日紀錄與專案 README 在正確層級，沒有編譯產物或憑證。
-
-- 本次 commit：待填。
+- History 中的本次 commit：待填。
 - 包含哪些當日檔案？待填。
-- push 成功與 GitHub 核對結果：待填。
+- Push 與 GitHub 核對結果：待填。
 
 ### D3. 第二筆課堂提交
 
-把 HelloCourse 第一行改為 `Hello, my Java course!`，同步修改**專案 README** 的預期輸出。在 java-01 測試後，回 repo 根目錄：
+把 HelloCourse 第一行改為 `Hello, my Java course!`，同步修改**專案 README** 的預期輸出。測試、存檔後：
 
-```powershell
-git diff -- 2026_09_18
-git add -- 2026_09_18
-git diff --cached
-git commit -m "2026_09_18: update course greeting"
-git push origin main
-git log --oneline -3
-```
+1. 在 Desktop 的 **Changes** 查看原始碼與 README 差異，勾選要提交的檔案。
+2. Summary 填 `2026_09_18: update course greeting`，按 **Commit to main → Push origin**。
+3. 開啟 **History**，選取兩次提交，查看各自修改了哪些內容。
 
 - 第二筆 commit 與實際修改：待填。
-- add 後又修改檔案，commit 是否包含新修改？用暫存區概念說明：待填。
-- 檔案已存檔，或只是 commit 成功，為何不能直接關機？待填。
+- 若取消勾選 README，這次 commit 是否包含它？原檔是否會消失？待填。
+- 檔案已存檔，或只有 Commit 成功，為何不能直接關機？待填。
 
-`git diff` 比較工作目錄與暫存區，`git diff --cached` 看準備提交的差異。每完成一個階段即可 commit／push，不必等到最後一分鐘。
+每完成一個階段即可 Commit／Push，不必等到最後一分鐘。
 
 ## E｜檢查 GitHub 與演練下一次取回
 
 ### E1. 核對遠端已保存
 
-儲存並提交目前改動後，在 **115_1_Java 根目錄**執行：
+1. 儲存所有檔案，將必要的 Changes 提交；若顯示 **Push origin**，點選並等待完成。
+2. 按 **Fetch origin** 取得遠端狀態；若顯示 **Pull origin**，表示遠端有更新，依 E3 處理。
+3. 在 **History** 查看 main 的最新 commit；開啟 **Repository → View on GitHub**，切到 main，比對最新 commit 識別碼與內容。
+4. 確認 GitHub 的 `2026_09_18/java-01/src`、專案 README、當日兩份紀錄都是最新版本。
 
-```powershell
-git push origin main
-git fetch origin
-git status -sb
-git rev-parse HEAD
-git rev-parse origin/main
-```
-
-本週主線操作 main；兩個雜湊應相同，而且沒有未提交檔案。開啟 GitHub main，檢查 `2026_09_18/java-01/src` 原始碼、專案 README 與當日紀錄。Everything up-to-date 不代表未存檔或未 commit 的內容已上傳。
+**Changes 空白只表示沒有未提交變更；Fetch 也不會替你 Push。** 必須同時確認提交已上傳及網頁內容。
 
 | 核對項目 | 實際結果 |
 |---|---|
 | repo 網址／分支 | 待填 |
-| 本機與遠端 commit 是否一致 | 待填 |
+| History 與 GitHub 最新 commit 是否一致 | 待填 |
 | 日期下的程式與紀錄是否齊全 | 待填 |
 
-### E2. 新位置 clone，演練下次還原後取回
+### E2. 新位置 Clone，演練下次還原後取回
 
-先保存並推送目前內容，再於 repo 外的工作位置執行。測試副本名稱 `115_1_Java-check` 必須尚不存在：
+1. 完成 E1 後，選 **File → Clone repository → URL**，填同一個 repo 網址。
+2. Local path 指向 repo 外尚不存在的 `115_1_Java-check`，按 **Clone**。
+3. 用 **Repository → Show in Explorer** 確認現在是測試副本；兩份 repo 在清單中可能顯示相同名稱，要以路徑辨別。
+4. 用 IDE 開啟測試副本內 `2026_09_18/java-01`，在此專案目錄執行：
 
 ```powershell
-git clone https://github.com/YOUR_ACCOUNT/115_1_Java.git 115_1_Java-check
-cd 115_1_Java-check/2026_09_18/java-01
 javac -encoding UTF-8 -d out src/HelloCourse.java src/GreetingApp.java
 java -cp out HelloCourse
 java -cp out GreetingApp
 ```
 
-確認 HelloCourse 是修改後的內容，GreetingApp 三筆輸出正確。不需要真的關機或刪除原目錄。此處只是驗證副本，完成後回到**原本 115_1_Java** 繼續填紀錄及 F。
+確認 HelloCourse 是修改後內容，GreetingApp 三筆輸出正確。不需真的關機或刪除原目錄。完成後回到**原本的 115_1_Java** 繼續填紀錄及 F；必要時用 File → Add local repository 選回原路徑。
 
-- 此次 clone 的 commit 與兩支程式輸出：待填。
-- 下次剛 clone 後為何要重新編譯？待填。
-- clone 是否會帶回作者設定與 IDE 的 JDK 路徑？待填。
+- 此次 Clone 的 commit、實際路徑與兩支程式輸出：待填。
+- 下次剛 Clone 後為何要重新編譯？待填。
+- Clone 是否會帶回作者設定與 IDE 的 JDK 路徑？待填。
 
 ### E3. 每次上課與家中續作
 
-還原後沒有本機 repo，執行 clone。若家中或同一堂課已有 repo，先保存工作、確認 main 與工作目錄乾淨，再 `git pull --ff-only origin main`。剛 clone 通常不需立即再 pull。
+- 還原後沒有本機 repo：使用 **Clone repository**。
+- 家中或同堂課已有 repo：先儲存、提交本機工作，確認 Changes 沒有遺漏，選 main，按 **Fetch origin**；有更新時再按 **Pull origin**。有衝突先請教師協助。
+- **Fetch** 更新遠端資訊；**Pull** 將遠端修改整合到目前本機分支。剛 Clone 通常不需立即再 Pull。
 
-下一次例如在 2026_09_25 上課，在 repo 根目錄建立 `2026_09_25/java-01/src`（日期依實際上課日），保留既有 2026_09_18；同日多個專案可依序用 java-02、java-03。全學期沿用同一 GitHub repo。
+下一次例如 2026_09_25，在學期 repo 新增 `2026_09_25/java-01/src`，保留先前日期；同日多專案可用 java-02、java-03。全學期沿用同一個 repo。
 
-- 下次預計使用的日期／專案路徑：待填。
-- clone 與 pull 的差異：待填。
+- 下次日期／專案路徑：待填。
+- Clone、Fetch、Pull 的差異：待填。
 
 ### E4. 失敗處理
 
-- 目標資料夾已存在：先檢查有無未保存工作，不直接刪除或覆蓋。
-- 認證或權限問題：核對帳號、HTTPS 網址、私人 repo 權限及 GCM。
-- push 被拒或無法快轉：先 fetch 與查看提交圖，請教師協助；不要 force push。
-- 專案中誤有 .git：先由教師檢查，不能把整個專案當作巢狀 repo 而漏交來源檔。
-- .class 仍被追蹤：.gitignore 不會取消已有追蹤；檢查 git ls-files，由教師協助取消特定產物的追蹤。
+- 目標資料夾已存在：先檢查未保存工作，不直接刪除或覆蓋。
+- 認證或權限問題：核對 Desktop 的登入帳號、repo 網址與私人 repo 權限。
+- Changes 看不到修改：確認 IDE 已存檔、Desktop 選到正確實際路徑；檢查忽略規則及巢狀 `.git`。
+- Push 被拒或出現衝突：先 Fetch，再請教師檢查歷史與衝突；不要 Force push 或用 Discard changes 隱藏問題。
+- `.class` 已被追蹤：新增 `.gitignore` 不會取消既有追蹤，請教師協助處理。
 
-**若關機前仍無法 push，立刻告知教師**。先儲存檔案，依教師安排將完整 repo（包含 .git、原始碼與尚未提交的紀錄）備份至 USB 或不會還原的位置，確認可讀，連線恢復後補 push。不能只在同一還原磁碟另存 ZIP 就關機。
+**若關機前仍無法 Push，立刻告知教師**。依安排將完整 repo（包含 `.git`、原始碼與未提交紀錄）備份至 USB 或不會還原的位置，確認可讀，連線恢復後補 Push。不能只在同一還原磁碟另存 ZIP 就關機。
 
-- 本次遇到的問題與保存方式（沒有填未遇到）：待填。
+- 本次問題與保存方式（沒有填未遇到）：待填。
 
 ## F｜AI 審查、人工驗證與最終提交
 
@@ -332,7 +312,7 @@ buildGreeting 應回傳 "Hello, " + 姓名 + "!"，不在方法內輸出。
 請列出我能親自執行的驗證步驟。
 ```
 
-填寫 `AI_USAGE.md`，包含初版 commit、回覆摘要、採用或未採用原因、指令、三筆實際結果。原程式已符合需求時，可以不改程式，但須記錄判斷依據。
+依 `AI_USAGE_template.md` 的完整範例，填寫五項簡易紀錄：使用方式、提問、AI 建議與自己的決定、親自驗證、學到什麼。第一週不要求填 commit 雜湊或重貼操作指令；三筆結果須據實填寫。原程式已符合需求時可以不修改，說明原因即可。繳交前刪除範例部分。
 
 ### F2. 即使畫面有文字，也要檢查回傳值
 
@@ -354,67 +334,34 @@ static String buildGreeting(String name) {
 ### F3. 下課關機前：完整保存
 
 - [ ] 儲存所有檔案，將進度、測試結果與待辦寫入當日紀錄。
-- [ ] 在 `2026_09_18/java-01` 編譯並執行；未完成時也須保存，明確標示錯誤與待辦。
-- [ ] repo 根目錄 `git status --short` 已核對必要檔案，無巢狀 .git 或不該上傳的內容。
+- [ ] 在 java-01 編譯並執行；未完成也須保存，標示錯誤與待辦。
+- [ ] Desktop 選對原本的 `115_1_Java` 與 main，檢查 Changes、勾選所有必要檔案。
+- [ ] Summary 填 `2026_09_18: save java-01 and learning records`，按 **Commit to main**；未完成可標 WIP。
+- [ ] 按 **Push origin** 並等待成功；沒有新修改可略過 Commit，但仍要確認既有提交已上傳。
+- [ ] **Fetch origin** 後確認沒有待處理更新，History 與 GitHub main 最新 commit 一致，Changes 無遺漏。
+- [ ] GitHub main 當日來源檔與紀錄齊全，最終 commit 連結填於繳交平台。
+- [ ] 依教室規範登出 Desktop 與瀏覽器 GitHub；確認遠端保存後才關機。
 
-在 **115_1_Java 根目錄**：
+若最後又修改講義或 AI 紀錄，請再次 Commit／Push／核對。不要以 Stash 代替上傳，Stash 仍在本機。沒有 AI 權限時據實記錄，不影響保存要求。
 
-```powershell
-git add -- .gitignore README.md 2026_09_18
-git diff --cached
-git commit -m "2026_09_18: save java-01 and learning records"
-git push origin main
-git fetch origin
-git status -sb
-git rev-parse HEAD
-git rev-parse origin/main
-```
+## G｜課後延伸：Desktop 分支與 Pull Request
 
-先核對暫存區是否包含本次預計保存的內容。沒有新修改可略過 commit，但仍要 push 與核對；若尚有未完成程式，提交訊息可標 WIP，記錄實際失敗而非宣稱通過。
-
-- [ ] fetch 後 HEAD 與 origin/main 一致，且工作目錄乾淨。
-- [ ] GitHub main 的 `2026_09_18/java-01/src` 是最新版本，當日紀錄齊全。
-- [ ] 最終 commit 連結已填於繳交平台，不必再寫回同一 commit 的檔案。
-- [ ] 共用電腦依教室規範登出；確認 GitHub 已保存後才關機。
-
-若最後又修改講義或 AI 紀錄，請再次 commit／push／核對。沒有 AI 工具權限時據實標示使用教師示範或未使用，不影響保存程式與紀錄的要求。
-
-## G｜課後延伸：分支與 Pull Request
-
-在 F 完成後、`115_1_Java` 根目錄的 `main` 且工作目錄乾淨時開始：
-
-```powershell
-git switch -c docs/verification
-```
-
-自行新增 `2026_09_18/VERIFICATION.md`，記錄三筆測試與雙 IDE 結果；再執行：
-
-```powershell
-git add -- 2026_09_18/VERIFICATION.md
-git commit -m "Document cross-IDE verification"
-git push -u origin docs/verification
-```
-
-1. 在 GitHub 建立 Pull Request，選 **base: main**、**compare: docs/verification**。
-2. 標題說明本次修改；內容寫出目的、修改檔案與驗證結果。
-3. 在 Files changed 確认只新增預期的驗證文件。請有權限的同學 review；無同儕時依檢核表自行審查。
-4. 確認符合儲存庫規則後合併。若要求他人核准，不略過規則。
-5. 回到本機：
-
-```powershell
-git switch main
-git pull --ff-only origin main
-git log --oneline --graph --all
-```
+1. 完成 F，選 main，確認 Changes 乾淨；按 **Current branch → New branch**，建立 `docs/verification`。
+2. 新增 `2026_09_18/VERIFICATION.md`，記錄三筆測試與雙 IDE 結果。
+3. 在 Changes 檢查、勾選文件，Summary 填 `Document cross-IDE verification`，提交至目前分支。
+4. 按 **Publish branch**，把新分支上傳；後續更新使用 Push origin。
+5. 使用 **Preview Pull Request → Create Pull Request**，或到 GitHub 建立 PR，確認 **base: main**、**compare: docs/verification**。
+6. 說明目的、修改與驗證，查看 Files changed；依 repo 規則請同學 review，無同儕時自行審查。符合規則後合併。
+7. 回 Desktop 選 **Current branch → main**，按 **Fetch origin → Pull origin**，確認驗證文件已出現。PR 尚未合併時，main 不會取得該文件。
 
 | 延伸紀錄 | 填寫（未做填「未做延伸」） |
 |---|---|
 | PR 網址與 base／compare | 待填 |
 | 修改目的、review 發現 | 待填 |
-| 是否已合併？本機是否看得到文件？ | 待填 |
-| PR 與 `git pull` 有何不同？ | 待填 |
+| 是否已合併？本機 main 是否看得到文件？ | 待填 |
+| PR 與 Pull origin 有何不同？ | 待填 |
 
-若完成 G 後還要更新本講義紀錄，另提交一次並 push，再於平台更新最終提交雜湊即可。
+若又修改本講義紀錄，在 main 再提交、Push 並更新平台連結。
 
 ## 繳交清單
 
@@ -438,3 +385,6 @@ git log --oneline --graph --all
 - [GitHub：認證工具](https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git)
 - [Git：pull 與快轉](https://git-scm.com/docs/git-pull)
 - [GitHub：建立 Pull Request](https://docs.github.com/en/pull-requests/how-tos/create-pull-requests/creating-a-pull-request)
+
+- [GitHub Desktop：提交與查看差異](https://docs.github.com/en/desktop/making-changes-in-a-branch/committing-and-reviewing-changes-to-your-project-in-github-desktop)
+- [GitHub Desktop：同步分支](https://docs.github.com/en/desktop/working-with-your-remote-repository-on-github-or-github-enterprise/syncing-your-branch-in-github-desktop)

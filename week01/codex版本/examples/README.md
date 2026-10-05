@@ -106,26 +106,15 @@ Hello, Ada Lovelace!
 - 尚未完成／目前錯誤：待填。
 - 下次上課要繼續的工作：待填。
 
-## 下課前保存
+## 下課前保存（GitHub Desktop）
 
-教室電腦關機後會還原，請先儲存所有檔案。
+教室電腦關機後會還原，請依序完成：
 
-從本專案目錄回到學期 repo 根目錄：
+1. 儲存所有程式與紀錄。
+2. 在 GitHub Desktop 確認 Current repository 是 `115_1_Java`、Current branch 是 `main`；可用 Repository → Show in Explorer 確認路徑。
+3. 在 Changes 查看差異，勾選要保存的原始碼、README 與當日紀錄，排除編譯產物。
+4. Summary 填 `2026_09_18: save java-01 and learning records`，按 Commit to main。
+5. 按 Push origin，等待完成；若沒有新修改可略過 Commit，但仍須確認提交已上傳。
+6. 用 Repository → View on GitHub 開啟 main，核對最新 commit 與當日程式、紀錄，再登出及關機。
 
-```powershell
-cd ../..
-```
-
-確認目前位於 `115_1_Java`，再執行：
-
-```powershell
-git status --short
-git add -- .gitignore README.md 2026_09_18
-git diff --cached
-git commit -m "2026_09_18: save java-01 and learning records"
-git push origin main
-```
-
-若沒有新修改，可以略過 commit；仍須確認所有提交已推送。
-
-最後開啟 GitHub 的 `main` 分支，確認當日程式與紀錄都是最新版本，再關機。
+Changes 空白不代表已上傳；Commit 只保存在本機。如果 Push 失敗，立即請教師協助，保存完成前不要關機。

@@ -12,9 +12,9 @@
 
 ## 教學節奏與還原卡教室流程
 
-學期 repo 固定為 `115_1_Java`；第一週專案為 `2026_09_18/java-01`。Git 指令在 repo 根目錄，編譯及 IDE 操作在 java-01。每次課前 clone 整個 repo，日期及專案內不做 git init。兩套 IDE 開啟同一份原始碼。
+學期 repo 固定為 `115_1_Java`；第一週專案為 `2026_09_18/java-01`。GitHub Desktop 管理整個學期 repo，編譯及 IDE 操作在 java-01。每次課前 clone 整個 repo，日期及專案內不做 git init。兩套 IDE 開啟同一份原始碼。
 
-首次在 GitHub 建庫並初始化 README，確認預設分支 main，接著 clone。還原後，本機作者設定、登入認證、IDE JDK 設定可能不在，必須重新確認。教師先將 JDK、IDE、Git／GCM 納入可用教室環境。
+首次在 GitHub 建庫並初始化 README，確認預設分支 main，接著 clone。還原後，本機作者設定、登入認證、IDE JDK 設定可能不在，必須重新確認。教師先將 JDK、IDE、GitHub Desktop 納入可用教室環境。
 
 | 節次 | 50 分鐘安排 |
 |---|---|
@@ -22,7 +22,7 @@
 | 第 2 節 | 方法移植與除錯 30；commit 與中途 push 20 |
 | 第 3 節 | AI 驗證 20；互查與檢核 15；關機前保存 15 |
 
-關機前核對必要檔案已保存、工作目錄乾淨、push 成功、fetch 後 HEAD 與 origin/main 一致，以及 GitHub main 的當日來源檔與紀錄。只 commit 或只看 Everything up-to-date 均不足。
+關機前核對必要檔案已保存、工作目錄乾淨、push 成功、Fetch 後無待處理更新、History 與 GitHub main 最新 commit 一致，以及 GitHub main 的當日來源檔與紀錄。只 Commit 或只看 Changes 空白均不足。
 
 推送失敗不可直接關機。先協助修復；仍無法完成時，安排將完整 repo（含 .git 及未提交檔案）複製至 USB 或不受還原影響的位置並確認可讀，後續補推送。學生未完成程式也必須保存，標記 WIP、錯誤與待辦。
 
@@ -86,9 +86,9 @@ Hello, Ada Lovelace!
 - GitHub 初始化 README 是初始提交；clone 取得歷史、origin 與 main，不能再在日期或專案內 init。
 - .gitignore 放 repo 根目錄；無開頭斜線的 out/、bin/、.idea/ 規則涵蓋子目錄。
 - 日期下存 LAB_REPORT.md、AI_USAGE.md；java-01 內存 README、src。學期根 README 可作日期索引。
-- git add 暫存當下內容；add 後新修改必須再 add。git diff 比較工作目錄／暫存區，--cached 看待提交修改。
+- Desktop Changes 顯示已存檔的修改；勾選決定本次提交範圍，取消勾選不刪檔。勾選後又編輯須再檢查差異；不可把勾選等同於 git add 凍結當下內容。CLI 暫存區教學集中在 git_cli_reference.md。
 - 本週以兩筆程式提交加階段紀錄作練習，不以固定提交總數評分；完成一階段就 push。
-- 工作目錄乾淨只表示沒有未提交變更，不代表所有 commit 已到 GitHub。需確認 remote／main、push 成功、fetch 後雜湊一致及網頁檔案。
+- 工作目錄乾淨只表示沒有未提交變更，不代表所有 commit 已到 GitHub。需確認 repo／main、Push 成功、History 與 GitHub 最新 commit 一致及網頁檔案。
 - 還原後沒有 repo 時 clone；已有 repo 才談 pull。家中續作先同步，關閉前仍要推送。
 - 作者設定不是版本追蹤內容，clone 後重新設定；JDK 或 IDE 本機路徑也不會自動重建。
 - clone 到另一個測試位置，可模擬下次取回成果；必須在日期／專案內重新編譯，驗證不依賴本機 out。
@@ -104,18 +104,18 @@ Hello, Ada Lovelace!
 
 學生可以拒絕所有 AI 變更，只要能說明原程式已通過需求。沒有工具權限時，可驗證教師示範並據實標示，不捏造服務、模型或對話紀錄。
 
-AI_USAGE 引用已存在的人工初版 commit；包含最終紀錄的 commit 雜湊寫在繳交平台，不強迫學生把該 commit 的雜湊寫回自身內容。
+第一週 AI_USAGE 採五項簡易紀錄，範本內提供完整的虛構填寫範例。學生不需在文件填 commit 雜湊、模型版本或完整指令；保留提問、採用判斷及三筆實測結果。人工初版仍可由 GitHub History 查閱，最終 commit 連結填在繳交平台。範例不能當成學生的實際紀錄。
 
 ## G 延伸解答：分支與 PR
 
-`docs/verification` 承載驗證文件的修改，PR 比較來源分支與 main，讓審查者看目的、差異與測試證據。PR 是協作審查流程，git pull 是本機取得及整合遠端更新的指令；兩者不相同。PR 建立後尚未合併，main 也尚未取得該變更。
+`docs/verification` 承載驗證文件的修改，PR 比較來源分支與 main，讓審查者看目的、差異與測試證據。PR 是協作審查流程，Desktop 的 Pull origin 是本機取得及整合遠端更新的操作；兩者不相同。PR 建立後尚未合併，main 也尚未取得該變更。
 
-合併後回到 main 執行 pull --ff-only，確認 2026_09_18/VERIFICATION.md 存在；不要求刪除分支，避免額外操作負擔。
+合併後在 Desktop 選 Current branch → main，執行 Fetch origin → Pull origin，確認 2026_09_18/VERIFICATION.md 存在；不要求刪除分支，避免額外操作負擔。
 
 ## 離堂檢核參考答案
 
 1. repo 是 115_1_Java，日期為 2026_09_18，專案為 java-01。
-2. Git 指令固定在 repo 根目錄；編譯／執行在日期下的 java-01。
+2. Desktop 管理整個 115_1_Java；編譯／執行在日期下的 java-01。
 3. 存檔與 commit 都還在本機；關機還原會清除新增資料，需 push 並核對遠端。
 4. 還原後沒有本機 repo，要 clone；作者設定不會隨 clone 帶回。
 5. 先請教師協助修復；仍無法 push 時保存完整 repo 至不會還原的位置，確認可讀，恢復連線後補推送。
@@ -127,7 +127,7 @@ AI_USAGE 引用已存在的人工初版 commit；包含最終紀錄的 commit �
 | 經驗遷移 | 說明 Click／main、String、回傳值與 UI 分工 |
 | 可執行與追蹤 | 兩套 IDE 輸出一致，能追蹤引數與回傳值 |
 | 除錯能力 | 分清編譯錯誤與需求錯誤，能以三筆資料重現 |
-| 版本控制 | 多筆有意義的 commit、能說明暫存區與 diff |
+| 版本控制 | 多筆有意義的 commit、能用 Changes 選擇提交範圍、閱讀差異與 History |
 | GitHub | remote、push、pull、clone 重跑證據與可存取連結 |
 | AI 協作 | 人工初版、採用判斷、實際測試結果與反思 |
 
@@ -142,3 +142,16 @@ AI_USAGE 引用已存在的人工初版 commit；包含最終紀錄的 commit �
 - [GitHub 認證](https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git)
 - [Git pull](https://git-scm.com/docs/git-pull)
 - [GitHub PR](https://docs.github.com/en/pull-requests/how-tos/create-pull-requests/creating-a-pull-request)
+
+## GitHub Desktop 授課補充
+
+- 首次示範 File → Options → Accounts 登入；File → Options → Git 設定作者。作者不是登入身分，repo 的 Git Config 若覆寫也須核對。
+- 每堂 File → Clone repository，確認 Local path；Repository → Show in Explorer 建日期目錄。已有 repo 使用 Add local repository，不用 New repository 重建。
+- 示範 Changes → 勾選檔案 → Summary → Commit to main → Push origin，再以 History 和 View on GitHub 核對。
+- Fetch 只更新遠端資訊，Pull 才整合；Desktop 的 Pull 不應直接解釋成 CLI 的 --ff-only。遇到衝突先保留工作、由教師協助。
+- 延伸分支使用 Current branch → New branch → Publish branch → PR；不把 Publish branch 與 Publish repository 混淆。
+- 第二份 Clone 用路徑辨識，測完回原始副本；Stash 仍在本機，不能代替 Push。
+- Desktop 已含操作所需 Git；只有選做 CLI 補充者才需要另確認命令列 Git 安裝。Java 編譯指令仍為必學內容。
+- 本次按官方文件修訂流程，尚未在教室 Desktop GUI、真實登入與 PR 全程實測；課前用示範帳號走一次完整流程。
+
+參考：[Desktop 提交與差異](https://docs.github.com/en/desktop/making-changes-in-a-branch/committing-and-reviewing-changes-to-your-project-in-github-desktop)、[Desktop 同步](https://docs.github.com/en/desktop/working-with-your-remote-repository-on-github-or-github-enterprise/syncing-your-branch-in-github-desktop)。指令對照見 [git_cli_reference.md](git_cli_reference.md)。

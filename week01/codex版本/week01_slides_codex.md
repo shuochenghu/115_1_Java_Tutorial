@@ -48,7 +48,6 @@ style: |
 <!-- 教師提示：以學生先前 C# 經驗開場。詢問是否曾經遇過「程式昨天能跑，今天不能跑」，連結環境檢查與版本控制。 -->
 
 ---
-
 ## 今天要完成的事
 
 - 用 C# WinForms 經驗理解 Java 的方法、參數與回傳值。
@@ -91,7 +90,6 @@ Paul Deitel、Harvey Deitel
 <!-- 來源：物件導向程式設計與AI協作_課程大綱_整合版.md「評量方式」。無期中考，第 16 週期末考。 -->
 
 ---
-
 ## 本週課堂安排
 
 | 節次 | 內容（每節 50 分鐘） |
@@ -100,19 +98,18 @@ Paul Deitel、Harvey Deitel
 | 第 2 節 | 方法移植與除錯 30 分；Git 提交與中途 push 20 分 |
 | 第 3 節 | AI 驗證 20 分；互查與檢核 15 分；關機前保存 15 分 |
 
-教師先確認還原後的 JDK、IDE、Git／GCM 可用。
+教師先確認還原後的 JDK、IDE、GitHub Desktop 可用。
 每次課程保留最後 **15 分鐘**完成 push 與遠端檢查。
 
 <!-- 教師提示：3×50 分鐘為建議節奏；分支、PR 為課後延伸。首次建立 GitHub repo 後全學期沿用。 -->
 
 ---
-
 ## 還原卡教室：每次上課的固定流程
 
 ```text
-上課前：GitHub → clone 整個 115_1_Java → 開啟當日專案
-上課中：寫程式 → 測試 → commit → 適時 push
-下課前：儲存全部檔案 → commit → push → 網頁確認 → 關機
+上課前：Desktop Clone repository → 開啟日期下的 java-01
+上課中：寫程式 → 測試 → Commit to main → Push origin
+下課前：Save All → Commit → Push origin → 網站確認 → 關機
 ```
 
 - **存檔**只寫入教室磁碟；**commit**只保存在本機 Git。
@@ -122,7 +119,6 @@ Paul Deitel、Harvey Deitel
 未完成的程式也要保存，並在紀錄寫明問題與待辦。
 
 ---
-
 <!-- _class: small -->
 
 ## 一個學期儲存庫，日期下放專案
@@ -145,7 +141,6 @@ Paul Deitel、Harvey Deitel
 <!-- 教師提示：.git 不會顯示在 GitHub 檔案清單；Git 不追蹤空資料夾，需有檔案才會出現在遠端。 -->
 
 ---
-
 ## 首次上課：建立 GitHub 學期儲存庫
 
 1. 登入自己的 GitHub，選 **New repository**。
@@ -160,74 +155,78 @@ Paul Deitel、Harvey Deitel
 <!-- 來源：https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository 。本流程從 GitHub 開始，因此初始化 README 後 clone，不使用先在本機 init 再連空白遠端的流程。 -->
 
 ---
-## GitHub 登入與作者資訊不同
 
-- Git for Windows 安裝時保留 **Git Credential Manager（GCM）**。
-- 第一次透過 HTTPS 存取時，依 GCM 提示在瀏覽器登入／授權。
-- GitHub 帳號密碼不能直接當作 Git HTTPS 操作的密碼。
-- 共用電腦請依教室規範清除登入與已儲存認證。
+## GitHub Desktop：登入自己的帳號
 
-**Token、密碼不放進網址、程式碼、截圖或 AI 紀錄。**
-若沒有登入視窗，先檢查 GCM 是否安裝及其設定。
+1. 開啟 **GitHub Desktop**，Windows 選 **File → Options → Accounts**。
+2. 在 GitHub.com 選 **Sign in**，依提示切換到瀏覽器授權。
+3. 確認瀏覽器登入的是本人帳號，再返回 Desktop。
+4. 檢查 Accounts 顯示的帳號，避免用到前一位同學的登入。
 
-<!-- 來源：https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git 。學生講義補充 GCM／GitHub CLI 登入處理；不要求學生建立或交出 Token。 -->
+還原後可能需要重新登入；Desktop 與瀏覽器都要核對。
+**使用 Desktop 不需另外操作 GCM；不要把密碼／Token 寫進作業。**
 
----
-
-## 每次上課前：clone 整個學期儲存庫
-
-在教師指定的本機工作位置開啟 PowerShell。
-以自己的 GitHub 帳號取代 `YOUR_ACCOUNT`：
-
-```powershell
-git clone https://github.com/YOUR_ACCOUNT/115_1_Java.git
-cd 115_1_Java
-git remote -v
-git branch --show-current
-```
-
-確認遠端是自己的 repo、目前分支是 `main`。
-**clone 已建立 `.git` 與 `origin`，不必再 init 或 remote add。**
-
-<!-- 來源：https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository 。目標資料夾若已存在，先查是否有未保存內容；不要直接覆蓋、刪除或在其中再 clone 一份。 -->
+<!-- 來源：https://docs.github.com/en/desktop/installing-and-authenticating-to-github-desktop/authenticating-to-github-in-github-desktop 。本課以 Windows 介面為準；認證畫面文字可能隨版本調整。 -->
 
 ---
 
-## 每次 clone 後：確認作者與登入
+## 每次上課前：用 Desktop clone
 
-在 **`115_1_Java` 根目錄**執行，替換為自己的資料：
+1. **File → Clone repository… → GitHub.com**。
+2. 選自己的 **`115_1_Java`**；找不到可用 URL 分頁貼上 HTTPS 網址。
+3. 在 **Local path** 選教師指定位置，確認最終路徑以 `115_1_Java` 結尾。
+4. 按 **Clone**，等待完成。
+5. 核對 **Current repository = 115_1_Java**、**Current branch = main**。
 
-```powershell
-git config user.name "Your Name"
-git config user.email "YOUR_GITHUB_EMAIL"
-git config --get user.name
-git config --get user.email
-git status -sb
-```
+複製的是整學期 repo，**不是只複製 java-01**。
+若目標目錄已有資料，先確認是否有未保存內容，不直接刪除。
 
-作者資訊存在本機設定，**不會隨 clone 自動帶回**。
-GitHub 認證也可能需重新登入；作者資訊不是登入憑證。
-
-<!-- 教師提示：使用 repo 層級設定，避免共用電腦混用作者。信箱可使用自己 GitHub Settings → Emails 提供的 noreply 地址。 -->
+<!-- 來源：https://docs.github.com/en/desktop/adding-and-cloning-repositories/cloning-and-forking-repositories-from-github-desktop 。也可在網站 Code → Open with GitHub Desktop 啟動；不要誤選 New repository 或重複 Publish repository。 -->
 
 ---
 
-## 建立當日專案，辨識兩種工作位置
+## 每次 clone 後：確認提交作者
 
-首次實作：在 **`115_1_Java` 根目錄**建立資料夾。
+1. **File → Options → Git**，填入自己的 **Name、Email**，按 Save。
+2. 選好 repo 後，查看 **Repository → Repository settings → Git Config**。
+3. 若此 repo 使用獨立設定，確認不是別人的姓名與信箱。
 
-```powershell
-New-Item -ItemType Directory -Path 2026_09_18/java-01/src -Force
-cd 2026_09_18/java-01
-```
+可選本人 GitHub 帳號的信箱或提供的 noreply 信箱。
+**Accounts 決定登入誰；Git 設定決定 commit 記錄的作者。**
+還原後檢查一次；這些本機設定不會隨原始碼 clone 自動帶回。
 
-| 位置 | 用途 |
+<!-- 來源：https://docs.github.com/en/desktop/configuring-and-customizing-github-desktop/configuring-git-for-github-desktop 。File → Options → Git 影響全域預設；repo 的 local Git Config 可覆蓋它。 -->
+
+---
+
+## Desktop 畫面：先認識這些位置
+
+| 位置／按鈕 | 用來確認什麼 |
 |---|---|
-| `115_1_Java` | 執行課程 Git 指令、管理整學期成果 |
-| `115_1_Java/2026_09_18/java-01` | IDE 開啟位置、編譯與執行 Java |
+| Current repository／Current branch | 目前 repo 與分支 |
+| Changes | 尚未提交的檔案與差異，勾選本次要提交的內容 |
+| Summary／Commit to main | 寫提交摘要，建立本機版本 |
+| History | 已提交的版本、作者與變更內容 |
+| Push origin | 把本機提交傳到 GitHub |
+| Fetch origin／Pull origin | 檢查遠端更新／將更新整合到本機 |
 
-在專案目錄執行 `cd ../..`，即可回到 repo 根目錄。
-日期目錄、專案目錄內都**不要建立另一個 Git 儲存庫**。
+**Changes 沒有檔案，不代表本機提交都已上傳。**
+
+---
+
+## 用檔案總管建立當日專案
+
+1. Desktop 選好 repo → **Repository → Show in Explorer**。
+2. 在 `115_1_Java` 內新增資料夾 **`2026_09_18`**。
+3. 在日期下新增 **`java-01`**，再於其中新增 **`src`**。
+
+| 工具 | 開啟的位置 |
+|---|---|
+| GitHub Desktop | 整學期 `115_1_Java` repo |
+| VS Code／IntelliJ IDEA | `2026_09_18/java-01` 專案 |
+| Java 編譯終端機 | `2026_09_18/java-01` 專案 |
+
+Desktop 會偵測子目錄的變更，不需把每個專案另加成 repo。
 
 ---
 ## 你已經用過物件與方法
@@ -368,7 +367,7 @@ HelloCourse.java  →   HelloCourse.class   →   JVM 執行
 - **JDK 21 LTS**：本教材選定的教學基準。
 - **VS Code** ＋ Microsoft 的 **Extension Pack for Java**。
 - **IntelliJ IDEA**：本週使用一般 Java 專案功能。
-- **Git for Windows＋GCM、GitHub 帳號**：本機版本與遠端協作。
+- **GitHub Desktop＋GitHub 帳號**：圖形介面的版本控制。
 - **Marp for VS Code**：閱讀、預覽本教材時使用。
 
 書籍以 Java SE 8／9 為背景；本週採傳統類別與 `main` 寫法。
@@ -445,7 +444,6 @@ public static void main(String[] args) {
 <!-- 教師提示：本頁為 main 片段，完整程式見後面的 GreetingApp。static 僅為首週方法遷移橋接，不取代第 5 週的物件設計。 -->
 
 ---
-
 ## 實作 A：在當日專案編譯與執行
 
 將範例放入 `2026_09_18/java-01/src/HelloCourse.java`。
@@ -464,7 +462,6 @@ java -cp out HelloCourse
 <!-- 教師提示：編譯失敗先修正，不執行舊 class；所有課程專案的產物皆以 repo 根目錄的 .gitignore 排除。 -->
 
 ---
-
 ## VS Code：開啟當日的 java-01
 
 1. 確認已安裝 **Extension Pack for Java**。
@@ -474,7 +471,7 @@ java -cp out HelloCourse
 5. 等待 Java 載入完成，點 `main` 上方 **Run**。
 
 每次還原後，重新確認 JDK 與擴充套件是否可用。
-Git 操作用另一個終端機，固定停在 **`115_1_Java` 根目錄**。
+Git 操作用 Desktop 選 **`115_1_Java`**，IDE 則只開當日專案。
 
 <!-- 來源：https://code.visualstudio.com/docs/java/java-project 。每次開啟單一課程專案，避免歷週同名類別互相干擾。 -->
 
@@ -493,7 +490,6 @@ Git 操作用另一個終端機，固定停在 **`115_1_Java` 根目錄**。
 <!-- 來源：https://code.visualstudio.com/docs/languages/java 。只對自己建立或可信任的課程檔案啟用工作區信任。預設 App.java 可留著，但本週要執行的是 HelloCourse。 -->
 
 ---
-
 ## IntelliJ IDEA：開啟同一份專案
 
 1. **Open** 選 `115_1_Java/2026_09_18/java-01`。
@@ -507,7 +503,6 @@ Git 操作用另一個終端機，固定停在 **`115_1_Java` 根目錄**。
 <!-- 來源：https://www.jetbrains.com/help/idea/import-project-or-module-wizard.html 。不勾 Create Git repository，不在日期或專案內新增 .git；兩套 IDE 操作同一份原始碼。 -->
 
 ---
-
 ## IntelliJ IDEA：核對原始碼與輸出
 
 1. 確認檔案位於 **`2026_09_18/java-01/src`**。
@@ -605,26 +600,42 @@ static String buildGreeting(String name) {
 <!-- 教師提示：一次只做一項，不提交故意破壞的版本。此練習強調型態名稱、識別字大小寫與需求驗證；解答在教師筆記。 -->
 
 ---
-## Git 與 GitHub：本機版本與遠端協作
+
+## Desktop 操作背後的版本概念
 
 ```text
-工作目錄 ──add──→ 暫存區 ──commit──→ 本機儲存庫
-                                       │ push
-                                       ▼
-                                 GitHub 遠端儲存庫
-                                       │ pull
-                                       ▼
-                                  本機目前分支
+IDE 儲存檔案 → Changes 選取變更 → Commit to main → 本機版本
+                                                  │
+                                             Push origin
+                                                  ▼
+                                              GitHub
 ```
 
-- `commit` 留下本機版本；`push` 才把提交傳至遠端。
-- `pull` 取得遠端更新並整合；操作前先確認分支與工作目錄。
-- `clone` 建立另一份本機儲存庫，包含歷史與遠端連線資訊。
+- Commit 建立本機快照；Push 才把提交傳到 GitHub。
+- History 可比較已提交版本；Changes 顯示尚未提交內容。
+- 取消勾選只表示本次不提交，**不是刪除，也不是已備份**。
 
-<!-- 來源：https://git-scm.com/docs/gittutorial ; https://git-scm.com/docs/git-pull 。pull 並非只下載檔案。 -->
+指令版另放 `git_cli_reference.md`，課堂不要求輸入 Git 指令。
+
+<!-- 來源：https://docs.github.com/en/desktop/making-changes-in-a-branch/committing-and-reviewing-changes-to-your-project-in-github-desktop 。不要把 Desktop 勾選機制直接當作命令列暫存區的凍結快照；提交前重新查看最新差異。 -->
 
 ---
 
+## 圖形介面與 Git 操作目的對照（補充）
+
+| 目的 | 本課主要用 Desktop | 指令版概念 |
+|---|---|---|
+| 取回 repo | Clone repository | clone |
+| 查看／選擇變更 | Changes、勾選檔案 | status、diff、add |
+| 建立本機版本 | Commit to main | commit |
+| 查看歷史 | History | log |
+| 上傳提交 | Push origin | push |
+| 檢查／整合遠端 | Fetch origin／Pull origin | fetch／pull |
+
+**操作目的相近，按鈕不必然等於某一條含特定參數的指令。**
+需要時才查 `git_cli_reference.md`，不必兩種流程都做一次。
+
+---
 ## 根目錄的 .gitignore 管理所有專案
 
 將教材 `starter/.gitignore` 複製到 **`115_1_Java/.gitignore`**：
@@ -643,42 +654,33 @@ out/
 
 ---
 
-## 實作 D：提交第一週的基準版本
+## 實作 D：Changes → Commit → Push
 
-在 `java-01` 測試後，回到 **`115_1_Java` 根目錄**。
-專案 README 寫執行方式；當日紀錄放 `2026_09_18` 下。
+1. IDE 儲存並測試後，切換 Desktop，確認 repo／main。
+2. 在 **Changes** 點選檔案，檢查右側新增與刪除內容。
+3. 勾選 `.gitignore`、需要更新的 README 與當日程式／紀錄。
+4. **Summary** 填 `2026_09_18: add java-01 greeting baseline`。
+5. 按 **Commit to main**，再按 **Push origin**，等待完成。
 
-```powershell
-git status --short
-git add -- .gitignore README.md 2026_09_18
-git diff --cached
-git commit -m "2026_09_18: add java-01 greeting baseline"
-git push origin main
-```
+**兩個按鈕都要理解：Commit 保存本機版本，Push 傳到 GitHub。**
+應排除的 out／class 若出現，先檢查忽略規則，勿只取消勾選了事。
 
-`git add` 收進當日程式、紀錄與根目錄設定；先檢查清單。
-**GitHub 已有初始化 README 提交，本機不需 git init。**
+<!-- 來源：https://docs.github.com/en/desktop/making-changes-in-a-branch/committing-and-reviewing-changes-to-your-project-in-github-desktop ; https://docs.github.com/en/desktop/making-changes-in-a-branch/pushing-changes-to-github-from-github-desktop -->
 
 ---
 
-## 實作 D：修改、比較與第二次提交
+## 實作 D：比較修改並查看 History
 
-修改 HelloCourse 第一行並同步專案 README，重新測試。
-在 **repo 根目錄**執行：
+1. 修改 HelloCourse 第一行與專案 README，儲存並重跑。
+2. 回 Desktop，在 **Changes** 檢查兩個檔案的差異。
+3. 勾選要提交的檔案，Summary 填入此次修改目的。
+4. **Commit to main → Push origin**。
+5. 切換 **History**，選剛才的提交，指出哪些行被修改。
 
-```powershell
-git diff -- 2026_09_18
-git add -- 2026_09_18
-git diff --cached
-git commit -m "2026_09_18: update course greeting"
-git push origin main
-```
-
-`add` 後又修改檔案，必須再次 `add` 才會納入該筆提交。
-**上課中完成一個階段就 commit／push，降低臨時關機的損失。**
+**勾選後若又改檔案，commit 前再看一次最新差異。**
+每完成一個階段就提交並推送，避免只等下課最後一分鐘。
 
 ---
-
 ## 當日紀錄也要放在 repo 內
 
 ```text
@@ -697,76 +699,65 @@ git push origin main
 
 ---
 
-## 實作 E：確認 GitHub 已收到當日成果
+## 實作 E：Desktop 與 GitHub 交叉確認
 
-在 **`115_1_Java` 根目錄**執行：
+1. Commit 後按 **Push origin**，等待操作成功、無錯誤。
+2. **Fetch origin** 檢查遠端狀態，確認沒有待推送／待拉取更新。
+3. 在 **History** 選最新提交，查看其識別碼與內容。
+4. **Repository → View on GitHub**，核對 main 的最新提交。
+5. 查看 `2026_09_18/java-01/src` 及當日紀錄確實是最新版本。
 
-```powershell
-git push origin main
-git fetch origin
-git status -sb
-git rev-parse HEAD
-git rev-parse origin/main
-```
+**沒有待提交檔案，也可能還有未推送的 commit。**
+最新 commit 要能在網站找到；只看到 Fetch origin 按鈕仍不足。
 
-本週在 main 操作：兩個完整雜湊應相同，且沒有未提交修改。
-再開 GitHub **main → 2026_09_18 → java-01 → src** 檢查內容。
-
-<!-- 教師提示：工作目錄乾淨不等於推送成功；Everything up-to-date 也不能代表尚未 add/commit 的檔案已上傳。請同時比對清單、分支、雜湊與網頁。 -->
+<!-- 教師提示：可用 History 提交的右鍵 Copy SHA（依版本）與網站提交識別碼比對；學生可直接提供網站 commit 連結，不需 rev-parse。 -->
 
 ---
 
-## 何時 clone？何時 pull？
+## Fetch、Pull、Clone 的差別
 
-| 狀況 | 操作 |
+| 狀況 | Desktop 操作 |
 |---|---|
-| 教室已還原，本機沒有 repo | clone 整個 `115_1_Java` |
-| 同一堂課 repo 還在，遠端有新提交 | 先保存本機修改，再 pull |
-| 家中已有同一份 repo | 開始修改前先確認狀態並同步 |
+| 還原後沒有本機 repo | File → Clone repository |
+| repo 已存在，想檢查遠端 | Fetch origin |
+| 遠端有更新，要帶入目前分支 | Pull origin |
+| 有本機提交要上傳 | Push origin |
 
-在既有 repo 根目錄、main 且工作目錄乾淨時：
-
-```powershell
-git pull --ff-only origin main
-```
-
-剛 clone 成功通常已是最新，不需要馬上再 pull。
-若歷史分岔停止，先請教師協助，不使用強制推送覆蓋。
+已有 repo 時，先儲存、處理本機修改，再 **Fetch → Pull**。
+**Fetch 只取得遠端資訊，不能當成已完成 Pull。**
+出現衝突或 rebase 提示先請教師協助；課堂不以強制推送修復。
 
 ---
 
-## 實作 E：演練下一次取回成果
+## 實作 E：用另一個位置 clone 驗證
 
-本次 push 後，在 repo 外的工作位置建立**不同名稱的測試副本**：
+1. 本次 Push 成功後，**File → Clone repository → URL**。
+2. 貼同一 repo 網址，Local path 指向另一個新的測試位置。
+3. 按 Clone，再 **Show in Explorer** 核對這次的實際路徑。
+4. 開啟副本的 `2026_09_18/java-01`，在 IDE 執行兩支程式。
+5. 驗證後，回到原本課堂副本繼續實作。
 
-```powershell
-git clone https://github.com/YOUR_ACCOUNT/115_1_Java.git 115_1_Java-check
-cd 115_1_Java-check/2026_09_18/java-01
-javac -encoding UTF-8 -d out src/HelloCourse.java src/GreetingApp.java
-java -cp out GreetingApp
-```
+兩份副本可能顯示相同 repo 名稱，要核對本機路徑。
+不刪原資料、不真的關機；這是在演練下一次取回遠端成果。
 
-確認三筆輸出，再回到原本 `115_1_Java` 繼續實作。
-這是額外驗證副本；平時每次上課 clone 後資料夾名稱仍為 `115_1_Java`。
-
-<!-- 教師提示：不實際關機、不刪除原工作目錄來測試還原；以新位置 clone 驗證遠端足以重建。 -->
+<!-- 教師提示：Desktop 若未同時列出兩份副本，可用 File → Add local repository 選回原 repo 根目錄；Add 是開啟已有 clone，不是 New repository。 -->
 
 ---
 
-## push 失敗或資料夾狀態不對時
+## Desktop 問題排查
 
-| 現象 | 處理方式 |
+| 現象 | 先檢查 |
 |---|---|
-| clone 目標已存在 | 先檢查舊資料；不要直接刪除或覆蓋 |
-| 認證失敗／Repository not found | 核對帳號、網址、權限與 GCM |
-| push 被拒／無法快轉 | fetch 後檢視歷史，請教師協助整合 |
-| GitHub 缺少日期／檔案 | 檢查是否存檔、add、commit、push 到 main |
-| 專案變成另一個 repo | 檢查是否誤建內層 .git，請教師協助 |
+| Changes 看不到新程式 | 是否已存檔、放在正確 clone 目錄、被忽略？ |
+| 出現其他週或大量非課程檔 | Current repository、實際路徑與勾選內容 |
+| No local changes，但網站沒更新 | History 是否有提交？是否完成 Push origin？ |
+| 需要登入／沒有權限 | Options → Accounts 是否為自己的帳號？ |
+| 推送被拒／衝突 | 保留修改與訊息，請教師協助整合 |
 
-**push 失敗不能直接關機；先完成下頁的保存處理。**
+**Discard changes 會捨棄修改，不是取消勾選，也不是備份。**
+push 失敗不能直接關機；依下一頁先保存。
 
 ---
-
 ## 無法推送時：先保存，再處理關機
 
 1. 儲存所有原始碼與紀錄，記下目前錯誤及待辦。
@@ -863,107 +854,130 @@ static String buildGreeting(String name) {
 
 ---
 
-## 延伸練習：分支與 Pull Request
+## 延伸 1：從 main 建立分支
 
-在 **`115_1_Java` 根目錄**且工作目錄乾淨時：
+1. Desktop 選 `115_1_Java`，確認 **Current branch = main**。
+2. 儲存並提交既有修改，確認 Changes 乾淨；Fetch／Pull 同步。
+3. **Current branch → New branch**，輸入 `docs/verification`。
+4. 若出現來源選擇，選 main，再按 **Create branch**。
+5. 確認 Current branch 已變為 **docs/verification**。
 
-```powershell
-git switch -c docs/verification
-```
-
-新增 `2026_09_18/VERIFICATION.md`，整理測試結果，再執行：
-
-```powershell
-git add -- 2026_09_18/VERIFICATION.md
-git commit -m "2026_09_18: document verification"
-git push -u origin docs/verification
-```
-
-<!-- 教師提示：只在 main 練習的同學可略過；分支上的未推送提交，同樣會受還原影響。 -->
-
----
-## 延伸練習：審查、合併與同步
-
-1. 在 GitHub 建立 PR：**base = main**，compare = `docs/verification`。
-2. 描述修改目的與驗證方式；查看 **Files changed**。
-3. 同儕或自己依檢核表審查，確認只有預期修改後合併。
-4. 回到 repo 根目錄，同步合併結果：
-
-```powershell
-git switch main
-git pull --ff-only origin main
-git log --oneline --graph --all
-```
-
-**PR 不是 `git pull`；建立 PR 也不代表已合併。**
-
-<!-- 來源：https://docs.github.com/en/pull-requests/how-tos/create-pull-requests/creating-a-pull-request 。若有保護規則，依規定取得 review，不略過檢查；延伸時保留分支即可，不必刪除。 -->
+分支是另一條版本歷史，**不是新增資料夾，也不需重新 Clone**。
+本練習：建立分支 → 新增文件 → PR 審查 → 合併 → 同步本機。
 
 ---
 
-## 下課前：存檔、測試、提交、推送
+## 延伸 2：自行建立文件，提交並上傳
 
-先儲存全部檔案，在 `java-01` 測試；再回到 **repo 根目錄**：
+1. 在 repo 的日期資料夾內，自行新增 **VERIFICATION.md**。
+2. 填寫 JDK、雙 IDE 執行結果、三筆姓名測試與修正紀錄，存檔。
+3. 回 Desktop **Changes**，查看差異並勾選該文件。
+4. Summary 填 `Document cross-IDE verification`，提交至目前分支。
+5. 按 **Publish branch** 上傳；同一分支後續修改用 **Push origin**。
 
-```powershell
-git status --short
-git add -- .gitignore README.md 2026_09_18
-git diff --cached
-git commit -m "2026_09_18: save java-01 and learning records"
-git push origin main
-```
+教材路徑：`2026_09_18/VERIFICATION.md`，放在 java-01 的上一層。
+若實際日期目錄是 `115_09_18`，就使用該目錄，不另建一份。
 
-清單包含學期 README、忽略規則及當日全部成果，commit 前先檢查。
-沒有新修改可略過 commit，**仍須確認已有提交都推送成功**。
+<!-- 教師提示：文件由學生自行建立，不是 Git 自動產生。Commit 按鈕應指向 docs/verification；未完成測試須據實記錄。Publish branch 只上傳分支，尚未合併到 main。 -->
 
-<!-- 教師提示：未完成程式也要保存，提交訊息與紀錄標明 WIP 與錯誤，不宣稱測試通過。 -->
+---
+
+## 延伸 3：在 GitHub 建立 PR 並檢查差異
+
+1. Desktop 選 **Preview Pull Request → Create Pull Request**。
+2. 瀏覽器核對 **base: main ← compare: docs/verification**。
+3. 標題填「新增第一週驗證紀錄」，描述目的、內容與驗證結果。
+4. 按 **Create pull request**，進入這筆 PR。
+5. 開啟 **Files changed**，確認只有預期文件，內容與測試紀錄正確。
+
+沒有 Desktop PR 按鈕時：GitHub repo → **Pull requests → New pull request**。
+需修改時，回原分支編輯、Commit、Push；同一筆 PR 會更新。
+
+<!-- 教師提示：base 是接收修改的分支，compare 是提供修改的分支。依 repo 規則完成同儕審查；自行檢查不等於取得他人的核准。建立 PR 尚未合併。 -->
+
+---
+
+## 延伸 4：執行合併，確認 GitHub main
+
+1. 在 PR 回到 **Conversation**，往下找到合併區域。
+2. 確認必要審查與檢查已通過，且沒有待解決的衝突。
+3. 按 **Merge pull request → Confirm merge**。
+4. 確認 PR 狀態顯示 **Merged**，不是只有 Closed。
+5. 回 repo 的 **Code**，選 **main**，確認日期下已有驗證文件。
+
+**這一步完成的是 GitHub 上的合併；教室電腦尚須同步。**
+按鈕不可用時，先處理畫面列出的原因並請教師協助。
+
+<!-- 來源：https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/merging-a-pull-request 。本頁示範允許 merge commit 的 repo；若 repo 只允許 Squash 或 Rebase，按鈕不同，依教師指定方式確認合併。分支保護、必要核准、檢查與衝突不可略過。Close pull request 不等於 Merge。 -->
+
+---
+
+## 延伸 5：同步本機 main，完成驗證
+
+1. 回 Desktop，確認 Changes 沒有尚未保存的修改。
+2. **Current branch → main**，再按 **Fetch origin**。
+3. 出現 **Pull origin** 時按下，等待同步完成。
+4. **Repository → Show in Explorer**，開啟日期下的驗證文件。
+5. 比對內容與 GitHub main；在 History 確認已取得合併結果。
+
+沒有 Pull 按鈕時，先核對 repo／main 與 History，確認是否已同步。
+**Merged ＋ GitHub main 有文件 ＋ 本機 main 有相同內容，才完成。**
+分支可先保留；若再修改講義紀錄，仍須 Commit／Push 後才關機。
+
+<!-- 教師提示：Fetch 取得遠端資訊，Pull 才整合到本機。不要拿 docs/verification 的最新雜湊直接當作合併後 main 的雜湊；合併方式可能產生不同提交。若畫面提示攜帶未提交變更或衝突，先完成保存並請教師協助。 -->
+
+---
+
+## 下課前：用 Desktop 完成保存
+
+1. IDE **Save All**，測試並補齊當日學習／AI 紀錄。
+2. Desktop 選 **115_1_Java／main**，Changes 核對並勾選必要檔案。
+3. Summary 填 `2026_09_18: save java-01 and learning records`。
+4. **Commit to main → Push origin**，等待成功。
+5. **View on GitHub** 檢查程式與紀錄，完成下一頁檢核。
+
+沒有新修改可略過 Commit，但仍要確認既有 commit 已推送。
+未完成程式也應保存，紀錄錯誤／待辦，不宣稱測試通過。
 
 ---
 
 ## 關機前的最後檢核
 
-- `git status --short` 沒有輸出，必要檔案都已追蹤。
-- push 成功；fetch 後 **HEAD 與 origin/main 雜湊一致**。
-- GitHub main 上看得到當日 `java-01/src` 的最新內容。
-- 當日 `LAB_REPORT.md`、`AI_USAGE.md` 與專案 README 已保存。
-- 最終 commit 連結交到指定平台；共用電腦依規範登出。
+- **Changes：No local changes**，必要成果也未被錯誤忽略。
+- **Push origin 已成功**，同步後沒有待推送／待拉取更新。
+- Desktop **History 最新提交**能在 GitHub main 的提交紀錄找到。
+- 網站有最新 `java-01/src`、專案 README、當日兩份學習紀錄。
+- 提交連結已繳交；依教室規範登出 **Desktop 與瀏覽器**。
 
-**確認遠端有最新成果，才關機。**
-若最後又改了紀錄，要再存檔、commit、push 與確認一次。
+**確認遠端保存最新成果，才關機。**
+最後又修改紀錄，就再 Save All → Commit → Push → 網站確認。
 
-<!-- 教師提示：不要求把最終 commit 的雜湊寫回該提交內的檔案；使用繳交平台欄位。必要時人工核對學生 GitHub 當日路徑。 -->
+<!-- 教師提示：避免把未提交的變更留在 stash 後關機；stash 也只在本機。不要為使畫面乾淨而 Discard。 -->
 
 ---
 
-## 下一次上課：沿用 repo，新增日期
+## 下一次上課：Desktop clone，再建日期
 
-還原後，在工作位置重新 clone 同一個儲存庫：
+1. 開機後開 Desktop，確認本人登入與作者設定。
+2. **File → Clone repository**，取回同一個 `115_1_Java`。
+3. **Show in Explorer**，查看前次日期的成果仍在。
+4. 在檔案總管新增實際上課日期，例如 `2026_09_25`。
+5. 於其下建立 `java-01/src`，IDE 開啟新的 java-01。
 
-```powershell
-git clone https://github.com/YOUR_ACCOUNT/115_1_Java.git
-cd 115_1_Java
-```
-
-依當日日期新增，例如下一次為 `2026_09_25` 時：
-
-```powershell
-New-Item -ItemType Directory -Path 2026_09_25/java-01/src -Force
-```
-
-先核對作者／登入設定，再開新專案；保留前次 `2026_09_18`。
-日期以實際上課日為準，不每週另建 GitHub repo。
+**每週沿用同一個 repo；日期與專案不是新的 repo。**
+已有本機 repo 才使用 Fetch／Pull；還原後通常重新 Clone。
 
 ---
 
 ## 離堂檢核
 
-1. 今天的 repo、日期目錄、專案目錄分別叫什麼？
-2. 編譯指令與 Git 指令，各在哪一層執行？
-3. 為什麼只存檔或 commit，關機後仍可能失去成果？
-4. 下次還原後應 clone 還是 pull？作者設定會自動回來嗎？
-5. push 失敗時，在關機前應做什麼？
+1. Desktop 應選哪個 repo？IDE 應開哪一層資料夾？
+2. Commit to main 與 Push origin 分別把成果存在哪裡？
+3. No local changes 能保證 GitHub 已更新嗎？還要查什麼？
+4. Fetch origin 與 Pull origin 有何不同？還原後應選哪個操作？
+5. push 失敗時，關機前應如何保存？
 
-下週：**基本型態、參考型態與運算子，系統整理 C#／Java 差異。**
+下週：**基本型態、參考型態與運算子，整理 C#／Java 差異。**
 預習：參考書 §2.5–2.8、§3.5。
 
 ---
@@ -979,4 +993,19 @@ New-Item -ItemType Directory -Path 2026_09_25/java-01/src -Force
 - [GitHub：建庫](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository)｜[clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)｜[認證](https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git)｜[建立 PR](https://docs.github.com/en/pull-requests/how-tos/create-pull-requests/creating-a-pull-request)
 
 工具依教室版本為準；本週使用 JDK 21 與一般 Java Class。
+
+---
+
+<!-- _class: small -->
+
+## GitHub Desktop 官方操作文件
+
+- [安裝與設定](https://docs.github.com/en/desktop/installing-and-authenticating-to-github-desktop/setting-up-github-desktop)
+- [登入 GitHub](https://docs.github.com/en/desktop/installing-and-authenticating-to-github-desktop/authenticating-to-github-in-github-desktop)｜[作者設定](https://docs.github.com/en/desktop/configuring-and-customizing-github-desktop/configuring-git-for-github-desktop)
+- [Clone repo](https://docs.github.com/en/desktop/adding-and-cloning-repositories/cloning-and-forking-repositories-from-github-desktop)
+- [查看差異與提交](https://docs.github.com/en/desktop/making-changes-in-a-branch/committing-and-reviewing-changes-to-your-project-in-github-desktop)
+- [Push 至 GitHub](https://docs.github.com/en/desktop/making-changes-in-a-branch/pushing-changes-to-github-from-github-desktop)
+- [Fetch／Pull 同步](https://docs.github.com/en/desktop/working-with-your-remote-repository-on-github-or-github-enterprise/syncing-your-branch-in-github-desktop)
+
+以 Windows GitHub Desktop 為教學主線，選單依安裝版本可能略有不同。
 

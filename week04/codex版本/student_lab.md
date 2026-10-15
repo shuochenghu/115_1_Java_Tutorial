@@ -8,7 +8,7 @@
 
 1. 無 repo 時 clone，有副本先保存再 Fetch/Pull；在 115_1_Java/YYYY_MM_DD 建 java-04/src。
 2. 放五個核心 examples 與 starter/MissionLog.java，勿放 teacher 同名類別；日期下放本報告及 AI_USAGE。
-3. 執行 java -version、javac -version，寫下完整版本：待填。不限定 JDK 21。
+3. 執行 java -version、javac -version，寫下完整版本：待填。不限定特定 JDK 版本。
 4. 在 java-04 編譯 `javac -encoding UTF-8 -d out src/*.java`；成功後跑 MissionLog。此時能跑任務但日誌與摘要未完成，是預期起始狀態。
 
 診斷：第三週 {1,1,2} 的最終能源/樣本/成功行動次數：待填。{2,1,1} 是否相同：待填。只有最終三個數字，能否分辨路線：待填。

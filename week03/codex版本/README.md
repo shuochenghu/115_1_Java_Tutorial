@@ -32,7 +32,7 @@
 在 java-03 內：
 
 ```powershell
-javac --release 21 -encoding UTF-8 -d out src/*.java
+javac -encoding UTF-8 -d out src/*.java
 java -cp out EnergyStatus
 java -cp out SingleAction
 java -cp out ChargeForecast
@@ -45,11 +45,11 @@ java -cp out RoverMission
 教師在本教材目錄編譯：
 
 ```powershell
-javac --release 21 -encoding UTF-8 -d out-teacher teacher/*.java
+javac -encoding UTF-8 -d out-teacher teacher/*.java
 java -cp out-teacher RoverMission
 ```
 
-JDK 21 為教學基準；作者實測 JDK 22，以 `--release 21` 編譯再在 JDK 22 執行，不能視為 JDK 21 實機驗證。詳細證據見 verification。三節各 50 分鐘、休息另計；內容較密，完整骨架為教師支援，課堂必做只補三個行動分支。
+本週不限定特定 JDK 版本，使用教室或自己已安裝的 JDK，記錄實際 java／javac 版本；編譯指令不設定固定目標版本。IDE 與終端機應使用一致的 JDK，版本錯配時清除舊編譯產物後重編譯。過去實測環境與本次複核見 verification，不代表所有版本均已驗證。三節各 50 分鐘、休息另計；內容較密，完整骨架為教師支援，課堂必做只補三個行動分支。
 
 ## 保存與取回
 

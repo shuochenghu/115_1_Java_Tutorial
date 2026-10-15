@@ -58,4 +58,4 @@ npx -y @marp-team/marp-cli@latest week04_slides_claude.md -o week04_slides_claud
 
 - 沿用第 1 週 claude 版的 Marp 樣式與 `by-claude` 徽章。
 - 沿用第 2–3 週的探測車規則、結束判斷順序、`115_1_Java/YYYY_MM_DD/java-NN/src` 結構、150 分鐘節奏（最後 15 分鐘保存推送），以及「模擬 AI 錯誤，先預測再重現」的除錯練習形式。
-- 不限定 JDK 版本：程式只用到 Java 11 就有的語法（`List.of` 需 Java 9 以上），學生用電腦上已安裝的 JDK 即可。驗證結果見驗證紀錄。
+- 不限定特定 JDK 版本：學生使用已安裝的 JDK，記錄 java／javac 實際版本，不設定固定編譯目標。範例改以 Arrays.asList 準備資料，再複製成可增刪的 ArrayList，不依賴 List.of。實測環境只作驗證紀錄，不是學生版本要求。

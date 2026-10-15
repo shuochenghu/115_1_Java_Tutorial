@@ -32,3 +32,13 @@
 - GitHub Desktop 的 push、全新 clone 流程（沿用第 1–3 週流程，本週未重新操作）。
 - 150 分鐘時間配置的課堂試做。
 - `println(script)` 的雜湊碼每次執行可能不同，投影片的 `[I@1b28cdfa` 只是範例。
+
+## 2026-10-15：版本要求複核（Codex）
+
+本次依使用者要求取消特定JDK版本限制。上方2026-10-06的JDK22與--release11紀錄是歷史證據，不是學生編譯要求；本次不回寫其執行者或結果。
+
+ListBasics與投影片的資料初始化改用Arrays.asList，再以new ArrayList建立可增刪副本；補入java.util.Arrays匯入，教師筆記同步解釋固定大小清單與可增刪副本的差異。官方依據：[Arrays.asList](https://docs.oracle.com/javase/8/docs/api/java/util/Arrays.html#asList-T...-)（文件版本是查閱來源，不是學生JDK要求）。
+
+以目前OpenJDK／javac22執行 `javac -encoding UTF-8 -Xlint:all`，範例、起始碼、教師解答在新暫存目錄分開編譯成功，MissionLogCheck仍為12/12；ListBasics替換前後於同一JDK比較完整輸出，逐字一致。未指定固定目標版本，暫存產物已清除。
+
+投影片同步重匯出35頁HTML，全頁DOM邊界／程式區塊水平溢出檢查無問題；本次改動的第19、21頁另開截圖目視，未發現截斷。不將本機CLI複核推論為所有JDK、IDE GUI或教室端皆通過。跨週摘要見[第3至5週紀錄](../../week03_week05_JDK檢視紀錄.md)。

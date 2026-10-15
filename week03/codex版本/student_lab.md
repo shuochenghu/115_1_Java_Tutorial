@@ -11,7 +11,7 @@
 1. 還原後無 repo：GitHub Desktop clone `115_1_Java`。已有副本：先保留未提交工作，再 Fetch／Pull；衝突請教師協助，不覆蓋舊成果。
 2. 建立 `YYYY_MM_DD/java-03/src`，日期由教師公告。複製 examples 的四個 Java 檔及 starter/RoverMission.java 至 src；同名教師答案不可一起複製。
 3. 本講義另存當日 `LAB_REPORT.md`，AI 範本另存 `AI_USAGE.md`。沿用 repo 根 .gitignore；沒有時合併 starter/.gitignore 規則。
-4. 在 java-03 執行 `javac --release 21 -encoding UTF-8 -d out src/*.java`，再 `java -cp out RoverMission`，輸入 0。TODO 程式應能返回，但探索等功能尚未完成。
+4. 在 java-03 執行 `javac -encoding UTF-8 -d out src/*.java`，再 `java -cp out RoverMission`，輸入 0。TODO 程式應能返回，但探索等功能尚未完成。
 
 | 診斷 | 我的預測／理由 | 執行核對 |
 |---|---|---|

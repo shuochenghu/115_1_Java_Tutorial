@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,15 +22,15 @@ public class ListBasics {
         System.out.println("contains(2)? " + log.contains(2) + ", indexOf(2) = " + log.indexOf(2));
 
         // 陷阱 1：remove(int) 是「刪索引」，remove(Object) 才是「刪值」。
-        ArrayList<Integer> a = new ArrayList<>(List.of(5, 0, 2));
+        ArrayList<Integer> a = new ArrayList<>(Arrays.asList(5, 0, 2));
         a.remove(0);                       // 刪掉索引 0（值 5）
         System.out.println("remove(0)                -> " + a);
-        ArrayList<Integer> b = new ArrayList<>(List.of(5, 0, 2));
+        ArrayList<Integer> b = new ArrayList<>(Arrays.asList(5, 0, 2));
         b.remove(Integer.valueOf(0));      // 刪掉值 0
         System.out.println("remove(Integer.valueOf(0)) -> " + b);
 
         // Collections：對整個集合操作的現成方法。
-        ArrayList<Integer> energy = new ArrayList<>(List.of(14, 8, 20, 6));
+        ArrayList<Integer> energy = new ArrayList<>(Arrays.asList(14, 8, 20, 6));
         System.out.println("min = " + Collections.min(energy) + ", max = " + Collections.max(energy)
                 + ", frequency(8) = " + Collections.frequency(energy, 8));
         Collections.sort(energy);
@@ -48,14 +49,14 @@ public class ListBasics {
                 + "; 1000 equals 1000: " + big1.equals(big2));
 
         // 陷阱 3：邊走訪邊用索引刪除，後面的元素會往前補位而被跳過。
-        ArrayList<String> steps = new ArrayList<>(List.of("OK", "FULL", "UNKNOWN", "OK"));
+        ArrayList<String> steps = new ArrayList<>(Arrays.asList("OK", "FULL", "UNKNOWN", "OK"));
         for (int i = 0; i < steps.size(); i++) {
             if (!steps.get(i).equals("OK")) {
                 steps.remove(i);
             }
         }
         System.out.println("forward remove (bug) -> " + steps);
-        ArrayList<String> steps2 = new ArrayList<>(List.of("OK", "FULL", "UNKNOWN", "OK"));
+        ArrayList<String> steps2 = new ArrayList<>(Arrays.asList("OK", "FULL", "UNKNOWN", "OK"));
         for (int i = steps2.size() - 1; i >= 0; i--) {
             if (!steps2.get(i).equals("OK")) {
                 steps2.remove(i);

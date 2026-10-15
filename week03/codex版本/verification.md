@@ -1,6 +1,6 @@
 # 第三週作者驗證紀錄
 
-日期：2026-09-29。教學基準 Java 21；當前 `java -version` 為 OpenJDK 22（build 22+36-2370），`javac -version` 為 javac 22。編譯使用 `--release 21 -encoding UTF-8`，不能將目標版本當作 JDK 21 執行證據。
+歷史驗證日期：2026-09-29。當時教學基準為 Java 21（現已取消此要求）；當時 `java -version` 為 OpenJDK 22（build 22+36-2370），`javac -version` 為 javac 22。編譯使用 `--release 21 -encoding UTF-8`，不能將目標版本當作 JDK 21 執行證據。
 
 ## 作者檢查
 
@@ -42,3 +42,11 @@ AI 變異測試使用暫存副本，不修改正式解答：`>6` 固定6/0輸入
 ## 限制
 
 非整數、EOF 與例外處理不在本週輸入契約。JDK 21 實機、VS Code／IntelliJ GUI、真實 GitHub Desktop 認證／push／pull／全新遠端 clone 及學生課堂試做未執行。暫存編譯不等同 clean-clone 驗證。程式執行與投影片 QA 已由統籌完成相應紀錄，不代表教室端操作已經實測。
+
+## 2026-10-15：取消版本限制後複核
+
+現行教材不限定特定JDK版本。README、學生講義、作業及投影片的編譯指令已取消固定目標版本，教師筆記取消JDK21教學基準。上方2026-09-29的版本與編譯參數是歷史證據，保留原實測事實，不作為學生要求。
+
+本次使用OpenJDK／javac22，以 `javac -encoding UTF-8 -Xlint:all` 在新暫存目錄分開編譯examples、starter、teacher，均成功。四個範例可執行；starter輸入0安全返回；教師四條預設路線及五個固定狀態案例逐筆核對最後儀表板與終態，均符合上表預期。未設定--release、-source或-target，暫存產物已清除；不據此宣稱所有JDK均已實測。
+
+投影片重新匯出32頁HTML，32頁DOM邊界及程式碼水平溢出檢查無問題；本次改動的第5、32頁另開截圖目視，未發現截斷。IDE GUI、真實遠端及學生試教仍未驗證。跨週檢視摘要見[第3至5週紀錄](../../week03_week05_JDK檢視紀錄.md)。

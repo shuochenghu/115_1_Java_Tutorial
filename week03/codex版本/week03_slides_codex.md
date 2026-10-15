@@ -93,11 +93,11 @@ energy >= 6 && !locked
 4. 不把同名 teacher 程式複製進同一專案。
 
 ```powershell
-javac --release 21 -encoding UTF-8 -d out src/*.java
+javac -encoding UTF-8 -d out src/*.java
 java -cp out RoverMission
 ```
 
-<!-- 教師提示：先輸入 0 確認骨架能結束。JDK 21 教學基準，作者使用 JDK 22。 -->
+<!-- 教師提示：先輸入 0 確認骨架能結束。JDK 不限定版本，記錄實際 java／javac；舊實測環境見 verification。 -->
 
 ---
 ## 同一台車，三種行動
@@ -499,7 +499,7 @@ AI_USAGE：目的、Prompt、採納理由、實測、本人修改。
 - [Scanner API](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Scanner.html)：整數輸入。
 - 本課綱與跨週銜接設計：主題、能力邊界。
 
-JDK 21 教學基準；實測使用 JDK 22，目標 Java 21。
+JDK 不限定版本；記錄實際 java／javac，不固定編譯目標。
 教室 IDE、真實 GitHub 與學生試做仍需課前確認。
 
-<!-- 教師提示：詳見verification。不要把目標版本當成實際運行版本。 -->
+<!-- 教師提示：詳見verification。文件版本僅為查閱來源，不是學生 JDK 要求；不要把歷史測試環境當成使用限制。 -->

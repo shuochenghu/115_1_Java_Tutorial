@@ -76,7 +76,7 @@
 在 `java-03` 目錄執行；編譯成功後再執行程式：
 
 ```powershell
-javac --release 21 -encoding UTF-8 -d out src/*.java
+javac -encoding UTF-8 -d out src/*.java
 java -cp out RoverMission
 ```
 

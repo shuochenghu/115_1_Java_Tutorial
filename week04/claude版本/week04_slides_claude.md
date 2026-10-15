@@ -429,7 +429,7 @@ C# 的 `List<int>` 可以直接放 `int`，這是兩種語言真正不同的地�
 ## Collections：整個集合的現成方法
 
 ```java
-ArrayList<Integer> energy = new ArrayList<>(List.of(14, 8, 20, 6));
+ArrayList<Integer> energy = new ArrayList<>(Arrays.asList(14, 8, 20, 6));
 
 Collections.min(energy)           // 6
 Collections.max(energy)           // 20
@@ -438,7 +438,7 @@ Collections.sort(energy);         // [6, 8, 14, 20]
 ```
 
 - `Arrays` 處理陣列；`Collections` 處理集合（`List`、`Set`…）
-- `List.of(...)`：快速建立固定內容的清單（只能讀）；再包一層 `new ArrayList<>(...)` 才能修改
+- `Arrays.asList(...)`：建立固定大小的清單（可改元素）；外層 `new ArrayList<>(...)` 建立可增刪的副本
 
 **能用現成方法，就不要自己寫找最小值的迴圈**
 
@@ -472,9 +472,9 @@ List<String> results = new ArrayList<>();   // 左邊寫介面、右邊寫實作
 ## 陷阱 1：`remove(0)` 刪的是哪一個？
 
 ```java
-ArrayList<Integer> a = new ArrayList<>(List.of(5, 0, 2));
+ArrayList<Integer> a = new ArrayList<>(Arrays.asList(5, 0, 2));
 a.remove(0);                    // [0, 2]   ← 刪「索引 0」
-a = new ArrayList<>(List.of(5, 0, 2));
+a = new ArrayList<>(Arrays.asList(5, 0, 2));
 a.remove(Integer.valueOf(0));   // [5, 2]   ← 刪「值 0」
 ```
 

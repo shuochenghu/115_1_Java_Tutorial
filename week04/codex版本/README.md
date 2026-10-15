@@ -41,7 +41,7 @@ java -cp out MissionLog
 java -cp out ArrayBasics
 ```
 
-本週不限定 JDK 21 或其他特定版本。使用教室或自己的已安裝 JDK，記錄實際版本；程式採傳統 class/main、一般 API，無預覽功能，也不使用 List.of。版本錯配時沿用第一週 IDE/JDK 檢查方式。
+本週不限定特定 JDK 版本。使用教室或自己的已安裝 JDK，記錄實際版本；程式採傳統 class/main、一般 API，無預覽功能，也不使用 List.of。版本錯配時沿用第一週 IDE/JDK 檢查方式。
 
 測試其他路線：修改 main 的 `int[] script = {1, 1, 2};`，重新編譯再執行；繳交前恢復這條預設路線。命令列腳本是選讀，主作業不讀取 args。
 

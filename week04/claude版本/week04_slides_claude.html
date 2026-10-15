@@ -1338,7 +1338,7 @@ section .ex {
 .small { font-size: 0.8em; }
 ;" data-marpit-pagination-total="35" data-size="16:9"><div class="ex">範例：code/examples/ListBasics.java｜Collections 段</div>
 <h2 id="collections%E6%95%B4%E5%80%8B%E9%9B%86%E5%90%88%E7%9A%84%E7%8F%BE%E6%88%90%E6%96%B9%E6%B3%95">Collections：整個集合的現成方法</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-java"><span class="hljs-type">ArrayList</span>&lt;Integer&gt; <span class="hljs-variable">energy</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(List.of(<span class="hljs-number">14</span>, <span class="hljs-number">8</span>, <span class="hljs-number">20</span>, <span class="hljs-number">6</span>));
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-java"><span class="hljs-type">ArrayList</span>&lt;Integer&gt; <span class="hljs-variable">energy</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(Arrays.asList(<span class="hljs-number">14</span>, <span class="hljs-number">8</span>, <span class="hljs-number">20</span>, <span class="hljs-number">6</span>));
 
 Collections.min(energy)           <span class="hljs-comment">// 6</span>
 Collections.max(energy)           <span class="hljs-comment">// 20</span>
@@ -1347,7 +1347,7 @@ Collections.sort(energy);         <span class="hljs-comment">// [6, 8, 14, 20]</
 </code></pre>
 <ul>
 <li><code>Arrays</code> 處理陣列；<code>Collections</code> 處理集合（<code>List</code>、<code>Set</code>…）</li>
-<li><code>List.of(...)</code>：快速建立固定內容的清單（只能讀）；再包一層 <code>new ArrayList&lt;&gt;(...)</code> 才能修改</li>
+<li><code>Arrays.asList(...)</code>：建立固定大小的清單（可改元素）；外層 <code>new ArrayList&lt;&gt;(...)</code> 建立可增刪的副本</li>
 </ul>
 <p><strong>能用現成方法，就不要自己寫找最小值的迴圈</strong></p>
 <footer>物件導向程式設計｜Week 04｜claude 版本</footer>
@@ -1489,9 +1489,9 @@ section .ex {
 .small { font-size: 0.8em; }
 ;" data-marpit-pagination-total="35" data-size="16:9"><div class="ex">範例：code/examples/ListBasics.java｜陷阱 1</div>
 <h2 id="%E9%99%B7%E9%98%B1-1remove0-%E5%88%AA%E7%9A%84%E6%98%AF%E5%93%AA%E4%B8%80%E5%80%8B">陷阱 1：<code>remove(0)</code> 刪的是哪一個？</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-java"><span class="hljs-type">ArrayList</span>&lt;Integer&gt; <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(List.of(<span class="hljs-number">5</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>));
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-java"><span class="hljs-type">ArrayList</span>&lt;Integer&gt; <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(Arrays.asList(<span class="hljs-number">5</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>));
 a.remove(<span class="hljs-number">0</span>);                    <span class="hljs-comment">// [0, 2]   ← 刪「索引 0」</span>
-a = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(List.of(<span class="hljs-number">5</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>));
+a = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(Arrays.asList(<span class="hljs-number">5</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>));
 a.remove(Integer.valueOf(<span class="hljs-number">0</span>));   <span class="hljs-comment">// [5, 2]   ← 刪「值 0」</span>
 </code></pre>
 <ul>

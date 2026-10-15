@@ -11,7 +11,7 @@
 | 本週新增 | 陣列（建立、預設值、`length`、走訪、越界、參考、`Arrays`）、`args`、`ArrayList`、包裝類別與自動裝箱、`Collections`、Prompt 需求描述 |
 | 交給第 5 週 | 三條平行清單容易對不齊、`state[1]` 靠位置表達意義 → 自訂 `MissionStep`／`Rover` 類別，`ArrayList<MissionStep>` |
 
-**刻意不教**：自訂類別、`try/catch`、Lambda／Stream、`Iterator`、泛型方法、二維陣列（Deitel 7.11–7.12 可留到需要時）、可變長度參數（7.13）。`List.of` 只當作建立測試資料的工具，不展開 16.14。
+**刻意不教**：自訂類別、`try/catch`、Lambda／Stream、`Iterator`、泛型方法、二維陣列（Deitel 7.11–7.12 可留到需要時）、可變長度參數（7.13）。`Arrays.asList` 只當作建立測試資料的工具，需 import java.util.Arrays；它建立固定大小的清單，外層 new ArrayList 複製成可增刪清單，不展開可變長度參數。
 
 Set 與 Map 只在投影片的地圖上出現一次。課綱寫 Collections Framework「入門」，本週以 `List` 為主，`HashMap` 放在選做。
 

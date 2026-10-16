@@ -27,3 +27,5 @@
 ### 範例附圖
 
 ![AI 使用紀錄範例附圖](https://raw.githubusercontent.com/shuochenghu/115_1_Java_Tutorial/main/img/test.png)
+
+![圖 2：電量百分比修改後的本人執行結果](images/picgo.png)

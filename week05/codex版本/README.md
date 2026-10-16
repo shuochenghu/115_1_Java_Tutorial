@@ -11,6 +11,7 @@
 - 解釋私有欄位、受控的狀態修改、每個物件獨立狀態，以及共用參考的效果。
 - 將三條平行清單改成一條物件清單，保留順序、每步快照與所有終止規則。
 - 把需求轉為類別責任與方法契約，用反例檢驗 AI 的設計建議。
+- 分辨C#與Java類別欄位的預設存取，並以新情境設計卡驗證需求轉換能力。
 
 ## 檔案索引
 
@@ -25,6 +26,7 @@
 | [teacher/MissionStep.java](teacher/MissionStep.java)／[MissionLog.java](teacher/MissionLog.java) | 完整答案 |
 | [teacher/MissionStepCheck.java](teacher/MissionStepCheck.java)／[MissionLogCheck.java](teacher/MissionLogCheck.java) | 物件檢查及第四週完整輸出回歸檢查 |
 | [teacher/FixedScriptMission.java](teacher/FixedScriptMission.java) | 教師固定初始狀態入口 |
+| [teacher/SampleCase.java](teacher/SampleCase.java)／[SampleCaseCheck.java](teacher/SampleCaseCheck.java) | F1新情境的完整教師參考與12項檢查；學生實作列選做 |
 | [AI_USAGE_template.md](AI_USAGE_template.md) | 四欄簡表與虛構／模擬完整示範 |
 | [handoff.md](handoff.md) | 第四至第六週能力與資料契約 |
 | [verification.md](verification.md) | 本次實測、版本及限制 |
@@ -61,6 +63,7 @@ MissionStep 是資料類別，不含 main；執行入口為 MissionLog。起始�
 javac -encoding UTF-8 -Xlint:all -d out-teacher teacher/*.java
 java -cp out-teacher MissionStepCheck
 java -cp out-teacher MissionLogCheck
+java -cp out-teacher SampleCaseCheck
 java -cp out-teacher FixedScriptMission 2 4 2
 ```
 
@@ -69,6 +72,8 @@ java -cp out-teacher FixedScriptMission 2 4 2
 ## 設計邊界與來源
 
 目前 energy、samples、actionCount 及停止條件仍在 MissionLog；本週集中把歷史記錄建模，不要求同時完成完整 Rover 系統。MissionStep 建構契約為 energy 0..20、result 非 null 的既有代碼、command 可為任何 int；呼叫端負責提供正確資料，完整防護與例外處理留後續。
+
+本次修訂將C#欄位存取差異放在講義C1；F段30分鐘改為「獨立SampleCase設計卡、模擬AI程式審查、三選一反例與反思」。F3新增錯存可變電池參考的快照問題，先在SnapshotDemo副本觀察，再恢復原程式。主作業仍是六組TODO及八個學生來源檔；SampleCase不接進任務，完整Rover重構留待第六週責任分工與UML討論。
 
 RoverBattery 是概念示範，允許 energy=0 的電池充電；MissionLog 是整個任務，初始能源 0 時已結束，不能執行充電。兩者責任不同，不能拿電池方法取代任務停止規則。
 

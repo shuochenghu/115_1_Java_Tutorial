@@ -12,15 +12,15 @@
 |---|---|---:|---|
 | 第1節 | A 取回與診斷 | 10 | 找到上週日誌的對齊問題 |
 | 第1節 | B 類別、建構、this | 25 | 兩個物件追蹤、編譯錯誤擇一 |
-| 第1節 | C 封裝與行為 | 15 | 能說明方法如何守住能源規則 |
+| 第1節 | C 封裝、C#存取權對照 | 15 | 受控修改；省略修飾字的語言差異 |
 | 第2節 | D 參考、快照、IDEA | 20 | 參考圖與三檔執行入口 |
-| 第2節 | E1–E2 實作前段 | 30 | 建構與 getter 完成，開始整合 |
-| 第3節 | E3 整合檢查 | 5 | 預設路線、無效／返回路線先通過 |
-| 第3節 | F 需求、AI反例與反思 | 25 | 一項反例的前後實測 |
+| 第2節 | E1–E2 實作前段 | 25 | 建構與 getter 完成，開始整合 |
+| 第2節 | E3 整合檢查 | 5 | 預設路線、無效／返回路線先通過 |
+| 第3節 | F 新需求、AI審查與反例 | 30 | F1設計8、F2審查8、F3除錯10、F4反思4 |
 | 第3節 | G 檢核 | 5 | 類別責任與下週問題 |
 | 第3節 | H 保存 | 15 | 正確版、紀錄與推送狀態 |
 
-六條路線、B–D 詳細表與完整反例紀錄可課後補齊，課堂優先掌握兩個物件、建構／this、每步新物件及 `{1,1,2}`／`{3,9,0}`。150 分鐘為規畫，未經學生試教；若 D 的 IDE 操作較慢，改由教師帶看設定，保留實作時間，明確標示學生待補 GUI。
+六條路線、B–D 詳細表與完整反例紀錄可課後補齊，課堂優先掌握兩個物件、建構／this、每步新物件及 `{1,1,2}`／`{3,9,0}`。150 分鐘為規畫，未經學生試教；C1佔C段約3分鐘，用口頭對照與教師副本展示；B3、F3的完整證據可課後補。若 D 的 IDE 操作較慢，改由教師帶看設定，保留實作時間，明確標示學生待補 GUI。F1／F2要保留學生先自行設計與審查的時間，不先展示SampleCase答案。
 
 ## 教學主線與知識點
 
@@ -41,6 +41,12 @@ StepCard 定義一種資料的結構與查詢，CreateStepDemo 負責啟動與�
 private 限制跨類別直接讀寫；方法負責查詢或合法行為。RoverBattery.explore 能拒絕不足，charge 能封頂，比要求每個呼叫端自行記住扣電規則更集中。這是初步的責任集中與分離顯示，不宣稱已教完整 SOLID。
 
 MissionStep 是已發生的快照，沒有改寫需求，所以只提供 getter／isSuccessful。方法不輸出，MissionLog 負責報表；將來換顯示方式不需動資料類別。所有欄位配 setter 不等於封裝完成。private 不檢查範圍；本週建構參數採合法前提，完整違約處理留後續。
+
+### C# 存取權的遷移
+
+C1答案：兩種語言都可寫private欄位；C#類別欄位省略修飾字為private，Java則為套件存取。本週StepCard與CreateStepDemo都在預設套件，省略private後直接寫first.energy會編譯成功，值可變成99。這是刻意在副本暴露的保護缺口，展示後恢復。
+
+C#的public int Energy { get; private set; }表示外部可讀、類別內可寫。Java本週用private欄位、public getter及explore／charge等行為表達需求；不強迫補setEnergy，也不把最外層類別的預設可見性混入這張欄位對照表。只需辨識差異，不展開套件設計。
 
 ### static、參考與快照
 
@@ -110,15 +116,51 @@ battery=30.0
 
 ### F
 
-F1 可用 Prompt 示範：
+F1設計卡參考（名稱可不同，需求與呼叫須一致）：
 
-> 設計 MissionStep，保存同一步 int command、int energy、String result，使用 private 實例欄位；建構時一次傳入三值，前提為 energy 0..20、result 為既有非null代碼，command可為任意int。提供三個getter及boolean isSuccessful，以內容比較OK；不需要setter及輸出方法。MissionLog每步行動後建立新物件並保存於ArrayList，負責回放與摘要。沿用一般Java，不用record、繼承、Lambda、例外處理。請先說明責任及順序，再列兩物件獨立與new String("OK")反例，不能聲稱我已執行測試。
+| 項目 | 參考答案與理由 |
+|---|---|
+| 類別與責任 | SampleCase，維護一盒樣本的容量與存取規則，不印報表、不操作探測車 |
+| 欄位 | private int capacity、count；freeSpace用capacity-count計算，避免多存一份需同步的狀態 |
+| 建構 | SampleCase(int capacity)，小於1改1、大於8改8，count=0；先修正參數再指定欄位 |
+| 查詢 | getCapacity/getCount/getFreeSpace均無參數、回傳int，不改狀態 |
+| 修改 | boolean store(int amount)，非正數或超過剩餘空間回傳false且不改；int unload()回傳卸下份數後count=0 |
+| 約束與不提供操作 | 1<=capacity<=8、0<=count<=capacity；無任意setCount，不提供改容量操作 |
 
-這段是教師自編提示，不代表已呼叫真實 AI。
+必要測試：容量3初始count0/free3；store(2)為true、count2/free1；再store(2)為false且維持2；store(1)為true、count3/free0；unload()回傳3，再unload回傳0。另測容量0改1、9改8、store(0)與store(-1)拒絕，以及兩盒資料獨立。
 
-F2 選項1：三欄static後，E1第一行變為 `2/12/NOT_ENOUGH_ENERGY/false`，兩者看到相同共享資料。恢復實例欄位，再測兩物件與兩條路線。選項2：new String("OK")與常值參考不同，第一行 isSuccessful=false；改equals後true。固定任務中的常值可能讓==偶然通過，E1反例不可省略。
+這些先作為學生紙上預期，不能寫成本人已實測。完整教師參考在teacher/SampleCase.java，teacher/SampleCaseCheck.java實際檢查12項；學生不必複製這兩個檔案，也不把SampleCase接進主任務。
 
-F3：新增setter會允許覆寫歷史，不符合需求；把三欄裝成物件能集中資料，但仍可能在錯誤時機建立、傳錯能源或結果。呼叫端與回歸測試仍有必要。
+F2模擬AI回覆至少可指出：
+
+| 偏差 | 呼叫反例與後果 |
+|---|---|
+| capacity/count公開 | box.count=-1或box.capacity=0可破壞狀態 |
+| 建構不修正容量 | new SampleCase(0)的capacity仍0 |
+| 未拒絕非正數 | 先存2後store(-1)，存量竟減少；store(0)也沒有拒絕訊號 |
+| 未檢查剩餘空間 | 容量3先存2再存2，變4而非整批拒絕 |
+| store回傳void | 呼叫端無法用boolean接收成敗；boolean ok=box.store(1)無法編譯 |
+| 缺卸空／剩餘空間查詢 | 需求中的unload、getFreeSpace找不到可用方法 |
+
+學生選四項即可，每項要指出需求句及具體呼叫。數值回傳錯誤與缺方法的編譯錯誤可同時存在，不能只寫「封裝不好」。
+
+改寫Prompt可用：
+
+> 設計SampleCase，建造時傳入容量並修正到1..8，初始空盒。欄位private；提供查詢容量、存量及剩餘空間的方法。store(int amount)僅在正數且放得下時整批存入，回傳boolean；拒絕不改存量。unload()清空並回傳原份數，空盒回傳0。不要任意setter或輸出方法。使用本週一般Java、單一建構子、不用繼承、record、Lambda或例外處理。請先說明責任及方法契約，再提出填滿、超量、非正數、卸空、容量修正與兩盒獨立的測試呼叫，不得聲稱我已實測。
+
+本段是教師自編提示，沒有呼叫真實AI。完整程式保留在教師目錄，課堂先讓學生完成設計與審查。
+
+F3反例三選一：
+
+| 選項 | 錯誤副本預期表現 | 最小修正及重測 |
+|---|---|---|
+| 1 static共享資料 | E1第一行被覆蓋成2/12/NOT_ENOUGH_ENERGY/false | 恢復實例欄位；E1第一行回到1/14/OK/true，兩條任務路線再測 |
+| 2 ==內容比較 | new String("OK")的isSuccessful為false；任務常值可能偶然通過 | 改equals；E1與兩條任務路線再測 |
+| 3 保存可變電池參考 | 輸出19/19及same object=true；探索後本應保留的14消失 | 恢復每步new StepCard的原SnapshotDemo；兩筆command/energy為1/14、3/19，current=19、separate records=true；兩條任務路線再測 |
+
+選項3的清單確實有兩筆，但兩個索引指向同一電池，add不複製物件。正式快照保存的是當時int值，不因後來充電而改變。此活動使用原有RoverBattery，不需引入完整Rover。工具verify.py會在暫存副本重現錯誤輸出，並以正式SnapshotDemo完整輸出檢查修正結果。
+
+F4：歷史沒有改寫需求，所以MissionStep只讀；SampleCase存量需要改變，但只能由守規則的store／unload處理。只看最後能源無法證明歷史正確；呼叫端仍要在對的時機提供正確值，完整回歸檢查仍必要。
 
 ### G與H
 
@@ -131,6 +173,8 @@ G：宣告參考變數不等於建立物件；this指目前實例；資料欄位
 | 三欄仍0/null或讀取PENDING | 建構是否寫energy=energy、getter是否仍佔位 |
 | 第一次物件建立後被第二次蓋掉 | 欄位是否static |
 | 常值測試過，new String卻失敗 | 是否以==比較內容 |
+| 快照兩筆能源都變成最後值 | 是否存同一可變物件的參考，未保存當時數值 |
+| 同套件直接寫欄位居然能編譯 | 是否省略private，誤套C#類別欄位預設規則 |
 | 日誌能源早一步 | 建立記錄是否放在switch之前 |
 | {3,9,0}只剩返回或空記錄 | 是否只保存OK |
 | 最低能源0但每步都大於0 | 最低值初始值是否用0 |
@@ -144,3 +188,5 @@ G：宣告參考變數不等於建立物件；this指目前實例；資料欄位
 語言概念參考 Oracle 官方 Java Tutorials：[類別](https://docs.oracle.com/javase/tutorial/java/javaOO/classes.html)、[建構子](https://docs.oracle.com/javase/tutorial/java/javaOO/constructors.html)、[this](https://docs.oracle.com/javase/tutorial/java/javaOO/thiskey.html)、[存取控制](https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html)。這些頁面標示以JDK8撰寫，本週只取穩定的傳統class概念，不把它當新版功能清單。
 
 IDE操作核對：[VS Code Java](https://code.visualstudio.com/docs/java/java-tutorial)、[IntelliJ Java專案與執行](https://www.jetbrains.com/help/idea/creating-and-running-your-first-java-application.html)、[IDEA內容根與來源根](https://www.jetbrains.com/help/idea/content-roots.html)。官方新版範例可能採Java25 compact source；本週維持傳統class/main及實際已安裝JDK。文件核對不能代替教室GUI實測。
+
+C#對照依據：[Microsoft 類別成員的預設存取](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers)、[屬性存取子限制](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/restricting-accessor-accessibility)。Java套件存取另對照上述Oracle存取控制頁；本週只比較類別欄位。

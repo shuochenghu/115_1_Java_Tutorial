@@ -2,11 +2,11 @@
 
 ## 功能驗證
 
-本週教材目錄執行 `python -X utf8 tools/verify.py`。需要現有Python與JDK，不安裝套件。使用本週目錄內新的暫存子目錄，分別編譯examples、starter、teacher及模擬學生src；檢查四個範例完整輸出、starter安全返回、8項物件檢查、15項完整輸出回歸、兩個預期編譯錯誤、四項錯誤變異及固定狀態入口。結束自動清除本次暫存產物。
+本週教材目錄執行 `python -X utf8 tools/verify.py`。需要現有Python與JDK，不安裝套件。使用本週目錄內新的暫存子目錄，分別編譯examples、starter、teacher及模擬學生src；檢查四個範例完整輸出、starter安全返回、8項物件檢查、15項完整輸出回歸、12項SampleCase檢查、兩個預期編譯錯誤、同套件省略private的寫入、講義F3可變參考反例、四項原有錯誤變異、SampleCase超量存入變異及固定狀態入口。結束自動清除本次暫存產物。
 
 錯誤變異只修改暫存副本；檢查器必須能拒絕static共享資料、==內容比較、漏存建構參數及只記成功步驟，不能只證明正確版會跑。
 
-不用Python時，依README分開編譯教師Java檔，再執行兩個Check即可；Python工具、輸出擷取、AssertionError及變異測試不是學生先備要求。
+不用Python時，依README分開編譯教師Java檔，再執行MissionStepCheck、MissionLogCheck與選做參考的SampleCaseCheck；Python工具、輸出擷取、AssertionError及變異測試不是學生先備要求。
 
 ## 投影片與版面
 

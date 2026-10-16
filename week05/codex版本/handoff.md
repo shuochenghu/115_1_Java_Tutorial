@@ -28,6 +28,8 @@
 
 學生必做為建構、this、getter、物件方法與物件清單；以 RoverBattery 示範受控修改。主作業仍保留已熟悉的具名狀態，不同時搬成 Rover 類別。countCommands、最低值迴圈、終止判斷及教師測試入口由教師提供。
 
+2026-10-16修訂：C1增加C#與Java類別欄位的存取對照；F1／F2改以獨立SampleCase需求做設計卡與AI程式審查，實作只列選做。F3第三種反例使用SnapshotDemo副本，把同一RoverBattery加入清單兩次，觀察19/19後恢復14、19的數值快照。主作業仍是原有兩類別與六組TODO，沒有增加完整Rover或final欄位要求。
+
 使用者本次補充：單一程式以 VS Code 教學；專案超過兩個程式檔時加入 IntelliJ IDEA。本週兩檔基本範例先在 VS Code，SnapshotDemo 的三檔合作再介紹 IDEA；不要求每題雙 IDE 重做。共用技能已同步此規範。
 
 目前只需要理解 static main／工具方法與實例成員的差異，不教 static 計數器、繼承、多型、equals/toString 覆寫、record、自訂泛型、Comparator、Lambda、Stream 或 JUnit。沒有 setter 是本次「已發生歷史」的需求選擇，不是所有類別都禁止 setter。
@@ -38,6 +40,14 @@
 
 本週只做「類別責任表」及簡單參考示意，不要求正式 UML 關係、生命週期／組合判定或完整系統設計。不以 ArrayList<MissionStep> 就直接宣稱已成立 UML 組合關係。
 
-## 本次交接狀態
+第六週可取F1的SampleCase設計卡作為新情境類別圖，或把主任務狀態重構為Rover；需重新界定責任、方法與停止規則，不把本週的選做程式算成全體學生已掌握的先備能力。
+
+## 初版交接狀態（2026-10-15）
 
 建立 week05/codex版本，原有第四週與 Claude 版保留。實際驗證範圍見 [verification.md](verification.md)。目前工作分支 main，未建立提交、未執行 fetch，不能宣稱已與遠端同步。根目錄沒有 PROJECT_MEMORY.md，本週決策保存在本檔與驗證紀錄；後續作者仍須查閱最新工作區狀態。
+
+## 修訂交接狀態（2026-10-16）
+
+本次在main完成C1與F段修訂，僅改動week05/codex版本。講義、教師筆記、作業、README、AI範本、交接、驗證紀錄、維護工具及45頁投影片已同步；新增SampleCase／SampleCaseCheck兩個教師參考檔。六組TODO與八檔學生src保持原範圍，完整Rover仍交由第六週規畫。
+
+本次重跑8項物件檢查、15項任務回歸及12項SampleCase檢查，並實測同套件存取、錯存可變參考與錯誤變異；45頁版面檢查通過，細節與限制見verification。修改尚未提交，未fetch，不宣稱與遠端同步。下一步可備第六週責任表／UML，或安排本週學生試教，再依實際完成時間調整。

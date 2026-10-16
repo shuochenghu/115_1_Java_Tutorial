@@ -2,6 +2,7 @@
 from pathlib import Path
 import subprocess
 import tempfile
+import re
 
 BASE = Path(__file__).resolve().parents[1]
 
@@ -57,7 +58,7 @@ def main():
                            "steps=0, ok=0, rejected=0, ignored=3\nlowest energy=N/A\n"
                            "final energy=6, samples=5, actionCount=3 -> SUCCESS\nbattery=30.0\n"), starter
         print("PASS starter safe exit with unfinished log")
-        for name in ("MissionStepCheck", "MissionLogCheck"):
+        for name in ("MissionStepCheck", "MissionLogCheck", "SampleCaseCheck"):
             print(execute(work / "teacher", name), end="")
         for label, statement, fragment in (
             ("private access", "StepCard s=new StepCard(1,14); s.energy=99;", "private"),
@@ -73,6 +74,41 @@ def main():
                                      errors="replace", timeout=30)
             assert failure.returncode != 0 and fragment in failure.stderr.lower(), failure.stderr
             print("PASS expected compile failure", label)
+        # C1對照：同套件欄位省略private可直接寫，不能誤套C#預設規則。
+        access = work / "package-access"
+        access.mkdir()
+        step_card = (BASE / "examples/StepCard.java").read_text(encoding="utf-8")
+        (access / "StepCard.java").write_text(
+            step_card.replace("private int energy;", "int energy;"), encoding="utf-8")
+        (access / "AccessDemo.java").write_text(
+            "public class AccessDemo { public static void main(String[] args) {"
+            "StepCard first=new StepCard(1,14); first.energy=99;"
+            "System.out.println(first.getEnergy()); }}", encoding="utf-8")
+        compile_to(access, access / "out")
+        assert execute(access / "out", "AccessDemo") == "99\n"
+        print("PASS package access permits same-package write without private")
+        # 直接取用講義F3選項3程式，避免教材反例與工具中的另一份程式失去對齊。
+        lab = (BASE / "student_lab.md").read_text(encoding="utf-8")
+        trap_section = lab.split("### F3 ", 1)[1].split("### F4 ", 1)[0]
+        trap_body = re.search(r"```java\n(.*?)\n```", trap_section, re.DOTALL).group(1)
+        trap = work / "reference-trap"
+        trap.mkdir()
+        (trap / "SnapshotDemo.java").write_text(
+            "import java.util.ArrayList;\npublic class SnapshotDemo {\n"
+            "public static void main(String[] args) {\n" + trap_body + "\n}}\n", encoding="utf-8")
+        compile_to(trap, trap / "out", [BASE / "examples/RoverBattery.java"])
+        assert execute(trap / "out", "SnapshotDemo") == "19/19\nsame object=true\n"
+        print("PASS reproduced reference trap; original snapshot output already checked as 14,19")
+        # F2教師參考的偵測力：超量仍收進去，必須被檢查器拒絕。
+        sample = work / "sample-mutation"
+        sample.mkdir()
+        sample_source = (BASE / "teacher/SampleCase.java").read_text(encoding="utf-8")
+        (sample / "SampleCase.java").write_text(
+            sample_source.replace("amount <= 0 || amount > getFreeSpace()", "amount <= 0"),
+            encoding="utf-8")
+        compile_to(sample, sample / "out", [BASE / "teacher/SampleCaseCheck.java"])
+        run(["java", "-cp", str(sample / "out"), "SampleCaseCheck"], ok=False)
+        print("PASS detected sample case batch overflow mutation")
         original = (BASE / "teacher/MissionStep.java").read_text(encoding="utf-8")
         log = (BASE / "teacher/MissionLog.java").read_text(encoding="utf-8")
         mutations = [

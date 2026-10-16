@@ -1,5 +1,7 @@
 # 第五週教材驗證紀錄
 
+本檔依日期保留歷史證據；2026-10-15的頁數、檔案數與活動題號為初版紀錄，現行修訂與本次重跑結果見末段2026-10-16。
+
 日期：2026-10-15。下列為作者本次本機實測，不能當作學生本人紀錄。教材不限定特定JDK版本；本次編譯未設定固定目標版本或使用預覽功能。
 
 ## 實際環境與方法
@@ -58,3 +60,39 @@
 本週README統一為「不限定特定JDK版本」，共用技能同步：日常編譯不設定固定--release／-source／-target，也不鎖定IDE SDK版本。本次再次以目前OpenJDK／javac22執行tools/verify.py，所有編譯、四個範例完整輸出、starter安全返回、8項物件檢查、15項完整輸出回歸、兩項預期編譯錯誤、四項錯誤變異及固定狀態入口檢查均通過。Java與投影片原稿未改，不重作本週視覺檢查。
 
 前段「未改第一至第四週」描述的是第五週初次製作；本次後續工作已依使用者要求修訂第三週及第四週的JDK要求與相關資料初始化。跨週摘要見[第3至5週紀錄](../../week03_week05_JDK檢視紀錄.md)，原有測試環境與限制仍保留。
+
+## 2026-10-16：依兩版比較建議修訂Codex版
+
+### 改動及課程負擔
+
+- C1加入C#／Java類別欄位的預設存取與屬性／getter對照；官方Java與Microsoft文件已核對，來源附於teacher_notes。
+- F1改為獨立的SampleCase樣本運送盒設計卡；F2審查教師自編錯誤AI程式，至少四項偏差各附呼叫例子，再改寫Prompt。設計與審查是必做，完整實作為課後選做，不冒充本人已測。
+- F3新增把同一可變電池參考存入兩次的快照反例，與static／==錯誤形成三選一。AI範本同步題號與虛構填寫示範。
+- 保留主作業兩個類別、六組TODO及學生八個Java檔，不改原任務規則或輸出。完整Rover重構留給第六週；JDK仍不限定版本。
+- E段由35改30分鐘，F段由25改30分鐘；三節各50分鐘，總計150。C1以約3分鐘口頭對照／教師副本示範融入原C段。這是備課配置，尚未學生試教。
+- 同步README、student_lab、assignment、teacher_notes、AI_USAGE_template、handoff、tools/README與verify.py、Marp Markdown／HTML；新增teacher/SampleCase.java與SampleCaseCheck.java，答案不放學生src。
+
+### 本次實測
+
+環境為OpenJDK22（22+36-2370）／javac22、Python3.14.0、Node.js24.11.0。執行 `python -X utf8 tools/verify.py`，未指定--release、-source或-target；分別編譯examples六檔、starter兩檔、teacher七檔，另合併學生八檔模擬src，均成功。
+
+| 檢查 | 本次結果 |
+|---|---|
+| 原有四個範例、starter、任務 | 四範例完整輸出及starter安全返回通過；MissionStepCheck 8/8、MissionLogCheck 15/15；所有既有完整輸出期望保留 |
+| C1存取權 | private直接寫入仍編譯失敗；副本省略private後，同套件AccessDemo可寫入並由getter讀到99 |
+| F3選項3 | 直接擷取講義程式片段建立暫存SnapshotDemo，實際輸出19/19、same object=true；原正式SnapshotDemo完整輸出核對為1/14、3/19、current=19、separate records=true |
+| 新情境教師參考 | SampleCaseCheck 12/12，包含初始空盒、存入、整批拒絕、0／負數／極大正數、填滿、滿盒拒絕、卸空、容量上下界及兩盒獨立 |
+| 錯誤偵測能力 | 原四項錯誤變異仍被拒絕；另在SampleCase副本移除剩餘空間檢查，檢查器能偵測超量存入。正式答案保持正確 |
+| 固定狀態入口 | 原SUCCESS、EXHAUSTED、UNFINISHED三種CLI入口檢查通過 |
+
+錯誤與編譯測試均在本次新暫存目錄進行，結束已清除。沒有把F1／F2的紙上測試要求改成學生必須實作SampleCase。
+
+### 投影片與限制
+
+Marp CLI4.5.1／Core4.4.0重新匯出45頁HTML。以現有puppeteer-core24.43.1與本機無頭Chrome檢查全45頁，未發現DOM邊界或程式區塊水平溢出；已巡視全頁聯絡表，並放大檢查時間表、C1及F段各頁。沿用原有16:9、字型及配色。截圖與layout-report.json保存在本次視覺化目錄的week05-revised-qa。
+
+首次瀏覽器檢查遇暫存profile衝突，改用獨立profile完成；第四週版面工具原檔未更動。其後一次臨時包裝有變數名稱衝突，修正後成功執行，未把失敗當作版面通過。
+
+本次只修改week05/codex版本；Claude教材及其他週次不變。IDE GUI、真實AI服務、遠端GitHub、其他JDK與學生150分鐘試教仍未驗證。分支與未提交狀態另依handoff本次追加紀錄，不把初版狀態當現況。
+
+靜態交付檢查：本週27個檔案、27個Markdown本機連結皆可讀取／定位，code fence、public class檔名、行尾空白、45頁Markdown／HTML同步檢查通過；starter與本次修改前相同，沒有.class或.verify暫存產物，git diff --check通過。工作分支main，本次修改尚未提交。

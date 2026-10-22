@@ -1,0 +1,55 @@
+@startuml
+' 第六週（claude 版本）：社團器材借用的參考設計（教師用），與 code/teacher/club 一致
+skinparam classAttributeIconSize 0
+hide circle
+
+class Club {
+  + {static} MAX_ACTIVE_LOANS : int = 2
+  - equipments : ArrayList<Equipment> {readOnly}
+  - loans : ArrayList<Loan> {readOnly}
+  + Club()
+  + addEquipment(equipment : Equipment) : void
+  + borrow(member : Member, equipment : Equipment, date : String) : String
+  + giveBack(equipment : Equipment, date : String) : String
+  + isOnLoan(equipment : Equipment) : boolean
+  + countActiveLoans(member : Member) : int
+  + getLoanCount() : int
+  + activeLoanReport() : String
+}
+class Member {
+  - studentId : String {readOnly}
+  - name : String {readOnly}
+  + Member(studentId : String, name : String)
+  + getStudentId() : String
+  + getName() : String
+}
+class Equipment {
+  - id : String {readOnly}
+  - name : String {readOnly}
+  + Equipment(id : String, name : String)
+  + getId() : String
+  + getName() : String
+}
+class Loan {
+  - member : Member {readOnly}
+  - equipment : Equipment {readOnly}
+  - borrowDate : String {readOnly}
+  - returnDate : String
+  + Loan(member : Member, equipment : Equipment, borrowDate : String)
+  + getMember() : Member
+  + getEquipment() : Equipment
+  + isActive() : boolean
+  + close(returnDate : String) : boolean
+  + describe() : String
+}
+
+Club --> "0..*" Equipment : equipments
+Club "1" *-- "0..*" Loan : loans
+Loan "0..*" --> "1" Member : member
+Loan "0..*" --> "1" Equipment : equipment
+note right of Member
+  同時未歸還的 Loan 最多 2 筆：
+  這是 Club.borrow 檢查的規則，
+  不是多重性（歷史紀錄會一直增加）
+end note
+@enduml

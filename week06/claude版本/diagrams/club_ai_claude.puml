@@ -1,0 +1,30 @@
+@startuml
+' 第六週（claude 版本）：作業用「模擬 AI 回覆」類別圖，刻意含有設計問題，不是真實 AI 對話
+skinparam classAttributeIconSize 0
+hide circle
+
+class Club {
+  - equipments : ArrayList<Equipment>
+  - loans : ArrayList<Loan>
+  + getLoans() : ArrayList<Loan>
+}
+class Member {
+  - studentId : String
+  - name : String
+  + borrow(e : Equipment) : void
+}
+class Equipment {
+  - id : String
+  - name : String
+  + borrower : Member
+}
+class Loan {
+  - member : Member
+  - borrowDate : String
+}
+
+Club --> "0..*" Equipment
+Club --> "0..*" Loan
+Member "1" --> "0..2" Loan : loans
+Loan "1" --> "0..*" Equipment
+@enduml

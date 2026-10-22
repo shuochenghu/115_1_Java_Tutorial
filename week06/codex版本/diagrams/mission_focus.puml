@@ -1,0 +1,38 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+hide circle
+skinparam defaultFontName "Microsoft JhengHei"
+left to right direction
+class Mission {
+  - rover : Rover
+  - history : ArrayList<MissionStep>
+  - returned : boolean
+  + Mission(rover : Rover)
+  + run(script : int[]) : void
+  + getOutcome() : String
+  + getStepCount() : int
+  + getStep(index : int) : MissionStep
+  + countCommands() : int[]
+  + countOk() : int
+  + countRejected() : int
+  + lowestEnergy() : int
+}
+class Rover {
+  - energy : int
+  - samples : int
+  - actionCount : int
+  + Rover(energy : int, samples : int)
+  + getEnergy() : int
+  + getSamples() : int
+  + getActionCount() : int
+  + isSuccess() : boolean
+  + isExhausted() : boolean
+  + isStopped() : boolean
+  + execute(command : int) : String
+  - explore() : String
+  - scan() : String
+  - charge() : String
+}
+Mission --> "1" Rover : rover
+@enduml

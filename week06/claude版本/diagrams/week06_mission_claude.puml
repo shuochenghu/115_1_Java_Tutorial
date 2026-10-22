@@ -1,0 +1,60 @@
+@startuml
+' 第六週（claude 版本）：重構後的任務系統類別圖，與 code/teacher 一致
+skinparam classAttributeIconSize 0
+hide circle
+
+class MissionLog {
+  + {static} main(args : String[]) : void
+  ~ {static} toScript(args : String[]) : int[]
+  ~ {static} printReplay(mission : Mission) : void
+  ~ {static} printSummary(script : int[], mission : Mission) : void
+}
+class Mission {
+  - rover : Rover {readOnly}
+  - steps : ArrayList<MissionStep> {readOnly}
+  + Mission(rover : Rover)
+  + run(script : int[]) : void
+  + getOutcome() : String
+  + getStepCount() : int
+  + getStep(index : int) : MissionStep
+  + countCommands() : int[]
+  + countOk() : int
+  + countRejected() : int
+  + lowestEnergy() : int
+}
+class Rover {
+  + {static} CAPACITY : int = 20
+  + {static} TARGET_SAMPLES : int = 5
+  - energy : int
+  - samples : int
+  - actionCount : int
+  + Rover(energy : int, samples : int)
+  + getEnergy() : int
+  + getSamples() : int
+  + getActionCount() : int
+  + isSuccess() : boolean
+  + isExhausted() : boolean
+  + isStopped() : boolean
+  + execute(command : int) : String
+  - explore() : String
+  - scan() : String
+  - charge() : String
+}
+class MissionStep {
+  - command : int {readOnly}
+  - result : String {readOnly}
+  - energyAfter : int {readOnly}
+  + MissionStep(command : int, result : String, energyAfter : int)
+  + getCommand() : int
+  + getResult() : String
+  + getEnergyAfter() : int
+  + isRejected() : boolean
+  + describe() : String
+}
+
+MissionLog ..> Mission
+MissionLog ..> Rover
+MissionLog ..> MissionStep
+Mission --> "1" Rover : rover
+Mission "1" *-- "0..*" MissionStep : steps
+@enduml

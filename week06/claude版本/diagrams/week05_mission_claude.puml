@@ -1,0 +1,45 @@
+@startuml
+' 第六週（claude 版本）：第五週 claude 版程式的類別圖（重構前）
+skinparam classAttributeIconSize 0
+hide circle
+
+class MissionLog {
+  + {static} main(args : String[]) : void
+  ~ {static} toScript(args : String[]) : int[]
+  ~ {static} runMission(script : int[], rover : Rover, steps : ArrayList<MissionStep>) : String
+  ~ {static} printReplay(steps : ArrayList<MissionStep>) : void
+  ~ {static} countCommands(steps : ArrayList<MissionStep>) : int[]
+  ~ {static} printSummary(script : int[], steps : ArrayList<MissionStep>) : void
+}
+class Rover {
+  + {static} CAPACITY : int = 20
+  + {static} TARGET_SAMPLES : int = 5
+  - energy : int
+  - samples : int
+  - actionCount : int
+  + Rover(energy : int, samples : int)
+  + getEnergy() : int
+  + getSamples() : int
+  + getActionCount() : int
+  + explore() : String
+  + scan() : String
+  + charge() : String
+  + execute(command : int) : String
+  + isSuccess() : boolean
+  + isExhausted() : boolean
+}
+class MissionStep {
+  - command : int {readOnly}
+  - result : String {readOnly}
+  - energyAfter : int {readOnly}
+  + MissionStep(command : int, result : String, energyAfter : int)
+  + getCommand() : int
+  + getResult() : String
+  + getEnergyAfter() : int
+  + isRejected() : boolean
+  + describe() : String
+}
+
+MissionLog ..> Rover
+MissionLog ..> MissionStep
+@enduml

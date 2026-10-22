@@ -1,0 +1,15 @@
+@startuml
+' 第六週（claude 版本）：一個類別方框的三格。對照 code/examples/Battery.java
+skinparam classAttributeIconSize 0
+hide circle
+
+class Battery {
+  - capacity : int {readOnly}
+  - level : int
+  + Battery(capacity : int, level : int)
+  + getCapacity() : int
+  + getLevel() : int
+  + use(amount : int) : boolean
+  + charge(amount : int) : int
+}
+@enduml

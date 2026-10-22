@@ -1,0 +1,18 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+hide circle
+skinparam defaultFontName "Microsoft JhengHei"
+class SampleCase {
+  + capacity : int
+  + count : int
+  + SampleCase(capacity : int)
+  + store(amount : int) : void
+  + getCount() : int
+}
+note right of SampleCase
+  教師自編：錯誤AI建議
+  store: count += amount
+  不檢查容量與超量
+end note
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+hide circle
+skinparam defaultFontName "Microsoft JhengHei"
+left to right direction
+class MissionLog
+class Mission {
+  - rover : Rover
+  - history : ArrayList<MissionStep>
+  - returned : boolean
+}
+class Rover
+class MissionStep
+MissionLog ..> Mission
+MissionLog ..> Rover
+MissionLog ..> MissionStep
+Mission --> "1" Rover : rover
+Mission --> "0..*" MissionStep : history
+note bottom of Mission
+  責任視角：省略非重點成員
+  每次執行使用新的Mission
+end note
+@enduml

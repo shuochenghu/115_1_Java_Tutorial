@@ -1,0 +1,22 @@
+@startuml
+' 第六週（claude 版本）：聚合與組合只需認識。看程式誰 new 出部分、部分會不會被別人共用
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+
+class Flashlight
+class Battery
+class Mission
+class MissionStep
+
+Flashlight "0..*" o-- "1" Battery : battery
+note bottom of Battery
+  new Battery 在外面，
+  可以裝進兩支手電筒
+end note
+Mission "1" *-- "0..*" MissionStep : steps
+note bottom of MissionStep
+  Mission 自己 new，
+  清單不交給別人
+end note
+@enduml

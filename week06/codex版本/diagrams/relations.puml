@@ -1,0 +1,24 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+hide circle
+skinparam defaultFontName "Microsoft JhengHei"
+left to right direction
+class Lamp {
+  - battery : Battery
+  + Lamp(battery : Battery)
+  + turnOn(minutes : int) : boolean
+}
+class Battery {
+  - energy : int
+  + Battery(energy : int)
+  + getEnergy() : int
+  + use(amount : int) : boolean
+  + charge() : boolean
+}
+class Charger {
+  + refill(battery : Battery) : boolean
+}
+Lamp "0..*" --> "1" Battery : battery
+Charger ..> Battery : 參數
+@enduml

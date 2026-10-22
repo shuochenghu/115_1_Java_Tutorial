@@ -1,0 +1,13 @@
+@startuml
+' 第六週（claude 版本）：第五週程式只看類別與關係（投影片用）
+skinparam classAttributeIconSize 0
+hide circle
+hide members
+
+class MissionLog
+class Rover
+class MissionStep
+
+MissionLog ..> Rover : new, execute()
+MissionLog ..> MissionStep : new, getXxx()
+@enduml

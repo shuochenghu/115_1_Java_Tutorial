@@ -1,0 +1,17 @@
+@startuml
+' 第六週（claude 版本）：重構後只看類別與關係（投影片用）
+skinparam classAttributeIconSize 0
+hide circle
+hide members
+
+class MissionLog
+class Mission
+class Rover
+class MissionStep
+
+MissionLog ..> Mission : new, run()
+MissionLog ..> Rover : new, getXxx()
+MissionLog ..> MissionStep : describe()
+Mission --> "1" Rover : rover
+Mission "1" *-- "0..*" MissionStep : steps
+@enduml

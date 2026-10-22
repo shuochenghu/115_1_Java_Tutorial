@@ -1,0 +1,17 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+hide circle
+skinparam defaultFontName "Microsoft JhengHei"
+left to right direction
+class MissionLog {
+  + {static} main(args : String[]) : void
+  ~ {static} runMission(script : int[], energy : int, samples : int) : void
+}
+class MissionStep
+MissionLog ..> MissionStep : 區域變數history
+note bottom of MissionLog
+  第五週Codex：部分成員
+  目前狀態仍是區域變數
+end note
+@enduml

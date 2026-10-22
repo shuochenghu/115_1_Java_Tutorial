@@ -1,0 +1,16 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+hide circle
+skinparam defaultFontName "Microsoft JhengHei"
+class MissionStep {
+  - command : int
+  - energy : int
+  - result : String
+  + MissionStep(command : int, energy : int, result : String)
+  ' B2：依Java補getEnergy與isSuccessful
+}
+note bottom of MissionStep
+  B2練習：部分成員圖
+end note
+@enduml

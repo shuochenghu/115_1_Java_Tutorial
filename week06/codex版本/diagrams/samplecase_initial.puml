@@ -1,0 +1,12 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+hide circle
+skinparam defaultFontName "Microsoft JhengHei"
+class SampleCase {
+  ' E1：看模擬AI前，先寫自己的初版
+}
+note bottom of SampleCase
+  E1：先完成自己的初版設計
+end note
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+' 第六週（claude 版本）：關聯與相依。對照 code/examples 的 Flashlight、Charger、RelationDemo
+skinparam classAttributeIconSize 0
+hide circle
+
+class Battery {
+  - capacity : int {readOnly}
+  - level : int
+  + use(amount : int) : boolean
+  + charge(amount : int) : int
+}
+class Flashlight {
+  - name : String {readOnly}
+  - battery : Battery {readOnly}
+  + Flashlight(name : String, battery : Battery)
+  + getName() : String
+  + turnOn(minutes : int) : boolean
+}
+class Charger {
+  + refill(battery : Battery) : int
+}
+
+Flashlight "0..*" --> "1" Battery : battery
+Charger ..> Battery : refill(battery)
+@enduml

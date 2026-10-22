@@ -1,0 +1,23 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+hide circle
+skinparam defaultFontName "Microsoft JhengHei"
+left to right direction
+class MissionLog {
+  + {static} main(args : String[]) : void
+}
+class Mission {
+  ' D3：補三欄與run/countOk/lowestEnergy
+}
+class Rover {
+  + execute(command : int) : String
+}
+class MissionStep {
+  + getEnergy() : int
+}
+' D3：補關係與多重性
+note bottom of MissionLog
+  部分成員圖，於D3補完
+end note
+@enduml

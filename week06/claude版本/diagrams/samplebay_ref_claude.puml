@@ -1,0 +1,52 @@
+@startuml
+' 第六週（claude 版本）：樣本艙整合的參考設計（教師用）；Mission、MissionStep、MissionLog 與本週程式相同，只列出有變動的部分
+skinparam classAttributeIconSize 0
+hide circle
+
+class Mission {
+  - rover : Rover {readOnly}
+  - steps : ArrayList<MissionStep> {readOnly}
+  + run(script : int[]) : void
+  + getOutcome() : String
+}
+class Rover {
+  + {static} CAPACITY : int = 20
+  + {static} TARGET_DELIVERED : int = 5
+  - energy : int
+  - actionCount : int
+  - delivered : int
+  - bay : SampleBay {readOnly}
+  + Rover(energy : int, bayCapacity : int)
+  + getEnergy() : int
+  + getActionCount() : int
+  + getDelivered() : int
+  + getSamplesOnBoard() : int
+  + execute(command : int) : String
+  + isSuccess() : boolean
+  + isExhausted() : boolean
+  + isStopped() : boolean
+  - explore() : String
+  - scan() : String
+  - charge() : String
+  - unload() : String
+}
+class SampleBay {
+  - capacity : int {readOnly}
+  - count : int
+  + SampleBay(capacity : int)
+  + getCapacity() : int
+  + getCount() : int
+  + getFreeSpace() : int
+  + store(amount : int) : boolean
+  + unload() : int
+}
+class MissionStep {
+  - command : int {readOnly}
+  - result : String {readOnly}
+  - energyAfter : int {readOnly}
+}
+
+Mission --> "1" Rover : rover
+Mission "1" *-- "0..*" MissionStep : steps
+Rover "1" *-- "1" SampleBay : bay
+@enduml

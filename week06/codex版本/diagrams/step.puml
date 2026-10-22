@@ -1,0 +1,16 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+hide circle
+skinparam defaultFontName "Microsoft JhengHei"
+class MissionStep {
+  - command : int
+  - energy : int
+  - result : String
+  + MissionStep(command : int, energy : int, result : String)
+  + getCommand() : int
+  + getEnergy() : int
+  + getResult() : String
+  + isSuccessful() : boolean
+}
+@enduml

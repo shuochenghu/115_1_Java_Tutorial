@@ -1,0 +1,22 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+hide circle
+skinparam defaultFontName "Microsoft JhengHei"
+class SampleCase {
+  - capacity : int
+  - count : int
+  + SampleCase(capacity : int)
+  + getCapacity() : int
+  + getCount() : int
+  + getFreeSpace() : int
+  + store(amount : int) : boolean
+  + unload() : int
+}
+note right of SampleCase
+  容量建構時修正到1..8
+  初始空盒
+  非正數或超量整批拒絕
+  拒絕時存量不變
+end note
+@enduml

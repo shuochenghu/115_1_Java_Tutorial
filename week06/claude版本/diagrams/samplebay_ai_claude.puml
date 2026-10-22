@@ -1,0 +1,38 @@
+@startuml
+' 第六週（claude 版本）：教師設計的「模擬 AI 回覆」類別圖，刻意含有設計問題，不是真實 AI 對話
+skinparam classAttributeIconSize 0
+hide circle
+left to right direction
+
+class Mission {
+  - rover : Rover
+  - steps : ArrayList<MissionStep>
+  + run(script : int[]) : void
+  + getSteps() : ArrayList<MissionStep>
+  + getOutcome() : String
+}
+class Rover {
+  - energy : int
+  - samples : int
+  - actionCount : int
+  + execute(command : int) : String
+  + unload() : String
+  + isSuccess() : boolean
+}
+class SampleBay {
+  - capacity : int
+  + count : int
+  + store(amount : int) : boolean
+  + explore() : String
+}
+class MissionStep {
+  - command : int
+  - result : String
+  - rover : Rover
+}
+
+Mission --> "1" Rover
+Mission --> "0..*" MissionStep
+Rover "1" --> "0..*" SampleBay : bays
+MissionStep --> Rover
+@enduml

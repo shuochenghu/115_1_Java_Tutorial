@@ -1,0 +1,29 @@
+@startuml
+' 第七週作業（claude 版本）：社團器材的繼承。學生依這張圖寫 Camera、Projector。
+skinparam classAttributeIconSize 0
+hide circle
+
+class Equipment {
+  - id : String {readOnly}
+  - name : String {readOnly}
+  + Equipment(id : String, name : String)
+  + getId() : String
+  + getName() : String
+  + getLabel() : String
+}
+class Camera {
+  - memoryCards : int {readOnly}
+  + Camera(id : String, name : String, memoryCards : int)
+  + getMemoryCards() : int
+  + checklist() : String
+}
+class Projector {
+  - needsScreen : boolean {readOnly}
+  + Projector(id : String, name : String, needsScreen : boolean)
+  + needsScreen() : boolean
+  + checklist() : String
+}
+
+Equipment <|-- Camera
+Equipment <|-- Projector
+@enduml

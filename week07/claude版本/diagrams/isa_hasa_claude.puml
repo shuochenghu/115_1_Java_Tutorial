@@ -1,0 +1,19 @@
+@startuml
+' 第七週（claude 版本）：is-a（繼承）與 has-a（欄位關聯）的對照。
+skinparam classAttributeIconSize 0
+hide circle
+hide members
+
+class Member
+class VipMember
+class Rover
+class HeavyRover
+class Flashlight
+class Battery
+class Mission
+
+Member <|-- VipMember : is-a
+Rover <|-- HeavyRover : is-a
+Flashlight --> "1" Battery : has-a
+Mission --> "1" Rover : has-a
+@enduml

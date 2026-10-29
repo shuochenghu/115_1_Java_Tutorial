@@ -1,0 +1,37 @@
+@startuml
+' 第七週（claude 版本）：Rover 與 HeavyRover 的完整類別圖。# 是 protected。
+skinparam classAttributeIconSize 0
+hide circle
+
+class Rover {
+  + {static} CAPACITY : int = 20
+  + {static} TARGET_SAMPLES : int = 5
+  - energy : int
+  - samples : int
+  - actionCount : int
+  + Rover(energy : int, samples : int)
+  + getEnergy() : int
+  + getSamples() : int
+  + getActionCount() : int
+  + isSuccess() : boolean
+  + isExhausted() : boolean
+  + isStopped() : boolean
+  + execute(command : int) : String
+  # spendEnergy(amount : int) : boolean
+  # addSamples(amount : int) : void
+  # countAction() : void
+  - explore() : String
+  - scan() : String
+  - charge() : String
+}
+class HeavyRover {
+  + {static} DRILL_COST : int = 8
+  + {static} DRILL_YIELD : int = 3
+  - drillCount : int
+  + HeavyRover(energy : int, samples : int)
+  + getDrillCount() : int
+  + drill() : String
+}
+
+Rover <|-- HeavyRover
+@enduml

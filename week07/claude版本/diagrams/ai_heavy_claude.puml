@@ -1,0 +1,31 @@
+@startuml
+' 第七週（claude 版本）：模擬 AI 寫的 HeavyRover（刻意含錯，不是參考答案）。子類別又宣告了一份 energy、samples。
+skinparam classAttributeIconSize 0
+hide circle
+left to right direction
+
+class Rover {
+  - energy : int
+  - samples : int
+  - actionCount : int
+  + Rover(energy : int, samples : int)
+  + getEnergy() : int
+  + getSamples() : int
+  + isStopped() : boolean
+  + execute(command : int) : String
+}
+class "HeavyRover（模擬 AI）" as HeavyRover {
+  - energy : int
+  - samples : int
+  - drillCount : int
+  + HeavyRover(energy : int, samples : int)
+  + getDrillCount() : int
+  + drill() : String
+}
+
+Rover <|-- HeavyRover
+note right of HeavyRover
+  drill() 改的是這裡的 energy、samples；
+  getEnergy() 讀的是 Rover 裡的那一份
+end note
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+' 第七週（claude 版本）：投影片用的節錄圖，只列本週相關的成員；完整圖見 heavy_claude.puml。
+skinparam classAttributeIconSize 0
+hide circle
+left to right direction
+
+class Rover {
+  - energy : int
+  - samples : int
+  - actionCount : int
+  + Rover(energy : int, samples : int)
+  + getEnergy() : int
+  + isStopped() : boolean
+  + execute(command : int) : String
+  # spendEnergy(amount : int) : boolean
+  # addSamples(amount : int) : void
+  # countAction() : void
+  - explore() : String
+}
+class HeavyRover {
+  + {static} DRILL_COST : int = 8
+  + {static} DRILL_YIELD : int = 3
+  - drillCount : int
+  + HeavyRover(energy : int, samples : int)
+  + getDrillCount() : int
+  + drill() : String
+}
+
+Rover <|-- HeavyRover
+note "其餘 getter、scan、charge、常數省略" as N1
+@enduml

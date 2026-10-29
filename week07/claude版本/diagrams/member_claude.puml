@@ -1,0 +1,31 @@
+@startuml
+' 第七週（claude 版本）：Member 與 VipMember。空心三角形箭頭指向父類別。
+skinparam classAttributeIconSize 0
+hide circle
+
+class Member {
+  - id : String {readOnly}
+  - name : String {readOnly}
+  - points : int
+  + Member(id : String, name : String)
+  + getId() : String
+  + getName() : String
+  + getPoints() : int
+  + buy(price : int) : int
+  # addPoints(amount : int) : void
+  + describe() : String
+}
+class VipMember {
+  + {static} BONUS : int = 20
+  - bonusCount : int
+  + VipMember(id : String, name : String)
+  + getBonusCount() : int
+  + claimBonus() : int
+}
+
+Member <|-- VipMember
+note right of VipMember
+  只列出「新增」的成員；
+  繼承來的不再寫一次
+end note
+@enduml

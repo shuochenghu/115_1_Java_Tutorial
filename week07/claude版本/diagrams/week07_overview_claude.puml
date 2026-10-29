@@ -1,0 +1,21 @@
+@startuml
+' 第七週（claude 版本）：任務系統總覽，只畫類別名稱與關係。本週新增 HeavyRover、HeavyRoverTry。
+skinparam classAttributeIconSize 0
+hide circle
+hide members
+
+class MissionLog
+class Mission
+class Rover
+class MissionStep
+class HeavyRover
+class HeavyRoverTry
+
+MissionLog ..> Mission
+MissionLog ..> Rover
+MissionLog ..> MissionStep
+Mission --> "1" Rover : rover
+Mission *-- "0..*" MissionStep : steps
+Rover <|-- HeavyRover
+HeavyRoverTry ..> HeavyRover
+@enduml

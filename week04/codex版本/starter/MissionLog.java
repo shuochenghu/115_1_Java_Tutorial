@@ -5,7 +5,7 @@ import java.util.Collections;
 // 同一任務規則，只新增逐筆保存；目前狀態維持具名變數，方便銜接第三週。
 public class MissionLog {
     public static void main(String[] args) {
-        int[] script = {1, 1, 2};
+        int[] script = {1, 1, 2}; // 探索 → 探索 → 掃描。
         runMission(script, 20, 0);
     }
 
@@ -22,7 +22,7 @@ public class MissionLog {
             int command = script[i];
             String result;
             switch (command) {
-                case 1:
+                case 1: // 指令 1：探索，消耗 6 格能源，取得 2 份樣本。
                     if (energy >= 6) {
                         energy -= 6;
                         samples += 2;
@@ -32,7 +32,7 @@ public class MissionLog {
                         result = "NOT_ENOUGH_ENERGY";
                     }
                     break;
-                case 2:
+                case 2: // 指令 2：掃描，消耗 2 格能源，取得 1 份樣本。
                     if (energy >= 2) {
                         energy -= 2;
                         samples++;
@@ -42,7 +42,7 @@ public class MissionLog {
                         result = "NOT_ENOUGH_ENERGY";
                     }
                     break;
-                case 3:
+                case 3: // 指令 3：充電，增加 5 格能源，最多 20 格；已滿時拒絕充電。
                     if (energy < 20) {
                         energy += 5;
                         if (energy > 20) {
@@ -54,11 +54,11 @@ public class MissionLog {
                         result = "ALREADY_FULL";
                     }
                     break;
-                case 0:
+                case 0: // 指令 0：返回，停止讀取後續指令，不增加成功行動次數。
                     running = false;
                     result = "RETURN";
                     break;
-                default:
+                default: // 其他整數：無效指令，不改變能源、樣本或成功行動次數。
                     result = "UNKNOWN_COMMAND";
                     break;
             }

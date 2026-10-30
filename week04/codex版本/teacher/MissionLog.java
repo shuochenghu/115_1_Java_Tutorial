@@ -5,7 +5,7 @@ import java.util.Collections;
 // 同一任務規則，只新增逐筆保存；目前狀態維持具名變數，方便銜接第三週。
 public class MissionLog {
     public static void main(String[] args) {
-        int[] script = {1, 1, 2};
+        int[] script = {1, 1, 2}; // 探索 → 探索 → 掃描。
         runMission(script, 20, 0);
     }
 
@@ -22,7 +22,7 @@ public class MissionLog {
             int command = script[i];
             String result;
             switch (command) {
-                case 1:
+                case 1: // 指令 1：探索，消耗 6 格能源，取得 2 份樣本。
                     if (energy >= 6) {
                         energy -= 6;
                         samples += 2;
@@ -32,7 +32,7 @@ public class MissionLog {
                         result = "NOT_ENOUGH_ENERGY";
                     }
                     break;
-                case 2:
+                case 2: // 指令 2：掃描，消耗 2 格能源，取得 1 份樣本。
                     if (energy >= 2) {
                         energy -= 2;
                         samples++;
@@ -42,7 +42,7 @@ public class MissionLog {
                         result = "NOT_ENOUGH_ENERGY";
                     }
                     break;
-                case 3:
+                case 3: // 指令 3：充電，增加 5 格能源，最多 20 格；已滿時拒絕充電。
                     if (energy < 20) {
                         energy += 5;
                         if (energy > 20) {
@@ -54,14 +54,15 @@ public class MissionLog {
                         result = "ALREADY_FULL";
                     }
                     break;
-                case 0:
+                case 0: // 指令 0：返回，停止讀取後續指令，不增加成功行動次數。
                     running = false;
                     result = "RETURN";
                     break;
-                default:
+                default: // 其他整數：無效指令，不改變能源、樣本或成功行動次數。
                     result = "UNKNOWN_COMMAND";
                     break;
             }
+            // 對應學生版 TODO 2：把 command、energy、result 加到對應清單。
             // 同一步三欄一起新增，包含拒絕與返回；能源記錄行動執行後的值。
             commandLog.add(command);
             energyLog.add(energy);
@@ -89,6 +90,7 @@ public class MissionLog {
 
     static int[] countCommands(ArrayList<Integer> commandLog) {
         int[] counts = new int[4];
+        // 對應學生版 TODO 1：走訪 commandLog，計數 0–3 的指令。
         // 日誌包含無效指令，先檢查範圍再用作索引。
         for (int command : commandLog) {
             if (command >= 0 && command < counts.length) {
@@ -101,6 +103,7 @@ public class MissionLog {
     static void printReplay(ArrayList<Integer> commandLog, ArrayList<Integer> energyLog,
             ArrayList<String> resultLog) {
         System.out.println("=== replay ===");
+        // 對應學生版 TODO 3：用相同索引讀取三條清單，依序回放每一步。
         for (int i = 0; i < commandLog.size(); i++) {
             System.out.println("step " + (i + 1) + ": command=" + commandLog.get(i)
                     + ", result=" + resultLog.get(i) + ", energy=" + energyLog.get(i));
@@ -109,6 +112,7 @@ public class MissionLog {
 
     static void printSummary(int scriptLength, ArrayList<Integer> energyLog,
             ArrayList<String> resultLog) {
+        // 對應學生版 TODO 4：用 frequency 計算 OK、RETURN，印出 steps、ok、rejected、ignored。
         int ok = Collections.frequency(resultLog, "OK");
         int returned = Collections.frequency(resultLog, "RETURN");
         int steps = resultLog.size();
@@ -116,6 +120,7 @@ public class MissionLog {
         int ignored = scriptLength - steps;
         System.out.println("steps=" + steps + ", ok=" + ok
                 + ", rejected=" + rejected + ", ignored=" + ignored);
+        // 對應學生版 TODO 5：先判斷空清單；空清單印 N/A，否則用 min 印出最低能源。
         // 空清單沒有最小值；這裡只統計每一步結束後的能源，不含初始能源。
         if (energyLog.isEmpty()) {
             System.out.println("lowest energy=N/A");

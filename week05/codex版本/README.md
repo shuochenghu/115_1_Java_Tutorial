@@ -32,6 +32,8 @@
 | [verification.md](verification.md) | 本次實測、版本及限制 |
 | [tools/README.md](tools/README.md) | 教師維護與驗證方式 |
 
+投影片上方僅標示該頁對應的 `.java` 檔案；沒有對應程式的頁面不加標示。路徑以本週教材目錄為起點，學生複製到自己的 src 後開啟同名檔案；teacher 程式仍是教師示範或參考，不放入學生 src。
+
 ## 學生操作
 
 無本機副本時 clone；已有副本先保存，再 Fetch／Pull。沿用學期 repo，在 `115_1_Java/YYYY_MM_DD/java-05/src/` 放 examples 六個 Java 檔及 starter 兩個檔案，日期以實際上課日替換。LAB_REPORT.md、AI_USAGE.md 放當日日期目錄，專案 README 放 java-05。不要另建巢狀 repo，也不要加入 teacher 同名檔案。

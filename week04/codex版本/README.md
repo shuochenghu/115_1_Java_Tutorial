@@ -21,13 +21,15 @@
 | [AI_USAGE_template.md](AI_USAGE_template.md) | 四欄精簡紀錄與虛構填寫範例 |
 | [examples/README.md](examples/README.md) | 五個核心示範與一個選讀範例 |
 | [starter/MissionLog.java](starter/MissionLog.java) | 可編譯的學生骨架，五個 TODO |
-| [teacher/MissionLog.java](teacher/MissionLog.java) | 完整解答，無 TODO |
+| [teacher/MissionLog.java](teacher/MissionLog.java) | 完整解答，以註解標示學生版 TODO 1–5 的對應位置 |
 | [teacher/FixedScriptMission.java](teacher/FixedScriptMission.java) | 教師固定初始狀態觀察工具 |
 | [teacher/MissionLogCheck.java](teacher/MissionLogCheck.java) | 教師輸出比對工具，不是學生 JUnit 作業 |
 | [handoff.md](handoff.md) | 第三→四→五週能力與資料契約 |
 | [verification.md](verification.md) | 實際驗證、使用版本與限制 |
 
 ## 學生操作
+
+投影片上方僅標示該頁對應的 `.java` 檔案；沒有對應程式的頁面不加標示。路徑以本週教材目錄為起點，學生複製到自己的 src 後開啟同名檔案；teacher 程式仍是教師示範或參考，不放入學生 src。
 
 無本機 repo 時 clone；已有副本先保存再 Fetch／Pull。在學期 repo `115_1_Java/YYYY_MM_DD/java-04/src/` 放五個核心 examples 與 **starter** 的 MissionLog.java；日期以實際上課日替換。不要另建巢狀 repo，不要把同名 teacher 放進 src。
 

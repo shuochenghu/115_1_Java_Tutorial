@@ -17,7 +17,7 @@
 
 | 檔案 | 用途 |
 |---|---|
-| [投影片 Markdown](week05_slides_codex.md)／[HTML](week05_slides_codex.html) | Marp 16:9，附講者備註與範例檔案位置 |
+| [投影片 Markdown](week05_slides_codex.md)／[HTML](week05_slides_codex.html) | Marp 16:9，共47頁，附講者備註與Java檔案位置 |
 | [student_lab.md](student_lab.md) | A–H 可填講義，另存 LAB_REPORT.md |
 | [assignment.md](assignment.md) | 必做／延伸、案例、繳交與評分 |
 | [teacher_notes.md](teacher_notes.md) | 150 分鐘節奏、逐題答案、示範與診斷 |

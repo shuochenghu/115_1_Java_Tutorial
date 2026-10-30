@@ -80,6 +80,7 @@ AI 協作：從需求寫出可驗證的類別設計
 <!-- 教師提示：A暖身。初始能源20、樣本0。這是刻意假設漏加的錯誤，不是提供的正確答案自帶此錯誤；starter尚有TODO。正常三條清單是[1,1,2]、[14,8,6]、[OK,OK,OK]；漏記後energyLog變[14,6]。相同索引1會錯配6，索引2讀能源會拋出IndexOutOfBoundsException。MissionStep讓同一步三欄一起交付，仍須由呼叫端傳正確值、每步建立並新增，不能宣稱使用物件便不會漏記。 -->
 
 ---
+<!-- _class: small -->
 ## 本週的改造範圍
 
 <p class="slide-ref" data-slide="3">對應程式：<code>starter/MissionStep.java</code>、<code>starter/MissionLog.java</code></p>
@@ -92,6 +93,7 @@ AI 協作：從需求寫出可驗證的類別設計
 **完成後：每筆記錄資料獨立，同一路線輸出與第四週一致。**
 
 目前狀態仍用 energy、samples、actionCount。
+指令沿用：0返回、1探索、2掃描、3充電；其他整數為無效。
 
 <!-- 教師提示：這次只集中改資料表示。完整Rover設計可到下週再討論。 -->
 
@@ -115,16 +117,21 @@ AI 協作：從需求寫出可驗證的類別設計
 
 | 活動 | main 入口 | 合作的類別 |
 |---|---|---|
-| B | examples/CreateStepDemo.java | examples/StepCard.java |
-| C | examples/BatteryDemo.java | examples/RoverBattery.java |
-| D1 | examples/ReferenceDemo.java | examples/RoverBattery.java |
-| D2–D3 | examples/SnapshotDemo.java | examples/StepCard.java<br>examples/RoverBattery.java |
-| E | starter/MissionLog.java | starter/MissionStep.java |
+| B 類別／建構 | examples/CreateStepDemo.java | examples/StepCard.java |
+| C 封裝 | examples/BatteryDemo.java | examples/RoverBattery.java |
+| D1 參考 | examples/ReferenceDemo.java | examples/RoverBattery.java |
+| D2–D3 快照 | examples/SnapshotDemo.java | examples/StepCard.java<br>examples/RoverBattery.java |
+| E 主作業 | starter/MissionLog.java | starter/MissionStep.java |
 
-同一列檔案要一起編譯，執行 main 所在的類別。
+把表中八個Java檔複製到同一src；終端機開在學生java-05目錄：
 
-路徑從本週教材目錄起算；複製到學生 src 後使用同名檔。
-基本兩檔先用 VS Code，三檔合作再加入 IDEA。
+```powershell
+javac -encoding UTF-8 -d out src/*.java
+java -cp out CreateStepDemo
+```
+
+執行時只寫main入口的類別名，不加.java；換活動就換該名稱。
+先用VS Code，三檔快照範例再加入IDEA；teacher同名檔不放src。
 
 <!-- 教師提示：examples共六個檔案、四個main入口。每次選定main，不執行純資料類別。 -->
 
@@ -156,9 +163,11 @@ StepCard first = new StepCard(1, 14);
 
 | 片段 | 角色 |
 |---|---|
-| StepCard | 變數的型態，定義資料與操作 |
-| new StepCard(1,14) | 建立物件並呼叫建構子 |
-| first | 保存參考值，指向建立的物件 |
+| StepCard | 類別：規定欄位與方法，也是變數的型態 |
+| new StepCard(1,14) | 建立物件：依類別建立一份資料，欄位為1與14 |
+| first | 參考變數：透過它找到並使用那個物件 |
+
+只宣告 `StepCard first;` 尚未建立物件；右側的new才會建立。
 
 <!-- 教師提示：B1。先追蹤右側建立，再看指定。只宣告StepCard first不會建立StepCard物件。 -->
 
@@ -175,6 +184,7 @@ public class StepCard {
 }
 ```
 
+欄位宣告在class內、方法外；private限制直接存取的位置。
 command 記指令編號；energy 記該步行動後的能源。
 每個物件有自己的欄位，建構結束後資料仍保留。
 
@@ -196,6 +206,7 @@ public StepCard(int command, int energy) {
 
 呼叫 `new StepCard(1, 14)` 時，參數先收到1與14，
 再存入新物件的 command 與 energy 欄位。
+建構子只保存傳入值；不會因command=1就自動探索或扣電。
 
 <!-- 教師提示：B1。刻意加void會變普通方法。這裡先處理合法引數，完整違約防護留後續。 -->
 
@@ -218,10 +229,12 @@ this.energy = energy;
 <!-- 教師提示：預設int欄位為0。不要把this講成全域變數或目前類別本身；它指目前實例。 -->
 
 ---
+<!-- _class: small -->
 ## getter 讓呼叫端讀取資料
 
 <p class="slide-ref" data-slide="11">對應程式：<code>examples/StepCard.java</code>、<code>examples/CreateStepDemo.java</code></p>
 
+public＝其他類別可呼叫；int＝回傳整數；空括號＝不需要參數。
 StepCard 內定義查詢方法：
 
 ```java
@@ -238,7 +251,7 @@ System.out.println("first=" + first.getCommand()
 ```
 
 getEnergy 回傳14，與指令1組成輸出 first=1/14。
-getter 只回傳資料；由 main 決定如何顯示。
+getter是一般查詢方法的命名慣例；只回傳資料，由main決定如何顯示。
 
 <!-- 教師提示：getter是一般方法的命名慣例。C#屬性語法不直接移植為Java；沿用方法參數/回傳的理解。 -->
 
@@ -256,6 +269,8 @@ StepCard second = new StepCard(2, 12);
 |---|---|
 | first | 1／14 |
 | second | 2／12 |
+
+即使兩次都用相同參數new，也會建立不同物件；內容相同不代表同一物件。
 
 <!-- 教師提示：B2，先預測再執行。第二次建立後再讀第一次，確認資料獨立。 -->
 
@@ -312,9 +327,13 @@ energy 是 private，外部透過方法改變能源。
 <!-- 教師提示：C。private加上受控方法才讓規則集中；不能說private會自動驗證範圍。 -->
 
 ---
+<!-- _class: small -->
 ## 封裝驗證：拒絕時不變，充電時封頂
 
 <p class="slide-ref" data-slide="16">對應程式：<code>examples/BatteryDemo.java</code>、<code>examples/RoverBattery.java</code></p>
+
+先預測，再執行BatteryDemo核對。合法初始能源為0～20；
+充電加5、上限20，已滿電就回傳false且不改值。
 
 | 起點／操作 | 回傳值 | 能源 |
 |---|---|---:|
@@ -329,6 +348,7 @@ energy 是 private，外部透過方法改變能源。
 <!-- 教師提示：先遮住答案讓學生預測。建構前提0..20；電池類別沒有任務終止概念。 -->
 
 ---
+<!-- _class: small -->
 ## 目前狀態與歷史資料有不同需求
 
 <p class="slide-ref" data-slide="17">對應程式：<code>examples/RoverBattery.java</code>、<code>examples/StepCard.java</code>、<code>starter/MissionStep.java</code></p>
@@ -341,7 +361,8 @@ energy 是 private，外部透過方法改變能源。
 例如電池由14充到19，先前記錄的14仍應保留。
 所以歷史類別只提供讀取，不提供改值的 setter。
 
-history 可以繼續 add 新記錄；已存的舊記錄不跟著電池改變。
+history可以繼續add，舊記錄仍保留原值。
+RoverBattery只管電池，所以能源0仍可充電；MissionLog的任務能源0已停止。
 
 <!-- 教師提示：沒有setter是此需求的選擇，不是所有類別都禁setter。私有欄位仍需正確建構契約。 -->
 
@@ -362,6 +383,7 @@ history 可以繼續 add 新記錄；已存的舊記錄不跟著電池改變。
 <!-- 教師提示：講義C1。比較的是類別欄位，避免與最外層類別混淆。教師副本省略private後可編譯並改99；隨即恢復。 -->
 
 ---
+<!-- _class: small -->
 ## static 與實例成員
 
 <p class="slide-ref" data-slide="19">對應程式：<code>starter/MissionLog.java</code>、<code>starter/MissionStep.java</code></p>
@@ -370,10 +392,9 @@ static 成員屬於類別；實例成員屬於某個物件。
 
 | 成員 | 本週用途 |
 |---|---|
-| static main | 啟動流程 |
-| static 工具方法 | 由參數處理回放與摘要 |
-| 實例欄位 | 各筆記錄保存自己的資料 |
-| 實例方法 | 查詢該筆記錄，或改變該電池 |
+| static main／工具方法 | 不必先new MissionLog；由參數推進流程或算報表 |
+| 實例欄位command／energy／result | 每個new MissionStep各自保存一份 |
+| 實例方法getEnergy | 用first.getEnergy()指定要讀哪筆記錄 |
 
 實例欄位：第一筆保留14、第二筆保留12。
 若 energy 改成 static，兩個物件會共用同一欄位，後寫的值會覆蓋前值。
@@ -394,7 +415,8 @@ alias.explore();
 
 first 與 alias 共同看見14，other 仍為20。
 
-`==` 可檢查此處的參考是否相同。
+`first == alias` 為true；`first == other` 為false。
+兩個變數可以共用一個物件；兩次new則建立兩個物件。
 
 <!-- 教師提示：請學生畫first、alias連到同一物件，other另連一個。不要用數值相同推論同物件。 -->
 
@@ -496,6 +518,7 @@ MissionStep 只保存／查詢傳入資料；耗電與停止判斷仍由 Mission
 <!-- 教師提示：由需求推設計而非先把名詞都變類別。完整防護不在本週必做。 -->
 
 ---
+<!-- _class: small -->
 ## 完成 MissionStep：建構、讀值、判斷成功
 
 <p class="slide-ref" data-slide="26">對應程式：<code>starter/MissionStep.java</code></p>
@@ -506,6 +529,7 @@ MissionStep 只保存／查詢傳入資料；耗電與停止判斷仍由 Mission
 | 2 | getCommand／getEnergy／getResult | 各回傳本物件的對應欄位 |
 | 3 | isSuccessful：內容為OK才回傳true | new String("OK")也應為true |
 
+isSuccessful只判斷**當步result是否為OK**，不代表整個任務已收集5份樣本。
 三個欄位已提供；完成TODO 1–3後，先用下一頁查詢驗證，
 再處理 MissionLog 的TODO 4–6。getter不印報表。
 
@@ -537,30 +561,57 @@ MissionStep second =
 <!-- 教師提示：若first變成second的值，查static；OK卻false，查==。new String只用於內容比較反例。 -->
 
 ---
-## 每步建立物件，三條清單改成一條
+<!-- _class: small -->
+## TODO 4：行動後才建立並加入記錄
 
 <p class="slide-ref" data-slide="28">對應程式：<code>starter/MissionLog.java</code></p>
 
-runMission 的 history 已宣告；本頁要填的是 switch 後的TODO 4：
+runMission開頭已提供 `ArrayList<MissionStep> history`，不用重複宣告。
+
+1. switch先執行指令，算出這一步的energy與result。
+2. 在switch之後、當輪結束前的TODO 4，建立新記錄並加入history：
 
 ```java
-ArrayList<MissionStep> history = new ArrayList<>();
-```
-
-```java
-// switch 完成，取得本步的實際結果後
 history.add(new MissionStep(command, energy, result));
 ```
 
-例：首次探索完成後，新增一筆 `(1, 14, "OK")`。
-每筆已讀指令都記，包含拒絕、無效及返回；停止後的指令不讀也不記。
+例如首次探索後，這筆記錄是command=1、energy=14、result="OK"。
+包含拒絕、無效及返回，每筆已讀指令都要新增；停止後的指令不讀也不記。
 
-<!-- 教師提示：若放在switch前，能源早一步；若只在OK分支add，摘要與counts會改變。 -->
+必須放在switch後：此時result才有值，energy才是該步行動後的能源。
+
+<!-- 教師提示：直接搬到switch前，result尚未指定會編譯失敗；即使另填占位值，也還不是本步的實際結果。若只在OK分支add，摘要與counts會改變。 -->
+
+---
+<!-- _class: small -->
+## new建立記錄，add保存參考，get取回物件參考
+
+<p class="slide-ref" data-slide="29">對應程式：<code>starter/MissionStep.java</code>、<code>starter/MissionLog.java</code></p>
+
+`ArrayList<MissionStep>` 表示清單元素的型態是MissionStep；清單不會自動建立記錄。
+
+| 操作 | 實際做的事 |
+|---|---|
+| new MissionStep(...) | 建立一個新記錄，存入當步三欄 |
+| history.add(...) | 把該物件的參考放到清單尾端 |
+| history.get(i) | 取回索引i處的參考，指向原物件，不會再new |
+
+以路線{1,1,2}前兩步為例，完成TODO 4後：
+
+| 索引 | 取回的記錄內容 |
+|---|---|
+| 0 | command=1、energy=14、result=OK |
+| 1 | command=1、energy=8、result=OK |
+
+讀第1筆：`history.get(0).getEnergy()` 得14。
+先get找到物件，再getEnergy讀它的欄位；每步new不同物件才能保存各步資料。
+
+<!-- 教師提示：本頁只解釋既有TODO 4及清單用法，不增加TODO。add只存參考，不是複製物件；建立空ArrayList也不會生成MissionStep。後面錯存同一電池的反例可回扣本頁。 -->
 
 ---
 ## TODO 5：先取物件，再讀欄位
 
-<p class="slide-ref" data-slide="29">對應程式：<code>starter/MissionLog.java</code></p>
+<p class="slide-ref" data-slide="30">對應程式：<code>starter/MissionLog.java</code></p>
 
 ```java
 MissionStep step = history.get(i);
@@ -582,7 +633,7 @@ step 1: command=1, result=OK, energy=14
 <!-- _class: small -->
 ## TODO 6：由物件查詢做摘要
 
-<p class="slide-ref" data-slide="30">對應程式：<code>starter/MissionLog.java</code></p>
+<p class="slide-ref" data-slide="31">對應程式：<code>starter/MissionLog.java</code></p>
 
 ```java
 for (MissionStep step : history) {
@@ -598,6 +649,7 @@ for (MissionStep step : history) {
 steps 是 history.size()；rejected＝steps−ok−returned。
 例 `{3,9,0}`：已滿電拒絕、無效、返回，得到 steps=3、ok=0、returned=1，
 所以 rejected=2。RETURN 單獨計，不算成功也不算拒絕。
+ignored＝script.length−steps；例如 `{1,1,1,1}` 第3筆達標，未讀的1筆就是ignored。
 
 <!-- 教師提示：RETURN不是成功也不是拒絕。ignored仍為script.length-steps。 -->
 
@@ -605,7 +657,7 @@ steps 是 history.size()；rejected＝steps−ok−returned。
 <!-- _class: small -->
 ## 求最低能源：讀值後比較
 
-<p class="slide-ref" data-slide="31">對應程式：<code>starter/MissionLog.java</code></p>
+<p class="slide-ref" data-slide="32">對應程式：<code>starter/MissionLog.java</code></p>
 
 清單裝的是 MissionStep，不是整數；先讀 getEnergy，再比較大小。
 
@@ -624,9 +676,10 @@ for (MissionStep step : history) {
 <!-- 教師提示：這段支援碼已提供。不能直接用min(history)，MissionStep尚未定義比較順序。 -->
 
 ---
+<!-- _class: small -->
 ## 先驗證成功與返回兩條核心路線
 
-<p class="slide-ref" data-slide="32">對應程式：<code>starter/MissionLog.java</code></p>
+<p class="slide-ref" data-slide="33">對應程式：<code>starter/MissionLog.java</code></p>
 
 每次從energy=20、samples=0獨立執行；改main的script後重新編譯。
 終態三個數字依序為**能源／樣本／成功行動數**。
@@ -636,7 +689,8 @@ for (MissionStep step : history) {
 | {1,1,2} | 6/5/3 SUCCESS | 能源14、8、6 |
 | {3,9,0} | 20/0/0 RETURNED | 拒絕、無效、返回都保存 |
 
-除了終態，還要核對回放、指令次數counts、摘要與最低能源。
+counts統計已讀合法指令，包含被拒絕者；actionCount只算成功行動。
+還要核對回放、摘要與最低能源，不能只看最後的SUCCESS。
 這兩條路線的最低能源為6／20，battery百分比為30.0／100.0。
 
 完整六條路線見講義E3與作業，課後補齊本人實測。
@@ -647,7 +701,7 @@ for (MissionStep step : history) {
 <!-- _class: small -->
 ## 教師示範：改初始狀態，檢查停止邊界
 
-<p class="slide-ref" data-slide="33">對應程式：<code>teacher/FixedScriptMission.java</code>、<code>teacher/MissionLogCheck.java</code></p>
+<p class="slide-ref" data-slide="34">對應程式：<code>teacher/FixedScriptMission.java</code>、<code>teacher/MissionLogCheck.java</code></p>
 
 在本週教材 `week05/codex版本` 目錄執行：
 
@@ -658,17 +712,42 @@ java -cp out-teacher FixedScriptMission 2 4 2
 
 參數依序是初始能源2、樣本4、掃描指令2。
 
-| 初始 energy/samples；script | 預期 |
-|---|---|
-| 2/4；{2} | 同時耗盡與達標，SUCCESS |
-| 0/0；{3,1} | EXHAUSTED，零筆日誌 |
-| 20/5；{1} | SUCCESS，零筆日誌 |
-| 20/0；{} | UNFINISHED、最低值N/A |
+| 初始狀態；script | 類別名後接的參數 | 預期 |
+|---|---|---|
+| 2/4；{2} | 2 4 2 | SUCCESS，1筆日誌 |
+| 0/0；{3,1} | 0 0 3 1 | EXHAUSTED，零筆 |
+| 20/5；{1} | 20 5 1 | SUCCESS，零筆 |
+| 20/0；{} | 20 0 | UNFINISHED、最低值N/A |
 
 判斷重點：達標優先於耗盡；初始已停止就不讀指令。
 教師操作工具，學生記錄終態與日誌筆數。
 
 <!-- 教師提示：這是教師支援工具，不要求學生另寫命令列介面。四列依序執行FixedScriptMission 2 4 2、0 0 3 1、20 5 1、20 0；空腳本只傳兩個初始值。第一列應為0/5/1 SUCCESS、1筆日誌、最低能源0；初始已停止兩列都為零筆。教師回歸工具另執行java -cp out-teacher MissionLogCheck；不把電池charge規則套成任務可復活。 -->
+
+---
+<!-- _class: small -->
+## 教師檢查工具：物件資料與任務輸出分開驗證
+
+<p class="slide-ref" data-slide="35">對應程式：<code>teacher/MissionStepCheck.java</code>、<code>teacher/MissionLogCheck.java</code></p>
+
+在本週教材 `week05/codex版本` 目錄執行，與學生src分開：
+
+```powershell
+javac -encoding UTF-8 -d out-teacher teacher/*.java
+java -cp out-teacher MissionStepCheck
+java -cp out-teacher MissionLogCheck
+```
+
+| 工具 | 要檢查什麼 | 通過時最後一行 |
+|---|---|---|
+| MissionStepCheck | 欄位讀值、物件獨立、內容比較與快照 | 8/8 object checks passed |
+| MissionLogCheck | 15組任務的完整輸出與邊界 | 15/15 passed |
+
+FixedScriptMission是「指定一組初始狀態並顯示結果」；Check是「比對預先寫好的期望」。
+上面驗證的是teacher答案，不能當作學生src已完成的證據；學生仍須本人測試與記錄。
+這些是教師工具，不要求學生另寫檢查器。
+
+<!-- 教師提示：沿用既有工具，不教JUnit、輸出擷取或AssertionError實作。Check失敗時依PASS/FAIL或錯誤訊息定位，再核對該案例；不能只看程式有執行。若另用學生完成碼搭配工具，只保留一組同名MissionStep與MissionLog，詳README，不把teacher答案混進學生src。 -->
 
 ---
 ## 新需求：先設計樣本運送盒
@@ -688,7 +767,7 @@ java -cp out-teacher FixedScriptMission 2 4 2
 ---
 ## 設計卡：每個決定都要對應需求
 
-<p class="slide-ref" data-slide="35">對應程式：<code>teacher/SampleCase.java</code></p>
+<p class="slide-ref" data-slide="37">對應程式：<code>teacher/SampleCase.java</code></p>
 
 | 設計卡 | 要回答的問題 |
 |---|---|
@@ -699,6 +778,7 @@ java -cp out-teacher FixedScriptMission 2 4 2
 
 填入講義 F1 設計卡；方法名可自訂，但卡片、Prompt與呼叫要一致。
 以容量3為例，自己寫出存2、再存2、存1、卸空的預期。
+上方teacher檔是討論後的參考答案；先完成自己的設計卡，實作仍為選做。
 
 <!-- 教師提示：方法名可自訂但需一致。紙上預期不是已執行證據；教師參考另存，不是學生必交新類別。 -->
 
@@ -724,33 +804,38 @@ public void store(int amount) {
 <!-- 教師提示：教師自編模擬建議。至少找四項偏差，各配具體呼叫，不能只回答封裝不好；F2共8分鐘。 -->
 
 ---
-## 用反例說明偏差，再改寫 Prompt
+<!-- _class: small -->
+## 把設計卡與反例寫成可驗收的Prompt
 
-- 容量0或9，建構後應符合什麼範圍？
-- 容量3先存2，再存2，回傳與存量應如何？
-- 存0或負數，呼叫者能知道拒絕嗎？
-- 如何查剩餘空間、卸空並取得份數？
+F2要交「至少四項偏差與呼叫例子」以及一份改寫後的Prompt。
+把自己的F1決定填進下列格式，**方括號是待填內容，不是Java程式**：
 
-產出：F2 偏差表＋一份改寫後的 Prompt。
-把問題改寫成AI可遵守的規格，例如「容量小於1時設為1」。
-其餘依你的設計卡寫清責任、建構規則、方法參數／回傳與測試。
-可用紙上推論並標明未實測，不要求登入 AI 服務。
+```text
+請設計[類別名稱]，責任是[一句話]。
+建構規則：[容量修正、初始存量]。
+公開方法：[名稱、參數、回傳值、拒絕時狀態]。
+請用[本人測試呼叫與預期回傳／存量]檢查結果。
+```
+
+例如把「容量0怎麼辦？」改成規格「容量小於1時設為1」。
+限定本週的一般class，不用record／繼承等未教做法。
+可用紙上推論並標明未實測；不要求登入AI服務，也不要求完成SampleCase程式。
 
 <!-- 教師提示：可以紙上推論，必須標示未實測。完整實作選做；不強制登入AI服務，不提前看教師答案。 -->
 
 ---
 ## 除錯選項一：資料全加 static
 
-<p class="slide-ref" data-slide="38">對應程式：<code>starter/MissionStep.java</code></p>
+<p class="slide-ref" data-slide="40">對應程式：<code>starter/MissionStep.java</code></p>
 
-**第38–40頁三選一，在 repo 外副本操作。**
+**第40–42頁三選一，在 repo 外副本操作。**
 
 > 模擬建議：「所有地方都要讀資料，加 static 更方便。」
 
-1. 正確版先保存，副本把三欄加 static。
+1. 保存正確版，副本只把三個欄位宣告加static，保留原建構子與getter。
 2. 用第27頁的兩筆測試資料，兩個都建立後再讀第一筆。
 3. 第一筆為何也變成第二筆資料？
-4. 恢復實例欄位，重測第27頁與第32頁兩條路線。
+4. 恢復實例欄位，重測第27頁與第33頁兩條路線。
 
 預期反例：第一筆變成 2／12／NOT_ENOUGH_ENERGY。
 
@@ -759,9 +844,9 @@ public void store(int amount) {
 ---
 ## 除錯選項二：用 == 比較結果
 
-<p class="slide-ref" data-slide="39">對應程式：<code>starter/MissionStep.java</code></p>
+<p class="slide-ref" data-slide="41">對應程式：<code>starter/MissionStep.java</code></p>
 
-**第38–40頁三選一，在 repo 外副本操作。**
+**第40–42頁三選一，在 repo 外副本操作。**
 
 > 模擬建議：「固定代碼，用 == 比較就好。」
 
@@ -771,7 +856,8 @@ return result == "OK"; // 副本錯誤示範
 
 用第27頁的 `new String("OK")` 測試：這個錯誤寫法回傳false。
 因為 == 比參考，並非比內容；改回內容比較應為true。
-再重測第27頁與第32頁兩條路線，記錄修正理由。
+只用字串常值可能碰巧通過，所以這裡刻意用new String建立不同參考。
+再重測第27頁與第33頁兩條路線，記錄修正理由。
 
 <!-- 教師提示：常值字串可能讓錯誤偶然通過，所以不能只測主任務的固定常值。 -->
 
@@ -779,11 +865,12 @@ return result == "OK"; // 副本錯誤示範
 <!-- _class: small -->
 ## 除錯選項三：保存同一個可變物件
 
-<p class="slide-ref" data-slide="40">對應程式：<code>examples/SnapshotDemo.java</code></p>
+<p class="slide-ref" data-slide="42">對應程式：<code>examples/SnapshotDemo.java</code></p>
 
-**第38–40頁三選一，在 repo 外副本操作。**
+**第40–42頁三選一，在 repo 外副本操作。**
 
-在副本以本段替換 SnapshotDemo.main；執行後讀取兩筆能源：
+在副本只替換main大括號內的內容，保留import與方法外殼。
+執行後讀取兩筆能源：
 
 ```java
 RoverBattery battery = new RoverBattery(20);
@@ -801,15 +888,17 @@ System.out.println(history.get(0).getEnergy() + "/"
 <!-- 教師提示：用SnapshotDemo副本，只替換main內容；完整片段與列印在講義F3。不要更動正式examples。 -->
 
 ---
+<!-- _class: small -->
 ## 快照反例：最後能源相同，歷史卻錯了
 
-<p class="slide-ref" data-slide="41">對應程式：<code>examples/SnapshotDemo.java</code></p>
+<p class="slide-ref" data-slide="43">對應程式：<code>examples/SnapshotDemo.java</code></p>
 
 | 保存方式 | 第一筆能源 | 第二筆能源 |
 |---|---:|---:|
 | 同一電池參考存兩次 | 19 | 19 |
 | 每步 new StepCard 保存數值 | 14 | 19 |
 
+存同一電池參考，不是存兩份電池備份；充電後兩筆都讀到現在的19。
 兩種方式的目前電池都為19，單看最後能源抓不到錯誤。
 
 本頁承接選項三；恢復原 SnapshotDemo，確認逐筆為14、19。
@@ -820,7 +909,7 @@ System.out.println(history.get(0).getEnergy() + "/"
 ---
 ## 資料只讀，仍可能記錯時間點
 
-<p class="slide-ref" data-slide="42">對應程式：<code>starter/MissionStep.java</code>、<code>starter/MissionLog.java</code>、<code>teacher/SampleCase.java</code></p>
+<p class="slide-ref" data-slide="44">對應程式：<code>starter/MissionStep.java</code>、<code>starter/MissionLog.java</code>、<code>teacher/SampleCase.java</code></p>
 
 - MissionStep 保存過去：建立後只讀，不提供改寫歷史的setter。
 - SampleCase 管目前存量：可以透過合法的存入／卸空動作改變。
@@ -838,7 +927,7 @@ System.out.println(history.get(0).getEnergy() + "/"
 <!-- _class: small -->
 ## 用類別責任表，交接給第六週
 
-<p class="slide-ref" data-slide="43">對應程式：<code>starter/MissionStep.java</code>、<code>starter/MissionLog.java</code>、<code>examples/RoverBattery.java</code></p>
+<p class="slide-ref" data-slide="45">對應程式：<code>starter/MissionStep.java</code>、<code>starter/MissionLog.java</code>、<code>examples/RoverBattery.java</code></p>
 
 | 類別 | 一句話責任 |
 |---|---|
@@ -854,15 +943,16 @@ RoverBattery 只用在本週示範；主任務的energy／samples仍由MissionLo
 ---
 ## 保存可重現的正確版本
 
-<p class="slide-ref" data-slide="44">對應程式：<code>starter/MissionLog.java</code></p>
+<p class="slide-ref" data-slide="46">對應程式：<code>starter/MissionLog.java</code></p>
 
-1. main的script恢復 `{1,1,2}`，移除臨時檢查，還原錯誤副本的修改。
+1. 正式src保留正確版；main的script恢復 `{1,1,2}`，移除臨時檢查。
 2. 重新編譯、執行，完成LAB_REPORT與AI_USAGE。
 3. GitHub Desktop檢查差異、commit、push、遠端核對。
 4. 另取回新副本重編譯，未做項目如實標示。
 
 新副本應有回放能源14、8、6，終態6/5/3 SUCCESS，battery=30.0。
-src交examples六檔＋完成的starter兩檔；teacher同名檔及out不提交。
+src交examples六檔＋完成的starter兩檔；錯誤副本留在repo外，
+teacher同名檔與out不提交。
 
 <!-- 教師提示：預留15分鐘。推送失敗先求助及保存到不還原位置，不讓未完成程式遺失。 -->
 

@@ -124,3 +124,15 @@ Marp CLI4.5.1／Core4.4.0重新匯出45頁HTML。以現有puppeteer-core24.43.1�
 以OpenJDK／javac 22在隔離暫存目錄分開編譯examples與teacher，核對CreateStepDemo、ReferenceDemo、SnapshotDemo完整輸出，與投影片的1/14、2/12、14→8／區域1、快照14／19一致。MissionStepCheck 8/8、MissionLogCheck 15/15、SampleCaseCheck 12/12通過。另以暫存反例重現第2頁的1/6/OK錯配與索引2越界，將第40頁原樣片段放入獨立main執行得到19/19；結果保存於execution-results.json。暫存編譯副本已清除，未把錯誤碼放入正式src。
 
 Marp CLI 4.5.1／Core 4.4.0重新匯出45頁HTML；本機無頭Chrome與puppeteer-core 24.43.1檢查全頁邊界、檔名列和標題間距及水平溢出，無問題。已巡視全頁聯絡表，放大檢查第2、11、21、25–27、29–33、36、40、42–44頁；最後微調後再次放大檢查第2、11、27、42頁。最終截圖與報告在qa-final；這不是全45頁內文逐字放大檢查，未新增IDE GUI、其他JDK、教室投影或學生試教證據。本次僅修訂week05/codex版本，尚未提交。
+
+## 2026-10-30：再檢視說明缺口，拆為47頁
+
+重新檢視原45頁，針對仍需口頭補完的概念與操作修訂23頁，另增加兩頁說明，總計47頁。補明類別／物件／參考變數、欄位位置、建構子僅存傳入值、getter宣告各部分、相同內容不代表同一物件、充電與合法初值、電池與任務停止責任、單步OK與任務SUCCESS、counts/actionCount/ignored差別及Prompt待填格式。第5頁增加學生工作目錄、八檔配置、編譯及main入口執行指令；第28頁移除容易被重複抄入TODO的既有清單宣告，說明switch後result才確定、能源才是行動後值。
+
+新增第29頁以兩筆實際記錄區分new建立物件、add保存參考、get取回原物件參考；新增第35頁明列MissionStepCheck／MissionLogCheck用途、教師工作目錄、指令與8/8／15/15摘要，區分FixedScriptMission單組顯示與Check預期比對。第34頁四種邊界均列出可直接接在類別名後的參數。三選一活動更新為第40–42頁，重測入口更新為第27、33頁。教師筆記、README、學生講義與handoff同步；歷史45頁驗證紀錄保留原日期，不當作本次結果。
+
+以OpenJDK／javac 22在隔離副本原樣執行第5頁與第35頁指令：學生八個來源檔一起編譯成功，CreateStepDemo輸出first=1/14、second=2/12、same object=false；教師MissionStepCheck 8/8、MissionLogCheck 15/15通過。另核對history取回原參考且能源14／8，單步OK可同時有任務UNFINISHED（初始20/0只探索一次後為14/2/1）；零能源電池charge為true/5，但零能源任務不讀充電指令且為EXHAUSTED。以上臨時編譯副本已清除，不增加學生測試程式。
+
+15個Java檔、assignment及AI範本雜湊均與本次修改前相同，保留六個TODO、原任務規則、學生必交八檔與必做／選做份量。40頁有Java檔名列，共61次Java路徑引用均存在，檔名列無其他文件。47頁Markdown／HTML、27個本機Markdown連結、code fence、頁碼交叉引用與git diff --check通過。
+
+Marp CLI 4.5.1／Core 4.4.0同步匯出47頁HTML；無頭Chrome與puppeteer-core 24.43.1檢查全頁內容邊界、檔名列與標題間距及水平溢出，無問題。已巡視全頁聯絡表，放大檢查第5、7、11、16、17、19、26、28、29、31、34、35、39頁，最後微調後複核第7、28、29頁。為避免長頁面截圖的行內字串未繪出暫態，最終擷取時每次只顯示單頁SVG，未改教材文字或版型來掩蓋問題；最終截圖與layout-report.json在本次visualizations/week05-review-20261030/qa-final。這是全頁縮圖巡視與重點頁放大，未宣稱全頁逐字放大、IDE GUI、教室投影、其他JDK或學生試教。本次只修改week05/codex版本，尚未提交。

@@ -148,6 +148,8 @@ System.out.println(second.getCommand() + "/" + second.getEnergy()
 - TODO 5：依 history 索引取得一筆物件，以 getter 印 `step 1: command=1, result=OK, energy=14`。先取得物件，再取欄位。
 - TODO 6：走訪 history，以 isSuccessful 計 ok，以 getResult 內容為 RETURN 計 returned；後面的 rejected、ignored、空清單與最低值已提供。
 
+清單宣告已提供。new建立一筆MissionStep，add保存其參考，get依索引取回同一物件；get本身不會建立新記錄。isSuccessful只表示當步result為OK，不表示任務已收集5份樣本。
+
 每完成一組就編譯執行。為何 countCommands 現在要先取得 step.getCommand？待填。為何不能直接對 history 使用 Collections.min 取得能源最小值？待填，本週不用 Comparator 解決。
 
 ### E3 本人測試

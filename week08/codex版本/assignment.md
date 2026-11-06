@@ -1,0 +1,90 @@
+# 第八週作業｜以覆寫改變行為並驗證多型
+
+初稿由Codex生成。截止及繳交平台由教師公告。以課堂成果延伸，最低要求固定、題目與設計開放；選做不取代必做。
+
+## 一、主線必做
+
+1. 完成TODO 1–3：Rover探索流程呼叫產量方法、HeavyRover以@Override覆寫、CompareMissions建立兩組獨立任務。不能只改預期值讓結果印OK。
+2. 一般車與重型車探索成本均6；產量分別2及3；成功才增加一次actionCount。維持private狀態與private explore，不改execute、Mission、MissionStep或MissionLog。
+3. HeavyRoverTry十五行全OK，保留完整輸出；CompareMissions保留兩段完整報表，不只最後一行。
+4. 完成講義D5兩個邊界案例與一個自己的反例，先寫預期、再記實際與可抓到的錯誤。自訂測試入口可放experiments，繳交其Java來源及結果，不要求再寫報表系統。
+5. 完成一份E模擬AI審查及F指定UML；B、C預測與錯誤實驗保留於LAB_REPORT，不重複另外寫長篇報告。
+
+| 初始狀態／腳本 | 一般車期望energy/samples/actions/outcome | 重型車期望 |
+|---|---|---|
+| 20/0，{1,1,2} | 6/5/3/SUCCESS，3步 | 8/6/2/SUCCESS，2步，忽略1筆 |
+| 6/2，{1,3} | 0/4/1/EXHAUSTED，1步 | 0/5/1/SUCCESS，1步 |
+| 5/0，{1} | 5/0/0/UNFINISHED，1筆拒絕 | 同左 |
+
+最後一列腳本用完但未達標、未耗盡、未返回，因此outcome為UNFINISHED。每筆行動回傳與任務outcome是不同欄位，不可混寫。
+
+固定int[] script，不讀args或Scanner、不新增指令4。初始energy為0..20、samples非負；腳本非null。每次新車、新Mission，只run一次；任務與讀結果期間不外部操作同一車。合法小整數，不驗收數值溢位、例外、共享車、並行或契約外建構值。
+
+## 二、一個小型獨立遷移題（必做，二選一）
+
+### 路線A：SurveyRover精細採樣車
+
+情境：精細採樣只選取少量樣本，每次探索耗6格、得1份；掃描、充電、停止與任務日誌沿用Rover。探索產量不代表整體效能較佳，請依需求評估。
+
+自行新建SurveyRover.java與SurveyRoverTry.java：
+
+- extends Rover，建構子親自寫super(energy,samples)。
+- 只覆寫protected int exploreYield()，回1並加@Override；不增加狀態、不重寫execute。
+- 測試入口以Rover型態參考接收SurveyRover，再交給Mission；不要用車種if分支。
+- 先推算下表，親自編譯執行。前三個getter及outcome均須核對，並與一般車至少比較一次。
+
+| 案例 | SurveyRover期望 |
+|---|---|
+| 20/0，腳本{1,1,2} | 6/3/3/UNFINISHED，3步；同腳本一般車SUCCESS |
+| 6/4，腳本{1,3} | 0/5/1/SUCCESS，1步；停止後不充電 |
+| 5/0，直接execute(1) | NOT_ENOUGH_ENERGY，5/0/0不變 |
+| 20/5，直接execute(1) | STOPPED，20/5/0不變 |
+
+另自行設計一個反例，說明能抓到哪種錯誤。允許用簡短main印狀態與結果，不要求完整報表。教師檢查器不代替本人預測與實測。
+
+### 路線B：自訂同等規模的探測車
+
+一句話說明需求，探索產量為固定1..4的正整數；成本6不變。至少有使用super的建構子、正確@Override及一個自行命名的main入口；不重複父類別狀態、不增加命令、不改Mission。
+
+寫清產量選擇與情境的關係，以Rover型態參考交入Mission，先預測再記正常、能源邊界、拒絕、已停止案例；附一個自己的反例及與一般車的比較。不能只換名稱與數字而沒有規格、解釋與驗證。控制在一個子類別及一個入口，更多功能列選做。
+
+## 三、AI與設計紀錄（必做）
+
+- AI_USAGE採本週五欄，來源明寫教師模擬；另用真實AI才附工具及對話摘要。不要求付費服務或帳號。
+- 保留模擬原文、兩行DIFF、@Override編譯診斷、最小修正及十五行重測。用[AI]、[fix] commit可比較，修正前後不要同時混編。
+- DESIGN只放本週指定圖、方法選擇解釋、遷移規格與測試表；其他結果可引用LAB_REPORT。
+- puml與SVG同步，圖修改後立即重新產圖及本人檢視。教師代產據實記錄。
+
+## 四、繳交與驗收
+
+```text
+115_1_Java/YYYY_MM_DD/
+  LAB_REPORT.md
+  AI_USAGE.md
+  java-08/
+    README.md
+    DESIGN.md
+    src/          # 初始十檔＋自選遷移兩檔
+    diagrams/     # 本人dispatch_practice.puml與.svg
+    experiments/  # D5本人測試入口與必要相依檔；不放刻意編譯錯誤副本
+    ai-check/     # 完成Rover、修正後AI HeavyRover、HeavyRoverTry
+```
+
+B、C編譯錯誤只留診斷於LAB_REPORT，不要求繳錯誤副本。experiments、ai-check及正式src分開編譯；同名類別不要放同一次javac。不要複製教師答案或教師檢查工具到src。
+
+README列實際JDK、操作目錄、四個主入口、遷移入口、TODO完成度、編譯指令與本人操作證據。GitHub Desktop檢查差異、commit、push、遠端核對；新位置clone後重新編譯執行。排除out、class、jar、.idea、iml及憑證。失敗與待補據實記錄，不能用作者驗證代替本人結果。
+
+| 項目 | 建議配分 | 驗收重點 |
+|---|---:|---|
+| 主線與狀態驗證 | 35 | 三組TODO、兩車完整報表、邊界及本人反例 |
+| 獨立遷移 | 25 | 自行建構／覆寫／入口，規格及比較有證據 |
+| AI審查與修正 | 20 | 先預測、解釋private誤用、最小修正與相同案例重測 |
+| UML、解釋與可重現 | 20 | 本人圖、呼叫判讀、README及重新取回結果 |
+
+這是當週內配分，不更動課綱總評。新增課後工作暫估45–60分鐘，依熟練度與課堂未完成量調整；多寫功能或長報告不直接加分。
+
+## 選做
+
+- 用super.describe()討論沿用父方法與直接重寫說明的取捨；B3之外不另要求第二份紀錄。
+- 閱讀Object.toString()覆寫，設計不改變物件狀態的摘要；不以記憶體位址當輸出驗收。
+- 自訂一個三檔短情境，例如通知與緊急通知，觀察相同父類別方法呼叫的不同版本；不要求完整系統。

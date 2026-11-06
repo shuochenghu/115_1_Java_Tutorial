@@ -1,0 +1,28 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+hide circle
+left to right direction
+class FixedScriptMission {
+  + {static} main(args : String[]) : void
+}
+class MissionLog {
+  + {static} main(args : String[]) : void
+  ~ {static} runMission(script : int[], energy : int, samples : int) : void
+}
+class RoverDemo {
+  + {static} main(args : String[]) : void
+}
+class Rover
+FixedScriptMission ..> MissionLog : 呼叫runMission
+RoverDemo ..> Rover : 建立與操作
+note bottom of MissionLog
+  完整任務入口
+  再建立Rover與Mission
+end note
+note bottom of RoverDemo
+  只示範探測車
+  不啟動完整任務
+end note
+@enduml

@@ -25,6 +25,7 @@
 | 檔案 | 用途 |
 |---|---|
 | [投影片原稿](week06_slides_codex.md)／[HTML](week06_slides_codex.html) | 16:9、講者備註、對應檔案與活動 |
+| [程式關聯補充投影片](week06_program_relationships_codex.md)／[HTML](week06_program_relationships_codex.html) | 獨立9頁：以使用者提供的完整關係圖為主體，分段說明並對照第五週teacher |
 | [student_lab.md](student_lab.md) | A–G 可填講義，另存LAB_REPORT |
 | [assignment.md](assignment.md) | 必做、六路線、繳交與評量 |
 | [DESIGN_template.md](DESIGN_template.md) | 圖片、責任表、初版與AI採納理由 |
@@ -37,6 +38,8 @@
 | [tools/README.md](tools/README.md) | 教師功能驗證、產圖與Marp維護 |
 
 ## 學生工作位置
+
+程式關聯補充投影片可於D1責任討論前後選用，不增加必交作業；原37頁主教材保留。第3–5頁以[使用者提供的完整關係圖](diagrams/teacher_relationships_overview.png)為主體，搭配整體、主任務與輔助入口的說明；原圖未裁切或改畫。分享HTML時，請連同本目錄的diagrams資料夾並保留相對位置。
 
 沿用學期repo：`115_1_Java/YYYY_MM_DD/java-06/`，日期使用實際上課日。`src/` 放 examples六檔及starter五檔，共11檔；範例彼此獨立，主任務只需四個類別，`RoverDemo` 是銜接入口。LAB_REPORT.md與AI_USAGE.md放日期目錄，README.md與DESIGN.md放java-06。
 

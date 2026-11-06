@@ -62,3 +62,11 @@ HeavyRover「探索一次得3份」是動機，不是本週已交付的功能。
 分支main，HEAD為6885de0（本機端圖片）；git status --short為「?? week06/」。第六週兩版目前都在未追蹤資料夾內，本次未提交、未推送、未fetch。記錄完成不代表已把檔案傳到家中電腦；換電腦前需同步或攜回整個week06及相關專案檔案，尤其HTML須連同diagrams。請勿在新電腦看到舊HEAD就誤以為第六週教材遺失。
 
 回家可使用的接續提示：「接續Java課程第6週Codex教材，先讀week06/codex版本/handoff.md與verification.md，核對目前檔案後，再依我的要求調整。」
+
+## 2026-11-06｜程式關聯獨立投影片
+
+初稿為20頁，依使用者後續指定精簡為9頁。現行[補充投影片HTML](week06_program_relationships_codex.html)及[Marp原稿](week06_program_relationships_codex.md)，供說明第六週teacher六個非Check程式彼此的關係，以及與第五週teacher的責任搬移。原37頁主教材保留，可於D1討論前後選用，不增加作業或取代學生三組TODO。
+
+現行內容僅整理該題回答：六個程式分工、四類別合作圖與呼叫順序、兩個輔助入口、第五週集中設計、責任搬移、沿用／新增對照，以及SampleCase的位置。已移除Rover字義、操作示範、數值追蹤、停止反例及檢核題。後續依使用者提供的圖片，將第3–5頁改為同一張完整關係圖的圖解：第3頁總覽、第4頁主任務、第5頁輔助入口。主圖為diagrams/teacher_relationships_overview.png，原PNG完整保留；第6頁沿用before.svg。先前的teacher_entries.puml／SVG保留為獨立圖檔。攜回或分享HTML時，連同diagrams資料夾並保留相對位置。
+
+原20頁初稿曾完成逐頁視覺檢查與程式對照；精簡後9頁另重新匯出與檢查，詳見[本次驗證紀錄](verification.md)。本次沒有改Java、前週或Claude，未重跑原完整功能檢查，未提交或推送；以上舊日期的Git快照不代表目前狀態，接續前仍須重新查看git status。

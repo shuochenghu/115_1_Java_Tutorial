@@ -52,3 +52,29 @@
 - 社團遷移題只有紙上參考，未編寫或執行社團Java實作。
 
 未提交、未fetch，不能宣稱與遠端同步。原教材與Claude版保留檢查於交付前記錄。
+
+## 2026-11-06｜獨立程式關聯補充投影片（20頁初稿紀錄）
+
+依使用者要求，另製[程式關聯投影片原稿](week06_program_relationships_codex.md)與[HTML](week06_program_relationships_codex.html)，共20頁。內容限兩週Codex程式，說明第六週teacher六個非Check類別、三個入口、主任務合作、快照、停止責任、第五週責任搬移，以及獨立SampleCase的位置。每頁附教師備註，末頁問題答案放備註；不增加學生必交工作。
+
+- 新增teacher_entries.puml／同名SVG，表示FixedScriptMission→MissionLog與RoverDemo→Rover；沿用既有before.svg、after.svg。以既有PlantUML MIT 1.2026.9匯出新圖，未改動原圖。
+- Marp CLI4.5.1／Core4.4.0匯出20頁HTML。以既有check_slides.cjs、puppeteer-core及獨立profile的本機Chrome檢查20頁，圖片均載入，版面邊界與程式水平溢出0問題。已逐頁檢視20張完整截圖，圖、表、中文與程式未見裁切重疊；釐清teacher目錄執行指令的措辭後，重新匯出與檢查。
+- 以OpenJDK22在隔離暫存目錄分別編譯第5、6週非Check教師程式。比較MissionLog預設腳本與FixedScriptMission的20/0＋{1,3,0}、2/4＋{2}、20/0＋{1,1,1,1}，四組完整輸出一致；確認投影片能源、樣本、行動數、成功優先與停止後不多記的數值。
+- 實跑本週RoverDemo，輸出為OK/14/2/1、STOPPED/0、STOPPED/20。兩週MissionStep、FixedScriptMission及第五週teacher/SampleCase→本週examples/SampleCase，三組來源逐位元組相同。
+- 本次未修改Java，只針對簡報敘述執行上述範例，未重新執行2026-10-22的完整15＋16項檢查或錯誤變異。第12頁停止反例沿用原教材既有驗證，本次未再次製作錯誤副本。
+- Markdown／HTML均20頁，每頁教師備註存在，三個SVG引用及本次文件連結存在；UTF-8、行尾空白與git diff --check通過。暫存編譯檔與bare HTML於完成後清除。
+- 建立前保存第5、6週157份既有檔案SHA-256；允許變動的只有本週Codex README、verification、handoff三份索引／紀錄，其餘154份檔案雜湊不變，包括原37頁投影片、Java、第五週與Claude版。新增內容僅在本週Codex目錄。
+
+本次截圖、layout-report.json、code-comparison.json及保留檢查證據位於本機視覺化目錄program-relations-qa，不交付學生src。HTML分享時仍需連同diagrams資料夾；沒有教室投影、學生試教、跨JDK或跨平台證據。未提交或推送。
+
+### 同日依使用者指定精簡：現行9頁
+
+使用者要求只把「第六週teacher非Check程式彼此的關係，以及與第五週teacher的關聯」這題回答做成投影片。現行原稿／HTML已改為9頁，保留程式分工、合作圖與呼叫流程、輔助入口、第五週設計、責任搬移及SampleCase位置；移除名詞教學、操作示範、數值追蹤、停止反例與檢核題。README、handoff已同步。
+
+重新匯出Marp HTML；9頁版面邊界／圖片載入檢查0問題，巡視全頁縮圖並放大檢查新改寫的合作流程頁。Markdown與HTML均9頁、圖片引用存在，git diff --check及新增原稿行尾空白檢查通過。沿用檔案相同性重新核對；Java未改，本輪未再編譯或執行程式。截圖與報告另存program-relations-qa/focused，20頁初稿的紀錄僅代表歷史檢查，不代表現行頁數。暫存bare HTML已清除。
+
+### 同日改以使用者關係圖為主體
+
+依使用者「我要這張圖」「放在投影片中為主體並說明」的指示，將附件PNG原樣複製為diagrams/teacher_relationships_overview.png，SHA-256與附件相同，未裁切、重畫或修改像素。第3–5頁均以左側59%的原圖為主體，右側分別說明整體關係、Mission與狀態／歷史的連結、FixedScriptMission與RoverDemo入口；維持9頁，後段保留第五週對照。
+
+重新匯出HTML並以Chrome檢查9頁，版面邊界0問題；已放大檢視第3–5頁，確認原圖完整顯示、中文與說明未裁切。背景圖不在既有工具的img載入檢查範圍，因此另核對本機檔案、HTML引用，並以三頁實際截圖確認顯示。截圖與報告在program-relations-qa/user-diagram。Java未修改，本輪未編譯執行程式；README與handoff同步，暫存bare HTML清除。HTML分享需連同diagrams資料夾。

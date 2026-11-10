@@ -25,9 +25,12 @@
 | 檔案 | 用途 |
 |---|---|
 | [投影片](week07_slides_codex.md)／[HTML](week07_slides_codex.html) | 沿用前週Marp版型，含講者備註與活動檔案 |
+| [claude 投影片](week07_slides_codex_claude.md)／[HTML](week07_slides_codex_claude.html) | 另一份可選用的投影片：由 Anthropic Claude（Claude Code）依本目錄教材製作，共40頁，每頁標 claude 徽章。分三段：第一部分只用 examples 的會員範例教 extends、super、protected 與 UML 繼承（B–C），第二部分以 starter 說明作業（D–G、模擬 AI 的 E 段與課後獨立遷移），附錄為 teacher 工具與參考圖；題號、TODO 與預期輸出沿用本週教材，不新增學生作業。HTML 需連同 diagrams 資料夾 |
 | [student_lab.md](student_lab.md) | A–G可填講義 |
 | [assignment.md](assignment.md) | 必做／選做、遷移規格、繳交與評量 |
 | [teacher_notes.md](teacher_notes.md) | 逐題答案、節奏、診斷與來源 |
+| [第 5→7 週 teacher 類別演進投影片（claude）](week07_teacher_evolution_codex_claude.md)／[HTML](week07_teacher_evolution_codex_claude.html) | 由 Anthropic Claude（Claude Code）依三週 teacher 程式整理，18頁，每頁標 claude 徽章：三張以顏色標示新增／修改／相同的類別圖、責任搬移表、explore 改寫對照、工具演進、HeavyRover 放入 Mission 的實測與討論題。內容是完整答案，交件後使用；HTML 需連同 diagrams 資料夾 |
+| [第 5–7 週教師程式演進講解稿](week05_to_week07_teacher_walkthrough.md) | 約 15 分鐘，搭配 UML、同一路線輸出對照與鑽探追蹤 |
 | [DESIGN_template.md](DESIGN_template.md)／[AI_USAGE_template.md](AI_USAGE_template.md) | 學生設計與精簡AI紀錄 |
 | [examples/README.md](examples/README.md) | 會員獨立範例、預期輸出與限制 |
 | [starter/Rover.java](starter/Rover.java)／[HeavyRover.java](starter/HeavyRover.java) | 三組主線TODO；同目錄其餘四檔已完成 |

@@ -78,3 +78,12 @@
 依使用者「我要這張圖」「放在投影片中為主體並說明」的指示，將附件PNG原樣複製為diagrams/teacher_relationships_overview.png，SHA-256與附件相同，未裁切、重畫或修改像素。第3–5頁均以左側59%的原圖為主體，右側分別說明整體關係、Mission與狀態／歷史的連結、FixedScriptMission與RoverDemo入口；維持9頁，後段保留第五週對照。
 
 重新匯出HTML並以Chrome檢查9頁，版面邊界0問題；已放大檢視第3–5頁，確認原圖完整顯示、中文與說明未裁切。背景圖不在既有工具的img載入檢查範圍，因此另核對本機檔案、HTML引用，並以三頁實際截圖確認顯示。截圖與報告在program-relations-qa/user-diagram。Java未修改，本輪未編譯執行程式；README與handoff同步，暫存bare HTML清除。HTML分享需連同diagrams資料夾。
+
+## 2026-11-07 claude 投影片（Claude Code 製作）
+
+使用者要求比照第五週，由 Claude 依本目錄教材另製投影片：`week06_slides_codex_claude.md`／`.html`，44頁，每頁 `by-claude` 徽章。結構：第一部分（第5–15頁）只用 examples 的 Battery／Lamp／Charger／RelationDemo 教讀圖、PlantUML、關聯／相依與多重性；第二部分（第16–38頁）以 starter 說明作業，SampleCase 的 E 段因屬必做而放在此段（程式在 examples）；附錄（第39–44頁）放 teacher 工具、after／samplecase_ref／mission_focus 參考圖與 final／組合補充。左上標籤藍 examples、綠 starter、灰 teacher；頁尾依段落標示。TODO 1 只列順序，TODO 2、3 只列規則，不投影答案。原37頁投影片、程式關聯補充投影片及其他教材、程式未改；本段與 README 索引列為 Claude 依使用者要求補記。
+
+- 環境：OpenJDK／javac 22（build 22+36-2370），未加 --release；examples、starter、teacher 分別在暫存目錄編譯。
+- CLI：RelationDemo、SampleCaseDemo、RoverDemo、starter MissionLog（空日誌）、teacher MissionLog 預設路線輸出與投影片一致；MissionLogCheck 15/15、MissionStateCheck 16/16；FixedScriptMission `0 0 3 1`、`20 5 1`、`2 4 2`、`20 0`、`20 0 3 9 0` 與投影片表格一致。另在暫存副本重現兩個反例：刪除 Mission.run 停止檢查跑 `{1,1,1,1}` 得第4筆 STOPPED、steps=4／rejected=1／ignored=0；刪除 SampleCase 超量條件得 overflow=true／count=4、fill 5、unload 5。六路線其餘四條依 assignment 核對，本次未逐條重跑。
+- 投影片：Marp CLI（npx @marp-team/marp-cli@latest）以 `--html` 匯出 HTML；另以 `--allow-local-files --images png` 匯出44頁 PNG，用縮圖聯絡表逐頁巡視。修正第6、10、18、25頁下緣溢出，第13頁關係圖過小，第21頁 Rover 程式被自動縮小，第29頁六路線表右側截斷，修正後重看修改頁。第21、25頁程式為節錄，講者備註已說明。
+- 未驗證：無頭瀏覽器自動溢出量測、教室投影可讀性、學生試教。尚未提交。

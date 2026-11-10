@@ -136,3 +136,21 @@ Marp CLI 4.5.1／Core 4.4.0重新匯出45頁HTML；本機無頭Chrome與puppetee
 15個Java檔、assignment及AI範本雜湊均與本次修改前相同，保留六個TODO、原任務規則、學生必交八檔與必做／選做份量。40頁有Java檔名列，共61次Java路徑引用均存在，檔名列無其他文件。47頁Markdown／HTML、27個本機Markdown連結、code fence、頁碼交叉引用與git diff --check通過。
 
 Marp CLI 4.5.1／Core 4.4.0同步匯出47頁HTML；無頭Chrome與puppeteer-core 24.43.1檢查全頁內容邊界、檔名列與標題間距及水平溢出，無問題。已巡視全頁聯絡表，放大檢查第5、7、11、16、17、19、26、28、29、31、34、35、39頁，最後微調後複核第7、28、29頁。為避免長頁面截圖的行內字串未繪出暫態，最終擷取時每次只顯示單頁SVG，未改教材文字或版型來掩蓋問題；最終截圖與layout-report.json在本次visualizations/week05-review-20261030/qa-final。這是全頁縮圖巡視與重點頁放大，未宣稱全頁逐字放大、IDE GUI、教室投影、其他JDK或學生試教。本次只修改week05/codex版本，尚未提交。
+
+## 2026-11-07 教師版 UML 補充
+
+- 逐項比對圖中的宣告成員與 `teacher/` 原始碼，核對 MissionLog 的 6 個靜態方法及 MissionStep 的 3 個欄位、1 個建構子和 4 個方法。
+- 本機使用 PlantUML MIT 1.2026.9 的 Smetana 排版匯出同名 SVG，另以 PNG 檢視兩個類別框、右側說明、箭頭和圖例。SVG XML 與 README 的兩個圖檔連結已檢查。
+
+## 2026-11-07 claude 投影片（Claude Code 製作）
+
+使用者要求由 Claude 依本目錄教材另製一份投影片：`week05_slides_codex_claude.md`／`.html`，43頁，每頁 `by-claude` 徽章。原 `week05_slides_codex.*` 及其他教材、程式未改；本段與 README 索引列為 Claude 依使用者要求補記。
+
+- 環境：OpenJDK／javac 22（build 22+36-2370），未加 --release。在暫存目錄分開編譯 examples 六檔與 teacher 七檔。
+- CLI：CreateStepDemo、BatteryDemo、ReferenceDemo、SnapshotDemo 完整輸出與投影片一致；MissionStepCheck 8/8、MissionLogCheck 15/15；FixedScriptMission `5 0 1 3 0`、`2 4 2`、`0 0 3 1` 分別得 10/0/1 RETURNED（3筆、最低5）、0/5/1 SUCCESS（1筆、最低0）、EXHAUSTED（0筆、N/A），與投影片表格一致。其餘投影片數值（E3六路線、F3反例、FixedScriptMission 另兩列）依 assignment 與 teacher_notes 核對，本次未另行重跑。
+- 投影片：Marp CLI（npx @marp-team/marp-cli@latest）以 `--html` 匯出 HTML；另以 `--allow-local-files --images png` 匯出43頁 PNG，用縮圖聯絡表逐頁巡視。修正第8頁參考示意圖對齊、第13頁程式超出下緣、第24頁擁擠、UML 圖過小（改為獨立第40頁）後，重看修改頁，未見截斷或重疊。第13頁 `charge()` 的封頂判斷在投影片縮成一行，邏輯與原檔相同，講者備註已說明。
+- 未驗證：無頭瀏覽器自動溢出量測、教室投影可讀性、學生試教。尚未提交。
+
+### 同日改版：examples 教學與 starter 作業分開
+
+依使用者要求重排為47頁：第一部分（第5–23頁）只用 examples 教 B–D，static 頁改用 StepCard、new／add／get 頁改用 SnapshotDemo 的 `ArrayList<StepCard>`，末頁對照範例工具與作業 TODO；第二部分（第24–43頁）以 starter 說明作業目標、TODO 1–6、E1／E3、F1–F4、G、H 與評分；附錄（第44–46頁）放 teacher 的 FixedScriptMission／Check 與 UML 預告。左上標籤分色：藍 examples、綠 starter、灰 teacher；頁尾依段落標示。TODO 6 頁原本列出完整迴圈，改為只留註解提示，避免投影作業答案。重新以 Marp 匯出 HTML 與47頁 PNG，逐頁縮圖巡視，第45頁註解貼近頁尾已縮短後複核。程式未改，未重跑 Java。

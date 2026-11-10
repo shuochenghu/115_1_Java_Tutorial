@@ -25,6 +25,7 @@
 | 檔案 | 用途 |
 |---|---|
 | [投影片原稿](week06_slides_codex.md)／[HTML](week06_slides_codex.html) | 16:9、講者備註、對應檔案與活動 |
+| [claude 投影片 Markdown](week06_slides_codex_claude.md)／[HTML](week06_slides_codex_claude.html) | 另一份可選用的投影片：由 Anthropic Claude（Claude Code）依本目錄教材製作，共44頁，每頁標 claude 徽章。分三段：第一部分只用 examples 教讀圖、PlantUML、關聯／相依與多重性（B–C），第二部分以 starter 說明作業（B1–B3練習、D–G，含 SampleCase 的 E 段），附錄為 teacher 工具、參考圖與 final／組合補充；題號、TODO 與預期輸出沿用本週教材，不新增學生作業。HTML 需連同 diagrams 資料夾 |
 | [程式關聯補充投影片](week06_program_relationships_codex.md)／[HTML](week06_program_relationships_codex.html) | 獨立9頁：以使用者提供的完整關係圖為主體，分段說明並對照第五週teacher |
 | [student_lab.md](student_lab.md) | A–G 可填講義，另存LAB_REPORT |
 | [assignment.md](assignment.md) | 必做、六路線、繳交與評量 |

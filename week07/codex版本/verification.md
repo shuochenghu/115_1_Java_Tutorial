@@ -81,3 +81,28 @@ success unchanged: 20/5/0/1 (expect 20/5/0/0) DIFF
 - 未做150分鐘學生試教；獨立遷移的難度與實際課後負擔仍需教師觀察。
 - 不驗收契約外建構值、溢位、null、重複run、共享車或並行行為。
 - 自訂遷移題由教師按學生明訂規格人工審查，不能用Cargo參考輸出代替驗收所有題目。
+
+## 2026-11-07 claude 投影片（Claude Code 製作）
+
+使用者要求比照第五、六週，由 Claude 依本目錄教材另製投影片：`week07_slides_codex_claude.md`／`.html`，40頁，每頁 `by-claude` 徽章。結構：第一部分（第5–17頁）只用 examples 的 Member／VipMember／MemberDemo 教 extends、建構順序、super、private 不被繼承、protected 同套件、UML 繼承與 is-a／has-a；第二部分（第18–34頁）以 starter 說明作業（D1–D5 三組 TODO、E 段模擬 AI、F、課後獨立遷移、G、評分）；附錄（第35–40頁）放 teacher 檢查工具、heavy_reference／ai_state／cargo_reference 參考圖與第八週入口。左上標籤藍 examples、綠 starter、紫 ai、灰 teacher；頁尾依段落標示。TODO 1 只投影講義已給的 explore 示範與 spendEnergy 規則，TODO 2、3 只列規格，drill 完整答案只在附錄。原投影片及其他教材、程式未改；本段與 README 索引列為 Claude 依使用者要求補記。
+
+- 環境：OpenJDK／javac 22（build 22+36-2370），未加 --release；examples、starter、teacher、ai-check、transfer 分別在暫存目錄編譯。
+- CLI：MemberDemo 六行輸出；C1 拿掉 super 得 `constructor Member in class Member cannot be applied to given types`、required String／found no arguments；C2 得 `points has private access in Member`；C3 加 `bob.addPoints(5)` 可編譯、Bob 33 點。starter MissionLog 為 6/5/3 SUCCESS、starter HeavyRoverTry 有 DIFF；teacher HeavyRoverTry 十五行全 OK、InheritanceCheck 45 項、MissionLogCheck 15/15、MissionStateCheck 16/16；ai/HeavyRover 配完成的 Rover 得9行 DIFF（after drill 20/0/0/1 等，與投影片節錄一致）；CargoRoverTry 七行與投影片一致。六路線其餘四條依 assignment 核對，本次未逐條重跑。
+- 投影片：Marp CLI（npx @marp-team/marp-cli@latest）以 `--html` 匯出 HTML；另以 `--allow-local-files --images png` 匯出40頁 PNG，用縮圖聯絡表逐頁巡視。修正第7頁程式被自動縮小與右欄橫向溢出、第28頁 AI 程式超出下緣、第29頁貼近頁尾、第36頁表格壓到頁尾，修正後重看修改頁。
+- 未驗證：無頭瀏覽器自動溢出量測、教室投影可讀性、學生試教。尚未提交。
+
+## 2026-11-07 第 5–7 週教師程式演進講解稿（Codex）
+
+- 逐項對照三週 `teacher/` 程式。以 SHA-256 核對 `MissionStep.java` 三週一致，以及第 6、7 週 `Mission.java`、`MissionLog.java` 內容一致。
+- Windows OpenJDK／javac 22（build 22+36-2370）分開編譯三週 `teacher/` 頂層 Java。三週 `MissionLogCheck` 各 15/15，預設 `{1,1,2}` 與教師路線 `{1,3,0,2}` 分別核對三週完整輸出一致。第 6 週 `RoverDemo` 的三行輸出與講解稿一致，第 7 週 `HeavyRoverTry` 15 行均為 OK，`InheritanceCheck` 45 項通過。
+- 講解稿的本機路徑、引用的 SVG 與第 7 週 README 入口已檢查。15 分鐘為教學安排，實際教室投影與學生試教待實施。
+
+## 2026-11-07 第 5→7 週 teacher 類別演進投影片（Claude Code 製作）
+
+使用者要求說明 codex版第 5、6、7 週 teacher 類別的演進並能上課使用。Claude 新增 `week07_teacher_evolution_codex_claude.md`／`.html`（18頁，每頁 `by-claude`）及 `diagrams/evolution_w05_claude`、`w06`、`w07` 三組 puml／SVG；與同日 Codex 的講解稿各自獨立，未修改該稿或其他教材、程式。
+
+- 檔案比對：以雜湊確認 MissionStep、MissionLogCheck、FixedScriptMission 三週相同；第六、七週 Mission、MissionLog、MissionStateCheck 相同；SampleCase 第五週 teacher 與第六週 examples 相同；Rover 第六→七週差異為新增三個 protected 方法並以其改寫 explore、scan。
+- CLI（OpenJDK／javac 22）：三週 teacher 分別編譯；MissionLogCheck 15/15（三週）、MissionStepCheck 8/8、MissionStateCheck 16/16、InheritanceCheck 45 項。另在暫存副本實測兩個投影片用例：`new Mission(new HeavyRover(20,0))` 跑 `{1,1,2}` 得 SUCCESS、energy=6、samples=5、drillCount=0；第六週 Mission 改存行動前能源時 MissionLogCheck 8 組失敗、7 組通過。
+- 圖：以本機 PlantUML MIT 1.2026.9（smetana）pipe 模式產 SVG，並另產 PNG 檢視三張圖。
+- 投影片：Marp CLI 以 `--html` 匯出；另以 `--allow-local-files --images png` 匯出18頁 PNG 逐頁巡視，修正第5、10、13頁貼近頁尾與第12頁程式縮小／右欄溢出後重看。
+- 未驗證：教室投影可讀性、學生試教。尚未提交。

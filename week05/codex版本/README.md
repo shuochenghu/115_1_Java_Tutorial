@@ -18,12 +18,14 @@
 | 檔案 | 用途 |
 |---|---|
 | [投影片 Markdown](week05_slides_codex.md)／[HTML](week05_slides_codex.html) | Marp 16:9，共47頁，附講者備註與Java檔案位置 |
+| [claude 投影片 Markdown](week05_slides_codex_claude.md)／[HTML](week05_slides_codex_claude.html) | 另一份可選用的投影片：由 Anthropic Claude（Claude Code）依本目錄教材製作，共47頁，每頁標 claude 徽章。分三段：第一部分只用 examples 教學（A–D），第二部分以 starter 說明作業（E–H），附錄為 teacher 工具與 UML 預告；題號、TODO 與預期輸出沿用本週教材，不新增學生作業 |
 | [student_lab.md](student_lab.md) | A–H 可填講義，另存 LAB_REPORT.md |
 | [assignment.md](assignment.md) | 必做／延伸、案例、繳交與評分 |
 | [teacher_notes.md](teacher_notes.md) | 150 分鐘節奏、逐題答案、示範與診斷 |
 | [examples/README.md](examples/README.md) | 四個示範入口與預期結果 |
 | [starter/MissionStep.java](starter/MissionStep.java)／[MissionLog.java](starter/MissionLog.java) | 六個 TODO 群組的可編譯骨架 |
 | [teacher/MissionStep.java](teacher/MissionStep.java)／[MissionLog.java](teacher/MissionLog.java) | 完整答案 |
+| [教師版 UML 類別圖](diagrams/mission_log_and_step.svg)／[PlantUML 原始檔](diagrams/mission_log_and_step.puml) | 對照兩個類別的成員與責任，以及建立和讀取日誌的關係 |
 | [teacher/MissionStepCheck.java](teacher/MissionStepCheck.java)／[MissionLogCheck.java](teacher/MissionLogCheck.java) | 物件檢查及第四週完整輸出回歸檢查 |
 | [teacher/FixedScriptMission.java](teacher/FixedScriptMission.java) | 教師固定初始狀態入口 |
 | [teacher/SampleCase.java](teacher/SampleCase.java)／[SampleCaseCheck.java](teacher/SampleCaseCheck.java) | F1新情境的完整教師參考與12項檢查；學生實作列選做 |

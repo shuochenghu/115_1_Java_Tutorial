@@ -1,0 +1,43 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 第九週終點：報表只有一個 print，任何來源都只印樣本數
+
+interface SampleSource <<interface>> #F4F4F4 {
+  + getSamples() : int
+}
+abstract class Rover <<abstract>> #F4F4F4 {
+  - energy : int
+  - samples : int
+  + getEnergy() : int
+  + getSamples() : int
+  # {abstract} exploreYield() : int
+}
+class StandardRover #F4F4F4
+class HeavyRover #F4F4F4
+class SampleTray #F4F4F4
+class SampleReport #F4F4F4 {
+  + {static} print(label : String, source : SampleSource) : void
+}
+SampleSource <|.. Rover
+SampleSource <|.. SampleTray
+Rover <|-- StandardRover
+Rover <|-- HeavyRover
+SampleReport ..> SampleSource : 參數
+note bottom of SampleReport
+  <b>本週新需求</b>
+  ・地面站：車輛要看「維運詳報」＝樣本數＋能源
+  ・手動清點：直接給一個整數
+  ・原本的共用報表格式不能變
+  → 同一個名字 print，參數不同？
+end note
+@enduml

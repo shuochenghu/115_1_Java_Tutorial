@@ -16,6 +16,6 @@ public class Camera extends Equipment {
     }
 
     public String checklist() {
-        return id + " " + name + " | cards=" + memoryCards;
+        return id + " " + name + " | 記憶卡數=" + memoryCards;
     }
 }

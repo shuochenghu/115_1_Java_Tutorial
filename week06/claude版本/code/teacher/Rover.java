@@ -53,7 +53,7 @@ public class Rover {
         // TODO 2：已停止的探測車不接受任何指令，狀態不變。
         // 第五週由 MissionLog 在迴圈裡擋；規則收回 Rover 後，不論誰呼叫都擋得住。
         if (isStopped()) {
-            return "STOPPED";
+            return "任務已停止";
         }
         switch (command) {
             case 1:
@@ -63,42 +63,42 @@ public class Rover {
             case 3:
                 return charge();
             case 0:
-                return "RETURN";
+                return "返回";
             default:
-                return "UNKNOWN_COMMAND";
+                return "無效指令";
         }
     }
 
     // TODO 2：三個行動改為 private，外部只能經過 execute，就繞不過上面的停止檢查。
     private String explore() {
         if (energy < 6) {
-            return "NOT_ENOUGH_ENERGY";
+            return "能源不足";
         }
         energy -= 6;
         samples += 2;
         actionCount++;
-        return "OK";
+        return "成功";
     }
 
     private String scan() {
         if (energy < 2) {
-            return "NOT_ENOUGH_ENERGY";
+            return "能源不足";
         }
         energy -= 2;
         samples++;
         actionCount++;
-        return "OK";
+        return "成功";
     }
 
     private String charge() {
         if (energy >= CAPACITY) {
-            return "ALREADY_FULL";
+            return "能源已滿";
         }
         energy += 5;
         if (energy > CAPACITY) {
             energy = CAPACITY;
         }
         actionCount++;
-        return "OK";
+        return "成功";
     }
 }

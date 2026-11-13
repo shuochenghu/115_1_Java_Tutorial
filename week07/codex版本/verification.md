@@ -106,3 +106,10 @@ success unchanged: 20/5/0/1 (expect 20/5/0/0) DIFF
 - 圖：以本機 PlantUML MIT 1.2026.9（smetana）pipe 模式產 SVG，並另產 PNG 檢視三張圖。
 - 投影片：Marp CLI 以 `--html` 匯出；另以 `--allow-local-files --images png` 匯出18頁 PNG 逐頁巡視，修正第5、10、13頁貼近頁尾與第12頁程式縮小／右欄溢出後重看。
 - 未驗證：教室投影可讀性、學生試教。尚未提交。
+
+## 2026-11-11 繁體中文輸出驗證
+
+- OpenJDK 22，使用 javac -encoding UTF-8 -Xlint:all 分開編譯範例、學生起始碼及教師解答。以 UTF-8 擷取主控台輸出。
+- 執行該週 tools/verify.py，中文預期輸出、教師檢查與原有回歸案例通過。
+- 歷史驗證中的英文輸出反映當時的程式，現行預期輸出以本週講義和教師筆記為準。
+- Marp CLI 4.5.1 重新匯出 3 份 HTML（35/40/18 頁）。以無頭 Chromium 檢查程式碼區塊與表格的版面邊界，未偵測到溢出。

@@ -50,7 +50,7 @@ public class Rover {
 
     // 外部唯一的行動入口。0 是返回，其他未定義代碼是無效指令，都不改變狀態。
     public String execute(int command) {
-        // TODO 2：已停止的探測車不接受任何指令，回傳 "STOPPED"，狀態不變。
+        // TODO 2：已停止的探測車不接受任何指令，回傳 "任務已停止"，狀態不變。
         // 第五週由 MissionLog 在迴圈裡擋；規則收回 Rover 後，不論誰呼叫都擋得住。
         switch (command) {
             case 1:
@@ -60,42 +60,42 @@ public class Rover {
             case 3:
                 return charge();
             case 0:
-                return "RETURN";
+                return "返回";
             default:
-                return "UNKNOWN_COMMAND";
+                return "無效指令";
         }
     }
 
     // TODO 2：完成上面的檢查後，把三個行動改為 private，外部只能經過 execute。
     public String explore() {
         if (energy < 6) {
-            return "NOT_ENOUGH_ENERGY";
+            return "能源不足";
         }
         energy -= 6;
         samples += 2;
         actionCount++;
-        return "OK";
+        return "成功";
     }
 
     public String scan() {
         if (energy < 2) {
-            return "NOT_ENOUGH_ENERGY";
+            return "能源不足";
         }
         energy -= 2;
         samples++;
         actionCount++;
-        return "OK";
+        return "成功";
     }
 
     public String charge() {
         if (energy >= CAPACITY) {
-            return "ALREADY_FULL";
+            return "能源已滿";
         }
         energy += 5;
         if (energy > CAPACITY) {
             energy = CAPACITY;
         }
         actionCount++;
-        return "OK";
+        return "成功";
     }
 }

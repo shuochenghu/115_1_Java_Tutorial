@@ -157,8 +157,8 @@ static void runMission(int[] script, int energy, int samples) {
         String result;
         switch (command) {
             case 1:                                        // 行動規則
-                if (energy >= 6) { energy -= 6; samples += 2; actionCount++; result = "OK"; }
-                else { result = "NOT_ENOUGH_ENERGY"; }
+                if (energy >= 6) { energy -= 6; samples += 2; actionCount++; result = "成功"; }
+                else { result = "能源不足"; }
                 break;
             ...                                            // 掃描、充電、返回、無效
         }
@@ -208,7 +208,7 @@ Mission **有一台** Rover、**有多筆** MissionStep（實線、關聯）；M
 | 指令 0 返回 | `running = false` | **Mission** `returned = true` 並 break |
 | 歷史紀錄 | 區域變數 `history` | **Mission** 的欄位 `history` |
 | 計數、最低能源 | MissionLog 的 static 方法 | **Mission** 的實例方法 |
-| 結果 SUCCESS／EXHAUSTED／… | `runMission` 的 if-else | **Mission** `getOutcome()` |
+| 結果 任務成功／能源耗盡／… | `runMission` 的 if-else | **Mission** `getOutcome()` |
 | 報表格式 | MissionLog | MissionLog（**不變**） |
 
 MissionLog 從 138 行縮成 42 行；新增 Mission 74 行、Rover 57 行。程式總量沒有變少，但**每段規則有了固定的家**。
@@ -282,7 +282,7 @@ for (int i = 0; i < script.length; i++) {
 
 ```java
 public String execute(int command) {
-    if (isStopped()) { return "STOPPED"; }
+    if (isStopped()) { return "任務已停止"; }
     ...
 }
 ```
@@ -303,12 +303,12 @@ if (rover.isStopped()) { break; }
 </div>
 </div>
 
-**反例**（第六週 D3）：拿掉 Mission 的檢查，跑 `{1,1,1,1}`——最終仍是 SUCCESS，但日誌**多出一筆 STOPPED**，ignored 從 1 變 0。
+**反例**（第六週 D3）：拿掉 Mission 的檢查，跑 `{1,1,1,1}`——最終仍是 任務成功，但日誌**多出一筆 任務已停止**，ignored 從 1 變 0。
 
 > 兩個檢查看起來重複，其實各守不同的規則。
 
 <!--
-講者備註：錯誤副本輸出：step 4: command=1, result=STOPPED, energy=2；steps=4, ok=3, rejected=1, ignored=0。本次在暫存副本實測過。
+講者備註：錯誤副本輸出：步驟 4: 指令=1, 結果=任務已停止, 能源=2；步數=4, 成功=3, 拒絕=1, 略過=0。本次在暫存副本實測過。
 -->
 
 ---
@@ -347,12 +347,12 @@ if (rover.isStopped()) { break; }
 ```java
 private String explore() {
     if (energy < 6) {
-        return "NOT_ENOUGH_ENERGY";
+        return "能源不足";
     }
     energy -= 6;
     samples += 2;
     actionCount++;
-    return "OK";
+    return "成功";
 }
 ```
 
@@ -364,11 +364,11 @@ private String explore() {
 ```java
 private String explore() {
     if (!spendEnergy(6)) {
-        return "NOT_ENOUGH_ENERGY";
+        return "能源不足";
     }
     addSamples(2);
     countAction();
-    return "OK";
+    return "成功";
 }
 ```
 
@@ -409,14 +409,14 @@ public class HeavyRover extends Rover {
     public int getDrillCount() { return drillCount; }
 
     public String drill() {
-        if (isStopped()) { return "STOPPED"; }
+        if (isStopped()) { return "任務已停止"; }
         if (!spendEnergy(DRILL_COST)) {
-            return "NOT_ENOUGH_ENERGY";
+            return "能源不足";
         }
         addSamples(DRILL_YIELD);
         countAction();
         drillCount++;
-        return "OK";
+        return "成功";
     }
 }
 ```
@@ -503,7 +503,7 @@ m.run(new int[] {1, 1, 2});
 3. 腳本能不能讓它鑽探？
 
 <!--
-講者備註：本次實測：能編譯（HeavyRover is-a Rover）；結果 SUCCESS、energy=6、samples=5、drillCount=0，和一般 Rover 完全相同。Mission 只呼叫 execute，腳本沒有鑽探指令；探索仍得 2 份。這正是第八週要解決的問題：Mission 不改，但讓不同的車有不同的探索行為（覆寫與多型）。答案在下一頁。
+講者備註：本次實測：能編譯（HeavyRover is-a Rover）；結果 任務成功、能源=6、樣本數=5、drillCount=0，和一般 Rover 完全相同。Mission 只呼叫 execute，腳本沒有鑽探指令；探索仍得 2 份。這正是第八週要解決的問題：Mission 不改，但讓不同的車有不同的探索行為（覆寫與多型）。答案在下一頁。
 -->
 
 ---
@@ -513,7 +513,7 @@ m.run(new int[] {1, 1, 2});
 ## 答案：能放進去，但行為和一般 Rover 一樣
 
 ```text
-SUCCESS energy=6 samples=5 drillCount=0
+任務成功 能源=6 樣本數=5 drillCount=0
 ```
 
 - **能編譯**：HeavyRover **是一種** Rover，可以放在要 Rover 的地方。
@@ -542,8 +542,8 @@ SUCCESS energy=6 samples=5 drillCount=0
 <!--
 講者備註：參考答案：
 1. 規則有固定位置，改一項只需動一個類別；每個類別小、可單獨測試（MissionStateCheck）。
-2. 會：本次在暫存副本實測，15 組中 8 組失敗、7 組通過；通過的都是能源沒變或沒有紀錄的案例（如 {0}、{3,9,0}、空腳本）。例如 {1,1,2} 回放第一步印 energy=20 而非 14，mixed success 失敗。也說明只測 {3,9,0} 抓不到這個錯。
-3. 日誌會多出 STOPPED（第六週 D3 反例）；狀態不變但流程規則被破壞。
+2. 會：本次在暫存副本實測，15 組中 8 組失敗、7 組通過；通過的都是能源沒變或沒有紀錄的案例（如 {0}、{3,9,0}、空腳本）。例如 {1,1,2} 回放第一步印 能源=20 而非 14，mixed success 失敗。也說明只測 {3,9,0} 抓不到這個錯。
+3. 日誌會多出 任務已停止（第六週 D3 反例）；狀態不變但流程規則被破壞。
 4. protected 欄位讓子類別能繞過規則直接改值（例如扣成負數）；保留 private、只開放守規則的方法，規則仍只有一份。
 5. Mission 只依賴 Rover 的公開入口（execute、isStopped、getter），不依賴 Rover 內部怎麼實作，所以 Rover 內部重構與新增子類別都不影響它。
 -->

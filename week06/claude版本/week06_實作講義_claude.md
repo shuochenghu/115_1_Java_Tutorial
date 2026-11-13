@@ -28,7 +28,7 @@
    java -cp out MissionLog
    ```
 
-   起始碼能執行：回放是空的，摘要是 `steps=0, ok=0, rejected=0, ignored=3`，最後一行是 `final energy=20, samples=0, actionCount=0 -> UNFINISHED`。任務一步都沒跑，原因在 D 段。
+   起始碼能執行：回放是空的，摘要是 `步數=0, 成功=0, 拒絕=0, 略過=3`，最後一行是 `最終能源=20, 樣本數=0, 行動次數=0 -> 任務未完成`。任務一步都沒跑，原因在 D 段。
 
 6. 用 Chrome 或 Firefox 安裝 **PlantUML for GitHub** 擴充功能（由 PlantUML 官方發布）。它讓 github.com 上的 PlantUML 原始碼直接顯示成圖。教室電腦若不能安裝擴充功能，G 段有替代做法。
 
@@ -115,13 +115,13 @@ A3. 打開 `DESIGN.md` 的「練習區」，照著 `src/Flashlight.java` 寫出 
 
 | 輸出行 | 預測 | 實際 |
 |---|---|---|
-| `A on 6 min:` | 待填 | 待填 |
-| `B on 6 min:`（第一次） | 待填 | 待填 |
-| `C on 6 min:` | 待填 | 待填 |
-| `shared level:`（第一次） | 待填 | 待填 |
-| `refill shared: +` | 待填 | 待填 |
-| `B on 6 min:`（第二次） | 待填 | 待填 |
-| `shared level:`（第二次） | 待填 | 待填 |
+| `燈具 A 開啟 6 分鐘：` | 待填 | 待填 |
+| `燈具 B 開啟 6 分鐘：`（第一次） | 待填 | 待填 |
+| `燈具 C 開啟 6 分鐘：` | 待填 | 待填 |
+| `共用電池電量：`（第一次） | 待填 | 待填 |
+| `替共用電池充電： +` | 待填 | 待填 |
+| `燈具 B 開啟 6 分鐘：`（第二次） | 待填 | 待填 |
+| `共用電池電量：`（第二次） | 待填 | 待填 |
 
 B1. B 第一次為什麼開不了燈？C 為什麼不受影響？（提示：第 5 週的 `alias`。）待填
 
@@ -188,7 +188,7 @@ C2. 第 5 週 `MissionLog` 做了下面這些事。假設下學期要把輸出�
 
 - [ ] 把命令列參數轉成 `int[]`
 - [ ] 依腳本一步一步執行、記錄
-- [ ] 判斷 SUCCESS／EXHAUSTED／RETURNED／UNFINISHED
+- [ ] 判斷 任務成功／能源耗盡／已返回／任務未完成
 - [ ] 計算 counts、ok、rejected、最低能源
 - [ ] 把結果印到螢幕
 
@@ -205,7 +205,7 @@ C3. 完成新設計的責任表（`Mission` 那列已示範）：
 
 對照新的類別圖 `diagrams/week06_mission_claude.svg`（教師投影）：`Mission` 用欄位保存 `rover` 與 `steps`，所以是實線；`MissionLog` 只在方法裡用到 `Mission`、`Rover`，以及 `getStep(i)` 交回來的 `MissionStep`，所以都是虛線。
 
-C4. **先預測**：`Rover` 收回停止規則後，`execute` 遇到停止會回傳 `"STOPPED"`。那 `Mission.run` 的迴圈裡還需要檢查 `rover.isStopped()` 嗎？拿掉會怎樣？預測：待填（D5 實測）
+C4. **先預測**：`Rover` 收回停止規則後，`execute` 遇到停止會回傳 `"任務已停止"`。那 `Mission.run` 的迴圈裡還需要檢查 `rover.isStopped()` 嗎？拿掉會怎樣？預測：待填（D5 實測）
 
 ## D｜依新圖重構（40 分鐘）
 
@@ -225,15 +225,15 @@ C4. **先預測**：`Rover` 收回停止規則後，`execute` 遇到停止會回
 
 `MissionLog` 與 `MissionStep` 已完成，不必修改。
 
-D1. 動手前先執行 `java -cp out RoverTry`，有幾行 `DIFF`？為什麼 `done`（一開始就有 5 份樣本）會變成 `14/7/1`？待填
+D1. 動手前先執行 `java -cp out RoverTry`，有幾行 `不符`？為什麼 `done`（一開始就有 5 份樣本）會變成 `14/7/1`？待填
 
 ### D2. TODO 1–2：Rover（跟做）
 
 1. `isStopped()`：用 `isSuccess()` 與 `isExhausted()` 組合。
-2. `execute` 的第一件事：已停止就回傳 `"STOPPED"`，不進入 `switch`。
+2. `execute` 的第一件事：已停止就回傳 `"任務已停止"`，不進入 `switch`。
 3. 把 `explore`、`scan`、`charge` 的 `public` 改成 `private`，重新編譯。在 IntelliJ 對 `explore` 按 Alt＋F7（Find Usages），確認只有 `execute` 用到它。
 
-再執行 `RoverTry`，每一行都應是 `OK`。
+再執行 `RoverTry`，每一行都應是 `成功`。
 
 D2-1. 改成 `private` 之後，類別圖上這三個方法的符號要從什麼改成什麼？為什麼這讓 TODO 2 的檢查「不會被繞過」？待填
 
@@ -250,7 +250,7 @@ public void run(int[] script)
 
 D3-1. `rover` 和 `steps` 為什麼不用再當參數傳進來？`run` 為什麼不再回傳結果字串，結果改由誰提供？待填
 
-D3-2. 迴圈中的停止判斷改用 `rover.isStopped()`。判斷結果的四段 `if` 搬到 `getOutcome()`，順序不能改：為什麼 SUCCESS 要排在 EXHAUSTED 前面？（提示：`new Rover(2, 4)` 執行掃描。）待填
+D3-2. 迴圈中的停止判斷改用 `rover.isStopped()`。判斷結果的四段 `if` 搬到 `getOutcome()`，順序不能改：為什麼 任務成功 要排在 能源耗盡 前面？（提示：`new Rover(2, 4)` 執行掃描。）待填
 
 ### D4. TODO 5–6：摘要數字（模仿＋獨立）
 
@@ -262,11 +262,11 @@ D4-1. `Mission` 為什麼提供 `getStepCount()` 與 `getStep(int index)`，而�
 
 | 參數 | 最後一行 |
 |---|---|
-| （無） | `final energy=6, samples=5, actionCount=3 -> SUCCESS` |
-| `2 2 2 2 2` | `final energy=10, samples=5, actionCount=5 -> SUCCESS` |
-| `3 9 0` | `final energy=20, samples=0, actionCount=0 -> RETURNED` |
-| `1 1 1 1` | `final energy=2, samples=6, actionCount=3 -> SUCCESS` |
-| `2 1` | `final energy=12, samples=3, actionCount=2 -> UNFINISHED` |
+| （無） | `最終能源=6, 樣本數=5, 行動次數=3 -> 任務成功` |
+| `2 2 2 2 2` | `最終能源=10, 樣本數=5, 行動次數=5 -> 任務成功` |
+| `3 9 0` | `最終能源=20, 樣本數=0, 行動次數=0 -> 已返回` |
+| `1 1 1 1` | `最終能源=2, 樣本數=6, 行動次數=3 -> 任務成功` |
+| `2 1` | `最終能源=12, 樣本數=3, 行動次數=2 -> 任務未完成` |
 
 摘要行與最低能源見作業說明的表格。
 
@@ -275,7 +275,7 @@ D4-1. `Mission` 為什麼提供 `getStepCount()` 與 `getStep(int index)`，而�
 先 commit 目前完成的程式。在 `Mission.run` 中暫時把「已停止就 break」的三行註解掉，重新編譯，執行 `java -cp out MissionLog 1 1 1 1`：
 
 - 回放多了哪一步？摘要哪些數字改變？待填
-- C4 的預測對嗎？結論：停止後「不讀、不記」是誰的規則？`STOPPED` 擋下的又是什麼？待填
+- C4 的預測對嗎？結論：停止後「不讀、不記」是誰的規則？`任務已停止` 擋下的又是什麼？待填
 
 做完**還原那三行**，重新編譯並再跑一次 `1 1 1 1`，確認回到 3 步。
 
@@ -295,7 +295,7 @@ D4-1. `Mission` 為什麼提供 `getStepCount()` 與 `getStep(int index)`，而�
 任務中心的新需求：
 
 > 探測車加裝第 5 週設計的樣本艙 `SampleBay`，本次任務容量 4。
-> 1. 探索得 2 份、掃描得 1 份，樣本改為存進樣本艙。能源不足時照舊回傳 `NOT_ENOUGH_ENERGY`；能源足夠但艙內放不下時回傳 `BAY_FULL`。兩種拒絕都不改變任何狀態。
+> 1. 探索得 2 份、掃描得 1 份，樣本改為存進樣本艙。能源不足時照舊回傳 `能源不足`；能源足夠但艙內放不下時回傳 `BAY_FULL`。兩種拒絕都不改變任何狀態。
 > 2. 新增指令 4「卸貨」：把艙內樣本全部送回基地，耗能 1、行動次數 +1；艙是空的時回傳 `BAY_EMPTY`，不耗能。
 > 3. 任務成功改為「已送回基地的樣本」累計達 5 份。
 > 4. 任務中心要能查詢能源、艙內樣本數、已送回樣本數、行動次數，但不能直接修改它們。

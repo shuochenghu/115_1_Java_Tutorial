@@ -183,7 +183,7 @@ public class RawStep {          // 檔名必須是 RawStep.java
 ```java
 RawStep a = new RawStep();      // 產生物件；a 存參考
 a.command = 1;
-a.result = "OK";
+a.result = "成功";
 a.energy = 14;
 ```
 
@@ -210,9 +210,9 @@ System.out.println(a == alias); // ?
 ```
 
 ```text
-a     ──> 物件 1 [ command=1 | result="OK" | energy=99 ]
+a     ──> 物件 1 [ 指令=1 | 結果="成功" | 能源=99 ]
 alias ──> 物件 1（同一個）
-b     ──> 物件 2 [ command=2 | result="OK" | energy=12 ]
+b     ──> 物件 2 [ 指令=2 | 結果="成功" | 能源=12 ]
 ```
 
 和第二週的 `String`、第四週的陣列相同：**變數存參考，`==` 比參考**
@@ -226,7 +226,7 @@ b     ──> 物件 2 [ command=2 | result="OK" | energy=12 ]
 ## A｜印出物件、放進清單
 
 ```java
-System.out.println("println(a): " + a);
+System.out.println("直接印出 a：" + a);
 ArrayList<RawStep> steps = new ArrayList<>();
 steps.add(a);
 steps.add(b);
@@ -234,7 +234,7 @@ System.out.println(steps.get(1).energy);
 ```
 
 ```text
-println(a): RawStep@2f4d3709        ← 類別名稱@雜湊碼（每次可能不同）
+直接印出 a：RawStep@2f4d3709        ← 類別名稱@雜湊碼（每次可能不同）
 12
 ```
 
@@ -256,7 +256,7 @@ bad.energy = -7;     // 能源不會是負的，但編譯器不會阻止
 ```
 
 ```text
-bad: command=1, result=null, energy=-7
+錯誤範例的指令=1, 結果=null, 能源=-7
 ```
 
 兩個問題：
@@ -466,7 +466,7 @@ Java 沒有屬性（property）；慣例是 `getXxx()`，布林可用 `isXxx()`
 | 三條清單的同一個索引 | 一個 `MissionStep` 物件 | 記錄一步 |
 | `main`、`printReplay`、`printSummary` | `MissionLog`（流程與輸出） | 跑任務、報告 |
 
-**輸出格式和規則完全不變**：第四週的五條測試，本週要得到一模一樣的結果
+用第四週的五條測試核對數值、行動結果與停止時機。報表沿用第四週的繁體中文欄位。
 
 ---
 
@@ -486,16 +486,16 @@ public Rover(int energy, int samples) {   // TODO 1：照 Battery 的做法
 
 public String explore() {                  // 已提供：scan、charge 照著寫（TODO 2）
     if (energy < 6) {
-        return "NOT_ENOUGH_ENERGY";
+        return "能源不足";
     }
     energy -= 6;
     samples += 2;
     actionCount++;
-    return "OK";
+    return "成功";
 }
 ```
 
-起始碼的建構子是空的 → 欄位都是 0 → `MissionLog` 一開始就 `EXHAUSTED`（D1）
+起始碼的建構子是空的 → 欄位都是 0 → `MissionLog` 一開始就 `能源耗盡`（D1）
 
 ---
 
@@ -536,17 +536,17 @@ error: non-static method explore() cannot be referenced from a static context
 不經過 `MissionLog`，直接建立物件、呼叫方法、比對預期：
 
 ```text
-new Rover(20, 0): 20/0/0  (expect 20/0/0) OK
-new Rover(25, -3): 20/0/0  (expect 20/0/0) OK
-new Rover(4, 2): 4/2/0  (expect 4/2/0) OK
-r.charge() -> ALREADY_FULL  (expect ALREADY_FULL)
-r.scan() -> OK  (expect OK)
-r.charge() -> OK  (expect OK, 18+5 capped at 20)
-r: 20/1/2  (expect 20/1/2) OK
+new Rover(20, 0): 20/0/0  （預期 20/0/0） 相符
+new Rover(25, -3): 20/0/0  （預期 20/0/0） 相符
+new Rover(4, 2): 4/2/0  （預期 4/2/0） 相符
+r.charge() -> 能源已滿  （預期 能源已滿）
+r.scan() -> 成功  （預期 成功）
+r.charge() -> 成功  （預期 成功, 18+5 封頂為 20）
+r: 20/1/2  （預期 20/1/2） 相符
 ```
 
 - `MissionLog` 只用 `new Rover(20, 0)`：建構子修正有沒有錯，**任務測試看不出來**
-- 完成 TODO 1–2 後先跑 `RoverTry`，全部 `OK` 再往下
+- 完成 TODO 1–2 後先跑 `RoverTry`，全部 `成功` 再往下
 
 ---
 
@@ -568,7 +568,7 @@ public class MissionStep {
     }
     public int getCommand() { return command; }   // TODO 4：照著寫另外兩個
     public String describe() {                    // 已提供：回放用的一行
-        return "command=" + command + ", result=" + result + ", energy=" + energyAfter;
+        return "指令=" + command + ", 結果=" + result + ", 能源=" + energyAfter;
     }
 }
 ```
@@ -599,10 +599,10 @@ for (int command : script) {
 TODO 6 `printReplay`：照第四週的回放迴圈，改成每步印 `"step N: "` 加上 `describe()`
 
 ```text
-=== replay ===
-step 1: command=3, result=ALREADY_FULL, energy=20
-step 2: command=9, result=UNKNOWN_COMMAND, energy=20
-step 3: command=0, result=RETURN, energy=20
+=== 任務回放 ===
+步驟 1: 指令=3, 結果=能源已滿, 能源=20
+步驟 2: 指令=9, 結果=無效指令, 能源=20
+步驟 3: 指令=0, 結果=返回, 能源=20
 ```
 
 ---
@@ -616,21 +616,21 @@ step 3: command=0, result=RETURN, energy=20
 第四週的現成方法，現在不能直接用：
 
 ```java
-Collections.frequency(resultLog, "OK");   // 清單裡是 MissionStep，不是 String
+Collections.frequency(resultLog, "成功");   // 清單裡是 MissionStep，不是 String
 Collections.min(energyLog);               // MissionStep 不知道怎麼比大小
 ```
 
 改用迴圈＋getter；「被拒絕」的判斷交給 `MissionStep` 自己：
 
 ```java
-public boolean isRejected() {             // 不是 OK、也不是 RETURN
+public boolean isRejected() {             // 不是 成功、也不是 返回
     ...
 }
 ```
 
 ```text
-steps=3, ok=0, rejected=2, ignored=0      ← 3 9 0
-lowest energy=20
+步數=3, 成功=0, 拒絕=2, 略過=0      ← 3 9 0
+最低能源=20
 ```
 
 ---
@@ -643,13 +643,13 @@ lowest energy=20
 
 | 參數 | 最終 E／S／A | 結果 | 摘要 |
 |---|---|---|---|
-| （無） | 6／5／3 | SUCCESS | `ok=3`，最低 6 |
-| `2 2 2 2 2` | 10／5／5 | SUCCESS | `ok=5`，最低 10 |
-| `3 9 0` | 20／0／0 | RETURNED | `ok=0, rejected=2`，最低 20 |
-| `1 1 1 1` | 2／6／3 | SUCCESS | `ignored=1`，最低 2 |
-| `2 1` | 12／3／2 | UNFINISHED | `ok=2`，最低 12 |
+| （無） | 6／5／3 | 任務成功 | `成功=3`，最低 6 |
+| `2 2 2 2 2` | 10／5／5 | 任務成功 | `成功=5`，最低 10 |
+| `3 9 0` | 20／0／0 | 已返回 | `成功=0, 拒絕=2`，最低 20 |
+| `1 1 1 1` | 2／6／3 | 任務成功 | `略過=1`，最低 2 |
+| `2 1` | 12／3／2 | 任務未完成 | `成功=2`，最低 12 |
 
-加上 `java -cp out RoverTry` 全部 `OK`。E／S／A = energy／samples／actionCount
+加上 `java -cp out RoverTry` 全部 顯示「相符」。E／S／A = energy／samples／actionCount
 
 ---
 
@@ -740,12 +740,12 @@ public class SampleBay {
 
 <div class="ex">範例：在完成的程式副本上修改</div>
 
-## E｜AI 除錯三選一：預設腳本都還是 `6／5／3 SUCCESS`
+## E｜AI 除錯三選一：預設腳本都還是 `6／5／3 任務成功`
 
 | # | 模擬 AI 修改 | 說法 |
 |---|---|---|
 | 1 | `MissionStep` 改存 `Rover`，`getEnergyAfter()` 回傳 `rover.getEnergy()` | 「直接存探測車，之後要什麼都能查」 |
-| 2 | `charge()` 改用 `Math.min(energy + 5, CAPACITY)`，之後一律 `actionCount++` 並回傳 `OK` | 「充電一行寫完」 |
+| 2 | `charge()` 改用 `Math.min(energy + 5, CAPACITY)`，之後一律 `actionCount++` 並回傳 `成功` | 「充電一行寫完」 |
 | 3 | 建構子先 `this.energy = energy;` 再修正 `energy` | 「先存再修正，程式比較短」 |
 
 1. **預測**哪個輸入或哪支程式會讓錯誤現形 → 2. 在 repo **以外**的副本重現（不 commit）→ 3. 最小修正 → 4. 重跑必做測試
@@ -753,7 +753,7 @@ public class SampleBay {
 **只看最後一行，抓不到**：要看回放、看邊界、直接測類別
 
 <!--
-答案：1 → 預設腳本回放能源 6,6,6（同一物件的參考）；2 → 3 9 0 變成 OK、actionCount=1；3 → RoverTry 的 new Rover(25, -3) 變成 25/-3/0。
+答案：1 → 預設腳本回放能源 6,6,6（同一物件的參考）；2 → 3 9 0 變成 成功、行動次數=1；3 → RoverTry 的 new Rover(25, -3) 變成 25/-3/0。
 -->
 
 ---

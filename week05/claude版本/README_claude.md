@@ -12,7 +12,7 @@
 
 1. 用 `RawStep` 把一步打包成物件，再看見 public 欄位的問題。
 2. 用 `Battery` 示範封裝：`private` 欄位、建構子修正初始值、方法拒絕不合法操作。
-3. 把同樣的設計套用到任務：`Rover` 保管狀態與規則，`MissionStep` 記錄一步，`MissionLog` 改用 `ArrayList<MissionStep>`，輸出與第 4 週逐字相同。
+3. 把同樣的設計套用到任務：`Rover` 保管狀態與規則，`MissionStep` 記錄一步，`MissionLog` 改用 `ArrayList<MissionStep>`，同一路線的數值和行動結果延續第 4 週，報表沿用第四週的繁體中文欄位。
 4. 需求轉換：把「樣本儲存艙」需求寫成類別設計卡，用它檢查模擬 AI 產生的類別。
 
 程式由三個以上的類別合作，本週重新使用 IntelliJ IDEA（第 1 週已介紹），VS Code 仍可使用。
@@ -63,5 +63,5 @@ npx -y @marp-team/marp-cli@latest --no-stdin week05_slides_claude.md -o week05_s
 
 - 沿用第 4 週 claude 版的 Marp 樣式、`by-claude` 徽章與範例檔標籤。
 - 沿用探測車規則、結束判斷順序、`115_1_Java/YYYY_MM_DD/java-NN/src` 結構、150 分鐘節奏（最後 15 分鐘保存推送），以及「模擬 AI 錯誤，先預測再重現」的除錯練習形式。
-- 程式輸出只用英數字，與前幾週相同，避免教室終端機的中文編碼問題。
+- 程式輸出使用繁體中文。以 UTF-8 儲存 Java 原始檔，編譯時使用 `javac -encoding UTF-8`，並確認終端機的輸出編碼。
 - 不限定特定 JDK 版本：學生使用已安裝的 JDK，記錄 java／javac 實際版本，不設定固定編譯目標。

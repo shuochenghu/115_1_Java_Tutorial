@@ -10,26 +10,26 @@ public class ShelfCheck {
 
     public static void main(String[] args) {
         Camera cam = new Camera("CAM-01", "Sony A7", 2);
-        expect("camera inherited", cam.getId() + " | " + cam.getName() + " | " + cam.getLabel(),
+        expect("相機繼承的方法", cam.getId() + " | " + cam.getName() + " | " + cam.getLabel(),
                 "CAM-01 | Sony A7 | CAM-01 Sony A7");
-        expect("camera checklist", cam.checklist() + " " + cam.getMemoryCards(), "CAM-01 Sony A7 | cards=2 2");
-        expect("camera negative cards", new Camera("CAM-02", "Canon R50", -1).checklist(),
-                "CAM-02 Canon R50 | cards=0");
-        expect("camera zero cards", new Camera("CAM-03", "Ricoh GR", 0).checklist(), "CAM-03 Ricoh GR | cards=0");
+        expect("相機檢查清單", cam.checklist() + " " + cam.getMemoryCards(), "CAM-01 Sony A7 | 記憶卡數=2 2");
+        expect("相機的記憶卡數為負數", new Camera("CAM-02", "Canon R50", -1).checklist(),
+                "CAM-02 Canon R50 | 記憶卡數=0");
+        expect("相機的記憶卡數為零", new Camera("CAM-03", "Ricoh GR", 0).checklist(), "CAM-03 Ricoh GR | 記憶卡數=0");
 
         Projector big = new Projector("PRJ-01", "Epson X49", true);
-        expect("projector inherited", big.getId() + " | " + big.getLabel(), "PRJ-01 | PRJ-01 Epson X49");
-        expect("projector checklist", big.checklist() + " " + big.needsScreen(), "PRJ-01 Epson X49 | screen=yes true");
-        expect("projector without screen", new Projector("PRJ-02", "Mini Beam", false).checklist(),
-                "PRJ-02 Mini Beam | screen=no");
+        expect("投影機繼承的方法", big.getId() + " | " + big.getLabel(), "PRJ-01 | PRJ-01 Epson X49");
+        expect("投影機檢查清單", big.checklist() + " " + big.needsScreen(), "PRJ-01 Epson X49 | 需要布幕=是 true");
+        expect("投影機不需要布幕", new Projector("PRJ-02", "Mini Beam", false).checklist(),
+                "PRJ-02 Mini Beam | 需要布幕=否");
 
-        expect("design: Camera extends Equipment", Camera.class.getSuperclass().getSimpleName(), "Equipment");
-        expect("design: Projector extends Equipment", Projector.class.getSuperclass().getSimpleName(), "Equipment");
-        expect("design: no hidden copies", hiddenFields(Camera.class) + " " + hiddenFields(Projector.class),
-                "(none) (none)");
-        expect("design: fields private", nonPrivateFields(Camera.class, Projector.class), "(none)");
+        expect("設計檢查：Camera 繼承 Equipment", Camera.class.getSuperclass().getSimpleName(), "Equipment");
+        expect("設計檢查：Projector 繼承 Equipment", Projector.class.getSuperclass().getSimpleName(), "Equipment");
+        expect("設計檢查：無重複欄位", hiddenFields(Camera.class) + " " + hiddenFields(Projector.class),
+                "（無） （無）");
+        expect("設計檢查：欄位為 private", nonPrivateFields(Camera.class, Projector.class), "（無）");
 
-        System.out.println(passed + "/" + total + " passed");
+        System.out.println(passed + "/" + total + " 項通過");
     }
 
     // 子類別又宣告了 id 或 name：會遮蔽 Equipment 的欄位，作業說明第 3 節的模擬 AI 回覆就是這樣。
@@ -42,7 +42,7 @@ public class ShelfCheck {
                 }
             }
         }
-        return found.isEmpty() ? "(none)" : found.trim();
+        return found.isEmpty() ? "（無）" : found.trim();
     }
 
     static String nonPrivateFields(Class<?>... types) {
@@ -56,16 +56,16 @@ public class ShelfCheck {
                 }
             }
         }
-        return found.isEmpty() ? "(none)" : found.trim();
+        return found.isEmpty() ? "（無）" : found.trim();
     }
 
     static void expect(String label, String actual, String expected) {
         total++;
         if (actual.equals(expected)) {
             passed++;
-            System.out.println("PASS " + label + " -> " + actual);
+            System.out.println("通過 " + label + " -> " + actual);
         } else {
-            System.out.println("FAIL " + label + " -> " + actual + " (expect " + expected + ")");
+            System.out.println("失敗 " + label + " -> " + actual + " （預期 " + expected + "）");
         }
     }
 }

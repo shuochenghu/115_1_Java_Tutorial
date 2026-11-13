@@ -111,7 +111,7 @@ section .ex {
 ;" data-marpit-pagination-total="35" data-size="16:9">
 <h2 id="%E9%97%9C%E6%96%BC%E9%80%99%E4%BB%BD%E6%95%99%E6%9D%90">關於這份教材</h2>
 <ul>
-<li>每頁右上角 <span>claude</span>：初稿由 Anthropic Claude 生成，教師審閱後使用</li>
+<li>每頁右上角 <span style="background:#c96442;color:#fff;padding:2px 10px;border-radius:10px;font-size:0.8em">claude</span>：初稿由 Anthropic Claude 生成，教師審閱後使用</li>
 <li>參考書：Deitel, <em>Java How to Program, Early Objects</em> 11e
 <ul>
 <li>第 7 章：7.2–7.4、7.7–7.9、7.14–7.16</li>
@@ -172,7 +172,7 @@ section .ex {
 ;" data-marpit-pagination-total="35" data-size="16:9">
 <h2 id="%E4%B8%8A%E9%80%B1%E7%95%99%E4%B8%8B%E7%9A%84%E5%95%8F%E9%A1%8C">上週留下的問題</h2>
 <p>第三週任務結束時，我們只剩三個數字：</p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-text">final energy=6, samples=5, actionCount=3 -&gt; SUCCESS
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-text">最終能源=6, 樣本數=5, 行動次數=3 -&gt; 任務成功
 </code></pre>
 <ul>
 <li>走的是「探索、探索、掃描」還是「掃描、探索、探索」？</li>
@@ -615,7 +615,7 @@ section .ex {
 ;" data-marpit-pagination-total="35" data-size="16:9"><div class="ex">範例：code/examples/ArrayBasics.java｜索引走訪、加強版 for</div>
 <h2 id="%E5%85%A9%E7%A8%AE%E8%B5%B0%E8%A8%AA%E8%A6%81%E4%B8%8D%E8%A6%81%E7%B4%A2%E5%BC%95">兩種走訪：要不要索引？</h2>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-java"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; script.length; i++) {
-    System.out.println(<span class="hljs-string">&quot;step &quot;</span> + (i + <span class="hljs-number">1</span>) + <span class="hljs-string">&quot; -&gt; command &quot;</span> + script[i]);
+    System.out.println(<span class="hljs-string">&quot;步驟 &quot;</span> + (i + <span class="hljs-number">1</span>) + <span class="hljs-string">&quot; → 指令 &quot;</span> + script[i]);
 }
 
 <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> command : script) {   <span class="hljs-comment">// 加強版 for（enhanced for）</span>
@@ -818,8 +818,8 @@ section .ex {
 <span class="hljs-keyword">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">reset</span><span class="hljs-params">(<span class="hljs-type">int</span>[] s)</span>   { s = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[] {<span class="hljs-number">20</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>}; }
 
 <span class="hljs-type">int</span>[] <span class="hljs-variable">state</span> <span class="hljs-operator">=</span> {<span class="hljs-number">14</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>};
-explore(state);   <span class="hljs-comment">// state = [8, 2, 1]   ← 呼叫端看得到</span>
-reset(state);     <span class="hljs-comment">// state = [8, 2, 1]   ← 沒變！</span>
+explore(state);   <span class="hljs-comment">// 狀態陣列 = [8, 2, 1]   ← 呼叫端看得到</span>
+reset(state);     <span class="hljs-comment">// 狀態陣列 = [8, 2, 1]   ← 沒變！</span>
 </code></pre>
 <ul>
 <li>Java 永遠是<strong>傳值</strong>；陣列變數的「值」是參考（Deitel 7.9）</li>
@@ -962,10 +962,10 @@ section .ex {
 </code></pre>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-powershell">java <span class="hljs-literal">-cp</span> out ScriptArgs <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span>
 </code></pre>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-text">args.length = 3
-args = [1, 1, 2]
-args[0] + args[0] = 11      ← 字串串接，不是 2
-script = [1, 1, 2], sum = 4
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-text">參數個數 = 3
+命令列參數 = [1, 1, 2]
+第一個參數與自身串接 = 11      ← 字串串接，不是 2
+指令腳本 = [1, 1, 2], 加總 = 4
 </code></pre>
 <ul>
 <li><code>args</code> 是字串陣列；C# <code>int.Parse</code> → Java <code>Integer.parseInt</code></li>
@@ -1259,7 +1259,7 @@ section .ex {
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-java">ArrayList&lt;<span class="hljs-type">int</span>&gt; log;       <span class="hljs-comment">// 編譯錯誤：泛型參數只能是參考型態</span>
 <span class="hljs-type">ArrayList</span>&lt;Integer&gt; <span class="hljs-variable">log</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();
 log.add(<span class="hljs-number">1</span>);               <span class="hljs-comment">// 自動裝箱：int → Integer</span>
-<span class="hljs-type">int</span> <span class="hljs-variable">first</span> <span class="hljs-operator">=</span> log.get(<span class="hljs-number">0</span>);   <span class="hljs-comment">// 自動拆箱：Integer → int</span>
+<span class="hljs-type">int</span> 第一筆 = log.get(<span class="hljs-number">0</span>);   <span class="hljs-comment">// 自動拆箱：Integer → int</span>
 </code></pre>
 <table>
 <thead>
@@ -1610,14 +1610,14 @@ section .ex {
 .small { font-size: 0.8em; }
 ;" data-marpit-pagination-total="35" data-size="16:9"><div class="ex">範例：code/examples/ListBasics.java｜陷阱 3</div>
 <h2 id="%E9%99%B7%E9%98%B1-3%E9%82%8A%E8%B5%B0%E8%A8%AA%E9%82%8A%E5%88%AA%E9%99%A4">陷阱 3：邊走訪邊刪除</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-java"><span class="hljs-comment">// 想刪掉所有不是 &quot;OK&quot; 的步驟</span>
-List: [OK, FULL, UNKNOWN, OK]
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-java"><span class="hljs-comment">// 想刪掉所有不是 &quot;成功&quot; 的步驟</span>
+List: [成功, 能源已滿, 無效指令, 成功]
 <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; steps.size(); i++) {
-    <span class="hljs-keyword">if</span> (!steps.get(i).equals(<span class="hljs-string">&quot;OK&quot;</span>)) steps.remove(i);
+    <span class="hljs-keyword">if</span> (!steps.get(i).equals(<span class="hljs-string">&quot;成功&quot;</span>)) steps.remove(i);
 }
-<span class="hljs-comment">// 結果：[OK, UNKNOWN, OK]   ← UNKNOWN 沒刪掉！</span>
+<span class="hljs-comment">// 結果：[成功, 無效指令, 成功]   ← 無效指令 沒刪掉！</span>
 </code></pre>
-<p>i=1 刪掉 FULL → UNKNOWN 往前補到索引 1 → 下一輪 i=2，<strong>跳過了它</strong></p>
+<p>i=1 刪掉 能源已滿 → 無效指令 往前補到索引 1 → 下一輪 i=2，<strong>跳過了它</strong></p>
 <p>修法：<strong>從後往前</strong>走（<code>i = size() - 1; i &gt;= 0; i--</code>）</p>
 <p>（改用加強版 for 邊走邊刪，通常會丟 <code>ConcurrentModificationException</code>）</p>
 <footer>物件導向程式設計｜Week 04｜claude 版本</footer>
@@ -1688,19 +1688,19 @@ section .ex {
 <tr>
 <td>0</td>
 <td>1</td>
-<td>OK</td>
+<td>成功</td>
 <td>14</td>
 </tr>
 <tr>
 <td>1</td>
 <td>1</td>
-<td>OK</td>
+<td>成功</td>
 <td>8</td>
 </tr>
 <tr>
 <td>2</td>
 <td>2</td>
-<td>OK</td>
+<td>成功</td>
 <td>6</td>
 </tr>
 </tbody>
@@ -1802,7 +1802,7 @@ section .ex {
 </tr>
 </tbody>
 </table>
-<p>結束判斷與第三週相同：成功 &gt; 耗盡 &gt; 返回；腳本用完但未結束 → <code>UNFINISHED</code></p>
+<p>結束判斷與第三週相同：成功 &gt; 耗盡 &gt; 返回；腳本用完但未結束 → <code>任務未完成</code></p>
 <footer>物件導向程式設計｜Week 04｜claude 版本</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="26" data-paginate="true" data-footer="物件導向程式設計｜Week 04｜claude 版本" data-class="by-claude" data-theme="default" data-lang="zh-TW" data-style="section { font-size: 25px; }
@@ -1918,18 +1918,18 @@ section .ex {
 ;" data-marpit-pagination-total="35" data-size="16:9"><div class="ex">範例：code/starter/MissionLog.java｜printReplay、countCommands、printSummary</div>
 <h2 id="todo-3%E2%80%935%E9%A0%90%E6%9C%9F%E8%BC%B8%E5%87%BA">TODO 3–5：預期輸出</h2>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-text">&gt; java -cp out MissionLog 3 9 0
-=== replay ===
-step 1: command=3, result=ALREADY_FULL, energy=20
-step 2: command=9, result=UNKNOWN_COMMAND, energy=20
-step 3: command=0, result=RETURN, energy=20
-counts[0..3]=[1, 0, 0, 1]
-steps=3, ok=0, rejected=2, ignored=0
-lowest energy=20
-final energy=20, samples=0, actionCount=0 -&gt; RETURNED
+=== 任務回放 ===
+步驟 1: 指令=3, 結果=能源已滿, 能源=20
+步驟 2: 指令=9, 結果=無效指令, 能源=20
+步驟 3: 指令=0, 結果=返回, 能源=20
+指令次數[0..3]=[1, 0, 0, 1]
+步數=3, 成功=0, 拒絕=2, 略過=0
+最低能源=20
+最終能源=20, 樣本數=0, 行動次數=0 -&gt; 已返回
 </code></pre>
 <ul>
 <li><code>counts</code>：指令 9 不在 0–3，<strong>不計數、也不能讓程式當掉</strong></li>
-<li><code>rejected</code>：不是 OK、也不是 RETURN 的步數</li>
+<li><code>rejected</code>：不是 成功、也不是 返回 的步數</li>
 <li><code>ignored</code>：任務結束後，腳本裡沒執行到的指令數</li>
 </ul>
 <footer>物件導向程式設計｜Week 04｜claude 版本</footer>
@@ -1995,31 +1995,31 @@ section .ex {
 <tr>
 <td>（無）</td>
 <td>6／5／3</td>
-<td>SUCCESS</td>
+<td>任務成功</td>
 <td>預設腳本 1 1 2</td>
 </tr>
 <tr>
 <td><code>2 2 2 2 2</code></td>
 <td>10／5／5</td>
-<td>SUCCESS</td>
+<td>任務成功</td>
 <td>和上週相同</td>
 </tr>
 <tr>
 <td><code>3 9 0</code></td>
 <td>20／0／0</td>
-<td>RETURNED</td>
+<td>已返回</td>
 <td>拒絕也記錄；9 不越界</td>
 </tr>
 <tr>
 <td><code>1 1 1 1</code></td>
 <td>2／6／3</td>
-<td>SUCCESS</td>
-<td><code>ignored=1</code></td>
+<td>任務成功</td>
+<td><code>略過=1</code></td>
 </tr>
 <tr>
 <td><code>2 1</code></td>
 <td>12／3／2</td>
-<td>UNFINISHED</td>
+<td>任務未完成</td>
 <td>腳本用完</td>
 </tr>
 </tbody>
@@ -2157,7 +2157,7 @@ section .ex {
 </tr>
 <tr>
 <td>記錄每一步歷程</td>
-<td>一條 <code>ArrayList&lt;String&gt;</code>，每筆存 <code>&quot;1,OK,14&quot;</code></td>
+<td>一條 <code>ArrayList&lt;String&gt;</code>，每筆存 <code>&quot;1,成功,14&quot;</code></td>
 <td></td>
 </tr>
 </tbody>

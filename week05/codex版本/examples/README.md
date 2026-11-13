@@ -16,38 +16,38 @@
 CreateStepDemo：
 
 ```text
-first=1/14
-second=2/12
-same object=false
+第一次=1/14
+第二次=2/12
+同一個物件=false
 ```
 
 BatteryDemo：
 
 ```text
-explore=false, energy=5
-charge=true, energy=10
-explore=true, energy=4
-cap=true, energy=20
-full=false, energy=20
+探索=false, 能源=5
+充電=true, 能源=10
+探索=true, 能源=4
+充至上限=true, 能源=20
+已充滿=false, 能源=20
 ```
 
 ReferenceDemo：
 
 ```text
-after alias=14/20
-same reference=true
-after spend=8
-inside replacement=1
-after replace=8
+建立別名後=14/20
+同一個參考=true
+扣除能源後=8
+方法內新物件的能源=1
+重新指定參考後=8
 ```
 
 SnapshotDemo：
 
 ```text
-command=1, energy=14
-command=3, energy=19
-current=19
-separate records=true
+指令=1, 能源=14
+指令=3, 能源=19
+目前能源=19
+各自獨立的紀錄=true
 ```
 
 RoverBattery 建構前提為 0..20；未提供契約外參數的防護，不宣稱 private 自動檢查數值。其 explore 只示範能源變動，不保存樣本或任務是否結束；getEnergy 是查詢，不會扣電。StepCard 沒有 setter，對外只讀；這不代表清單本身不能增刪。

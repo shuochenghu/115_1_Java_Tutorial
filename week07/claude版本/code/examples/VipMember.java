@@ -8,7 +8,7 @@ public class VipMember extends Member {
     public VipMember(String id, String name) {
         super(id, name);      // 先讓 Member 的建構子設定 id、name、points
         this.bonusCount = 0;
-        System.out.println("  [VipMember constructor] " + id);
+        System.out.println("  [VipMember 建構子] " + id);
     }
 
     public int getBonusCount() {

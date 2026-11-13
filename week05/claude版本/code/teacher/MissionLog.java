@@ -17,11 +17,11 @@ public class MissionLog {
 
         printReplay(steps);
         int[] counts = countCommands(steps);
-        System.out.println("counts[0..3]=" + Arrays.toString(counts));
+        System.out.println("指令次數[0..3]=" + Arrays.toString(counts));
         printSummary(script, steps);
         // runMission 改的是同一個 Rover 物件，所以 main 用 getter 讀得到最終狀態。
-        System.out.println("final energy=" + rover.getEnergy() + ", samples=" + rover.getSamples()
-                + ", actionCount=" + rover.getActionCount() + " -> " + outcome);
+        System.out.println("最終能源=" + rover.getEnergy() + ", 樣本數=" + rover.getSamples()
+                + ", 行動次數=" + rover.getActionCount() + " -> " + outcome);
     }
 
     // 與第四週相同：命令列參數逐一轉成 int。
@@ -48,21 +48,21 @@ public class MissionLog {
         }
         // 判斷順序與第三、四週相同：同時耗盡與達標時成功優先。
         if (rover.isSuccess()) {
-            return "SUCCESS";
+            return "任務成功";
         } else if (rover.isExhausted()) {
-            return "EXHAUSTED";
+            return "能源耗盡";
         } else if (!steps.isEmpty() && steps.get(steps.size() - 1).getCommand() == 0) {
-            return "RETURNED";
+            return "已返回";
         } else {
-            return "UNFINISHED";
+            return "任務未完成";
         }
     }
 
     // TODO 6：每一步的文字交給 MissionStep.describe()，這裡只負責編號。
     static void printReplay(ArrayList<MissionStep> steps) {
-        System.out.println("=== replay ===");
+        System.out.println("=== 任務回放 ===");
         for (int i = 0; i < steps.size(); i++) {
-            System.out.println("step " + (i + 1) + ": " + steps.get(i).describe());
+            System.out.println("步驟 " + (i + 1) + ": " + steps.get(i).describe());
         }
     }
 
@@ -84,7 +84,7 @@ public class MissionLog {
         int rejected = 0;
         int lowest = Rover.CAPACITY;
         for (MissionStep step : steps) {
-            if (step.getResult().equals("OK")) {
+            if (step.getResult().equals("成功")) {
                 ok++;
             } else if (step.isRejected()) {
                 rejected++;
@@ -94,10 +94,10 @@ public class MissionLog {
             }
         }
         int ignored = script.length - steps.size();
-        System.out.println("steps=" + steps.size() + ", ok=" + ok
-                + ", rejected=" + rejected + ", ignored=" + ignored);
+        System.out.println("步數=" + steps.size() + ", 成功=" + ok
+                + ", 拒絕=" + rejected + ", 略過=" + ignored);
         if (!steps.isEmpty()) {
-            System.out.println("lowest energy=" + lowest);
+            System.out.println("最低能源=" + lowest);
         }
     }
 }

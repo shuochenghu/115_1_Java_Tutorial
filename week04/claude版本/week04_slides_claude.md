@@ -70,7 +70,7 @@ style: |
 第三週任務結束時，我們只剩三個數字：
 
 ```text
-final energy=6, samples=5, actionCount=3 -> SUCCESS
+最終能源=6, 樣本數=5, 行動次數=3 -> 任務成功
 ```
 
 - 走的是「探索、探索、掃描」還是「掃描、探索、探索」？
@@ -201,7 +201,7 @@ System.out.println(Arrays.toString(script)); // [1, 1, 2]
 
 ```java
 for (int i = 0; i < script.length; i++) {
-    System.out.println("step " + (i + 1) + " -> command " + script[i]);
+    System.out.println("步驟 " + (i + 1) + " → 指令 " + script[i]);
 }
 
 for (int command : script) {   // 加強版 for（enhanced for）
@@ -277,8 +277,8 @@ static void explore(int[] s) { s[0] -= 6; s[1] += 2; s[2]++; }
 static void reset(int[] s)   { s = new int[] {20, 0, 0}; }
 
 int[] state = {14, 0, 0};
-explore(state);   // state = [8, 2, 1]   ← 呼叫端看得到
-reset(state);     // state = [8, 2, 1]   ← 沒變！
+explore(state);   // 狀態陣列 = [8, 2, 1]   ← 呼叫端看得到
+reset(state);     // 狀態陣列 = [8, 2, 1]   ← 沒變！
 ```
 
 - Java 永遠是**傳值**；陣列變數的「值」是參考（Deitel 7.9）
@@ -328,10 +328,10 @@ java -cp out ScriptArgs 1 1 2
 ```
 
 ```text
-args.length = 3
-args = [1, 1, 2]
-args[0] + args[0] = 11      ← 字串串接，不是 2
-script = [1, 1, 2], sum = 4
+參數個數 = 3
+命令列參數 = [1, 1, 2]
+第一個參數與自身串接 = 11      ← 字串串接，不是 2
+指令腳本 = [1, 1, 2], 加總 = 4
 ```
 
 - `args` 是字串陣列；C# `int.Parse` → Java `Integer.parseInt`
@@ -408,7 +408,7 @@ count++;
 ArrayList<int> log;       // 編譯錯誤：泛型參數只能是參考型態
 ArrayList<Integer> log = new ArrayList<>();
 log.add(1);               // 自動裝箱：int → Integer
-int first = log.get(0);   // 自動拆箱：Integer → int
+int 第一筆 = log.get(0);   // 自動拆箱：Integer → int
 ```
 
 | 基本型態 | 包裝類別 |
@@ -515,15 +515,15 @@ big1.equals(big2)  // true
 ## 陷阱 3：邊走訪邊刪除
 
 ```java
-// 想刪掉所有不是 "OK" 的步驟
-List: [OK, FULL, UNKNOWN, OK]
+// 想刪掉所有不是 "成功" 的步驟
+List: [成功, 能源已滿, 無效指令, 成功]
 for (int i = 0; i < steps.size(); i++) {
-    if (!steps.get(i).equals("OK")) steps.remove(i);
+    if (!steps.get(i).equals("成功")) steps.remove(i);
 }
-// 結果：[OK, UNKNOWN, OK]   ← UNKNOWN 沒刪掉！
+// 結果：[成功, 無效指令, 成功]   ← 無效指令 沒刪掉！
 ```
 
-i=1 刪掉 FULL → UNKNOWN 往前補到索引 1 → 下一輪 i=2，**跳過了它**
+i=1 刪掉 能源已滿 → 無效指令 往前補到索引 1 → 下一輪 i=2，**跳過了它**
 
 修法：**從後往前**走（`i = size() - 1; i >= 0; i--`）
 
@@ -546,9 +546,9 @@ ArrayList<String>  resultLog  = new ArrayList<>();
 
 | 步驟 i | commandLog | resultLog | energyLog |
 |---|---|---|---|
-| 0 | 1 | OK | 14 |
-| 1 | 1 | OK | 8 |
-| 2 | 2 | OK | 6 |
+| 0 | 1 | 成功 | 14 |
+| 1 | 1 | 成功 | 8 |
+| 2 | 2 | 成功 | 6 |
 
 **三條平行清單**：同一個索引 = 同一步。新增時三條要一起加，否則就對不齊
 
@@ -570,7 +570,7 @@ ArrayList<String>  resultLog  = new ArrayList<>();
 | `countCommands(...)` | `int[]` 計數、範圍檢查 | **TODO 4**（獨立） |
 | `printSummary(...)` | `Collections.frequency`、`min` | **TODO 5**（獨立） |
 
-結束判斷與第三週相同：成功 > 耗盡 > 返回；腳本用完但未結束 → `UNFINISHED`
+結束判斷與第三週相同：成功 > 耗盡 > 返回；腳本用完但未結束 → `任務未完成`
 
 ---
 
@@ -609,18 +609,18 @@ resultLog.add(result);
 
 ```text
 > java -cp out MissionLog 3 9 0
-=== replay ===
-step 1: command=3, result=ALREADY_FULL, energy=20
-step 2: command=9, result=UNKNOWN_COMMAND, energy=20
-step 3: command=0, result=RETURN, energy=20
-counts[0..3]=[1, 0, 0, 1]
-steps=3, ok=0, rejected=2, ignored=0
-lowest energy=20
-final energy=20, samples=0, actionCount=0 -> RETURNED
+=== 任務回放 ===
+步驟 1: 指令=3, 結果=能源已滿, 能源=20
+步驟 2: 指令=9, 結果=無效指令, 能源=20
+步驟 3: 指令=0, 結果=返回, 能源=20
+指令次數[0..3]=[1, 0, 0, 1]
+步數=3, 成功=0, 拒絕=2, 略過=0
+最低能源=20
+最終能源=20, 樣本數=0, 行動次數=0 -> 已返回
 ```
 
 - `counts`：指令 9 不在 0–3，**不計數、也不能讓程式當掉**
-- `rejected`：不是 OK、也不是 RETURN 的步數
+- `rejected`：不是 成功、也不是 返回 的步數
 - `ignored`：任務結束後，腳本裡沒執行到的指令數
 
 ---
@@ -633,11 +633,11 @@ final energy=20, samples=0, actionCount=0 -> RETURNED
 
 | 參數 | 最終 E／S／A | 結果 | 檢查重點 |
 |---|---|---|---|
-| （無） | 6／5／3 | SUCCESS | 預設腳本 1 1 2 |
-| `2 2 2 2 2` | 10／5／5 | SUCCESS | 和上週相同 |
-| `3 9 0` | 20／0／0 | RETURNED | 拒絕也記錄；9 不越界 |
-| `1 1 1 1` | 2／6／3 | SUCCESS | `ignored=1` |
-| `2 1` | 12／3／2 | UNFINISHED | 腳本用完 |
+| （無） | 6／5／3 | 任務成功 | 預設腳本 1 1 2 |
+| `2 2 2 2 2` | 10／5／5 | 任務成功 | 和上週相同 |
+| `3 9 0` | 20／0／0 | 已返回 | 拒絕也記錄；9 不越界 |
+| `1 1 1 1` | 2／6／3 | 任務成功 | `略過=1` |
+| `2 1` | 12／3／2 | 任務未完成 | 腳本用完 |
 
 E／S／A = energy／samples／actionCount
 
@@ -669,7 +669,7 @@ E／S／A = energy／samples／actionCount
 |---|---|---|
 | 統計指令 0–3 各用幾次 | `HashMap<Integer, Integer>` | |
 | 記錄每一步歷程 | `int[] log = new int[100]` | |
-| 記錄每一步歷程 | 一條 `ArrayList<String>`，每筆存 `"1,OK,14"` | |
+| 記錄每一步歷程 | 一條 `ArrayList<String>`，每筆存 `"1,成功,14"` | |
 
 - 每一格都要寫：**可行嗎？代價是什麼？你會怎麼改 Prompt？**
 - 這些是**教師設計的模擬建議**，不是真實對話；用真實 AI 時照實記錄

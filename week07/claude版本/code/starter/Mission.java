@@ -28,13 +28,13 @@ public class Mission {
     // 判斷順序與第三至六週相同，同時耗盡與達標時成功優先。
     public String getOutcome() {
         if (rover.isSuccess()) {
-            return "SUCCESS";
+            return "任務成功";
         } else if (rover.isExhausted()) {
-            return "EXHAUSTED";
+            return "能源耗盡";
         } else if (!steps.isEmpty() && steps.get(steps.size() - 1).getCommand() == 0) {
-            return "RETURNED";
+            return "已返回";
         } else {
-            return "UNFINISHED";
+            return "任務未完成";
         }
     }
 
@@ -59,11 +59,11 @@ public class Mission {
         return counts;
     }
 
-    // 結果是 "OK" 的筆數；字串用 equals 比較。
+    // 結果是 "成功" 的筆數；字串用 equals 比較。
     public int countOk() {
         int ok = 0;
         for (MissionStep step : steps) {
-            if (step.getResult().equals("OK")) {
+            if (step.getResult().equals("成功")) {
                 ok++;
             }
         }

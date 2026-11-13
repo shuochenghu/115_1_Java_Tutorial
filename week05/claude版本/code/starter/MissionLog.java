@@ -17,11 +17,11 @@ public class MissionLog {
 
         printReplay(steps);
         int[] counts = countCommands(steps);
-        System.out.println("counts[0..3]=" + Arrays.toString(counts));
+        System.out.println("指令次數[0..3]=" + Arrays.toString(counts));
         printSummary(script, steps);
         // runMission 改的是同一個 Rover 物件，所以 main 用 getter 讀得到最終狀態。
-        System.out.println("final energy=" + rover.getEnergy() + ", samples=" + rover.getSamples()
-                + ", actionCount=" + rover.getActionCount() + " -> " + outcome);
+        System.out.println("最終能源=" + rover.getEnergy() + ", 樣本數=" + rover.getSamples()
+                + ", 行動次數=" + rover.getActionCount() + " -> " + outcome);
     }
 
     // 與第四週相同：命令列參數逐一轉成 int。
@@ -49,19 +49,19 @@ public class MissionLog {
         }
         // 判斷順序與第三、四週相同：同時耗盡與達標時成功優先。
         if (rover.isSuccess()) {
-            return "SUCCESS";
+            return "任務成功";
         } else if (rover.isExhausted()) {
-            return "EXHAUSTED";
+            return "能源耗盡";
         } else if (!steps.isEmpty() && steps.get(steps.size() - 1).getCommand() == 0) {
-            return "RETURNED";
+            return "已返回";
         } else {
-            return "UNFINISHED";
+            return "任務未完成";
         }
     }
 
     // TODO 6：依序印出 "step N: " 加上該筆紀錄的 describe()；N 從 1 開始。
     static void printReplay(ArrayList<MissionStep> steps) {
-        System.out.println("=== replay ===");
+        System.out.println("=== 任務回放 ===");
     }
 
     // 已提供：第四週的計數方法，改成從每筆紀錄取出指令。
@@ -77,11 +77,11 @@ public class MissionLog {
     }
 
     // TODO 7：清單裡是 MissionStep，Collections.frequency／min 不能直接比結果或能源，改用迴圈。
-    // 需要的值：steps（紀錄筆數）、ok（結果為 "OK"）、rejected（用 isRejected()）、
+    // 需要的值：steps（紀錄筆數）、ok（結果為 "成功"）、rejected（用 isRejected()）、
     // ignored（腳本中沒被執行的指令數）、lowest energy（所有紀錄中最低的執行後能源；沒有紀錄時不印這一行）。
-    // 輸出格式：steps=3, ok=3, rejected=0, ignored=0
-    //          lowest energy=6
+    // 輸出格式：步數=3, 成功=3, 拒絕=0, 略過=0
+    //          最低能源=6
     static void printSummary(int[] script, ArrayList<MissionStep> steps) {
-        System.out.println("TODO 7: summary");
+        System.out.println("待辦 7：印出摘要");
     }
 }

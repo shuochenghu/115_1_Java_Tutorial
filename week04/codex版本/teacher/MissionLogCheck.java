@@ -1,47 +1,54 @@
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-// 教師驗證工具：比對完整輸出，包含每筆回放、對齊、計數、摘要、空日誌與最終狀態。
+// 類別：MissionLogCheck（教師驗證工具）
+// 意義：用 15 個固定案例確認 MissionLog 的完整輸出正確。
+// 作用：對每個案例執行 runMission，擷取它印出的文字，和預期輸出逐字比對；
+//       涵蓋回放、三條清單對齊、指令次數、摘要、空日誌與最終狀態。
 // 此處的輸出擷取不是學生先備要求；不使用 JUnit，也不要求學生另寫工具。
 public class MissionLogCheck {
+    // main：程式進入點。逐一執行 15 個案例並累計通過數；不是全部通過就丟出錯誤。
     public static void main(String[] args) throws Exception {
         int passed = 0;
-        passed += check("return", new int[] {0}, 20, 0,
-                "=== replay ===\nstep 1: command=0, result=RETURN, energy=20\ncounts[0..3]=[1, 0, 0, 0]\nsteps=1, ok=0, rejected=0, ignored=0\nlowest energy=20\nfinal energy=20, samples=0, actionCount=0 -> RETURNED\nbattery=100.0\n");
-        passed += check("mixed success", new int[] {1, 1, 2}, 20, 0,
-                "=== replay ===\nstep 1: command=1, result=OK, energy=14\nstep 2: command=1, result=OK, energy=8\nstep 3: command=2, result=OK, energy=6\ncounts[0..3]=[0, 2, 1, 0]\nsteps=3, ok=3, rejected=0, ignored=0\nlowest energy=6\nfinal energy=6, samples=5, actionCount=3 -> SUCCESS\nbattery=30.0\n");
-        passed += check("five scans", new int[] {2, 2, 2, 2, 2}, 20, 0,
-                "=== replay ===\nstep 1: command=2, result=OK, energy=18\nstep 2: command=2, result=OK, energy=16\nstep 3: command=2, result=OK, energy=14\nstep 4: command=2, result=OK, energy=12\nstep 5: command=2, result=OK, energy=10\ncounts[0..3]=[0, 0, 5, 0]\nsteps=5, ok=5, rejected=0, ignored=0\nlowest energy=10\nfinal energy=10, samples=5, actionCount=5 -> SUCCESS\nbattery=50.0\n");
-        passed += check("rejected and invalid", new int[] {3, 9, 0}, 20, 0,
-                "=== replay ===\nstep 1: command=3, result=ALREADY_FULL, energy=20\nstep 2: command=9, result=UNKNOWN_COMMAND, energy=20\nstep 3: command=0, result=RETURN, energy=20\ncounts[0..3]=[1, 0, 0, 1]\nsteps=3, ok=0, rejected=2, ignored=0\nlowest energy=20\nfinal energy=20, samples=0, actionCount=0 -> RETURNED\nbattery=100.0\n");
-        passed += check("stop after success", new int[] {1, 1, 1, 1}, 20, 0,
-                "=== replay ===\nstep 1: command=1, result=OK, energy=14\nstep 2: command=1, result=OK, energy=8\nstep 3: command=1, result=OK, energy=2\ncounts[0..3]=[0, 3, 0, 0]\nsteps=3, ok=3, rejected=0, ignored=1\nlowest energy=2\nfinal energy=2, samples=6, actionCount=3 -> SUCCESS\nbattery=10.0\n");
-        passed += check("script exhausted", new int[] {2, 1}, 20, 0,
-                "=== replay ===\nstep 1: command=2, result=OK, energy=18\nstep 2: command=1, result=OK, energy=12\ncounts[0..3]=[0, 1, 1, 0]\nsteps=2, ok=2, rejected=0, ignored=0\nlowest energy=12\nfinal energy=12, samples=3, actionCount=2 -> UNFINISHED\nbattery=60.0\n");
-        passed += check("rejected then charge", new int[] {1, 3, 0}, 5, 0,
-                "=== replay ===\nstep 1: command=1, result=NOT_ENOUGH_ENERGY, energy=5\nstep 2: command=3, result=OK, energy=10\nstep 3: command=0, result=RETURN, energy=10\ncounts[0..3]=[1, 1, 0, 1]\nsteps=3, ok=1, rejected=1, ignored=0\nlowest energy=5\nfinal energy=10, samples=0, actionCount=1 -> RETURNED\nbattery=50.0\n");
-        passed += check("success priority", new int[] {2}, 2, 4,
-                "=== replay ===\nstep 1: command=2, result=OK, energy=0\ncounts[0..3]=[0, 0, 1, 0]\nsteps=1, ok=1, rejected=0, ignored=0\nlowest energy=0\nfinal energy=0, samples=5, actionCount=1 -> SUCCESS\nbattery=0.0\n");
-        passed += check("initial zero energy", new int[] {3, 1}, 0, 0,
-                "=== replay ===\ncounts[0..3]=[0, 0, 0, 0]\nsteps=0, ok=0, rejected=0, ignored=2\nlowest energy=N/A\nfinal energy=0, samples=0, actionCount=0 -> EXHAUSTED\nbattery=0.0\n");
-        passed += check("initial success", new int[] {1}, 20, 5,
-                "=== replay ===\ncounts[0..3]=[0, 0, 0, 0]\nsteps=0, ok=0, rejected=0, ignored=1\nlowest energy=N/A\nfinal energy=20, samples=5, actionCount=0 -> SUCCESS\nbattery=100.0\n");
-        passed += check("empty script", new int[] {}, 20, 0,
-                "=== replay ===\ncounts[0..3]=[0, 0, 0, 0]\nsteps=0, ok=0, rejected=0, ignored=0\nlowest energy=N/A\nfinal energy=20, samples=0, actionCount=0 -> UNFINISHED\nbattery=100.0\n");
-        passed += check("exact energy", new int[] {1, 2}, 6, 0,
-                "=== replay ===\nstep 1: command=1, result=OK, energy=0\ncounts[0..3]=[0, 1, 0, 0]\nsteps=1, ok=1, rejected=0, ignored=1\nlowest energy=0\nfinal energy=0, samples=2, actionCount=1 -> EXHAUSTED\nbattery=0.0\n");
-        passed += check("charge cap", new int[] {3, 0}, 19, 0,
-                "=== replay ===\nstep 1: command=3, result=OK, energy=20\nstep 2: command=0, result=RETURN, energy=20\ncounts[0..3]=[1, 0, 0, 1]\nsteps=2, ok=1, rejected=0, ignored=0\nlowest energy=20\nfinal energy=20, samples=0, actionCount=1 -> RETURNED\nbattery=100.0\n");
-        passed += check("negative command", new int[] {-1, 9, 0}, 20, 0,
-                "=== replay ===\nstep 1: command=-1, result=UNKNOWN_COMMAND, energy=20\nstep 2: command=9, result=UNKNOWN_COMMAND, energy=20\nstep 3: command=0, result=RETURN, energy=20\ncounts[0..3]=[1, 0, 0, 0]\nsteps=3, ok=0, rejected=2, ignored=0\nlowest energy=20\nfinal energy=20, samples=0, actionCount=0 -> RETURNED\nbattery=100.0\n");
-        passed += check("initial success and zero", new int[] {3}, 0, 5,
-                "=== replay ===\ncounts[0..3]=[0, 0, 0, 0]\nsteps=0, ok=0, rejected=0, ignored=1\nlowest energy=N/A\nfinal energy=0, samples=5, actionCount=0 -> SUCCESS\nbattery=0.0\n");
-        System.out.println(passed + "/15 passed");
+        passed += check("返回", new int[] {0}, 20, 0,
+                "=== 任務回放 ===\n步驟 1: 指令=0, 結果=返回, 能源=20\n指令次數[0..3]=[1, 0, 0, 0]\n步數=1, 成功=0, 拒絕=0, 略過=0\n最低能源=20\n最終能源=20, 樣本數=0, 行動次數=0 -> 已返回\n電量百分比=100.0\n");
+        passed += check("混合指令達標", new int[] {1, 1, 2}, 20, 0,
+                "=== 任務回放 ===\n步驟 1: 指令=1, 結果=成功, 能源=14\n步驟 2: 指令=1, 結果=成功, 能源=8\n步驟 3: 指令=2, 結果=成功, 能源=6\n指令次數[0..3]=[0, 2, 1, 0]\n步數=3, 成功=3, 拒絕=0, 略過=0\n最低能源=6\n最終能源=6, 樣本數=5, 行動次數=3 -> 任務成功\n電量百分比=30.0\n");
+        passed += check("掃描五次", new int[] {2, 2, 2, 2, 2}, 20, 0,
+                "=== 任務回放 ===\n步驟 1: 指令=2, 結果=成功, 能源=18\n步驟 2: 指令=2, 結果=成功, 能源=16\n步驟 3: 指令=2, 結果=成功, 能源=14\n步驟 4: 指令=2, 結果=成功, 能源=12\n步驟 5: 指令=2, 結果=成功, 能源=10\n指令次數[0..3]=[0, 0, 5, 0]\n步數=5, 成功=5, 拒絕=0, 略過=0\n最低能源=10\n最終能源=10, 樣本數=5, 行動次數=5 -> 任務成功\n電量百分比=50.0\n");
+        passed += check("遭拒與無效指令", new int[] {3, 9, 0}, 20, 0,
+                "=== 任務回放 ===\n步驟 1: 指令=3, 結果=能源已滿, 能源=20\n步驟 2: 指令=9, 結果=無效指令, 能源=20\n步驟 3: 指令=0, 結果=返回, 能源=20\n指令次數[0..3]=[1, 0, 0, 1]\n步數=3, 成功=0, 拒絕=2, 略過=0\n最低能源=20\n最終能源=20, 樣本數=0, 行動次數=0 -> 已返回\n電量百分比=100.0\n");
+        passed += check("達標後停止", new int[] {1, 1, 1, 1}, 20, 0,
+                "=== 任務回放 ===\n步驟 1: 指令=1, 結果=成功, 能源=14\n步驟 2: 指令=1, 結果=成功, 能源=8\n步驟 3: 指令=1, 結果=成功, 能源=2\n指令次數[0..3]=[0, 3, 0, 0]\n步數=3, 成功=3, 拒絕=0, 略過=1\n最低能源=2\n最終能源=2, 樣本數=6, 行動次數=3 -> 任務成功\n電量百分比=10.0\n");
+        passed += check("腳本讀完", new int[] {2, 1}, 20, 0,
+                "=== 任務回放 ===\n步驟 1: 指令=2, 結果=成功, 能源=18\n步驟 2: 指令=1, 結果=成功, 能源=12\n指令次數[0..3]=[0, 1, 1, 0]\n步數=2, 成功=2, 拒絕=0, 略過=0\n最低能源=12\n最終能源=12, 樣本數=3, 行動次數=2 -> 任務未完成\n電量百分比=60.0\n");
+        passed += check("遭拒後充電", new int[] {1, 3, 0}, 5, 0,
+                "=== 任務回放 ===\n步驟 1: 指令=1, 結果=能源不足, 能源=5\n步驟 2: 指令=3, 結果=成功, 能源=10\n步驟 3: 指令=0, 結果=返回, 能源=10\n指令次數[0..3]=[1, 1, 0, 1]\n步數=3, 成功=1, 拒絕=1, 略過=0\n最低能源=5\n最終能源=10, 樣本數=0, 行動次數=1 -> 已返回\n電量百分比=50.0\n");
+        passed += check("達標優先", new int[] {2}, 2, 4,
+                "=== 任務回放 ===\n步驟 1: 指令=2, 結果=成功, 能源=0\n指令次數[0..3]=[0, 0, 1, 0]\n步數=1, 成功=1, 拒絕=0, 略過=0\n最低能源=0\n最終能源=0, 樣本數=5, 行動次數=1 -> 任務成功\n電量百分比=0.0\n");
+        passed += check("初始能源為零", new int[] {3, 1}, 0, 0,
+                "=== 任務回放 ===\n指令次數[0..3]=[0, 0, 0, 0]\n步數=0, 成功=0, 拒絕=0, 略過=2\n最低能源=無紀錄\n最終能源=0, 樣本數=0, 行動次數=0 -> 能源耗盡\n電量百分比=0.0\n");
+        passed += check("初始已達標", new int[] {1}, 20, 5,
+                "=== 任務回放 ===\n指令次數[0..3]=[0, 0, 0, 0]\n步數=0, 成功=0, 拒絕=0, 略過=1\n最低能源=無紀錄\n最終能源=20, 樣本數=5, 行動次數=0 -> 任務成功\n電量百分比=100.0\n");
+        passed += check("空腳本", new int[] {}, 20, 0,
+                "=== 任務回放 ===\n指令次數[0..3]=[0, 0, 0, 0]\n步數=0, 成功=0, 拒絕=0, 略過=0\n最低能源=無紀錄\n最終能源=20, 樣本數=0, 行動次數=0 -> 任務未完成\n電量百分比=100.0\n");
+        passed += check("能源剛好足夠", new int[] {1, 2}, 6, 0,
+                "=== 任務回放 ===\n步驟 1: 指令=1, 結果=成功, 能源=0\n指令次數[0..3]=[0, 1, 0, 0]\n步數=1, 成功=1, 拒絕=0, 略過=1\n最低能源=0\n最終能源=0, 樣本數=2, 行動次數=1 -> 能源耗盡\n電量百分比=0.0\n");
+        passed += check("充電上限", new int[] {3, 0}, 19, 0,
+                "=== 任務回放 ===\n步驟 1: 指令=3, 結果=成功, 能源=20\n步驟 2: 指令=0, 結果=返回, 能源=20\n指令次數[0..3]=[1, 0, 0, 1]\n步數=2, 成功=1, 拒絕=0, 略過=0\n最低能源=20\n最終能源=20, 樣本數=0, 行動次數=1 -> 已返回\n電量百分比=100.0\n");
+        passed += check("負數指令", new int[] {-1, 9, 0}, 20, 0,
+                "=== 任務回放 ===\n步驟 1: 指令=-1, 結果=無效指令, 能源=20\n步驟 2: 指令=9, 結果=無效指令, 能源=20\n步驟 3: 指令=0, 結果=返回, 能源=20\n指令次數[0..3]=[1, 0, 0, 0]\n步數=3, 成功=0, 拒絕=2, 略過=0\n最低能源=20\n最終能源=20, 樣本數=0, 行動次數=0 -> 已返回\n電量百分比=100.0\n");
+        passed += check("初始已達標且能源為零", new int[] {3}, 0, 5,
+                "=== 任務回放 ===\n指令次數[0..3]=[0, 0, 0, 0]\n步數=0, 成功=0, 拒絕=0, 略過=1\n最低能源=無紀錄\n最終能源=0, 樣本數=5, 行動次數=0 -> 任務成功\n電量百分比=0.0\n");
+        System.out.println(passed + "/15 項通過");
         if (passed != 15) {
-            throw new AssertionError("MissionLog output checks failed");
+            throw new AssertionError("任務日誌輸出檢查失敗");
         }
     }
 
+    // check：執行一個案例並比對輸出。
+    // 先把 System.out 暫時換成記憶體緩衝區，執行完再換回來，取得 runMission 印出的文字。
+    // 輸出與 expected 相同回傳 1，否則印出預期與實際內容並回傳 0。
     static int check(String label, int[] script, int energy, int samples,
             String expected) throws Exception {
         PrintStream original = System.out;
@@ -56,10 +63,10 @@ public class MissionLogCheck {
         }
         String actual = buffer.toString("UTF-8").replace("\r\n", "\n");
         if (actual.equals(expected)) {
-            System.out.println("PASS " + label);
+            System.out.println("通過 " + label);
             return 1;
         }
-        System.out.println("FAIL " + label + "\nEXPECTED:\n" + expected + "ACTUAL:\n" + actual);
+        System.out.println("失敗 " + label + "\n預期輸出：\n" + expected + "實際輸出：\n" + actual);
         return 0;
     }
 }

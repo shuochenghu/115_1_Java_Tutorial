@@ -29,20 +29,20 @@
 A1：Rover保存目前狀態與行動規則；Mission處理腳本、停止與歷史；MissionStep保存一筆行動後快照；MissionLog輸入固定腳本並印報表。
 
 A2：日誌為過去行動後快照，不能跟著之後充電改變。
-A3：6/5/3、SUCCESS。
-A4：MemberDemo及MissionLog可跑，HeavyRoverTry有DIFF；舊任務正常不等於鑽探完成。starter只是安全起點，不是錯誤答案。
+A3：6/5/3、任務成功。
+A4：MemberDemo及MissionLog可跑，HeavyRoverTry有不符；舊任務正常不等於鑽探完成。starter只是安全起點，不是錯誤答案。
 
 ## B答案與獨立練習
 
 B1完整輸出：
 
 ```text
-Member constructor: Amy
-Member constructor: Bob
-VipMember constructor: Bob
-Amy points=12
-Bob points=28
-Bob bonus=1
+Member 建構子: Amy
+Member 建構子: Bob
+VipMember 建構子: Bob
+Amy 的點數=12
+Bob 的點數=28
+Bob 的獎勵次數=1
 ```
 
 B2：前兩行能編譯，分別使用繼承與新增的方法。amy.claimBonus不能，Member無該方法；bob.points不能，points是Member的private欄位。要讓每行單獨測，否則一個編譯錯誤會遮住其他判斷。
@@ -75,17 +75,17 @@ D3：private drillCount，建構子super後設0，getter回該欄位。super把e
 
 D3-1：重複宣告會形成兩份不同欄位，getter與行動可能讀不同份，不能靠名字相同自動同步。
 
-D4參考teacher/HeavyRover.java。先isStopped，再spendEnergy，成功後addSamples、countAction、drillCount++，最後OK。先拒絕後更新，所有拒絕狀態都不變。
+D4參考teacher/HeavyRover.java。先isStopped，再spendEnergy，成功後addSamples、countAction、drillCount++，最後成功。先拒絕後更新，所有拒絕狀態都不變。
 
 D4-1預期：
 
 | 呼叫 | 回傳 | energy/samples/actionCount/drillCount |
 |---|---|---|
-| drill | OK | 12/3/1/1 |
-| execute(1) | OK | 6/5/2/1 |
-| drill | STOPPED | 6/5/2/1 |
+| drill | 成功 | 12/3/1/1 |
+| execute(1) | 成功 | 6/5/2/1 |
+| drill | 任務已停止 | 6/5/2/1 |
 
-D4-2可接受例：從8/2鑽探，結果0/5/1/1，同時達標與耗盡；或第一次鑽探後查看getter及actionCount，抓到回OK卻沒更新的錯誤。學生須解釋反例目的，不只照搬輸出。
+D4-2可接受例：從8/2鑽探，結果0/5/1/1，同時達標與耗盡；或第一次鑽探後查看getter及actionCount，抓到回成功卻沒更新的錯誤。學生須解釋反例目的，不只照搬輸出。
 
 D5：六路線數字與assignment一致，原有15項完整輸出期望沿用第六週，另16項物件與任務規則。HeavyRoverTry完整十五行由正常、低能源、剛好、耗盡與初始達標組成。只在合法初始值內測，不引入Claude的25/-1自動修正案例。
 
@@ -95,11 +95,11 @@ D5：六路線數字與assignment一致，原有15項完整輸出期望沿用第
 
 本週模擬錯誤程式已含super，可編譯。不要把它當成缺super題的另一份重複練習。AI聲稱「private就重新宣告」不成立。
 
-第一次drill回OK，但getEnergy／getSamples／getActionCount仍為20/0/0；只有getDrillCount為1。其後execute(1)使用父類別狀態，會得到14/2/1；子類別那份卻停在12/3。這是一個物件內的兩份同名狀態，不是兩個物件，也不是方法覆寫。嚴格語意上private欄位不被繼承，這裡稱「重複宣告造成兩份狀態」，避免把所有現象都叫覆寫或繼承。
+第一次drill回成功，但getEnergy／getSamples／getActionCount仍為20/0/0；只有getDrillCount為1。其後execute(1)使用父類別狀態，會得到14/2/1；子類別那份卻停在12/3。這是一個物件內的兩份同名狀態，不是兩個物件，也不是方法覆寫。嚴格語意上private欄位不被繼承，這裡稱「重複宣告造成兩份狀態」，避免把所有現象都叫覆寫或繼承。
 
 E3參考diagrams/ai_state.svg。E4最小修正：刪energy／samples及建構子內對它們的設定；drill改用isStopped、spendEnergy、addSamples、countAction與自己的drillCount。先刪欄位直接編譯會看到private錯誤，這是引導找正確擴充方法的證據，不應改欄位可見性來壓掉錯誤。
 
-完整AI錯誤實測DIFF與本次環境見verification；正式教師答案一直保持正確，錯誤版只在ai與暫存副本。修正後HeavyRoverTry十五行全部OK。
+完整AI錯誤實測不符與本次環境見verification；正式教師答案一直保持正確，錯誤版只在ai與暫存副本。修正後HeavyRoverTry十五行全部顯示「相符」。
 
 E5可用Prompt：
 
@@ -130,13 +130,13 @@ F2檢查本人圖與重新產生的SVG，非教師參考圖；教師代產需據
 CargoRover參考在teacher/transfer。cargo不是samples，load不耗能源、不增加actionCount；先停止，再檢查amount與剩餘容量。用amount>3-cargo避免先相加再判斷。預期CargoRoverTry：
 
 ```text
-OK/2
-REJECTED/2
-OK/3
-REJECTED/3
+成功/2
+已拒絕/2
+成功/3
+已拒絕/3
 20/0/0
-STOPPED/0
-STOPPED/0
+任務已停止/0
+任務已停止/0
 ```
 
 自訂題不要求同樣輸出，依學生自己寫的規格驗收：is-a成立、至少一個新狀態／方法、有super、正常／邊界／拒絕／停止及自己的案例。只換鑽探數字不算完整遷移。額外功能不是加分的必要條件，題目規模以一個子類別與一個main為限。
@@ -149,7 +149,7 @@ STOPPED/0
 |---|---|
 | 找不到父類別無參數建構子 | 檢查super的參數，不能只補一個不合需求的建構子 |
 | energy private access | 改用提供的方法，不改欄位可見性 |
-| drill回OK但getter沒有變 | 查是否另宣告同名狀態 |
+| drill回成功但getter沒有變 | 查是否另宣告同名狀態 |
 | drill成功但actionCount少1 | 查成功路徑是否countAction |
 | 達標後仍鑽探 | 新入口沒檢查停止，execute不會替它擋 |
 | 能源不足卻變負數 | 扣能源前要拒絕，拒絕不改狀態 |

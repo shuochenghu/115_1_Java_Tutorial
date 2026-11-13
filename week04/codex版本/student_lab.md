@@ -76,7 +76,7 @@ int 放入清單會裝箱，讀成 int 會拆箱；ArrayList<int> 為何不能�
 教師提供第三週的行動規則、迴圈與方法骨架，先只完成 TODO **2→3→1**。每完成一項就編譯。F1 再完成 4、5。
 
 - TODO 2：每步執行後把 command、energy、result 同時 add；拒絕、無效與返回也要保存。
-- TODO 3：同一索引讀三條清單，格式 `step 1: command=1, result=OK, energy=14`。
+- TODO 3：同一索引讀三條清單，格式 `步驟 1: 指令=1, 結果=成功, 能源=14`。
 - TODO 1：建立 int[4]，計算日誌中的 0–3 指令；越界指令不進 counts。
 
 {3,9,0} 的逐步追蹤：
@@ -93,12 +93,12 @@ int 放入清單會裝箱，讀成 int 會拆箱；ArrayList<int> 為何不能�
 
 | script | 預期狀態/結果 | 本人實際狀態/結果 | counts、摘要、每筆回放均相符？ |
 |---|---|---|---|
-| {0} | 20/0/0 RETURNED | 待填 | 待填 |
-| {1,1,2} | 6/5/3 SUCCESS | 待填 | 待填 |
-| {2,2,2,2,2} | 10/5/5 SUCCESS | 待填 | 待填 |
-| {3,9,0} | 20/0/0 RETURNED | 待填 | 待填 |
-| {1,1,1,1} | 2/6/3 SUCCESS | 待填 | 待填 |
-| {2,1} | 12/3/2 UNFINISHED | 待填 | 待填 |
+| {0} | 20/0/0 已返回 | 待填 | 待填 |
+| {1,1,2} | 6/5/3 任務成功 | 待填 | 待填 |
+| {2,2,2,2,2} | 10/5/5 任務成功 | 待填 | 待填 |
+| {3,9,0} | 20/0/0 已返回 | 待填 | 待填 |
+| {1,1,1,1} | 2/6/3 任務成功 | 待填 | 待填 |
+| {2,1} | 12/3/2 任務未完成 | 待填 | 待填 |
 
 完整輸出：待貼。繳交前恢復 {1,1,2}。課堂沒完成的路線，課後補齊本人實測。
 
@@ -108,8 +108,8 @@ int 放入清單會裝箱，讀成 int 會拆箱；ArrayList<int> 為何不能�
 
 先執行 CollectionsDemo，預測 min/max/frequency：待填；實際：待填。排序後 original：待填；sorted：待填。為何不能只排序 energyLog 來做回放：待填。
 
-- TODO 4：ok=frequency(resultLog,"OK")，returned=frequency(resultLog,"RETURN")；steps=size，rejected=steps-ok-returned，ignored=scriptLength-steps。
-- TODO 5：isEmpty 為 true 時印 `lowest energy=N/A`；否則才用 min。
+- TODO 4：成功=frequency(resultLog,"成功")，returned=frequency(resultLog,"返回")；步數=size，拒絕=steps-ok-returned，略過=scriptLength-steps。
+- TODO 5：isEmpty 為 true 時印 `最低能源=無紀錄`；否則才用 min。
 - 最低能源只看每步結束後的 energyLog，不含初始能源。
 
 教師使用 FixedScriptMission 示範以下案例；學生填預測與觀察，不需另寫入口。未觀察請註明待補；自己另跑者再註明「本人複驗」。

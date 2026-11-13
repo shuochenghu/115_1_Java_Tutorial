@@ -12,12 +12,12 @@ java -cp out MemberDemo
 完整預期輸出：
 
 ```text
-Member constructor: Amy
-Member constructor: Bob
-VipMember constructor: Bob
-Amy points=12
-Bob points=28
-Bob bonus=1
+Member 建構子: Amy
+Member 建構子: Bob
+VipMember 建構子: Bob
+Amy 的點數=12
+Bob 的點數=28
+Bob 的獎勵次數=1
 ```
 
 buy每滿10元得1點，非正數不加點；claimBonus每次加20且bonusCount加1。沒有次數或每日限制，不要自行推論一次後不能再領。先用全新物件測試，避免前一個實驗更動點數。

@@ -56,7 +56,7 @@ java -cp out MissionLog
 java -cp out HeavyRoverTry
 ```
 
-starter的MissionLog輸出已與前週完成版相同；HeavyRoverTry會出現DIFF，因為drill只是NOT_READY。舊任務成功不代表本週TODO已完成。完整完成後HeavyRoverTry十五行都為OK。
+starter的MissionLog輸出已與前週完成版相同；HeavyRoverTry會出現不符，因為drill只是尚未完成。舊任務成功不代表本週TODO已完成。完整完成後HeavyRoverTry十五行都為成功。
 
 ## 契約與邊界
 

@@ -6,15 +6,15 @@ public class SampleBayCheck {
                 + " " + bay.store(3) + " " + bay.store(2) + " " + bay.store(0) + " " + bay.store(-1)
                 + " " + bay.getCount() + " " + bay.store(1) + " " + bay.getFreeSpace()
                 + " " + bay.unload() + " " + bay.getCount();
-        check("new SampleBay(4) flow", actual, "4/0/4 true false false false 3 true 0 4 0");
+        check("容量為 4 的樣本盒操作流程", actual, "4/0/4 true false false false 3 true 0 4 0");
         check("new SampleBay(0)", "" + new SampleBay(0).getCapacity(), "1");
         check("new SampleBay(15)", "" + new SampleBay(15).getCapacity(), "10");
-        check("unload empty", "" + new SampleBay(3).unload(), "0");
+        check("卸載空盒", "" + new SampleBay(3).unload(), "0");
     }
 
     static void check(String label, String actual, String expected) {
-        String mark = actual.equals(expected) ? "PASS " : "FAIL ";
+        String mark = actual.equals(expected) ? "通過 " : "失敗 ";
         System.out.println(mark + label + " -> " + actual
-                + (actual.equals(expected) ? "" : " (expect " + expected + ")"));
+                + (actual.equals(expected) ? "" : " （預期 " + expected + "）"));
     }
 }

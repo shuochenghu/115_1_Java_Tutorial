@@ -1,0 +1,24 @@
+@startuml
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+skinparam sequenceMessageAlign left
+hide footbox
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+title 呼叫 print(label, source)：正確轉交 vs 模擬 AI 的轉交
+participant "SampleOverloadDemo" as D
+participant "print(String, SampleSource)" as P2
+participant "print(String, int)" as P3
+participant "print(String, Rover)" as P1
+== 正確版（teacher） ==
+D -> P2 : print("重型探測車", source)\n編譯時已選定：source 宣告為 SampleSource
+P2 -> P3 : print(label, source.getSamples())
+P3 --> D : 重型探測車 樣本數=6
+== 模擬 AI 版 ==
+D -> P2 : 同一個呼叫，同一個簽名
+P2 -[#C0392B]> P1 : if (source instanceof Rover)\nprint(label, (Rover) source)
+P1 --> D : <color:#C0392B>重型探測車 樣本數=6 能源=8  ← 違反共用格式</color>
+note over P2 : 錯不在呼叫端選錯簽名，\n而是方法本體<b>多轉交了一次</b>。\n最小修正：刪掉這個 if（含 return）
+@enduml

@@ -76,6 +76,6 @@ cmd /c "java -jar C:\ClassTools\plantuml.jar -charset UTF-8 -tsvg -pipe < diagra
 
 ## 規則與限制
 
-容量20；探索耗6得2、掃描耗2得1、充電+5封頂20，樣本至少5成功。每個Mission搭配一個新的Rover，只呼叫一次run；run期間與讀結果前不從其他位置操作同一Rover。script非null，初始energy 0..20、samples非負，不處理契約外資料。任務停止後不讀不記；每筆已讀指令（含拒絕、返回、無效）記行動後能源。結果優先SUCCESS、EXHAUSTED、RETURNED、UNFINISHED。空日誌仍輸出最低N/A及battery，與Codex第五週一致。
+容量20；探索耗6得2、掃描耗2得1、充電+5封頂20，樣本至少5成功。每個Mission搭配一個新的Rover，只呼叫一次run；run期間與讀結果前不從其他位置操作同一Rover。script非null，初始energy 0..20、samples非負，不處理契約外資料。任務停止後不讀不記；每筆已讀指令（含拒絕、返回、無效）記行動後能源。結果優先任務成功、能源耗盡、已返回、任務未完成。空日誌仍輸出最低無紀錄及battery，與Codex第五週一致。
 
 本週不限定JDK、不固定編譯目標、不用預覽語法。繼承、覆寫、例外處理、泛型設計與JUnit依後續週次安排。樣本盒沿用第五週需求，但本週重新提供完整程式，不假設上週選做已完成；不把樣本盒接進主任務。

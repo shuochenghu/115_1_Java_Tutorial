@@ -35,7 +35,7 @@
 | `examples/Charger.java` | `Battery` 只在參數出現：相依 |
 | `examples/RelationDemo.java` | A、B 共用一顆電池，C 自己一顆；預測題答案見下方 |
 | `starter/Rover.java` | 第 5 週完成版；`isStopped()` 回傳 false、`execute` 沒有停止檢查、三個行動仍是 public |
-| `starter/Mission.java` | 方法清單照類別圖寫好，`run` 空白、`getOutcome` 回傳 `UNFINISHED`、計數回傳 0、`lowestEnergy` 回傳 -1；可編譯並安全結束 |
+| `starter/Mission.java` | 方法清單照類別圖寫好，`run` 空白、`getOutcome` 回傳 `任務未完成`、計數回傳 0、`lowestEnergy` 回傳 -1；可編譯並安全結束 |
 | `starter/MissionStep.java`、`MissionLog.java` | 已完成，與教師版相同 |
 | `starter/RoverTry.java` | 已完成；只呼叫 `execute`，行動改成 private 後仍能編譯 |
 | `teacher/` | 完整解答與 `MissionCheck`（31 項） |
@@ -43,7 +43,7 @@
 
 重要的設計決定：
 
-- **停止規則放兩層**：`Rover.execute` 停止後回傳 `STOPPED`，守住探測車自己的狀態；`Mission.run` 停止後不讀、不記，這是任務日誌的規則。兩者各自守自己的資料，D5 用實驗證明 `Mission` 的檢查不能拿掉。從 `new Rover(20, 0)` 出發時，`STOPPED` 永遠不會出現在輸出中，所以輸出與第 5 週逐字相同（已實測 10 組參數）。
+- **停止規則放兩層**：`Rover.execute` 停止後回傳 `任務已停止`，守住探測車自己的狀態；`Mission.run` 停止後不讀、不記，這是任務日誌的規則。兩者各自守自己的資料，D5 用實驗證明 `Mission` 的檢查不能拿掉。從 `new Rover(20, 0)` 出發時，`任務已停止` 永遠不會出現在輸出中，所以輸出與第 5 週逐字相同（已實測 10 組參數）。
 - **`Mission` 不交出清單**：提供 `getStepCount()`、`getStep(i)`。`MissionStep` 不可變，交出單筆是安全的。`MissionCheck` 用反射檢查 `Mission` 沒有回傳集合的非 private 方法。
 - **`lowestEnergy()` 空紀錄回傳 -1**：避免學生用 `steps.get(0)` 在空清單時當掉，也避免把初值設成 0 或容量這種「看起來像真的」的數字。
 - **`ignored` 留在 `MissionLog` 計算**：腳本長度只有 `MissionLog` 知道，`Mission.run` 不保存腳本。這是刻意留下的小討論點：如果要讓 `Mission` 回答 ignored，`run` 就得記下腳本長度。
@@ -53,7 +53,7 @@
 
 ### 0
 
-- 第 5 週 `new Rover(0, 0).charge()` 回傳 `OK`，能源變 5、行動次數 1。規則應由 `Rover` 負責（能源是它的資料）。第 5 週其實是 `MissionLog.runMission` 在迴圈開頭擋住，直接呼叫就擋不住。
+- 第 5 週 `new Rover(0, 0).charge()` 回傳 `成功`，能源變 5、行動次數 1。規則應由 `Rover` 負責（能源是它的資料）。第 5 週其實是 `MissionLog.runMission` 在迴圈開頭擋住，直接呼叫就擋不住。
 - 草圖因人而異；常見錯誤是畫 `Rover → MissionStep`，或用實線把三個類別連起來。
 
 ### A
@@ -96,13 +96,13 @@ class Flashlight {
 `RelationDemo` 實際輸出：
 
 ```text
-A on 6 min: true
-B on 6 min: false
-C on 6 min: true
-shared level: 4
-refill shared: +6
-B on 6 min: true
-shared level: 4
+燈具 A 開啟 6 分鐘： true
+燈具 B 開啟 6 分鐘： false
+燈具 C 開啟 6 分鐘： true
+共用電池電量： 4
+替共用電池充電： +6
+燈具 B 開啟 6 分鐘： true
+共用電池電量： 4
 ```
 
 - B1：`a`、`b` 的 `battery` 欄位指向同一個 `Battery` 物件；A 用掉 6 格後只剩 4，B 要 6 格被拒絕。C 的電池是另一個物件。
@@ -113,7 +113,7 @@ shared level: 4
 
 ### C
 
-- C1：印出 `OK`，能源 5。第 5 週由 `MissionLog.runMission` 在執行前檢查 `isExhausted()`；別的類別直接呼叫 `charge()` 就擋不住。
+- C1：印出 `成功`，能源 5。第 5 週由 `MissionLog.runMission` 在執行前檢查 `isExhausted()`；別的類別直接呼叫 `charge()` 就擋不住。
 - C2：勾「依腳本執行並記錄」「判斷結果」「計算摘要數字」。轉成 `int[]` 與印到螢幕屬於命令列介面，換成視窗就會改。
 - C3：
 
@@ -128,20 +128,20 @@ shared level: 4
 
 ### D
 
-- D1：6 行 `DIFF`（`tired` 兩行、`done` 兩行、`r.execute(3)` 與 `r` 各一行）。`done` 一開始就達標，但起始碼沒有停止檢查，探索照樣執行：20−6＝14、5＋2＝7、行動 1。
+- D1：6 行 `不符`（`tired` 兩行、`done` 兩行、`r.execute(3)` 與 `r` 各一行）。`done` 一開始就達標，但起始碼沒有停止檢查，探索照樣執行：20−6＝14、5＋2＝7、行動 1。
 - D2-1：從 `+` 改成 `-`。外部只能呼叫 `execute`，而停止檢查就在 `execute` 的第一行，沒有其他入口能繞過。
 - D3-1：建構子已把 `rover` 存進欄位、建立了 `steps`，物件自己記得；`run` 只負責執行，結果改由 `getOutcome()` 查詢。
-- D3-2：`new Rover(2, 4)` 掃描後能源 0、樣本 5，同時耗盡與達標；規則是成功優先，所以 SUCCESS 必須先判斷。
-- D4-1：`mission.getSteps().clear();`（或 `add(new MissionStep(1, "OK", 99))`）會直接改掉任務紀錄，摘要隨之錯誤。
+- D3-2：`new Rover(2, 4)` 掃描後能源 0、樣本 5，同時耗盡與達標；規則是成功優先，所以 任務成功 必須先判斷。
+- D4-1：`mission.getSteps().clear();`（或 `add(new MissionStep(1, "成功", 99))`）會直接改掉任務紀錄，摘要隨之錯誤。
 - D5（實測）：拿掉 `run` 的停止檢查後，`1 1 1 1` 的輸出變成：
 
   ```text
-  step 4: command=1, result=STOPPED, energy=2
-  counts[0..3]=[0, 4, 0, 0]
-  steps=4, ok=3, rejected=1, ignored=0
+  步驟 4: 指令=1, 結果=任務已停止, 能源=2
+  指令次數[0..3]=[0, 4, 0, 0]
+  步數=4, 成功=3, 拒絕=1, 略過=0
   ```
 
-  最後一行仍是 `final energy=2, samples=6, actionCount=3 -> SUCCESS`，因為 `STOPPED` 沒有改變探測車。結論：「停止後不讀、不記」是任務日誌（`Mission`）的規則；`STOPPED` 保護的是探測車的狀態。預設腳本 `1 1 2` 剛好在達標時用完，看不出差異，所以實驗要用 `1 1 1 1`。
+  最後一行仍是 `最終能源=2, 樣本數=6, 行動次數=3 -> 任務成功`，因為 `任務已停止` 沒有改變探測車。結論：「停止後不讀、不記」是任務日誌（`Mission`）的規則；`任務已停止` 保護的是探測車的狀態。預設腳本 `1 1 2` 剛好在達標時用完，看不出差異，所以實驗要用 `1 1 1 1`。
 
 - D6：參考圖 `diagrams/week06_mission_claude.svg`。批改重點：`toScript`、`printReplay`、`printSummary` 是套件存取，應為 `~`（常被寫成 `-` 或 `+`）；`MissionLog ..> MissionStep` 常被漏掉（`printReplay` 呼叫 `getStep(i).describe()`）；圖上不能出現程式沒有的 `getSteps()`。
 
@@ -152,7 +152,7 @@ shared level: 4
 1. 不需要。艙內數量由 `SampleBay` 保管，送回的另外計數；`Rover` 再存一份 `samples`，兩邊一定會有對不上的時候。
 2. 參考設計放在 `Rover`：卸貨是 `Rover` 的行動，`isSuccess()` 也要用到它。放在 `Mission` 或新增 `Base` 類別也可以接受，但要說明誰在卸貨時通知它、`isStopped()` 怎麼知道成功。
 3. `Rover → SampleBay`，1 對 1；`SampleBay` 不需要知道 `Rover`。參考設計由 `Rover` 建構子 `new SampleBay(bayCapacity)`，畫成組合；畫關聯也算對。
-4. `Rover` 在 `explore`／`scan` 中檢查：先檢查能源（不足回 `NOT_ENOUGH_ENERGY`），再檢查 `bay.getFreeSpace()`（不足回 `BAY_FULL`），都通過才扣能源並存入。必須在扣能源之前，否則被拒絕時能源已經少了，違反需求 1。
+4. `Rover` 在 `explore`／`scan` 中檢查：先檢查能源（不足回 `能源不足`），再檢查 `bay.getFreeSpace()`（不足回 `BAY_FULL`），都通過才扣能源並存入。必須在扣能源之前，否則被拒絕時能源已經少了，違反需求 1。
 
 參考類別圖：`diagrams/samplebay_ref_claude.svg`。
 
@@ -200,7 +200,7 @@ shared level: 4
 - `Member`、`Equipment` 只記身分，不另存「借了幾件」「是否借出」，避免與 `Loan` 不一致。學生若在 `Equipment` 存 `onLoan`，只要說明由誰在借出、歸還時更新、且不是 public 欄位，也可接受。
 - `Loan` 的 `returnDate` 為 null 表示未歸還；`close` 第二次回傳 false（需求 5）。
 - 「同時最多 2 件」是規則，不是多重性：一位社員的歷史紀錄會超過 2 筆。
-- `borrow` 回傳 `OK`、`UNKNOWN_EQUIPMENT`、`ON_LOAN`、`LIMIT_REACHED`（需求 7）。
+- `borrow` 回傳 `成功`、`查無器材`、`已借出`、`已達借用上限`（需求 7）。
 - 比較物件用 `==`（同一個物件）；`equals` 留到第 7–8 週。
 
 模擬 AI 類別圖的問題：
@@ -246,7 +246,7 @@ java -cp out-check MissionCheck
 | 項目 | 重點 |
 |---|---|
 | 程式 | 停止規則在 `Rover.execute`；三個行動 private；`Mission.run` 保留停止檢查；沒有 `getSteps()`；`countOk` 用 `equals` |
-| 測試 | 五條與第 5 週相同；`RoverTry` 全部 `OK` |
+| 測試 | 五條與第 5 週相同；`RoverTry` 全部 顯示「相符」 |
 | 任務系統類別圖 | 與程式逐項一致；`~` 用對；關聯與相依分清楚；有多重性 |
 | 樣本艙設計 | 四個問題有理由；拒絕檢查在扣能源之前；E2 至少四項有情境 |
 | 社團設計 | 第一版在比對前 commit（看 commit 時間）；比對有需求編號與情境；最終圖說明修改理由 |

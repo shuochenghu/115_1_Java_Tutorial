@@ -1,0 +1,40 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 第十週 starter：四個 TODO 在哪裡（紅字＝要由你完成）
+
+legend top right
+  <back:#FFE8D6>　有 TODO 的檔案　</back>  <back:#F4F4F4>　已提供、不用改　</back>
+endlegend
+
+class SampleReport #FFE8D6 {
+  + {static} print(label : String, source : SampleSource) : void  {已提供}
+  --
+  <color:#C0392B><b>TODO 1</b>：print(String, Rover)，印樣本數＋能源</color>
+  <color:#C0392B><b>TODO 3</b>：print(String, int)，共用版改成轉交給它</color>
+}
+class SampleReportDemo #FFE8D6 {
+  + {static} main(args : String[]) : void
+  --
+  <color:#C0392B><b>TODO 2</b>：先觀察輸出變化，再改用 SampleSource 參考</color>
+}
+class SampleOverloadDemo #FFE8D6 {
+  + {static} main(args : String[]) : void
+  --
+  <color:#C0392B><b>TODO 4</b>：兩種參考指向同一台車，寫六個呼叫</color>
+}
+class "Rover / StandardRover / HeavyRover\nSampleSource / SampleTray\nMission / MissionLog / MissionStep\nCompareMissions / HeavyRoverTry" as Given #F4F4F4
+
+SampleReportDemo ..> SampleReport : 呼叫
+SampleOverloadDemo ..> SampleReport : 呼叫
+SampleReport ..> Given : 讀 getter
+@enduml

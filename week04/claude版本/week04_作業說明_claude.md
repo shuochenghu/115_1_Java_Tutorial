@@ -12,9 +12,9 @@
 |---|---|
 | 1 `toScript` | 把 `String[] args` 轉成同長度的 `int[]` |
 | 2 寫入日誌 | 每一步（含被拒絕、返回）都加入 `commandLog`、`energyLog`（執行後的能源）、`resultLog` |
-| 3 `printReplay` | 依序印出 `step N: command=…, result=…, energy=…` |
+| 3 `printReplay` | 依序印出 `步驟 N: 指令=…, 結果=…, 能源=…` |
 | 4 `countCommands` | 回傳 `int[4]`，`counts[k]` 為指令 k 出現的次數；0–3 以外的指令不計，且程式不能當掉 |
-| 5 `printSummary` | 印出 `steps`、`ok`、`rejected`（非 OK 也非 RETURN）、`ignored`（腳本中未執行的指令數），以及 `lowest energy`（日誌為空時不印） |
+| 5 `printSummary` | 印出 `steps`、`ok`、`rejected`（非 成功 也非 返回）、`ignored`（腳本中未執行的指令數），以及 `lowest energy`（日誌為空時不印） |
 
 不必處理非整數參數（`abc` 會丟 `NumberFormatException`，第 12 週再處理）。不可使用自訂類別、Lambda、Stream。
 
@@ -24,11 +24,11 @@
 
 | 參數 | 最終 energy／samples／actionCount | 結果 | 摘要 |
 |---|---|---|---|
-| （無） | 6／5／3 | SUCCESS | `steps=3, ok=3, rejected=0, ignored=0` |
-| `2 2 2 2 2` | 10／5／5 | SUCCESS | `steps=5, ok=5, rejected=0, ignored=0` |
-| `3 9 0` | 20／0／0 | RETURNED | `steps=3, ok=0, rejected=2, ignored=0` |
-| `1 1 1 1` | 2／6／3 | SUCCESS | `steps=3, ok=3, rejected=0, ignored=1` |
-| `2 1` | 12／3／2 | UNFINISHED | `steps=2, ok=2, rejected=0, ignored=0` |
+| （無） | 6／5／3 | 任務成功 | `步數=3, 成功=3, 拒絕=0, 略過=0` |
+| `2 2 2 2 2` | 10／5／5 | 任務成功 | `步數=5, 成功=5, 拒絕=0, 略過=0` |
+| `3 9 0` | 20／0／0 | 已返回 | `步數=3, 成功=0, 拒絕=2, 略過=0` |
+| `1 1 1 1` | 2／6／3 | 任務成功 | `步數=3, 成功=3, 拒絕=0, 略過=1` |
+| `2 1` | 12／3／2 | 任務未完成 | `步數=2, 成功=2, 拒絕=0, 略過=0` |
 
 另外自訂**一條**你認為能抓到錯誤的測試，寫出參數、預期與實際結果，並說明它在測什麼。
 

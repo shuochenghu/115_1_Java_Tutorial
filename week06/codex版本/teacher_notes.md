@@ -12,7 +12,7 @@ Codex第五週只有MissionStep資料建模與RoverBattery示範，沒有完整R
 | 10–30 B | 並排MissionStep程式與圖；學生補兩個方法 | 第一張本人圖已產生並看過 |
 | 30–50 C | 先預測共享電池，再執行與解釋線／數量 | 說出欄位與參數證據 |
 | 50–65 D1 | 跑RoverDemo；示範三個狀態欄位的搬移 | 理解Rover是本週新提供的類別 |
-| 65–90 D2 | TODO1帶做，2模仿，3獨立 | 任務三筆快照、正確OK與最低值 |
+| 65–90 D2 | TODO1帶做，2模仿，3獨立 | 任務三筆快照、正確成功與最低值 |
 | 90–100 D3 | 核心兩路線；補指定圖；教師示範刪停止檢查 | 圖與重構有證據；其餘路線課後 |
 | 100–125 E | 初版7、AI審查8、反例7、Prompt3 | 需求與反例支持採納理由 |
 | 125–135 F | 修圖5、檢核5 | puml／SVG同步與個人說明 |
@@ -57,7 +57,7 @@ MissionStep沿用第五週：private欄位且無setter，保存int／String值�
 
 ## A–C答案
 
-A1歷史快照；A2在MissionLog.runMission的區域變數；A3複製參考值，不複製整個物件；A4為6/5/3 SUCCESS。
+A1歷史快照；A2在MissionLog.runMission的區域變數；A3複製參考值，不複製整個物件；A4為6/5/3 任務成功。
 
 B1四個呼叫依序：能（public實例方法）；不能（private欄位）；不能（getEnergy不是static）；不能（無無參數建構子）。這四題先紙上推論；若做編譯驗證，用副本且一次只測一行，別把錯誤放進正式src。
 
@@ -66,13 +66,13 @@ B2應補`+ getEnergy() : int`、`+ isSuccessful() : boolean`；練習圖刻意�
 C1完整輸出：
 
 ```text
-A=true
-B=false
-C=true
-shared=2
-charge=true
-B again=true
-shared=1
+燈具 A=true
+燈具 B=false
+燈具 C=true
+共用電池能源=2
+充電=true
+燈具 B 再開啟=true
+共用電池能源=1
 ```
 
 C2：Lamp→Battery為關聯，`private Battery battery`；Charger→Battery為相依，`refill(Battery battery)`參數；RelationDemo→Lamp為相依，main的a/b/c區域變數。C3：1恰好一個、0..1零或一、0..*零到多、1..*至少一。shared此次兩支，不代表模型上限2；要允許每支Lamp一到兩顆，改Battery那端為1..2並修改實作，不能只改圖。
@@ -82,9 +82,9 @@ C2：Lamp→Battery為關聯，`private Battery battery`；Charger→Battery為�
 D1 RoverDemo：
 
 ```text
-OK/14/2/1
-STOPPED/0
-STOPPED/20
+成功/14/2/1
+任務已停止/0
+任務已停止/20
 ```
 
 | 類別 | 保存 | 負責 | 不負責 |
@@ -103,29 +103,29 @@ D3五條關係：Mission→Rover為1；Mission→MissionStep為0..*；MissionLog
 預設完整輸出與第五週相同：
 
 ```text
-=== replay ===
-step 1: command=1, result=OK, energy=14
-step 2: command=1, result=OK, energy=8
-step 3: command=2, result=OK, energy=6
-counts[0..3]=[0, 2, 1, 0]
-steps=3, ok=3, rejected=0, ignored=0
-lowest energy=6
-final energy=6, samples=5, actionCount=3 -> SUCCESS
-battery=30.0
+=== 任務回放 ===
+步驟 1: 指令=1, 結果=成功, 能源=14
+步驟 2: 指令=1, 結果=成功, 能源=8
+步驟 3: 指令=2, 結果=成功, 能源=6
+指令次數[0..3]=[0, 2, 1, 0]
+步數=3, 成功=3, 拒絕=0, 略過=0
+最低能源=6
+最終能源=6, 樣本數=5, 行動次數=3 -> 任務成功
+電量百分比=30.0
 ```
 
-3/9/0的三筆result為ALREADY_FULL、UNKNOWN_COMMAND、RETURN，能源皆20；counts[1,0,0,1]，steps3/ok0/rejected2/ignored0，最低20，20/0/0 RETURNED，battery100.0。另四路線見assignment。
+3/9/0的三筆result為能源已滿、無效指令、返回，能源皆20；counts[1,0,0,1]，steps3/ok0/rejected2/ignored0，最低20，20/0/0 已返回，battery100.0。另四路線見assignment。
 
-教師停止反例：副本刪`if (rover.isStopped()) { break; }`，跑1/1/1/1，會多一筆`step 4: command=1, result=STOPPED, energy=2`，counts[0,4,0,0]，steps4/ok3/rejected1/ignored0，最終仍2/6/3 SUCCESS。恢復後3筆、ignored1。預設1/1/2剛好在結束時用完，抓不到此錯誤，所以要選有剩餘指令的反例。
+教師停止反例：副本刪`if (rover.isStopped()) { break; }`，跑1/1/1/1，會多一筆`步驟 4: 指令=1, 結果=任務已停止, 能源=2`，counts[0,4,0,0]，steps4/ok3/rejected1/ignored0，最終仍2/6/3 任務成功。恢復後3筆、ignored1。預設1/1/2剛好在結束時用完，抓不到此錯誤，所以要選有剩餘指令的反例。
 
 教師邊界入口（teacher單獨編譯，沿用FixedScriptMission）：
 
 | 參數energy samples script... | 結果 |
 |---|---|
-| `0 0 3 1` | EXHAUSTED、0筆、最低N/A |
-| `20 5 1` | SUCCESS、0筆 |
-| `2 4 2` | 0能源／5樣本，SUCCESS優先 |
-| `20 0` | 空腳本UNFINISHED、0筆 |
+| `0 0 3 1` | 能源耗盡、0筆、最低無紀錄 |
+| `20 5 1` | 任務成功、0筆 |
+| `2 4 2` | 0能源／5樣本，任務成功優先 |
+| `20 0` | 空腳本任務未完成、0筆 |
 
 ## E答案與可接受替代
 
@@ -157,11 +157,11 @@ E2至少三項：
 錯誤副本完整輸出：
 
 ```text
-first=true, count=2
-overflow=true, count=4
-fill=true, count=5
-unload=5
-empty=0
+第一次=true, 存量=2
+超量存放=true, 存量=4
+剛好裝滿=true, 存量=5
+卸載=5
+空盒卸載=0
 ```
 
 恢復後第二行false/2、第三行true/3、unload3、empty0。SampleCaseDemo完整正確輸出見examples/README。再重測主任務兩路線，確認正確src未混入副本。預期值由需求計算，本人的結果仍須自己執行。
@@ -183,8 +183,8 @@ G按本人真實狀況驗收，未做就寫待補。本機CLI不代表IDE GUI、
 | 現象 | 優先診斷 |
 |---|---|
 | 日誌一直空，仍編譯成功 | run是否仍TODO；編譯成功不等於完成功能 |
-| return被算拒絕 | countRejected是否排除RETURN；countOk是否完成 |
-| 日誌有STOPPED | Mission停止檢查漏了；只保護Rover還不夠 |
+| return被算拒絕 | countRejected是否排除返回；countOk是否完成 |
+| 日誌有任務已停止 | Mission停止檢查漏了；只保護Rover還不夠 |
 | 歷史能源早一步 | new MissionStep是否在execute之前 |
 | 最低值永遠0 | 是否用0初始化，而非先判空取第一筆 |
 | 找不到main或duplicate class | 選錯資料類別；混進teacher同名檔 |

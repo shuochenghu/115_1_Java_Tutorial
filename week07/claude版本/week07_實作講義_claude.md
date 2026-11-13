@@ -29,7 +29,7 @@
    java -cp out HeavyRoverTry
    ```
 
-   `MissionLog` 的輸出和第 6 週完全相同（`Rover`、`Mission` 是第 6 週的完成版）。`HeavyRoverTry` 有好幾行 `DIFF`，因為重型探測車還不會鑽探，D 段完成它。
+   `MissionLog` 的輸出和第 6 週完全相同（`Rover`、`Mission` 是第 6 週的完成版）。`HeavyRoverTry` 有好幾行 `不符`，因為重型探測車還不會鑽探，D 段完成它。
 
 上週課末檢核第 5 題：「重型探測車探索一次得 3 份樣本，其他規則都和 `Rover` 一樣。你會複製一份 `Rover` 改成 `HeavyRover` 嗎？」把你上週的答案抄在這裡：待填
 
@@ -74,10 +74,10 @@ A1. **先預測** `java -cp out InheritDemo` 的輸出，再執行：
 
 | 輸出行 | 預測 | 實際 |
 |---|---|---|
-| `new VipMember:` 之後的兩行 | 待填 | 待填 |
+| `建立 VipMember：` 之後的兩行 | 待填 | 待填 |
 | `amy buy 120 -> ` | 待填 | 待填 |
 | `bob buy 85 -> ` | 待填 | 待填 |
-| `bob bonus -> ` | 待填 | 待填 |
+| `Bob 領取獎勵：` | 待填 | 待填 |
 | `bob` 的 `describe()` 那一行 | 待填 | 待填 |
 | `parent of Member:` | 待填 | 待填 |
 
@@ -96,7 +96,7 @@ A3. `VipMember.java` 裡沒有寫 `buy`，為什麼 `bob.buy(85)` 可以用？`b
 
 ### B1. 誰的建構子先執行
 
-看 A1 的輸出：建立 `VipMember` 時，`[Member constructor]` 在 `[VipMember constructor]` **之前**。子類別物件裡有一份父類別的部分，必須先把父類別的部分建好（設定 `id`、`name`、`points`），子類別才能接著設定自己的欄位。`super(id, name);` 就是「先請父類別的建構子處理這兩個值」。
+看 A1 的輸出：建立 `VipMember` 時，`[Member 建構子]` 在 `[VipMember 建構子]` **之前**。子類別物件裡有一份父類別的部分，必須先把父類別的部分建好（設定 `id`、`name`、`points`），子類別才能接著設定自己的欄位。`super(id, name);` 就是「先請父類別的建構子處理這兩個值」。
 
 B1-1. `Member` 的建構子裡沒有寫 `super(...)`，它的父類別是誰？那一行隱含地呼叫了什麼？（提示：A1 最後一行。）待填
 
@@ -179,7 +179,7 @@ C2. 有人寫了 `public class Mission extends Rover`。這樣會讓哪些奇怪
 
 `Mission`、`MissionStep`、`MissionLog`、`RoverTry`、`HeavyRoverTry` 已完成，不必修改。
 
-D1. 動手前先執行 `java -cp out HeavyRoverTry`，有幾行 `DIFF`？`big` 那一行為什麼已經是 `OK`（`new HeavyRover(25, -1)` 變成 `20/0/0`）？是誰把 25 改成 20 的？待填
+D1. 動手前先執行 `java -cp out HeavyRoverTry`，有幾行 `不符`？`big` 那一行為什麼已經是 `成功`（`new HeavyRover(25, -1)` 變成 `20/0/0`）？是誰把 25 改成 20 的？待填
 
 ### D2. TODO 1–2：Rover 提供給子類別的方法（跟做＋模仿）
 
@@ -196,11 +196,11 @@ D1. 動手前先執行 `java -cp out HeavyRoverTry`，有幾行 `DIFF`？`big` �
 ```java
 private String explore() {
     if (!spendEnergy(6)) {
-        return "NOT_ENOUGH_ENERGY";
+        return "能源不足";
     }
     addSamples(2);
     countAction();
-    return "OK";
+    return "成功";
 }
 ```
 
@@ -218,7 +218,7 @@ D3-1. 建構子為什麼要把 `energy`、`samples` 交給 `super(...)`，而不
 
 ### D4. TODO 4：drill（模仿）
 
-規格：已停止回傳 `STOPPED`；能源不足回傳 `NOT_ENOUGH_ENERGY`；成功時耗能 8、樣本 +3、行動次數 +1、鑽探次數 +1，回傳 `OK`。被拒絕時任何狀態都不變。
+規格：已停止回傳 `任務已停止`；能源不足回傳 `能源不足`；成功時耗能 8、樣本 +3、行動次數 +1、鑽探次數 +1，回傳 `成功`。被拒絕時任何狀態都不變。
 
 模仿 `explore`，用 `DRILL_COST`、`DRILL_YIELD` 兩個常數，不要寫死 8 和 3。
 
@@ -233,7 +233,7 @@ D4-2. **先追蹤**再執行。`HeavyRover h = new HeavyRover(20, 0);` 之後依
 | `h.execute(1)` | 待填 | 待填 | 待填 | 待填 | 待填 |
 | `h.drill()` | 待填 | 待填 | 待填 | 待填 | 待填 |
 
-執行 `HeavyRoverTry` 核對，每一行都應是 `OK`。
+執行 `HeavyRoverTry` 核對，每一行都應是 `成功`。
 
 ### D5. 實驗：protected 在 Java 裡有多寬（3 分鐘）
 
@@ -278,12 +278,12 @@ public class HeavyRover extends Rover {
 
     public String drill() {
         if (energy < 8) {
-            return "NOT_ENOUGH_ENERGY";
+            return "能源不足";
         }
         energy -= 8;
         samples += 3;
         drillCount++;
-        return "OK";
+        return "成功";
     }
 }
 ```
@@ -310,13 +310,13 @@ java -cp out HeavyRoverTry
 
 修正後執行 `HeavyRoverTry`。
 
-| 輸出行 | 預期 | 實際 | OK／DIFF |
+| 輸出行 | 預期 | 實際 | 成功／不符 |
 |---|---|---|---|
-| `h.drill() ->` | `OK` | 待填 | 待填 |
-| `h:`（第一次） | `12/3/1 drill=1` | 待填 | 待填 |
-| `h.drill() ->`（第二次） | `STOPPED` | 待填 | 待填 |
-| `exact.execute(3) ->` | `STOPPED` | 待填 | 待填 |
-| `empty.drill() ->` | `STOPPED` | 待填 | 待填 |
+| `h.drill() ->` | `成功` | 待填 | 待填 |
+| `h:`（第一次） | `12/3/1 鑽探次數=1` | 待填 | 待填 |
+| `h.drill() ->`（第二次） | `任務已停止` | 待填 | 待填 |
+| `exact.execute(3) ->` | `任務已停止` | 待填 | 待填 |
+| `empty.drill() ->` | `任務已停止` | 待填 | 待填 |
 
 追蹤：`HeavyRover h = new HeavyRover(20, 0); h.drill();` 之後，`h` 這**一個物件**裡有幾個名叫 `energy` 的欄位？各是多少？`getEnergy()` 讀的是哪一個？畫出物件的樣子：
 
@@ -338,7 +338,7 @@ java -cp out HeavyRoverTry
 ### E5. 修正並重測（5 分鐘＋課後）
 
 1. 刪掉 `HeavyRover` 重新宣告的 `energy`、`samples` 兩個欄位，以及建構子裡設定它們的兩行。重新編譯：出現什麼錯誤？為什麼這次是「好的錯誤」？待填
-2. 改用 TODO 1 的 protected 方法，並補上停止檢查與行動次數。重測到 `HeavyRoverTry` 全部 `OK`。
+2. 改用 TODO 1 的 protected 方法，並補上停止檢查與行動次數。重測到 `HeavyRoverTry` 全部 顯示「相符」。
 3. 和你在 D 段寫的 `drill()` 比較，最後是否一樣？待填
 
 AI 回覆裡哪一句話最誤導人？為什麼？待填
@@ -376,5 +376,5 @@ AI 回覆裡哪一句話最誤導人？為什麼？待填
 
 ## 課後選做
 
-- 設計「太陽能探測車」`SolarRover`：新增 `rest()`，未停止時能源 +2（封頂 20）、行動次數 +1；已停止回傳 `STOPPED`。`Rover` 目前的三個 protected 方法夠用嗎？要再加什麼？為什麼不乾脆把 `energy` 改成 `protected`？先在 `DESIGN.md` 畫圖再實作，並自己寫幾個像 `HeavyRoverTry` 的檢查。
+- 設計「太陽能探測車」`SolarRover`：新增 `rest()`，未停止時能源 +2（封頂 20）、行動次數 +1；已停止回傳 `任務已停止`。`Rover` 目前的三個 protected 方法夠用嗎？要再加什麼？為什麼不乾脆把 `energy` 改成 `protected`？先在 `DESIGN.md` 畫圖再實作，並自己寫幾個像 `HeavyRoverTry` 的檢查。
 - 在 IntelliJ 對 `Rover` 按 Ctrl＋H，再對 `Member` 按一次，比較兩個繼承階層；對 `HeavyRover` 的 `getEnergy()` 呼叫按 Ctrl＋B（Go to Declaration），看它跳到哪個檔案。

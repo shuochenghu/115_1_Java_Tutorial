@@ -33,9 +33,9 @@
 | `examples/VipMember.java` | `super(id, name)`、新增欄位 `bonusCount` 與方法 `claimBonus`；透過 `addPoints`、`getPoints` 改與讀點數 |
 | `examples/InheritDemo.java` | 建構子順序、繼承來的方法、`getClass().getSuperclass()` 看到 `Object` |
 | `starter/Rover.java` | 第 6 週完成版，多了 TODO 1、2 的註解；可編譯 |
-| `starter/HeavyRover.java` | `super(energy, samples)` 已寫好（否則無法編譯）；`getDrillCount` 回傳 0、`drill` 回傳 `NOT_READY` |
+| `starter/HeavyRover.java` | `super(energy, samples)` 已寫好（否則無法編譯）；`getDrillCount` 回傳 0、`drill` 回傳 `尚未完成` |
 | `starter/Mission.java`、`MissionStep.java`、`MissionLog.java`、`RoverTry.java` | 沿用第 6 週，只改檔頭說明，行為相同 |
-| `starter/HeavyRoverTry.java` | 已完成；15 行檢查，起始碼有 10 行 `DIFF` |
+| `starter/HeavyRoverTry.java` | 已完成；15 行檢查，起始碼有 10 行 `不符` |
 | `starter/club/` | 作業用：`Equipment`（完成）、`ShelfTry`（要等學生寫好 `Camera`、`Projector` 才能編譯，刻意設計） |
 | `ai/HeavyRover.java` | 模擬 AI 回覆：沒有 `super`、重複宣告 `energy`／`samples`、沒有停止檢查、沒有 `countAction` |
 | `ai/Camera.java` | 作業的模擬 AI 回覆：重複宣告 `id`／`name`（永遠是 null）、記憶卡數沒有下限 |
@@ -48,7 +48,7 @@
 - **`explore`、`scan` 改用輔助方法（TODO 2）**：讓學生看到「規則只寫一次、父類別自己也用」，並用第 5、6 週的必做測試確認重構沒有改變行為（已實測 10 組參數，與第 6 週教師版逐字相同）。`charge` 是增加能源，維持原樣；課後選做 `SolarRover` 會讓學生自己想要不要加 `gainEnergy`。
 - **`drill` 必須自己檢查停止**：`explore` 藏在 `execute` 後面，由 `execute` 擋；`drill` 是新的公開入口，沒有人替它擋。這是本週最容易漏的地方，模擬 AI 回覆也漏了。
 - **Java 的 protected 包含套件存取**：本課程所有類別在預設套件，`MissionLog`、`HeavyRoverCheck` 都能呼叫 `rover.spendEnergy(5)`（D5 讓學生親自試）。這和 C# 不同，要在 B4 講清楚；本課程仍寫 `protected`，表達「給子類別用」的意圖。
-- **`Mission` 不畫到 `HeavyRover` 的線**：`Mission` 的程式沒有出現 `HeavyRover`。`new Mission(new HeavyRover(20, 0))` 能編譯並正常執行（已實測：`SUCCESS`、3 步），但這是第 8 週多型的入口，本週只在課末檢核預告。
+- **`Mission` 不畫到 `HeavyRover` 的線**：`Mission` 的程式沒有出現 `HeavyRover`。`new Mission(new HeavyRover(20, 0))` 能編譯並正常執行（已實測：`任務成功`、3 步），但這是第 8 週多型的入口，本週只在課末檢核預告。
 - **`super(...)` 寫在第一行**：JDK 25 起（JEP 513，Flexible Constructor Bodies）允許在 `super(...)` 之前寫不使用 `this` 的敘述，甚至可以先指定本類別沒有初始值的欄位；JDK 24 以前則是編譯錯誤。本機 JDK 22 對 `this.bonusCount = 0; super(id, name);` 的錯誤是 `cannot reference this before supertype constructor has been called` 與 `statements before super() is a preview feature and is disabled by default.`。學生的 JDK 版本不一，所以講義沒有把「super 不在第一行」做成實驗，只要求一律寫在第一行。
 
 ## 講義解答
@@ -62,20 +62,20 @@
 A1 實際輸出（`InheritDemo`）：
 
 ```text
-new Member:
-  [Member constructor] M001
-new VipMember:
-  [Member constructor] V001
-  [VipMember constructor] V001
-amy buy 120 -> +12
-bob buy 85 -> +8
-bob bonus -> 28
-M001 Amy points=12
-V001 Bob points=28
-bob bonus count: 1
-bob class: VipMember
-parent of VipMember: Member
-parent of Member: java.lang.Object
+建立 Member：
+  [Member 建構子] M001
+建立 VipMember：
+  [Member 建構子] V001
+  [VipMember 建構子] V001
+Amy 消費 120，增加點數：12
+Bob 消費 85，增加點數：8
+Bob 領取獎勵：28
+M001 Amy 的點數=12
+V001 Bob 的點數=28
+Bob 的獎勵次數：1
+Bob 的實際類別：VipMember
+VipMember 的父類別：Member
+Member 的父類別：java.lang.Object
 ```
 
 常見預測錯誤：以為建立 `VipMember` 只印一行；`85 / 10` 寫成 8.5（第 2 週的整數除法）。
@@ -123,7 +123,7 @@ C2：`mission.execute(1)`、`mission.getEnergy()`、`mission.isStopped()` 都會
 
 ### D
 
-- D1：10 行 `DIFF`。`big` 已經是 `20/0/0`，因為建構子把值交給 `super(energy, samples)`，`Rover` 的建構子把 25 改成 20、−1 改成 0。
+- D1：10 行 `不符`。`big` 已經是 `20/0/0`，因為建構子把值交給 `super(energy, samples)`，`Rover` 的建構子把 25 改成 20、−1 改成 0。
 - D2-1：`spendEnergy(6)` 在 `6 <= 0`（不可能）或 `6 > energy` 時回傳 false，也就是 `energy < 6`，兩者相同。
 - D2-2：呼叫的人可能忘了先檢查，能源就會扣成負數；檢查寫在 `spendEnergy` 裡，每個子類別都不可能漏。
 - D3-1：`energy`、`samples` 是 `Rover` 的 private 欄位，`HeavyRover` 不能用名字指定；而且範圍檢查寫在 `Rover` 的建構子，交給它才不會漏。
@@ -132,9 +132,9 @@ C2：`mission.execute(1)`、`mission.getEnergy()`、`mission.isStopped()` 都會
 
   | 呼叫 | 回傳 | energy | samples | actionCount | drillCount |
   |---|---|---|---|---|---|
-  | `h.drill()` | `OK` | 12 | 3 | 1 | 1 |
-  | `h.execute(1)` | `OK` | 6 | 5 | 2 | 1 |
-  | `h.drill()` | `STOPPED` | 6 | 5 | 2 | 1 |
+  | `h.drill()` | `成功` | 12 | 3 | 1 | 1 |
+  | `h.execute(1)` | `成功` | 6 | 5 | 2 | 1 |
+  | `h.drill()` | `任務已停止` | 6 | 5 | 2 | 1 |
 
 - D5：能編譯，執行時能源真的減少 5（已實測：`spendEnergy(5)` 回傳 `true`，能源 15）。同一套件的類別都能呼叫 protected 方法，所以本課程的 `protected` 是「說明意圖」，不是強制保護。
 - D6：參考圖 `diagrams/heavy_claude.svg`，加上 `Mission --> "1" Rover : rover`。批改重點：`HeavyRover` 方框重複列出 `energy`、`execute`；三角形方向畫反；`#` 寫成 `+`；畫了 `Mission --> HeavyRover`。
@@ -154,38 +154,38 @@ C2：`mission.execute(1)`、`mission.getEnergy()`、`mission.isStopped()` 都會
 - E3：加上 `super` 後 `HeavyRoverTry` 的完整輸出（已實測）：
 
   ```text
-  big: 20/0/0 drill=0  (expect 20/0/0 drill=0) OK
-  h.drill() -> OK  (expect OK) OK
-  h: 20/0/0 drill=1  (expect 12/3/1 drill=1) DIFF
-  h.execute(1) -> OK  (expect OK) OK
-  h.isSuccess() -> false  (expect true) DIFF
-  h.drill() -> OK  (expect STOPPED) DIFF
-  h: 14/2/1 drill=2  (expect 6/5/2 drill=1) DIFF
-  low.drill() -> NOT_ENOUGH_ENERGY  (expect NOT_ENOUGH_ENERGY) OK
-  low.execute(1) -> OK  (expect OK) OK
-  low: 1/2/1 drill=0  (expect 1/2/1 drill=0) OK
-  exact.drill() -> OK  (expect OK) OK
-  exact.execute(3) -> OK  (expect STOPPED) DIFF
-  exact: 13/0/1 drill=1  (expect 0/3/1 drill=1) DIFF
-  empty.drill() -> NOT_ENOUGH_ENERGY  (expect STOPPED) DIFF
-  empty: 0/0/0 drill=0  (expect 0/0/0 drill=0) OK
+  big: 20/0/0 鑽探次數=0  （預期 20/0/0 鑽探次數=0） 相符
+  h.drill() -> 成功  （預期 成功） 相符
+  h: 20/0/0 鑽探次數=1  （預期 12/3/1 鑽探次數=1） 不符
+  h.execute(1) -> 成功  （預期 成功） 相符
+  h.isSuccess() -> false  （預期 true） 不符
+  h.drill() -> 成功  （預期 任務已停止） 不符
+  h: 14/2/1 鑽探次數=2  （預期 6/5/2 鑽探次數=1） 不符
+  low.drill() -> 能源不足  （預期 能源不足） 相符
+  low.execute(1) -> 成功  （預期 成功） 相符
+  能源不足: 1/2/1 鑽探次數=0  （預期 1/2/1 鑽探次數=0） 相符
+  exact.drill() -> 成功  （預期 成功） 相符
+  exact.execute(3) -> 成功  （預期 任務已停止） 不符
+  能源剛好足夠: 13/0/1 鑽探次數=1  （預期 0/3/1 鑽探次數=1） 不符
+  empty.drill() -> 能源不足  （預期 任務已停止） 不符
+  空盒: 0/0/0 鑽探次數=0  （預期 0/0/0 鑽探次數=0） 相符
   ```
 
   物件裡有兩個 `energy`：`Rover` 部分的是 20（`getEnergy()` 讀這個），`HeavyRover` 部分的是 12（`drill` 改這個）。`samples` 同理。這叫欄位**遮蔽**（hiding）：子類別的同名欄位讓子類別程式看不到父類別的那一份，但父類別的方法仍讀自己的。
 
   ```text
   h ──> [ HeavyRover 物件                         ]
-        [  Rover 的部分： energy=20 samples=0 actionCount=0 ]  ← getEnergy()、isStopped()、execute() 用這份
-        [  HeavyRover 的部分： energy=12 samples=3 drillCount=1 ]  ← drill() 用這份
+        [  Rover 的部分： 能源=20 樣本數=0 行動次數=0 ]  ← getEnergy()、isStopped()、execute() 用這份
+        [  HeavyRover 的部分： 能源=12 樣本數=3 drillCount=1 ]  ← drill() 用這份
   ```
 
 - E4（任三項即可，第 1 項已示範）：
 
   | 問題 | 證據 | 後果 |
   |---|---|---|
-  | 重複宣告 `energy`、`samples`，狀態有兩份 | `h: 20/0/0 drill=1` | 鑽探的樣本永遠不會讓任務成功；`Mission` 看不到鑽探 |
-  | 沒有停止檢查 | 第二次 `h.drill() -> OK`、`empty.drill() -> NOT_ENOUGH_ENERGY` | 已達標或耗盡後還能鑽探，第 6 週收回 `Rover` 的停止規則被繞過 |
-  | 沒有增加行動次數 | 第一次 `h: 20/0/0 drill=1`：鑽探成功了，行動次數仍是 0 | 摘要的 actionCount 少算 |
+  | 重複宣告 `energy`、`samples`，狀態有兩份 | `h: 20/0/0 鑽探次數=1` | 鑽探的樣本永遠不會讓任務成功；`Mission` 看不到鑽探 |
+  | 沒有停止檢查 | 第二次 `h.drill() -> 成功`、`empty.drill() -> 能源不足` | 已達標或耗盡後還能鑽探，第 6 週收回 `Rover` 的停止規則被繞過 |
+  | 沒有增加行動次數 | 第一次 `h: 20/0/0 鑽探次數=1`：鑽探成功了，行動次數仍是 0 | 摘要的 actionCount 少算 |
   | 子類別的 `energy` 沒有範圍檢查 | `new HeavyRover(25, 0)` 時子類別那份是 25 | 超過容量的能源可以鑽探 |
   | AI 宣稱「可以直接使用」 | 無法編譯 | 說明不能代替編譯與測試 |
 
@@ -197,8 +197,8 @@ C2：`mission.execute(1)`、`mission.getEnergy()`、`mission.isStopped()` 都會
   請寫 HeavyRover extends Rover：
   1. 建構子 HeavyRover(int energy, int samples) 用 super 交給 Rover 檢查。
   2. 新增 private int drillCount 與 getDrillCount()。
-  3. 新增 public String drill()：已停止（isStopped()）回傳 "STOPPED"；能源不足回傳 "NOT_ENOUGH_ENERGY"；
-     成功時能源 -8、樣本 +3、行動次數 +1、drillCount +1，回傳 "OK"。拒絕時任何狀態都不變。
+  3. 新增 public String drill()：已停止（isStopped()）回傳 "任務已停止"；能源不足回傳 "能源不足"；
+     成功時能源 -8、樣本 +3、行動次數 +1、drillCount +1，回傳 "成功"。拒絕時任何狀態都不變。
   限制：不可重新宣告 Rover 已有的欄位；只能用 spendEnergy、addSamples、countAction 改變狀態；
   不覆寫 Rover 的方法；欄位一律 private。
   最後列出你認為該測的案例（含已停止、能源剛好 8、能源 7），以及你不確定的地方。
@@ -210,18 +210,18 @@ C2：`mission.execute(1)`、`mission.getEnergy()`、`mission.isStopped()` 都會
 2. `Rover` 沒有無參數建構子；不寫的話 Java 自動補 `super()`，編譯錯誤。也只有 `Rover` 的建構子能設定並檢查它的 private 欄位。
 3. Java 的 `protected` 也開放給同一套件的所有類別；C# 只開放給子類別。
 4. 不對。借用紀錄不是一種社員，社員能做的事（借器材）紀錄不能做；應該是 `Loan` 有一個 `Member` 欄位。
-5. 能編譯（`HeavyRover` 是一種 `Rover`），已實測預設腳本得 `SUCCESS`。指令 1 仍得 2 份，因為 `execute` 呼叫的是 `Rover` 的 `explore`；`Mission` 也不會呼叫 `drill`。只靠新增方法做不到「探索得 3 份」，需要第 8 週的覆寫。
+5. 能編譯（`HeavyRover` 是一種 `Rover`），已實測預設腳本得 `任務成功`。指令 1 仍得 2 份，因為 `execute` 呼叫的是 `Rover` 的 `explore`；`Mission` 也不會呼叫 `drill`。只靠新增方法做不到「探索得 3 份」，需要第 8 週的覆寫。
 
 ## 作業參考答案
 
 - 第 1 部分：`code/teacher/Rover.java`、`HeavyRover.java`。
 - 第 2 部分：`code/teacher/club/Camera.java`、`Projector.java`。`Camera` 先 `super(id, name)` 再檢查記憶卡數（檢查的是參數，寫在 `super` 之後即可）。`Projector` 的 getter 名稱依類別圖是 `needsScreen()`，學生寫成 `isNeedsScreen()` 時 `ShelfTry` 無法編譯，請他對照類別圖。
-- 第 3 部分（已實測）：AI 版 `Camera` 能編譯；`ShelfTry` 的 `DIFF` 行：
+- 第 3 部分（已實測）：AI 版 `Camera` 能編譯；`ShelfTry` 的 `不符` 行：
 
   ```text
-  cam.checklist() -> null null | cards=2  (expect CAM-01 Sony A7 | cards=2) DIFF
-  odd.getMemoryCards() -> -1  (expect 0) DIFF
-  odd.checklist() -> null null | cards=-1  (expect CAM-02 Canon R50 | cards=0) DIFF
+  cam.checklist() -> null null | 記憶卡數=2  （預期 CAM-01 Sony A7 | 記憶卡數=2） 不符
+  odd.getMemoryCards() -> -1  （預期 0） 不符
+  odd.checklist() -> null null | 記憶卡數=-1  （預期 CAM-02 Canon R50 | 記憶卡數=0） 不符
   ```
 
   `cam` 有兩個 `id`：`Equipment` 部分的由 `super(id, name)` 設定，`getLabel()`、`getId()` 讀它，所以是對的；`Camera` 部分的從未指定，預設 `null`，`checklist()` 讀到它。最小修正：刪掉重複的 `id`、`name` 欄位，`checklist()` 改用 `getLabel()`；記憶卡數加上「小於 0 改成 0」。這和課堂 E 段是同一種錯誤，但這次**能編譯**，只能靠執行結果發現。
@@ -234,8 +234,8 @@ C2：`mission.execute(1)`、`mission.getEnergy()`、`mission.isStopped()` 都會
 | `constructor Rover in class Rover cannot be applied to given types` | 子類別建構子沒寫 `super(...)`，或參數個數不對 | 對照 B2 |
 | `energy has private access in Rover` | 子類別直接存取父類別欄位 | 用 protected 方法；**不要**把欄位改成 protected |
 | 子類別再宣告 `private int energy;` 之後就能編譯了 | 遮蔽：多了一份狀態 | 用 E3 的物件圖說明；`HeavyRoverCheck` 的「no hidden copies」會抓到 |
-| `drill` 在達標後仍回傳 `OK` | 漏了停止檢查 | 問「誰呼叫 drill？有經過 execute 嗎？」 |
-| `exact: 0/3/0` | 漏了 `countAction()` | 對照規格表 |
+| `drill` 在達標後仍回傳 `成功` | 漏了停止檢查 | 問「誰呼叫 drill？有經過 execute 嗎？」 |
+| `能源剛好足夠: 0/3/0` | 漏了 `countAction()` | 對照規格表 |
 | 圖上三角形指向子類別 | 箭頭方向畫反 | 讀成「子類別是一種父類別」，三角形在父類別那端 |
 | `HeavyRover` 方框列出所有繼承來的方法 | 以為子類別要完整列出 | 只列新增的；重複列出在之後覆寫時會分不清 |
 | `ShelfTry` 編譯錯誤 `cannot find symbol: class Camera` | 太早複製 `ShelfTry` | 先寫好兩個類別 |
@@ -262,7 +262,7 @@ java -cp out-club ShelfCheck
 | 項目 | 重點 |
 |---|---|
 | 程式 | 欄位 private；三個 protected 方法；`drill` 有停止檢查、用常數；`HeavyRover` 沒有重複欄位 |
-| 測試 | 五條與第 6 週相同；`RoverTry`、`HeavyRoverTry`、`ShelfTry` 全部 `OK` |
+| 測試 | 五條與第 6 週相同；`RoverTry`、`HeavyRoverTry`、`ShelfTry` 全部 顯示「相符」 |
 | AI 追蹤 | 預測寫在執行之前（看 commit 順序）；能說出「兩份狀態」；修正是最小的 |
 | 類別圖 | 繼承方向、`#`、子類別只列新增成員 |
 | 設計 | is-a 判斷有理由；自選器材的子類別成員合理 |

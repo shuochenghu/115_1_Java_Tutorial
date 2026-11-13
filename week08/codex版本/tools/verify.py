@@ -28,51 +28,51 @@ def compile_to(files, out, success=True):
 
 
 def java(out, name):
-    return run(['java', '-cp', out, name])
+    return run(['java', "-Dstdout.encoding=UTF-8", '-cp', out, name])
 
 
-MEMBER = '''Member constructor: Amy
-Member constructor: Bob
-VipMember constructor: Bob
-Member Amy / points=12
-VIP Bob / points=28 / bonus=1
-VIP Bob / points=28 / bonus=1
+MEMBER = '''Member 建構子: Amy
+Member 建構子: Bob
+VipMember 建構子: Bob
+會員 Amy / 點數=12
+VIP 會員 Bob / 點數=28 / 獎勵次數=1
+VIP 會員 Bob / 點數=28 / 獎勵次數=1
 '''
-COMPARE = '''=== normal ===
-=== replay ===
-step 1: command=1, result=OK, energy=14
-step 2: command=1, result=OK, energy=8
-step 3: command=2, result=OK, energy=6
-counts[0..3]=[0, 2, 1, 0]
-steps=3, ok=3, rejected=0, ignored=0
-lowest energy=6
-final energy=6, samples=5, actionCount=3 -> SUCCESS
-battery=30.0
-=== heavy ===
-=== replay ===
-step 1: command=1, result=OK, energy=14
-step 2: command=1, result=OK, energy=8
-counts[0..3]=[0, 2, 0, 0]
-steps=2, ok=2, rejected=0, ignored=1
-lowest energy=8
-final energy=8, samples=6, actionCount=2 -> SUCCESS
-battery=40.0
+COMPARE = '''=== 一般探測車 ===
+=== 任務回放 ===
+步驟 1: 指令=1, 結果=成功, 能源=14
+步驟 2: 指令=1, 結果=成功, 能源=8
+步驟 3: 指令=2, 結果=成功, 能源=6
+指令次數[0..3]=[0, 2, 1, 0]
+步數=3, 成功=3, 拒絕=0, 略過=0
+最低能源=6
+最終能源=6, 樣本數=5, 行動次數=3 -> 任務成功
+電量百分比=30.0
+=== 重型探測車 ===
+=== 任務回放 ===
+步驟 1: 指令=1, 結果=成功, 能源=14
+步驟 2: 指令=1, 結果=成功, 能源=8
+指令次數[0..3]=[0, 2, 0, 0]
+步數=2, 成功=2, 拒絕=0, 略過=1
+最低能源=8
+最終能源=8, 樣本數=6, 行動次數=2 -> 任務成功
+電量百分比=40.0
 '''
-TRIAL = '''drill: OK (expect OK) OK
-after drill: 12/3/1/1 (expect 12/3/1/1) OK
-explore: OK (expect OK) OK
-after explore: 6/6/2/1 (expect 6/6/2/1) OK
-done drill: STOPPED (expect STOPPED) OK
-done unchanged: 6/6/2/1 (expect 6/6/2/1) OK
-low: NOT_ENOUGH_ENERGY (expect NOT_ENOUGH_ENERGY) OK
-low unchanged: 7/0/0/0 (expect 7/0/0/0) OK
-exact: OK (expect OK) OK
-exact state: 0/3/1/1 (expect 0/3/1/1) OK
-zero cannot charge: STOPPED (expect STOPPED) OK
-initial zero: STOPPED (expect STOPPED) OK
-zero unchanged: 0/0/0/0 (expect 0/0/0/0) OK
-initial success: STOPPED (expect STOPPED) OK
-success unchanged: 20/5/0/0 (expect 20/5/0/0) OK
+TRIAL = '''鑽探: 成功 （預期 成功） 相符
+鑽探後: 12/3/1/1 （預期 12/3/1/1） 相符
+探索: 成功 （預期 成功） 相符
+探索後: 6/6/2/1 （預期 6/6/2/1） 相符
+任務完成後鑽探: 任務已停止 （預期 任務已停止） 相符
+完成後狀態維持: 6/6/2/1 （預期 6/6/2/1） 相符
+能源不足: 能源不足 （預期 能源不足） 相符
+能源不足時狀態維持: 7/0/0/0 （預期 7/0/0/0） 相符
+能源剛好足夠: 成功 （預期 成功） 相符
+能源剛好足夠時的狀態: 0/3/1/1 （預期 0/3/1/1） 相符
+能源耗盡後無法充電: 任務已停止 （預期 任務已停止） 相符
+初始能源為零: 任務已停止 （預期 任務已停止） 相符
+耗盡後狀態維持: 0/0/0/0 （預期 0/0/0/0） 相符
+初始已達標: 任務已停止 （預期 任務已停止） 相符
+達標後狀態維持: 20/5/0/0 （預期 20/5/0/0） 相符
 '''
 
 
@@ -129,10 +129,10 @@ def main():
         assert java(work / 'examples', 'MemberDemo') == MEMBER
         assert java(work / 'teacher', 'CompareMissions') == COMPARE
         assert java(work / 'teacher', 'HeavyRoverTry') == TRIAL
-        assert java(work / 'starter', 'CompareMissions') == 'NOT_READY: create two independent missions\n'
+        assert java(work / 'starter', 'CompareMissions') == '尚未完成：請建立兩個獨立任務\n'
         starter_trial = java(work / 'starter', 'HeavyRoverTry')
-        assert len([line for line in starter_trial.splitlines() if line.endswith('DIFF')]) == 2
-        assert 'after explore: 6/5/2/1' in starter_trial
+        assert len([line for line in starter_trial.splitlines() if line.endswith('不符')]) == 2
+        assert '探索後: 6/5/2/1' in starter_trial
         print('PASS full expected outputs and explicit unfinished starter')
         for check in ['MissionLogCheck', 'MissionStateCheck', 'PolymorphismCheck']:
             print(java(work / 'teacher', check).strip())
@@ -144,7 +144,7 @@ def main():
                 shutil.copyfile(p, combined / p.name)
         compile_to(sorted(combined.glob('*.java')), work / 'student-start')
         assert java(work / 'student-start', 'MemberDemo') == MEMBER
-        assert java(work / 'student-start', 'CompareMissions').startswith('NOT_READY:')
+        assert java(work / 'student-start', 'CompareMissions').startswith('尚未完成：')
         for name in ['Rover.java', 'HeavyRover.java', 'CompareMissions.java']:
             shutil.copyfile(BASE / 'teacher' / name, combined / name)
         compile_to(sorted(combined.glob('*.java')), work / 'student-finish')
@@ -156,7 +156,7 @@ def main():
                     BASE / 'teacher/MissionStep.java', *sorted((BASE / 'teacher/transfer').glob('*.java'))],
                    work / 'transfer')
         assert java(work / 'transfer', 'SurveyRoverTry') == (
-            '6/3/3/UNFINISHED\n0/5/1/SUCCESS\nNOT_ENOUGH_ENERGY/5/0/0\nSTOPPED/20/5/0\n')
+            '6/3/3/任務未完成\n0/5/1/任務成功\n能源不足/5/0/0\n任務已停止/20/5/0\n')
         print('PASS independent transfer full output')
 
         ai = work / 'ai-src'
@@ -166,12 +166,12 @@ def main():
         shutil.copyfile(BASE / 'ai/HeavyRover.java', ai / 'HeavyRover.java')
         compile_to(sorted(ai.glob('*.java')), work / 'ai')
         wrong = java(work / 'ai', 'HeavyRoverTry')
-        expected_wrong = TRIAL.replace('after explore: 6/6/2/1 (expect 6/6/2/1) OK',
-                                       'after explore: 6/5/2/1 (expect 6/6/2/1) DIFF')
-        expected_wrong = expected_wrong.replace('done unchanged: 6/6/2/1 (expect 6/6/2/1) OK',
-                                                 'done unchanged: 6/5/2/1 (expect 6/6/2/1) DIFF')
+        expected_wrong = TRIAL.replace('探索後: 6/6/2/1 （預期 6/6/2/1） 相符',
+                                       '探索後: 6/5/2/1 （預期 6/6/2/1） 不符')
+        expected_wrong = expected_wrong.replace('完成後狀態維持: 6/6/2/1 （預期 6/6/2/1） 相符',
+                                                 '完成後狀態維持: 6/5/2/1 （預期 6/6/2/1） 不符')
         assert wrong == expected_wrong, wrong
-        print('PASS simulated AI compiles and two expected DIFF lines')
+        print('PASS simulated AI compiles and two expected 不符 lines')
         # 最小修正：移除無效private方法，改寫產量方法；其餘AI內容保留。
         p = ai / 'HeavyRover.java'
         s = p.read_text(encoding='utf-8')
@@ -213,19 +213,19 @@ def main():
         shutil.copytree(BASE / 'examples', experiment)
         p = experiment / 'VipMember.java'
         s = p.read_text(encoding='utf-8')
-        s = re.sub(r'        return "VIP ".*?bonusCount;',
+        s = re.sub(r'        return "VIP 會員 ".*?bonusCount;',
                    '        return super.describe() + " / VIP";', s, flags=re.S)
         p.write_text(s, encoding='utf-8')
         compile_to(sorted(experiment.glob('*.java')), work / 'member-edit-out')
         assert java(work / 'member-edit-out', 'MemberDemo') == MEMBER.replace(
-            'VIP Bob / points=28 / bonus=1', 'Member Bob / points=28 / VIP')
+            'VIP 會員 Bob / 點數=28 / 獎勵次數=1', '會員 Bob / 點數=28 / VIP')
         print('PASS guided member edit and super call')
 
         mutations = [
             ('Rover.java', 'addSamples(exploreYield());', 'addSamples(2);'),
             ('HeavyRover.java', '        return 3;', '        return 2;'),
             ('HeavyRover.java', '        return 3;', '        countAction();\n        return 3;'),
-            ('Rover.java', 'if (isStopped()) { return "STOPPED"; }', '// missing stop'),
+            ('Rover.java', 'if (isStopped()) { return "任務已停止"; }', '// missing stop'),
             ('HeavyRover.java', 'private int drillCount;', 'private int drillCount;\n    private int energy;'),
         ]
         for i, (name, old, new) in enumerate(mutations):
@@ -237,7 +237,7 @@ def main():
             p.write_text(s.replace(old, new), encoding='utf-8')
             out = work / f'mutation-out-{i}'
             compile_to(sorted(target.glob('*.java')), out)
-            run(['java', '-cp', out, 'PolymorphismCheck'], success=False)
+            run(['java', "-Dstdout.encoding=UTF-8", '-cp', out, 'PolymorphismCheck'], success=False)
         print('PASS five detected behavior/design mutations')
     if not args.code_only:
         static_checks()

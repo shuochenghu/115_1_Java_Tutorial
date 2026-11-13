@@ -1,0 +1,53 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 第八週（codex teacher）：Rover 是具體類別，exploreYield 預設回 2
+
+class Rover #F4F4F4 {
+  - energy : int
+  - samples : int
+  - actionCount : int
+  + Rover(energy : int, samples : int)
+  + getSamples() : int
+  + execute(command : int) : String
+  # exploreYield() : int  {回 2}
+  - explore() : String
+}
+class HeavyRover #F4F4F4 {
+  - drillCount : int
+  + drill() : String
+  # exploreYield() : int  {回 3}
+}
+class Mission #F4F4F4 {
+  - rover : Rover
+  + run(script : int[]) : void
+  + getOutcome() : String
+}
+class MissionLog #F4F4F4 {
+  runMission(...) : 建立 new Rover(...)
+}
+class CompareMissions #F4F4F4 {
+  main : new Rover(20, 0)
+  main : new HeavyRover(20, 0)
+}
+Rover <|-- HeavyRover
+Mission --> "1" Rover : rover
+MissionLog ..> Rover : new Rover
+CompareMissions ..> Rover : new Rover
+note right of Rover
+  <b>第八週留下的兩個問題</b>
+  ① 新車種忘了覆寫 exploreYield，
+     也會「默默」得到 2 份，編譯器不會提醒
+  ② 報表只想讀樣本數，但能讀的只有 Rover，
+     沒有能源的「樣本盒」接不上
+end note
+@enduml

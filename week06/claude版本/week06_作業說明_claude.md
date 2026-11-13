@@ -11,10 +11,10 @@
 | TODO | 檔案 | 要求 |
 |---|---|---|
 | 1 | `Rover` | `isStopped()`：成功或耗盡時為 true，用 `isSuccess()`、`isExhausted()` 組合 |
-| 2 | `Rover` | `execute` 一開始：已停止就回傳 `STOPPED`，狀態不變；`explore`、`scan`、`charge` 改為 `private` |
+| 2 | `Rover` | `execute` 一開始：已停止就回傳 `任務已停止`，狀態不變；`explore`、`scan`、`charge` 改為 `private` |
 | 3 | `Mission` | `run(script)`：探測車已停止就不再讀指令、不記錄；每讀一個指令都記錄一筆 `MissionStep`（能源為執行後的值）；指令 0 記錄後結束 |
-| 4 | `Mission` | `getOutcome()`：`SUCCESS` > `EXHAUSTED` > `RETURNED`（最後一筆是指令 0）> `UNFINISHED` |
-| 5 | `Mission` | `countOk()`：結果為 `OK` 的筆數（用 `equals`）；`countRejected()`：`isRejected()` 為 true 的筆數 |
+| 4 | `Mission` | `getOutcome()`：`任務成功` > `能源耗盡` > `已返回`（最後一筆是指令 0）> `任務未完成` |
+| 5 | `Mission` | `countOk()`：結果為 `成功` 的筆數（用 `equals`）；`countRejected()`：`isRejected()` 為 true 的筆數 |
 | 6 | `Mission` | `lowestEnergy()`：所有紀錄中最低的執行後能源；沒有紀錄回傳 -1 |
 
 限制：
@@ -29,13 +29,13 @@
 
 | 參數 | 最終 energy／samples／actionCount | 結果 | 摘要 |
 |---|---|---|---|
-| （無） | 6／5／3 | SUCCESS | `steps=3, ok=3, rejected=0, ignored=0`，`lowest energy=6` |
-| `2 2 2 2 2` | 10／5／5 | SUCCESS | `steps=5, ok=5, rejected=0, ignored=0`，`lowest energy=10` |
-| `3 9 0` | 20／0／0 | RETURNED | `steps=3, ok=0, rejected=2, ignored=0`，`lowest energy=20` |
-| `1 1 1 1` | 2／6／3 | SUCCESS | `steps=3, ok=3, rejected=0, ignored=1`，`lowest energy=2` |
-| `2 1` | 12／3／2 | UNFINISHED | `steps=2, ok=2, rejected=0, ignored=0`，`lowest energy=12` |
+| （無） | 6／5／3 | 任務成功 | `步數=3, 成功=3, 拒絕=0, 略過=0`，`最低能源=6` |
+| `2 2 2 2 2` | 10／5／5 | 任務成功 | `步數=5, 成功=5, 拒絕=0, 略過=0`，`最低能源=10` |
+| `3 9 0` | 20／0／0 | 已返回 | `步數=3, 成功=0, 拒絕=2, 略過=0`，`最低能源=20` |
+| `1 1 1 1` | 2／6／3 | 任務成功 | `步數=3, 成功=3, 拒絕=0, 略過=1`，`最低能源=2` |
+| `2 1` | 12／3／2 | 任務未完成 | `步數=2, 成功=2, 拒絕=0, 略過=0`，`最低能源=12` |
 
-這五列與第 5 週作業的表格完全相同。另外執行 `java -cp out RoverTry`，貼上完整輸出，所有行都必須是 `OK`。
+這五列與第 5 週作業的表格完全相同。另外執行 `java -cp out RoverTry`，貼上完整輸出，所有行都必須是 `成功`。
 
 ## 2. 設計：任務系統與樣本艙
 
@@ -98,7 +98,7 @@ Loan "1" --> "0..*" Equipment
 @enduml
 ```
 
-情境的寫法範例（取自第 5 週，和上面的問題無關）：「如果 `MissionStep` 只存 `Rover` 而不存執行後能源，跑預設腳本時，回放的三步都會印出 `energy=6`，看不出每一步之後剩多少能源。」
+情境的寫法範例（取自第 5 週，和上面的問題無關）：「如果 `MissionStep` 只存 `Rover` 而不存執行後能源，跑預設腳本時，回放的三步都會印出 `能源=6`，看不出每一步之後剩多少能源。」
 
 ## 4. 繳交檔案
 
@@ -123,7 +123,7 @@ Loan "1" --> "0..*" Equipment
 | 項目 | 通過條件 |
 |---|---|
 | 編譯 | 全新 clone 後在 `java-06` 執行 `javac -encoding UTF-8 -d out src/*.java` 無錯誤 |
-| 功能 | 五條必做測試與上表一致；`3 9 0` 的回放三步與 `counts=[1, 0, 0, 1]` 正確；`RoverTry` 全部 `OK` |
+| 功能 | 五條必做測試與上表一致；`3 9 0` 的回放三步與 `指令次數[0..3]=[1, 0, 0, 1]` 正確；`RoverTry` 全部 顯示「相符」 |
 | 封裝與責任 | 欄位皆為 `private`；三個行動方法為 `private`；停止規則在 `Rover.execute`；`Mission` 沒有交出整條清單；`MissionLog` 沒有任務流程或計算 |
 | 任務系統類別圖 | 四個類別的欄位、方法、可見性、static 與程式一致；關聯與相依分清楚；`Mission` 的兩條關聯有多重性 |
 | 樣本艙設計 | 四個問題有理由；類別圖能對應需求 1–5；模擬 AI 至少四項問題且有情境 |

@@ -13,7 +13,7 @@
 | 1 | `Rover` | 三個 `protected` 方法：`spendEnergy(int)`（不合理或不足回傳 `false`、能源不變；否則扣除回傳 `true`）、`addSamples(int)`（大於 0 才增加）、`countAction()` |
 | 2 | `Rover` | `explore`、`scan` 改用 TODO 1 的方法；所有輸出與第 6 週逐字相同 |
 | 3 | `HeavyRover` | `private int drillCount`，建構子在 `super(energy, samples)` 之後設為 0，`getDrillCount()` 回傳它 |
-| 4 | `HeavyRover` | `drill()`：已停止回傳 `STOPPED`；能源不足回傳 `NOT_ENOUGH_ENERGY`；成功時能源 −8、樣本 +3、行動次數 +1、鑽探次數 +1，回傳 `OK`；被拒絕時狀態不變 |
+| 4 | `HeavyRover` | `drill()`：已停止回傳 `任務已停止`；能源不足回傳 `能源不足`；成功時能源 −8、樣本 +3、行動次數 +1、鑽探次數 +1，回傳 `成功`；被拒絕時狀態不變 |
 
 限制：
 
@@ -28,13 +28,13 @@
 
 | 參數 | 最後一行（與第 5、6 週相同） |
 |---|---|
-| （無） | `final energy=6, samples=5, actionCount=3 -> SUCCESS` |
-| `2 2 2 2 2` | `final energy=10, samples=5, actionCount=5 -> SUCCESS` |
-| `3 9 0` | `final energy=20, samples=0, actionCount=0 -> RETURNED` |
-| `1 1 1 1` | `final energy=2, samples=6, actionCount=3 -> SUCCESS` |
-| `2 1` | `final energy=12, samples=3, actionCount=2 -> UNFINISHED` |
+| （無） | `最終能源=6, 樣本數=5, 行動次數=3 -> 任務成功` |
+| `2 2 2 2 2` | `最終能源=10, 樣本數=5, 行動次數=5 -> 任務成功` |
+| `3 9 0` | `最終能源=20, 樣本數=0, 行動次數=0 -> 已返回` |
+| `1 1 1 1` | `最終能源=2, 樣本數=6, 行動次數=3 -> 任務成功` |
+| `2 1` | `最終能源=12, 樣本數=3, 行動次數=2 -> 任務未完成` |
 
-另外執行 `RoverTry`（12 行）與 `HeavyRoverTry`（15 行），貼上完整輸出，所有行都必須是 `OK`。
+另外執行 `RoverTry`（12 行）與 `HeavyRoverTry`（15 行），貼上完整輸出，所有行都必須是 `成功`。
 
 ## 2. 程式：社團器材的子類別
 
@@ -76,9 +76,9 @@ Equipment <|-- Projector
 規格：
 
 - `Camera` 的記憶卡數小於 0 時改成 0。
-- `checklist()` 的格式：`Camera` 是 `標籤 | cards=張數`，例如 `CAM-01 Sony A7 | cards=2`；`Projector` 是 `標籤 | screen=yes` 或 `screen=no`。標籤用繼承來的 `getLabel()`，**不可**在子類別另存編號或名稱。
+- `checklist()` 的格式：`Camera` 是 `標籤 | 記憶卡數=張數`，例如 `CAM-01 Sony A7 | 記憶卡數=2`；`Projector` 是 `標籤 | 需要布幕=是` 或 `需要布幕=否`。標籤用繼承來的 `getLabel()`，**不可**在子類別另存編號或名稱。
 
-兩個類別都寫好後，再把 `code/starter/club/ShelfTry.java` 複製到 `src/`（類別還不存在時它無法編譯，這是刻意的，請不要提早複製）。執行 `java -cp out ShelfTry`，9 行都必須是 `OK`。
+兩個類別都寫好後，再把 `code/starter/club/ShelfTry.java` 複製到 `src/`（類別還不存在時它無法編譯，這是刻意的，請不要提早複製）。執行 `java -cp out ShelfTry`，9 行都必須是 `成功`。
 
 ## 3. 追蹤：模擬 AI 寫的 Camera
 
@@ -102,7 +102,7 @@ public class Camera extends Equipment {
     }
 
     public String checklist() {
-        return id + " " + name + " | cards=" + memoryCards;
+        return id + " " + name + " | 記憶卡數=" + memoryCards;
     }
 }
 ```
@@ -110,9 +110,9 @@ public class Camera extends Equipment {
 在 `java-07` 另建資料夾 `ai-camera/`，放入 `Equipment.java`、你寫的 `Projector.java`、`ShelfTry.java` 與這份 `Camera.java`，依序完成：
 
 1. **先預測**（寫進 `DESIGN.md` 第 4 節，再編譯）：能編譯嗎？`cam.checklist()` 會印出什麼？
-2. 編譯並執行 `ShelfTry`，抄下所有 `DIFF` 行。
+2. 編譯並執行 `ShelfTry`，抄下所有 `不符` 行。
 3. 解釋原因：`cam` 物件裡有幾個 `id`？`checklist()` 讀到的是哪一個？為什麼 `cam.getLabel()` 卻是對的？
-4. 最小修正，重測到 9 行全部 `OK`。和你在第 2 部分寫的 `Camera` 比較。
+4. 最小修正，重測到 9 行全部 顯示「相符」。和你在第 2 部分寫的 `Camera` 比較。
 
 先用 `[AI]` commit 模擬回覆原文，修正後再用 `[fix]` commit。
 
@@ -151,10 +151,10 @@ public class Camera extends Equipment {
 | 項目 | 通過條件 |
 |---|---|
 | 編譯 | 全新 clone 後在 `java-07` 執行 `javac -encoding UTF-8 -d out src/*.java` 無錯誤；`ai-check`、`ai-camera` 各自用 `javac -encoding UTF-8 -d out *.java` 無錯誤 |
-| 重構不改行為 | 五條必做測試與上表一致；`RoverTry` 全部 `OK` |
-| 重型探測車 | `HeavyRoverTry` 全部 `OK` |
+| 重構不改行為 | 五條必做測試與上表一致；`RoverTry` 全部 顯示「相符」 |
+| 重型探測車 | `HeavyRoverTry` 全部 顯示「相符」 |
 | 繼承設計 | `HeavyRover extends Rover`；子類別沒有重複宣告父類別的欄位；欄位皆 `private`；三個輔助方法為 `protected`；`drill` 有停止檢查 |
-| 社團子類別 | `ShelfTry` 全部 `OK`；`Camera`、`Projector` 用 `super(id, name)`，沒有另存編號與名稱 |
+| 社團子類別 | `ShelfTry` 全部 顯示「相符」；`Camera`、`Projector` 用 `super(id, name)`，沒有另存編號與名稱 |
 | AI 追蹤 | E 段與第 3 部分都有先預測、實際輸出、原因與最小修正；修正後兩個資料夾的測試都通過；commit 紀錄看得到模擬原文與修正 |
 | 類別圖 | 繼承方向正確（三角形指向父類別）；`#`、`+`、`-` 與程式一致；子類別只列新增的成員 |
 | 誠信 | 能逐行解釋自己的程式；真實 AI 與模擬回覆分開記錄 |

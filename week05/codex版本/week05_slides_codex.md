@@ -70,14 +70,14 @@ AI 協作：從需求寫出可驗證的類別設計
 
 | 索引 | commandLog | resultLog | 正常 energyLog | 漏記後 energyLog |
 |---|---:|---|---:|---|
-| 0（第1步） | 1 | OK | 14 | 14 |
-| 1（第2步） | 1 | OK | 8 | **6（其實是第3步）** |
-| 2（第3步） | 2 | OK | 6 | **不存在** |
+| 0（第1步） | 1 | 成功 | 14 | 14 |
+| 1（第2步） | 1 | 成功 | 8 | **6（其實是第3步）** |
+| 2（第3步） | 2 | 成功 | 6 | **不存在** |
 
 回放若用相同索引讀取：第2步配到錯誤能源，第3步會讀取越界。
 **本週改成一筆 MissionStep 保存三欄，再加入一條 history 清單。**
 
-<!-- 教師提示：A暖身。初始能源20、樣本0。這是刻意假設漏加的錯誤，不是提供的正確答案自帶此錯誤；starter尚有TODO。正常三條清單是[1,1,2]、[14,8,6]、[OK,OK,OK]；漏記後energyLog變[14,6]。相同索引1會錯配6，索引2讀能源會拋出IndexOutOfBoundsException。MissionStep讓同一步三欄一起交付，仍須由呼叫端傳正確值、每步建立並新增，不能宣稱使用物件便不會漏記。 -->
+<!-- 教師提示：A暖身。初始能源20、樣本0。這是刻意假設漏加的錯誤，不是提供的正確答案自帶此錯誤；starter尚有TODO。正常三條清單是[1,1,2]、[14,8,6]、[成功,成功,成功]；漏記後energyLog變[14,6]。相同索引1會錯配6，索引2讀能源會拋出IndexOutOfBoundsException。MissionStep讓同一步三欄一起交付，仍須由呼叫端傳正確值、每步建立並新增，不能宣稱使用物件便不會漏記。 -->
 
 ---
 <!-- _class: small -->
@@ -90,7 +90,7 @@ AI 協作：從需求寫出可驗證的類別設計
 - 原來行動規則、停止時機及報表保持一致。
 - 比較修改前後的完整輸出，檢查改造是否正確。
 
-**完成後：每筆記錄資料獨立，同一路線輸出與第四週一致。**
+**完成後：每筆記錄資料獨立，同一路線的數值、行動結果與停止時機延續第四週。**
 
 目前狀態仍用 energy、samples、actionCount。
 指令沿用：0返回、1探索、2掃描、3充電；其他整數為無效。
@@ -206,7 +206,7 @@ public StepCard(int command, int energy) {
 
 呼叫 `new StepCard(1, 14)` 時，參數先收到1與14，
 再存入新物件的 command 與 energy 欄位。
-建構子只保存傳入值；不會因command=1就自動探索或扣電。
+建構子只保存傳入值；不會因指令=1就自動探索或扣電。
 
 <!-- 教師提示：B1。刻意加void會變普通方法。這裡先處理合法引數，完整違約防護留後續。 -->
 
@@ -246,11 +246,11 @@ public int getEnergy() {
 CreateStepDemo.main 中，first 建好後呼叫：
 
 ```java
-System.out.println("first=" + first.getCommand()
+System.out.println("第一次=" + first.getCommand()
         + "/" + first.getEnergy());
 ```
 
-getEnergy 回傳14，與指令1組成輸出 first=1/14。
+getEnergy 回傳14，與指令1組成輸出 第一次=1/14。
 getter是一般查詢方法的命名慣例；只回傳資料，由main決定如何顯示。
 
 <!-- 教師提示：getter是一般方法的命名慣例。C#屬性語法不直接移植為Java；沿用方法參數/回傳的理解。 -->
@@ -284,9 +284,9 @@ StepCard second = new StepCard(2, 12);
 3. 編譯，記錄訊息並解釋原因，再恢復正確程式。
 
 ```text
-first=1/14
-second=2/12
-same object=false
+第一次=1/14
+第二次=2/12
+同一個物件=false
 ```
 
 <!-- 教師提示：B3預期編譯失敗，不把故意錯誤混入正式版本。 -->
@@ -527,9 +527,9 @@ MissionStep 只保存／查詢傳入資料；耗電與停止判斷仍由 Mission
 |---|---|---|
 | 1 | 建構子以 this 保存 command、energy、result | 建立後讀三欄 |
 | 2 | getCommand／getEnergy／getResult | 各回傳本物件的對應欄位 |
-| 3 | isSuccessful：內容為OK才回傳true | new String("OK")也應為true |
+| 3 | isSuccessful：內容為成功才回傳true | new String("成功")也應為true |
 
-isSuccessful只判斷**當步result是否為OK**，不代表整個任務已收集5份樣本。
+isSuccessful只判斷**當步result是否為成功**，不代表整個任務已收集5份樣本。
 三個欄位已提供；完成TODO 1–3後，先用下一頁查詢驗證，
 再處理 MissionLog 的TODO 4–6。getter不印報表。
 
@@ -546,19 +546,19 @@ isSuccessful只判斷**當步result是否為OK**，不代表整個任務已收�
 
 ```java
 MissionStep first =
-    new MissionStep(1, 14, new String("OK"));
+    new MissionStep(1, 14, new String("成功"));
 MissionStep second =
-    new MissionStep(2, 12, "NOT_ENOUGH_ENERGY");
+    new MissionStep(2, 12, "能源不足");
 ```
 
 | 物件 | 預期 command／energy／result／isSuccessful |
 |---|---|
-| first | 1／14／OK／true |
-| second | 2／12／NOT_ENOUGH_ENERGY／false |
+| first | 1／14／成功／true |
+| second | 2／12／能源不足／false |
 
-要確認：建立second不覆蓋first；不同字串物件只要內容為OK，也應判成功。
+要確認：建立second不覆蓋first；不同字串物件只要內容為成功，也應判成功。
 
-<!-- 教師提示：若first變成second的值，查static；OK卻false，查==。new String只用於內容比較反例。 -->
+<!-- 教師提示：若first變成second的值，查static；成功卻false，查==。new String只用於內容比較反例。 -->
 
 ---
 <!-- _class: small -->
@@ -575,12 +575,12 @@ runMission開頭已提供 `ArrayList<MissionStep> history`，不用重複宣告�
 history.add(new MissionStep(command, energy, result));
 ```
 
-例如首次探索後，這筆記錄是command=1、energy=14、result="OK"。
+例如首次探索後，這筆記錄是指令=1、能源=14、結果="成功"。
 包含拒絕、無效及返回，每筆已讀指令都要新增；停止後的指令不讀也不記。
 
 必須放在switch後：此時result才有值，energy才是該步行動後的能源。
 
-<!-- 教師提示：直接搬到switch前，result尚未指定會編譯失敗；即使另填占位值，也還不是本步的實際結果。若只在OK分支add，摘要與counts會改變。 -->
+<!-- 教師提示：直接搬到switch前，result尚未指定會編譯失敗；即使另填占位值，也還不是本步的實際結果。若只在成功分支add，摘要與counts會改變。 -->
 
 ---
 <!-- _class: small -->
@@ -600,8 +600,8 @@ history.add(new MissionStep(command, energy, result));
 
 | 索引 | 取回的記錄內容 |
 |---|---|
-| 0 | command=1、energy=14、result=OK |
-| 1 | command=1、energy=8、result=OK |
+| 0 | 指令=1、能源=14、結果=成功 |
+| 1 | 指令=1、能源=8、結果=成功 |
 
 讀第1筆：`history.get(0).getEnergy()` 得14。
 先get找到物件，再getEnergy讀它的欄位；每步new不同物件才能保存各步資料。
@@ -624,7 +624,7 @@ String result = step.getResult();
 `i` 從0到 history.size()−1，顯示步號用 i+1；第一筆應印：
 
 ```text
-step 1: command=1, result=OK, energy=14
+步驟 1: 指令=1, 結果=成功, 能源=14
 ```
 
 <!-- 教師提示：完整回放for與println由學生組合，不在投影片塞全部程式。長迴圈在講義及教師答案看。 -->
@@ -640,18 +640,18 @@ for (MissionStep step : history) {
     if (step.isSuccessful()) {
         ok++;
     }
-    if ("RETURN".equals(step.getResult())) {
+    if ("返回".equals(step.getResult())) {
         returned++;
     }
 }
 ```
 
 steps 是 history.size()；rejected＝steps−ok−returned。
-例 `{3,9,0}`：已滿電拒絕、無效、返回，得到 steps=3、ok=0、returned=1，
-所以 rejected=2。RETURN 單獨計，不算成功也不算拒絕。
+例 `{3,9,0}`：已滿電拒絕、無效、返回，得到 步數=3、成功=0、returned=1，
+所以 拒絕=2。返回 單獨計，不算成功也不算拒絕。
 ignored＝script.length−steps；例如 `{1,1,1,1}` 第3筆達標，未讀的1筆就是ignored。
 
-<!-- 教師提示：RETURN不是成功也不是拒絕。ignored仍為script.length-steps。 -->
+<!-- 教師提示：返回不是成功也不是拒絕。ignored仍為script.length-steps。 -->
 
 ---
 <!-- _class: small -->
@@ -670,7 +670,7 @@ for (MissionStep step : history) {
 }
 ```
 
-支援碼已提供，**不是新增TODO**；空清單先印N/A，不可讀第0筆。
+支援碼已提供，**不是新增TODO**；空清單先印無紀錄，不可讀第0筆。
 非空才以上面迴圈處理。用首筆當起點，避免預設0把14、8、6錯算成0。
 
 <!-- 教師提示：這段支援碼已提供。不能直接用min(history)，MissionStep尚未定義比較順序。 -->
@@ -681,16 +681,16 @@ for (MissionStep step : history) {
 
 <p class="slide-ref" data-slide="33">對應程式：<code>starter/MissionLog.java</code></p>
 
-每次從energy=20、samples=0獨立執行；改main的script後重新編譯。
+每次從能源=20、樣本數=0獨立執行；改main的script後重新編譯。
 終態三個數字依序為**能源／樣本／成功行動數**。
 
 | 路線 | 預期終態 | 日誌重點 |
 |---|---|---|
-| {1,1,2} | 6/5/3 SUCCESS | 能源14、8、6 |
-| {3,9,0} | 20/0/0 RETURNED | 拒絕、無效、返回都保存 |
+| {1,1,2} | 6/5/3 任務成功 | 能源14、8、6 |
+| {3,9,0} | 20/0/0 已返回 | 拒絕、無效、返回都保存 |
 
 counts統計已讀合法指令，包含被拒絕者；actionCount只算成功行動。
-還要核對回放、摘要與最低能源，不能只看最後的SUCCESS。
+還要核對回放、摘要與最低能源，不能只看最後的任務成功。
 這兩條路線的最低能源為6／20，battery百分比為30.0／100.0。
 
 完整六條路線見講義E3與作業，課後補齊本人實測。
@@ -714,15 +714,15 @@ java -cp out-teacher FixedScriptMission 2 4 2
 
 | 初始狀態；script | 類別名後接的參數 | 預期 |
 |---|---|---|
-| 2/4；{2} | 2 4 2 | SUCCESS，1筆日誌 |
-| 0/0；{3,1} | 0 0 3 1 | EXHAUSTED，零筆 |
-| 20/5；{1} | 20 5 1 | SUCCESS，零筆 |
-| 20/0；{} | 20 0 | UNFINISHED、最低值N/A |
+| 2/4；{2} | 2 4 2 | 任務成功，1筆日誌 |
+| 0/0；{3,1} | 0 0 3 1 | 能源耗盡，零筆 |
+| 20/5；{1} | 20 5 1 | 任務成功，零筆 |
+| 20/0；{} | 20 0 | 任務未完成、最低值無紀錄 |
 
 判斷重點：達標優先於耗盡；初始已停止就不讀指令。
 教師操作工具，學生記錄終態與日誌筆數。
 
-<!-- 教師提示：這是教師支援工具，不要求學生另寫命令列介面。四列依序執行FixedScriptMission 2 4 2、0 0 3 1、20 5 1、20 0；空腳本只傳兩個初始值。第一列應為0/5/1 SUCCESS、1筆日誌、最低能源0；初始已停止兩列都為零筆。教師回歸工具另執行java -cp out-teacher MissionLogCheck；不把電池charge規則套成任務可復活。 -->
+<!-- 教師提示：這是教師支援工具，不要求學生另寫命令列介面。四列依序執行FixedScriptMission 2 4 2、0 0 3 1、20 5 1、20 0；空腳本只傳兩個初始值。第一列應為0/5/1 任務成功、1筆日誌、最低能源0；初始已停止兩列都為零筆。教師回歸工具另執行java -cp out-teacher MissionLogCheck；不把電池charge規則套成任務可復活。 -->
 
 ---
 <!-- _class: small -->
@@ -740,8 +740,8 @@ java -cp out-teacher MissionLogCheck
 
 | 工具 | 要檢查什麼 | 通過時最後一行 |
 |---|---|---|
-| MissionStepCheck | 欄位讀值、物件獨立、內容比較與快照 | 8/8 object checks passed |
-| MissionLogCheck | 15組任務的完整輸出與邊界 | 15/15 passed |
+| MissionStepCheck | 欄位讀值、物件獨立、內容比較與快照 | 8/8 項物件檢查通過 |
+| MissionLogCheck | 15組任務的完整輸出與邊界 | 15/15 項通過 |
 
 FixedScriptMission是「指定一組初始狀態並顯示結果」；Check是「比對預先寫好的期望」。
 上面驗證的是teacher答案，不能當作學生src已完成的證據；學生仍須本人測試與記錄。
@@ -837,7 +837,7 @@ F2要交「至少四項偏差與呼叫例子」以及一份改寫後的Prompt。
 3. 第一筆為何也變成第二筆資料？
 4. 恢復實例欄位，重測第27頁與第33頁兩條路線。
 
-預期反例：第一筆變成 2／12／NOT_ENOUGH_ENERGY。
+預期反例：第一筆變成 2／12／能源不足。
 
 <!-- 教師提示：F3三選一，10分鐘先完成預測與一輪操作，完整紀錄可課後補。錯誤只放repo外的副本。 -->
 
@@ -851,10 +851,10 @@ F2要交「至少四項偏差與呼叫例子」以及一份改寫後的Prompt。
 > 模擬建議：「固定代碼，用 == 比較就好。」
 
 ```java
-return result == "OK"; // 副本錯誤示範
+return result == "成功"; // 副本錯誤示範
 ```
 
-用第27頁的 `new String("OK")` 測試：這個錯誤寫法回傳false。
+用第27頁的 `new String("成功")` 測試：這個錯誤寫法回傳false。
 因為 == 比參考，並非比內容；改回內容比較應為true。
 只用字串常值可能碰巧通過，所以這裡刻意用new String建立不同參考。
 再重測第27頁與第33頁兩條路線，記錄修正理由。
@@ -950,7 +950,7 @@ RoverBattery 只用在本週示範；主任務的energy／samples仍由MissionLo
 3. GitHub Desktop檢查差異、commit、push、遠端核對。
 4. 另取回新副本重編譯，未做項目如實標示。
 
-新副本應有回放能源14、8、6，終態6/5/3 SUCCESS，battery=30.0。
+新副本應有回放能源14、8、6，終態6/5/3 任務成功，電量百分比=30.0。
 src交examples六檔＋完成的starter兩檔；錯誤副本留在repo外，
 teacher同名檔與out不提交。
 

@@ -7,13 +7,13 @@
 - 會員短例觀察覆寫，學生在隔離副本做小修改與super.describe()；super方法呼叫限簡短體驗，不視為熟練設計。
 - 三組主線TODO：1 private explore呼叫產量方法；2 HeavyRover自行宣告@Override；3 CompareMissions建立兩組新車、新Mission及報表呼叫。
 - 用父類別參考追蹤實際物件，區分可呼叫成員與執行時選擇；不要求向下轉型、instanceof或過載完整規則。
-- 一份模擬AI私有方法錯誤、兩行DIFF、編譯診斷、最小修正及同入口重測。
+- 一份模擬AI私有方法錯誤、兩行不符、編譯診斷、最小修正及同入口重測。
 - 一個課後小型遷移，SurveyRover或自訂。未完成課後題不能當第九週共同先備。
 - 150分鐘與課後45–60分鐘皆備課估計，未經試教；下週仍診斷覆寫簽名、參考型態及狀態更新位置。
 
 ## 精確程式契約
 
-Rover新增protected int exploreYield()回2；private explore保留扣能源6、拒絕不變、addSamples(exploreYield())、countAction一次、回OK。HeavyRover覆寫產量回3，只回數量、不改狀態。private explore不被覆寫；execute、停止與各行動規則不改。
+Rover新增protected int exploreYield()回2；private explore保留扣能源6、拒絕不變、addSamples(exploreYield())、countAction一次、回成功。HeavyRover覆寫產量回3，只回數量、不改狀態。private explore不被覆寫；execute、停止與各行動規則不改。
 
 HeavyRover.drill仍耗8得3、成功才增加行動及鑽探次數，停止優先。新版先drill再探索結果6/6/2/1，前週的6/5/2/1只適用前週。HeavyRoverTry已同步兩個期望字串，不以舊預期判新版錯誤。
 
@@ -21,7 +21,7 @@ Mission、MissionStep、MissionLog逐位元組沿用第七週教師檔；建構�
 
 固定int[] script，不讀命令列、不加指令4。energy初始0..20、samples非負、合法小整數；script非null；每次新車、新Mission，只run一次；執行與讀結果期間不外部操作同一車。不承諾契約外建構值、溢位、共享車、重複run或並行。
 
-CompareMissions一般車20/0跑{1,1,2}為6/5/3 SUCCESS、3步；重型車為8/6/2 SUCCESS、2步、忽略1筆。6/2跑{1,3}一般車0/4/1 EXHAUSTED，重型車0/5/1 SUCCESS；皆只讀1步。
+CompareMissions一般車20/0跑{1,1,2}為6/5/3 任務成功、3步；重型車為8/6/2 任務成功、2步、忽略1筆。6/2跑{1,3}一般車0/4/1 能源耗盡，重型車0/5/1 任務成功；皆只讀1步。
 
 遷移題產量固定1..4且不改狀態，不宣稱父流程能安全支援任意惡意覆寫。protected同套件亦能呼叫，課程約定局部方法只供行動實作。
 

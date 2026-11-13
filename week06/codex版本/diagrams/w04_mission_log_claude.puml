@@ -1,0 +1,38 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+skinparam packageBorderColor #8899AA
+hide circle
+hide empty members
+title 第 4 週：所有事情都在 MissionLog 一個類別裡
+
+class MissionLog #F4F4F4 {
+  + {static} main(args : String[]) : void
+  ~ {static} runMission(script : int[], energy : int, samples : int) : void
+  ~ {static} countCommands(commandLog : ArrayList<Integer>) : int[]
+  ~ {static} printReplay(commandLog, energyLog, resultLog) : void
+  ~ {static} printSummary(scriptLength, energyLog, resultLog) : void
+  ~ {static} calculateBatteryPercent(energy : int) : double
+}
+class FixedScriptMission #F4F4F4 {
+  + {static} main(args : String[]) : void
+}
+FixedScriptMission ..> MissionLog : 呼叫 runMission
+note right of MissionLog
+  <b>runMission 裡的區域變數</b>
+  ・目前狀態：energy、samples、actionCount、running
+  ・歷史：三條平行清單
+  　commandLog　ArrayList<Integer>
+  　energyLog　　ArrayList<Integer>
+  　resultLog　　ArrayList<String>
+  第 i 步的資料散在三條清單的第 i 格，
+  <b>三條必須一起 add，也不能只排序其中一條</b>
+end note
+@enduml

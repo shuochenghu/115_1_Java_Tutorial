@@ -19,7 +19,7 @@ public class Mission {
 
     // TODO 4：第五週 runMission 最後的四段判斷搬到這裡，順序不變。
     public String getOutcome() {
-        return "UNFINISHED";
+        return "任務未完成";
     }
 
     public int getStepCount() {
@@ -43,7 +43,7 @@ public class Mission {
         return counts;
     }
 
-    // TODO 5：模仿 countCommands 走訪 steps。結果是 "OK" 的筆數（字串用 equals 比較）。
+    // TODO 5：模仿 countCommands 走訪 steps。結果是 "成功" 的筆數（字串用 equals 比較）。
     public int countOk() {
         return 0;
     }

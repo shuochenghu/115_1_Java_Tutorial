@@ -1,0 +1,54 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 第十週（codex teacher）：SampleReport 變成三個同名 print
+
+legend top right
+  <back:#DFF3E3>　新增　</back>  <back:#FFE8D6>　修改　</back>  <back:#F4F4F4>　與第九週相同　</back>
+endlegend
+
+interface SampleSource <<interface>> #F4F4F4 {
+  + getSamples() : int
+}
+abstract class Rover <<abstract>> #F4F4F4 {
+  + getEnergy() : int
+  + getSamples() : int
+  # {abstract} exploreYield() : int
+}
+class StandardRover #F4F4F4
+class HeavyRover #F4F4F4
+class SampleTray #F4F4F4
+class SampleReport #FFE8D6 {
+  + {static} print(label : String, source : SampleSource) : void  {改為轉交 int 版}
+  <b>+ {static} print(label : String, rover : Rover) : void</b>
+  <b>+ {static} print(label : String, samples : int) : void</b>
+}
+class SampleReportDemo #FFE8D6 {
+  車輛改用 SampleSource 參考傳入
+}
+class SampleOverloadDemo #DFF3E3 {
+  同一台車 × 兩種參考，六個呼叫
+}
+SampleSource <|.. Rover
+SampleSource <|.. SampleTray
+Rover <|-- StandardRover
+Rover <|-- HeavyRover
+SampleReport ..> SampleSource
+SampleReport ..> Rover
+SampleReportDemo ..> SampleReport
+SampleOverloadDemo ..> SampleReport
+note bottom of Rover
+  Rover、Mission 等任務程式都沒改：
+  本週新增的是「呼叫哪一個報表」，
+  不是車的行為
+end note
+@enduml

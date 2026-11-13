@@ -15,19 +15,19 @@ public class HeavyRover extends Rover {
 
     // 模擬AI提出的探索方法，請核對是否符合父類別契約。
     private String explore() {
-        if (!spendEnergy(6)) { return "NOT_ENOUGH_ENERGY"; }
+        if (!spendEnergy(6)) { return "能源不足"; }
         addSamples(3);
         countAction();
-        return "OK";
+        return "成功";
     }
 
     // 其餘部分保留模擬原稿，供後續最小修正比較。
     public String drill() {
-        if (isStopped()) { return "STOPPED"; }
-        if (!spendEnergy(DRILL_COST)) { return "NOT_ENOUGH_ENERGY"; }
+        if (isStopped()) { return "任務已停止"; }
+        if (!spendEnergy(DRILL_COST)) { return "能源不足"; }
         addSamples(DRILL_YIELD);
         countAction();
         drillCount++;
-        return "OK";
+        return "成功";
     }
 }

@@ -120,13 +120,13 @@ src 先放 examples 三檔與 starter 七檔，共十檔。
 ```java
 // Member
 public String describe() {
-    return "Member " + name + " / points=" + points;
+    return "會員 " + name + " / 點數=" + points;
 }
 // VipMember
 @Override
 public String describe() {
-    return "VIP " + getName() + " / points=" + getPoints()
-            + " / bonus=" + bonusCount;
+    return "VIP 會員 " + getName() + " / 點數=" + getPoints()
+            + " / 獎勵次數=" + bonusCount;
 }
 ```
 
@@ -148,7 +148,7 @@ Amy 購買 120，Bob 購買 80，再領取一次 20 點加贈。
 
 先填 LAB_REPORT 的 B1，再執行 MemberDemo。
 
-<!-- 教師提示：預期Amy12、Bob28；後兩行都VIP Bob / points=28 / bonus=1。建構訊息三行也要預測。不要先執行或展開examples答案。 -->
+<!-- 教師提示：預期Amy12、Bob28；後兩行都VIP 會員 Bob / 點數=28 / 獎勵次數=1。建構訊息三行也要預測。不要先執行或展開examples答案。 -->
 
 ---
 ## @Override 的檢查
@@ -179,7 +179,7 @@ super.describe()
 
 先寫三行預期，再編譯、執行與解釋結果。
 
-<!-- 教師提示：super指定呼叫父方法，仍是同一個物件。完整return不立即顯示。參考輸出最後兩行Member Bob / points=28 / VIP；原src維持原範例。 -->
+<!-- 教師提示：super指定呼叫父方法，仍是同一個物件。完整return不立即顯示。參考輸出最後兩行會員 Bob / 點數=28 / VIP；原src維持原範例。 -->
 
 ---
 ## C｜參考型態與實際物件
@@ -261,7 +261,7 @@ Mission.run
 
 一般車預設仍應為 6 格、5 份、3 次行動。
 
-<!-- 教師提示：檢查點1。不要直接貼完整explore答案。此時HeavyRoverTry仍有兩行DIFF，下一步完成子覆寫。一般車舊完整輸出回歸。 -->
+<!-- 教師提示：檢查點1。不要直接貼完整explore答案。此時HeavyRoverTry仍有兩行不符，下一步完成子覆寫。一般車舊完整輸出回歸。 -->
 
 ---
 ## D3｜TODO 2：重型車覆寫
@@ -275,7 +275,7 @@ Mission.run
 | 註記 | @Override |
 | 行為 | 只回傳 3 |
 
-完成後 HeavyRoverTry 十五行應全 OK。
+完成後 HeavyRoverTry 十五行應全 成功。
 
 <!-- 教師提示：檢查點2。父類別三狀態private，學生不重複宣告；不在產量方法扣能源或加行動。不立即展示完整方法答案。 -->
 
@@ -292,7 +292,7 @@ Mission.run
 
 用本週新規格核對，保留第七週原教材。
 
-<!-- 教師提示：D3答案依序OK 12/3/1/1，OK 6/6/2/1，STOPPED 6/6/2/1。第七週兩處6/5要改成本週6/6，不能為印OK任意改expect。 -->
+<!-- 教師提示：D3答案依序成功 12/3/1/1，成功 6/6/2/1，任務已停止 6/6/2/1。第七週兩處6/5要改成本週6/6，不能為印成功任意改expect。 -->
 
 ---
 ## D4｜TODO 3：兩組任務
@@ -306,7 +306,7 @@ Mission.run
 
 show 只印報表，建立任務由你完成。
 
-<!-- 教師提示：TODO3核心是學生自己new車、new Mission、run。不要用老師helper代做。固定script={1,1,2}，標籤normal/heavy；同一腳本唯讀，共享腳本不共享車。 -->
+<!-- 教師提示：TODO3核心是學生自己new車、new Mission、run。不要用老師helper代做。固定script={1,1,2}，標籤「一般探測車」「重型探測車」；同一腳本唯讀，共享腳本不共享車。 -->
 
 ---
 ## D5｜兩車任務的結果
@@ -316,7 +316,7 @@ show 只印報表，建立任務由你完成。
 | 項目 | 一般車 | 重型車 |
 |---|---|---|
 | energy / samples / actions | 6 / 5 / 3 | 8 / 6 / 2 |
-| outcome | SUCCESS | SUCCESS |
+| outcome | 任務成功 | 任務成功 |
 | 已讀／忽略指令 | 3 / 0 | 2 / 1 |
 | battery | 30.0 | 40.0 |
 
@@ -338,7 +338,7 @@ show 只印報表，建立任務由你完成。
 
 再設計一個本人反例，說明能抓到何種錯誤。
 
-<!-- 教師提示：D5依序0/4/1 EXHAUSTED、0/5/1 SUCCESS，各1步。第二列皆拒絕且5/0/0 UNFINISHED；拒絕是行動回傳，UNFINISHED是任務結果。 -->
+<!-- 教師提示：D5依序0/4/1 能源耗盡、0/5/1 任務成功，各1步。第二列皆拒絕且5/0/0 任務未完成；拒絕是行動回傳，任務未完成是任務結果。 -->
 
 ---
 ## E｜AI 審查的需求與來源
@@ -360,10 +360,10 @@ show 只印報表，建立任務由你完成。
 ```java
 // HeavyRover 中刻意有錯的設計
 private String explore() {
-    if (!spendEnergy(6)) { return "NOT_ENOUGH_ENERGY"; }
+    if (!spendEnergy(6)) { return "能源不足"; }
     addSamples(3);
     countAction();
-    return "OK";
+    return "成功";
 }
 ```
 
@@ -376,13 +376,13 @@ private String explore() {
 
 在 ai-check 獨立編譯，執行 HeavyRoverTry。
 
-- 保留 after explore、done unchanged 的 DIFF
+- 保留 after explore、done unchanged 的 不符
 - 比較樣本數，說明實際呼叫路徑
-- 思考只看 SUCCESS 是否能抓到錯誤
+- 思考只看 任務成功 是否能抓到錯誤
 
 先記預期與實際，再解釋原因。
 
-<!-- 教師提示：錯誤6/5/2/1，預期6/6/2/1；兩處DIFF。5和6都達標，最後drill仍STOPPED，所以只看成功不夠。teacher_notes有完整對照。 -->
+<!-- 教師提示：錯誤6/5/2/1，預期6/6/2/1；兩處不符。5和6都達標，最後drill仍任務已停止，所以只看成功不夠。teacher_notes有完整對照。 -->
 
 ---
 ## E3｜@Override 編譯診斷

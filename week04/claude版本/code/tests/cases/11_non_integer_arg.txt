@@ -1,0 +1,5 @@
+# 非整數參數 abc：本週約定不處理，Integer.parseInt 丟出 NumberFormatException，程式以結束碼 1 中止、沒有任何標準輸出。
+run: MissionLog 1 abc
+exit: 1
+stderr: NumberFormatException
+---

@@ -1,0 +1,30 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 同一台車、兩種參考：編譯器依「宣告型態」選簽名
+
+object "rover : Rover" as R #E8F0F7
+object "source : SampleSource" as S #E8F0F7
+object "HeavyRover 物件\n能源=8　樣本=6" as H #FFFFFF
+R --> H : 指向
+S --> H : 指向（同一個）
+
+class "print(String, Rover)\n印 樣本數＋能源" as P1 #FFE8D6
+class "print(String, SampleSource)\n印 樣本數" as P2 #DFF3E3
+R ..> P1 : print(label, rover)\n兩版都能用，Rover 較具體
+S ..> P2 : print(label, source)\n只有這版能用
+note bottom of H
+  物件只有一個，狀態也只有一份。
+  選哪個 print 在<b>編譯時</b>就決定，
+  執行時<b>不會</b>因為它其實是 HeavyRover 而改選。
+end note
+@enduml

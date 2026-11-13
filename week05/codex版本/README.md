@@ -2,7 +2,7 @@
 
 課綱主題為類別與物件設計 I：封裝、建構子與設計原則，以及 AI 協作需求轉換。對象為有基礎 C# WinForms 經驗的資管系二年級學生。以三節各 50 分鐘規畫，休息另計；這是備課配置，尚未學生試教。
 
-第四週要同時維護 commandLog、energyLog、resultLog，本週讓同一步資料由一個 MissionStep 保存，再用 ArrayList<MissionStep> 回放。行動規則與既有輸出不變，讓學生能判斷「表示方式改了，行為是否保持」。
+第四週要同時維護 commandLog、energyLog、resultLog，本週讓同一步資料由一個 MissionStep 保存，再用 ArrayList<MissionStep> 回放。行動規則沿用第四週，報表沿用第四週的繁體中文欄位。用同一路線比對數值、行動結果與停止時機。
 
 ## 學習成果
 
@@ -26,7 +26,7 @@
 | [starter/MissionStep.java](starter/MissionStep.java)／[MissionLog.java](starter/MissionLog.java) | 六個 TODO 群組的可編譯骨架 |
 | [teacher/MissionStep.java](teacher/MissionStep.java)／[MissionLog.java](teacher/MissionLog.java) | 完整答案 |
 | [教師版 UML 類別圖](diagrams/mission_log_and_step.svg)／[PlantUML 原始檔](diagrams/mission_log_and_step.puml) | 對照兩個類別的成員與責任，以及建立和讀取日誌的關係 |
-| [teacher/MissionStepCheck.java](teacher/MissionStepCheck.java)／[MissionLogCheck.java](teacher/MissionLogCheck.java) | 物件檢查及第四週完整輸出回歸檢查 |
+| [teacher/MissionStepCheck.java](teacher/MissionStepCheck.java)／[MissionLogCheck.java](teacher/MissionLogCheck.java) | 物件檢查及沿用第四週路線的中文報表回歸檢查 |
 | [teacher/FixedScriptMission.java](teacher/FixedScriptMission.java) | 教師固定初始狀態入口 |
 | [teacher/SampleCase.java](teacher/SampleCase.java)／[SampleCaseCheck.java](teacher/SampleCaseCheck.java) | F1新情境的完整教師參考與12項檢查；學生實作列選做 |
 | [AI_USAGE_template.md](AI_USAGE_template.md) | 四欄簡表與虛構／模擬完整示範 |
@@ -79,6 +79,6 @@ java -cp out-teacher FixedScriptMission 2 4 2
 
 本次修訂將C#欄位存取差異放在講義C1；F段30分鐘改為「獨立SampleCase設計卡、模擬AI程式審查、三選一反例與反思」。F3新增錯存可變電池參考的快照問題，先在SnapshotDemo副本觀察，再恢復原程式。主作業仍是六組TODO及八個學生來源檔；SampleCase不接進任務，完整Rover重構留待第六週責任分工與UML討論。
 
-RoverBattery 是概念示範，允許 energy=0 的電池充電；MissionLog 是整個任務，初始能源 0 時已結束，不能執行充電。兩者責任不同，不能拿電池方法取代任務停止規則。
+RoverBattery 是概念示範，允許 能源=0 的電池充電；MissionLog 是整個任務，初始能源 0 時已結束，不能執行充電。兩者責任不同，不能拿電池方法取代任務停止規則。
 
 教科書依本專案 Deitel《Java How to Program, Early Objects》11e EPUB 核對：§3.2–3.5 為主，§8.3、§8.4、§8.6、§8.7 補充；有參數建構子採單一版本，不要求 §8.5 的過載。以章節引用，不猜紙本頁碼。官方語言依據見教師筆記；情境與活動為自編。

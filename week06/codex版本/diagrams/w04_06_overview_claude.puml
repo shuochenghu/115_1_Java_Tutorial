@@ -1,0 +1,56 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+skinparam packageBorderColor #8899AA
+hide circle
+hide empty members
+title 第 4 → 5 → 6 週：同一個任務，責任越分越清楚
+
+package "第 4 週" {
+  class "MissionLog" as M4 #F4F4F4 {
+    區域變數：energy、samples、actionCount
+    <b>三條清單：commandLog、energyLog、resultLog</b>
+    switch：探索／掃描／充電
+    迴圈、停止、結果、報表
+  }
+}
+package "第 5 週" {
+  class "MissionLog" as M5 #FFE8D6 {
+    區域變數：energy、samples、actionCount
+    <b>一條清單：ArrayList<MissionStep></b>
+    switch、迴圈、停止、結果、報表
+  }
+  class "MissionStep" as S5 #DFF3E3 {
+    command、energy、result
+  }
+  M5 ..> S5 : new / 讀取
+}
+package "第 6 週" {
+  class "MissionLog" as M6 #FFE8D6 {
+    固定腳本入口、報表
+  }
+  class "Mission" as Mi6 #DFF3E3 {
+    腳本迴圈、history、returned
+  }
+  class "Rover" as R6 #DFF3E3 {
+    energy、samples、actionCount
+    execute：探索／掃描／充電
+  }
+  class "MissionStep" as S6 #F4F4F4
+  M6 ..> Mi6
+  Mi6 --> "1" R6
+  Mi6 --> "0..*" S6
+}
+M4 -[hidden]> M5
+M5 -[hidden]> M6
+legend bottom
+  <back:#DFF3E3>　新增　</back>  <back:#FFE8D6>　修改　</back>  <back:#F4F4F4>　沿用　</back>
+endlegend
+@enduml

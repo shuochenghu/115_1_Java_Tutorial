@@ -101,7 +101,7 @@ src 先放 examples 三檔及 starter 六檔。
 
 記錄本人實際 java／javac 版本。
 
-<!-- 教師提示：答案見教師筆記A。6/5/3 SUCCESS；HeavyRoverTry會有DIFF。JDK不鎖定，不把歷史22當教室要求。 -->
+<!-- 教師提示：答案見教師筆記A。6/5/3 任務成功；HeavyRoverTry會有不符。JDK不鎖定，不把歷史22當教室要求。 -->
 
 ---
 ## B｜父類別與子類別
@@ -137,7 +137,7 @@ public class VipMember extends Member {
 public VipMember(String name) {
     super(name);
     bonusCount = 0;
-    System.out.println("VipMember constructor: " + name);
+    System.out.println("VipMember 建構子: " + name);
 }
 ```
 
@@ -160,7 +160,7 @@ MemberDemo 建立 Amy 與 Bob，再購買及領點。
 | Bob 買 85 再領 20 點 | 先填 | 執行後填 |
 | Bob 加贈次數 | 先填 | 執行後填 |
 
-<!-- 教師提示：檔案examples/MemberDemo.java。答案12、28、1，Member constructor: Bob先於VipMember。請學生追蹤85/10=8。 -->
+<!-- 教師提示：檔案examples/MemberDemo.java。答案12、28、1，Member 建構子: Bob先於VipMember。請學生追蹤85/10=8。 -->
 
 ---
 ## B2｜呼叫判讀
@@ -272,7 +272,7 @@ points += 20;
 
 Mission、MissionStep、MissionLog 保持第六週完成版。
 
-起始碼安全可跑，NOT_READY 不算完成功能。
+起始碼安全可跑，尚未完成 不算完成功能。
 
 <!-- 教師提示：D2十二分、D3六分、D4十二分。老師只示範explore，避免把scan和drill都寫給學生抄。課後另有一個小型獨立遷移。 -->
 
@@ -296,10 +296,10 @@ Mission、MissionStep、MissionLog 保持第六週完成版。
 
 ```java
 private String explore() {
-    if (!spendEnergy(6)) { return "NOT_ENOUGH_ENERGY"; }
+    if (!spendEnergy(6)) { return "能源不足"; }
     addSamples(2);
     countAction();
-    return "OK";
+    return "成功";
 }
 ```
 
@@ -341,9 +341,9 @@ energy、samples、actionCount 沿用父類別那份狀態。
 
 | 條件 | 回傳 | 狀態 |
 |---|---|---|
-| 已停止 | STOPPED | 全部不變 |
-| 能源不足8格 | NOT_ENOUGH_ENERGY | 全部不變 |
-| 其餘 | OK | -8能源、+3樣本 |
+| 已停止 | 任務已停止 | 全部不變 |
+| 能源不足8格 | 能源不足 | 全部不變 |
+| 其餘 | 成功 | -8能源、+3樣本 |
 
 成功時另加 1 次行動、1 次鑽探。
 使用提供的 DRILL_COST、DRILL_YIELD。
@@ -379,9 +379,9 @@ drill 是另一個入口，必須自己守住規則。
 | execute(1) | 先預測 | 先預測 |
 | drill() | 先預測 | 先預測 |
 
-再執行 HeavyRoverTry，十五行都應為 OK。
+再執行 HeavyRoverTry，十五行都應為 成功。
 
-<!-- 教師提示：答案依序OK 12/3/1/1，OK 6/5/2/1，STOPPED 6/5/2/1。另問7格、8格、初始0與初始5份，讓學生解釋拒絕與成功。 -->
+<!-- 教師提示：答案依序成功 12/3/1/1，成功 6/5/2/1，任務已停止 6/5/2/1。另問7格、8格、初始0與初始5份，讓學生解釋拒絕與成功。 -->
 
 ---
 ## D5｜舊任務的行為保持
@@ -413,11 +413,11 @@ private int energy;
 private int samples;
 
 public String drill() {
-    if (energy < 8) { return "NOT_ENOUGH_ENERGY"; }
+    if (energy < 8) { return "能源不足"; }
     energy -= 8;
     samples += 3;
     drillCount++;
-    return "OK";
+    return "成功";
 }
 ```
 
@@ -426,7 +426,7 @@ public String drill() {
 <!-- 教師提示：此為教師設計模擬回覆的節錄，非真實對話。ai-check只放完成Rover、AI HeavyRover、HeavyRoverTry三檔，和src分開編譯。先預測再跑。 -->
 
 ---
-## E2–E3｜回傳 OK，getter 卻沒變
+## E2–E3｜回傳 成功，getter 卻沒變
 
 ![w:970 h:350](diagrams/ai_state.svg)
 
@@ -443,9 +443,9 @@ public String drill() {
 - 重測正常、7格不足、8格剛好、已停止
 
 保留 [AI] 原文與 [fix] 修正兩個 commit。
-記錄模擬來源，十五行重新全部 OK。
+記錄模擬來源，十五行重新全部 顯示「相符」。
 
-<!-- 教師提示：不靠AI宣稱或只看一次OK驗收。講義E4五分鐘不夠時，E5 Prompt課後補，保留修正重測。 -->
+<!-- 教師提示：不靠AI宣稱或只看一次成功驗收。講義E4五分鐘不夠時，E5 Prompt課後補，保留修正重測。 -->
 
 ---
 ## 自己的反例

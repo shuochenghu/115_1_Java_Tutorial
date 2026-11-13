@@ -6,17 +6,17 @@
 
 1. 完成Rover的TODO 1：spendEnergy、explore及scan的重構。只把舊程式留著讓測試過，不算完成重構。教師示範explore，scan由學生模仿完成。
 2. 完成HeavyRover的TODO 2（自己的狀態）與TODO 3（drill）。欄位private、不可重複宣告energy／samples／actionCount，不新增setter，不覆寫父類別方法。
-3. HeavyRoverTry十五行全OK。從講義D4再提出一個自己的反例，列預期、實際、能抓到的錯誤，不只抄教師測試。
+3. HeavyRoverTry十五行都顯示「相符」。從講義D4再提出一個自己的反例，列預期、實際、能抓到的錯誤，不只抄教師測試。
 4. 六條既有路線完整輸出保持一致。前兩條核心路線已於課堂做，課後補齊其餘；每次從20/0的新任務出發。修改MissionLog固定script後重編譯，最後恢復{1,1,2}。
 
-| script | 最終energy/samples/actionCount | outcome | steps/ok/rejected/ignored | counts[0..3] | lowest | battery |
+| script | 最終energy/samples/actionCount | 任務結果 | 步數／成功／拒絕／略過 | 指令次數[0..3] | 最低能源 | 電量百分比 |
 |---|---|---|---|---|---|---|---|
-| {0} | 20/0/0 | RETURNED | 1/0/0/0 | [1,0,0,0] | 20 | 100.0 |
-| {1,1,2} | 6/5/3 | SUCCESS | 3/3/0/0 | [0,2,1,0] | 6 | 30.0 |
-| {2,2,2,2,2} | 10/5/5 | SUCCESS | 5/5/0/0 | [0,0,5,0] | 10 | 50.0 |
-| {3,9,0} | 20/0/0 | RETURNED | 3/0/2/0 | [1,0,0,1] | 20 | 100.0 |
-| {1,1,1,1} | 2/6/3 | SUCCESS | 3/3/0/1 | [0,3,0,0] | 2 | 10.0 |
-| {2,1} | 12/3/2 | UNFINISHED | 2/2/0/0 | [0,1,1,0] | 12 | 60.0 |
+| {0} | 20/0/0 | 已返回 | 1/0/0/0 | [1,0,0,0] | 20 | 100.0 |
+| {1,1,2} | 6/5/3 | 任務成功 | 3/3/0/0 | [0,2,1,0] | 6 | 30.0 |
+| {2,2,2,2,2} | 10/5/5 | 任務成功 | 5/5/0/0 | [0,0,5,0] | 10 | 50.0 |
+| {3,9,0} | 20/0/0 | 已返回 | 3/0/2/0 | [1,0,0,1] | 20 | 100.0 |
+| {1,1,1,1} | 2/6/3 | 任務成功 | 3/3/0/1 | [0,3,0,0] | 2 | 10.0 |
+| {2,1} | 12/3/2 | 任務未完成 | 2/2/0/0 | [0,1,1,0] | 12 | 60.0 |
 
 保留回放、counts、摘要、最低能源、最終狀態及battery，不只貼最後一行。完整輸出可用Markdown折疊區塊收納。
 
@@ -32,7 +32,7 @@ Mission、MissionStep與報表不改；getEnergy與command/energy/result建構�
 
 - CargoRover extends Rover，建構子CargoRover(int energy, int samples)，本週寫法為第一個敘述super(energy, samples)。private int cargo初始0，getCargo()回傳它。
 - 貨物容量固定3；它不是科學樣本，不另存能源或樣本。
-- 新方法public String load(int amount)：先檢查isStopped，為true回STOPPED；未停止時amount<=0或超出剩餘貨位回REJECTED；其餘增加cargo並回OK。
+- 新方法public String load(int amount)：先檢查isStopped，為true回任務已停止；未停止時amount<=0或超出剩餘貨位回已拒絕；其餘增加cargo並回成功。
 - 被拒絕時全部狀態不變。裝貨不耗能源、不加樣本、不增加actionCount；這是本題不同於鑽探的規則。貨量已滿不等於Rover成功，成功仍看samples。
 - 不覆寫execute，不把裝貨接到Mission腳本；所有輸入為合法小整數。
 
@@ -40,11 +40,11 @@ Mission、MissionStep與報表不改；getEnergy與command/energy/result建構�
 
 | 新物件／呼叫 | 回傳與狀態 |
 |---|---|
-| CargoRover(20,0)連續load(2)、load(2)、load(1) | OK/cargo2、REJECTED/cargo2、OK/cargo3 |
-| 同一台接著load(0) | REJECTED/cargo3 |
+| CargoRover(20,0)連續load(2)、load(2)、load(1) | 成功/cargo2、已拒絕/cargo2、成功/cargo3 |
+| 同一台接著load(0) | 已拒絕/cargo3 |
 | 查看原有三個getter | energy20、samples0、actionCount0 |
-| CargoRover(0,0).load(1) | STOPPED/cargo0 |
-| CargoRover(20,5).load(1) | STOPPED/cargo0 |
+| CargoRover(0,0).load(1) | 任務已停止/cargo0 |
+| CargoRover(20,5).load(1) | 任務已停止/cargo0 |
 
 另自己補一個負數或剛好滿載的案例，先寫預期再執行。類別圖加上自己的子類別與新成員即可，不必複製另一張完整Rover圖。
 
@@ -56,7 +56,7 @@ Mission、MissionStep與報表不改；getEnergy與command/energy/result建構�
 
 ## 三、AI與設計紀錄（必做）
 
-完成講義E一份模擬AI追蹤，保留預測、DIFF證據、同一物件的兩份狀態圖、最小修正及十五行重測。[AI]原文與[fix]修正可在commit比較。教師模擬和真實AI分開填；沒有真實AI帳號也可完成。
+完成講義E一份模擬AI追蹤，保留預測、不符證據、同一物件的兩份狀態圖、最小修正及十五行重測。[AI]原文與[fix]修正可在commit比較。教師模擬和真實AI分開填；沒有真實AI帳號也可完成。
 
 DESIGN只放本週指定圖、is-a理由、遷移規格與測試表。講義／DESIGN可互相引用，不重複抄寫。原始puml與SVG同步，圖改完立即產圖與本人檢視。
 

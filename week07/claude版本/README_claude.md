@@ -85,5 +85,5 @@ npx -y @marp-team/marp-cli@latest --no-stdin week07_slides_claude.md -o week07_s
 - 沿用第 6 週 claude 版的 Marp 樣式、`by-claude` 徽章、範例檔標籤、`DESIGN.md` 與 PlantUML 寫法。
 - 沿用探測車規則、結束判斷順序、命令列參數腳本、`115_1_Java/YYYY_MM_DD/java-NN/src` 結構、150 分鐘節奏（最後 15 分鐘保存推送），以及「模擬 AI 回覆，先預測再驗證」的練習形式。
 - `Mission`、`MissionStep`、`MissionLog` 與第 6 週相同，只改檔頭說明；`MissionLog` 輸出與第 5、6 週逐字相同。
-- 程式輸出只用英數字，避免教室終端機的中文編碼問題。
+- 程式輸出使用繁體中文。以 UTF-8 儲存 Java 原始檔，編譯時使用 `javac -encoding UTF-8`，並確認終端機的輸出編碼。
 - 不限定特定 JDK 版本：學生使用已安裝的 JDK，記錄 java／javac 實際版本，不設定固定編譯目標。`super(...)` 一律寫在建構子第一行，在 JDK 25 放寬規則前後都正確。

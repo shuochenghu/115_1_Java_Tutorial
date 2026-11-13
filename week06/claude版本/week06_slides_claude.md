@@ -85,7 +85,7 @@ System.out.println(r.charge());   // ？
 → 本週：先把設計**畫出來**，討論**誰該負責什麼**，再照圖搬家
 
 <!--
-講者備註：現場用第五週版跑 new Rover(0, 0).charge()，印出 OK、能源變 5。第五週是 MissionLog.runMission 在迴圈開頭擋住，直接呼叫就擋不住。
+講者備註：現場用第五週版跑 new Rover(0, 0).charge()，印出 成功、能源變 5。第五週是 MissionLog.runMission 在迴圈開頭擋住，直接呼叫就擋不住。
 -->
 
 ---
@@ -433,13 +433,13 @@ Flashlight a = new Flashlight("A", shared);
 Flashlight b = new Flashlight("B", shared);
 Flashlight c = new Flashlight("C", new Battery(10, 10));
 
-System.out.println("A on 6 min: " + a.turnOn(6));
-System.out.println("B on 6 min: " + b.turnOn(6));
-System.out.println("C on 6 min: " + c.turnOn(6));
-System.out.println("shared level: " + shared.getLevel());
+System.out.println("燈具 A 開啟 6 分鐘： " + a.turnOn(6));
+System.out.println("燈具 B 開啟 6 分鐘： " + b.turnOn(6));
+System.out.println("燈具 C 開啟 6 分鐘： " + c.turnOn(6));
+System.out.println("共用電池電量： " + shared.getLevel());
 Charger charger = new Charger();
-System.out.println("refill shared: +" + charger.refill(shared));
-System.out.println("B on 6 min: " + b.turnOn(6));
+System.out.println("替共用電池充電： +" + charger.refill(shared));
+System.out.println("燈具 B 開啟 6 分鐘： " + b.turnOn(6));
 ```
 
 把七行輸出寫在講義 B 段，再執行 `java -cp out RelationDemo`
@@ -528,7 +528,7 @@ System.out.println("B on 6 min: " + b.turnOn(6));
 |---|---|
 | 把命令列參數轉成 `int[]` | ? |
 | 依腳本執行並記錄 | ? |
-| 判斷 SUCCESS／EXHAUSTED／RETURNED／UNFINISHED | ? |
+| 判斷 任務成功／能源耗盡／已返回／任務未完成 | ? |
 | 計算 counts、ok、rejected、最低能源 | ? |
 | 把結果印到螢幕 | ? |
 
@@ -616,7 +616,7 @@ System.out.println("B on 6 min: " + b.turnOn(6));
 
 ## C｜先預測：兩個地方都要擋嗎？
 
-`Rover.execute` 停止後回傳 `"STOPPED"`、不改狀態。
+`Rover.execute` 停止後回傳 `"任務已停止"`、不改狀態。
 那 `Mission.run` 的迴圈還要檢查 `rover.isStopped()` 嗎？
 
 ```java
@@ -631,7 +631,7 @@ for (int command : script) {
 寫下預測（講義 C4），D5 實測
 
 <!--
-答案在 D5：要。拿掉後 1 1 1 1 會多記一筆 step 4: result=STOPPED，摘要變 steps=4, rejected=1。停止後不讀不記是任務日誌的規則，STOPPED 保護的是探測車狀態。
+答案在 D5：要。拿掉後 1 1 1 1 會多記一筆 步驟 4: 結果=任務已停止，摘要變 步數=4, 拒絕=1。停止後不讀不記是任務日誌的規則，任務已停止 保護的是探測車狀態。
 -->
 
 ---
@@ -648,10 +648,10 @@ for (int command : script) {
 起始碼可執行，但任務一步都沒跑：
 
 ```text
-=== replay ===
-counts[0..3]=[0, 0, 0, 0]
-steps=0, ok=0, rejected=0, ignored=3
-final energy=20, samples=0, actionCount=0 -> UNFINISHED
+=== 任務回放 ===
+指令次數[0..3]=[0, 0, 0, 0]
+步數=0, 成功=0, 拒絕=0, 略過=3
+最終能源=20, 樣本數=0, 行動次數=0 -> 任務未完成
 ```
 
 ---
@@ -686,18 +686,18 @@ public boolean isStopped() {      // TODO 1
 }
 
 public String execute(int command) {
-    // TODO 2：已停止就回傳 "STOPPED"，不進入 switch
+    // TODO 2：已停止就回傳 "任務已停止"，不進入 switch
     switch (command) { ... }
 }
 
 public String explore() { ... }   // TODO 2：改成 private（scan、charge 也是）
 ```
 
-先執行 `RoverTry`：有幾行 `DIFF`？為什麼 `done`（一開始就有 5 份樣本）會變成 `14/7/1`？
-完成後再執行，每一行都要是 `OK`
+先執行 `RoverTry`：有幾行 `不符`？為什麼 `done`（一開始就有 5 份樣本）會變成 `14/7/1`？
+完成後再執行，每一行都要是 `成功`
 
 <!--
-答案：6 行 DIFF。done 已達標，但起始碼沒有停止檢查，探索照樣扣 6 得 2。改成 private 後，外部唯一入口是 execute，而檢查就在它的第一行。
+答案：6 行 不符。done 已達標，但起始碼沒有停止檢查，探索照樣扣 6 得 2。改成 private 後，外部唯一入口是 execute，而檢查就在它的第一行。
 -->
 
 ---
@@ -722,7 +722,7 @@ public String getOutcome()             // TODO 4
 
 - `rover`、`steps` 變成**欄位**：物件自己記得，不必再傳
 - 執行（`run`）和查詢結果（`getOutcome`）分成兩個方法
-- 判斷順序不變：SUCCESS > EXHAUSTED > RETURNED > UNFINISHED
+- 判斷順序不變：任務成功 > 能源耗盡 > 已返回 > 任務未完成
 
 ---
 
@@ -756,14 +756,14 @@ mission.getSteps().clear();   // 任務紀錄被外人清空
 
 | 參數 | 最後一行 |
 |---|---|
-| （無） | `final energy=6, samples=5, actionCount=3 -> SUCCESS` |
-| `2 2 2 2 2` | `final energy=10, samples=5, actionCount=5 -> SUCCESS` |
-| `3 9 0` | `final energy=20, samples=0, actionCount=0 -> RETURNED` |
-| `1 1 1 1` | `final energy=2, samples=6, actionCount=3 -> SUCCESS` |
-| `2 1` | `final energy=12, samples=3, actionCount=2 -> UNFINISHED` |
+| （無） | `最終能源=6, 樣本數=5, 行動次數=3 -> 任務成功` |
+| `2 2 2 2 2` | `最終能源=10, 樣本數=5, 行動次數=5 -> 任務成功` |
+| `3 9 0` | `最終能源=20, 樣本數=0, 行動次數=0 -> 已返回` |
+| `1 1 1 1` | `最終能源=2, 樣本數=6, 行動次數=3 -> 任務成功` |
+| `2 1` | `最終能源=12, 樣本數=3, 行動次數=2 -> 任務未完成` |
 
 重構的定義：**外部行為不變**，內部結構變好
-摘要行見作業說明；`RoverTry` 全部 `OK`
+摘要行見作業說明；`RoverTry` 全部 顯示「相符」
 
 ---
 
@@ -776,13 +776,13 @@ mission.getSteps().clear();   // 任務紀錄被外人清空
 先 commit，註解掉三行，執行 `java -cp out MissionLog 1 1 1 1`：
 
 ```text
-step 3: command=1, result=OK, energy=2
-step 4: command=1, result=STOPPED, energy=2
-counts[0..3]=[0, 4, 0, 0]
-steps=4, ok=3, rejected=1, ignored=0
+步驟 3: 指令=1, 結果=成功, 能源=2
+步驟 4: 指令=1, 結果=任務已停止, 能源=2
+指令次數[0..3]=[0, 4, 0, 0]
+步數=4, 成功=3, 拒絕=1, 略過=0
 ```
 
-- `STOPPED` 守住了**探測車的狀態**（最後一行仍是 `2/6/3 SUCCESS`）
+- `任務已停止` 守住了**探測車的狀態**（最後一行仍是 `2/6/3 任務成功`）
 - 「停止後不讀、不記」是**任務日誌的規則** → 由 `Mission` 負責
 - 每個類別守**自己的資料**；做完記得還原那三行
 
@@ -842,7 +842,7 @@ steps=4, ok=3, rejected=1, ignored=0
 
 ## E｜新需求：探測車加裝樣本艙
 
-> 1. 探索得 2 份、掃描得 1 份，樣本存進**樣本艙**（第 5 週的 `SampleBay`，容量 4）。能源不足回 `NOT_ENOUGH_ENERGY`；放不下回 `BAY_FULL`。拒絕時任何狀態都不變。
+> 1. 探索得 2 份、掃描得 1 份，樣本存進**樣本艙**（第 5 週的 `SampleBay`，容量 4）。能源不足回 `能源不足`；放不下回 `BAY_FULL`。拒絕時任何狀態都不變。
 > 2. 新指令 4「卸貨」：艙內樣本全部送回基地，耗能 1、行動 +1；艙空時回 `BAY_EMPTY`，不耗能。
 > 3. 成功改為「已送回基地的樣本」累計達 5 份。
 > 4. 任務中心能查詢能源、艙內樣本數、已送回樣本數、行動次數，但不能直接修改。

@@ -139,7 +139,7 @@ AI 協作：先畫自己的設計，再**用需求與反例**判讀 AI 類別圖
 </div>
 
 <!--
-講者備註：A 答案：A1 歷史快照；A2 MissionLog.runMission 的區域變數；A3 複製參考值，不複製物件；A4 6/5/3 SUCCESS。這張 before 圖只列部分成員。
+講者備註：A 答案：A1 歷史快照；A2 MissionLog.runMission 的區域變數；A3 複製參考值，不複製物件；A4 6/5/3 任務成功。這張 before 圖只列部分成員。
 -->
 
 ---
@@ -374,14 +374,14 @@ Battery shared = new Battery(8);
 Lamp a = new Lamp(shared);
 Lamp b = new Lamp(shared);
 Lamp c = new Lamp(new Battery(8));
-System.out.println("A=" + a.turnOn(6));
-System.out.println("B=" + b.turnOn(6));
-System.out.println("C=" + c.turnOn(6));
-System.out.println("shared=" + shared.getEnergy());
+System.out.println("燈具 A=" + a.turnOn(6));
+System.out.println("燈具 B=" + b.turnOn(6));
+System.out.println("燈具 C=" + c.turnOn(6));
+System.out.println("共用電池能源=" + shared.getEnergy());
 Charger charger = new Charger();
-System.out.println("charge=" + charger.refill(shared));
-System.out.println("B again=" + b.turnOn(6));
-System.out.println("shared=" + shared.getEnergy());
+System.out.println("充電=" + charger.refill(shared));
+System.out.println("燈具 B 再開啟=" + b.turnOn(6));
+System.out.println("共用電池能源=" + shared.getEnergy());
 ```
 
 </div>
@@ -418,13 +418,13 @@ System.out.println("shared=" + shared.getEnergy());
 <div>
 
 ```text
-A=true
-B=false
-C=true
-shared=2
-charge=true
-B again=true
-shared=1
+燈具 A=true
+燈具 B=false
+燈具 C=true
+共用電池能源=2
+充電=true
+燈具 B 再開啟=true
+共用電池能源=1
 ```
 
 </div>
@@ -587,14 +587,14 @@ Lamp "0..*" --> "1" Battery : battery
 starter 能編譯、安全結束，但日誌是空的——**不算完成**：
 
 ```text
-steps=0, ok=0, rejected=0, ignored=3
-final energy=20, samples=0, actionCount=0 -> UNFINISHED
+步數=0, 成功=0, 拒絕=0, 略過=3
+最終能源=20, 樣本數=0, 行動次數=0 -> 任務未完成
 ```
 
 <span class="note">另複製三份練習圖 practice、task_template、samplecase_initial（.puml＋.svg）；DESIGN_template.md 另存為 java-06/DESIGN.md。</span>
 
 <!--
-講者備註：starter 實測輸出最後還有 battery=100.0 一行。不要把教師參考圖（step、relations 以外的 after、mission_focus、samplecase_ref）當自己的作答。
+講者備註：starter 實測輸出最後還有 電量百分比=100.0 一行。不要把教師參考圖（step、relations 以外的 after、mission_focus、samplecase_ref）當自己的作答。
 -->
 
 ---
@@ -698,13 +698,13 @@ public boolean isStopped() {
 }
 
 public String execute(int command) {
-    if (isStopped()) { return "STOPPED"; }
+    if (isStopped()) { return "任務已停止"; }
     switch (command) {
         case 1: return explore();
         case 2: return scan();
         case 3: return charge();
-        case 0: return "RETURN";
-        default: return "UNKNOWN_COMMAND";
+        case 0: return "返回";
+        default: return "無效指令";
     }
 }
 private String explore() { ... }
@@ -719,9 +719,9 @@ private String explore() { ... }
 | switch 裡直接扣電 | **private** 行動方法 |
 | 同一方法裡任意改 | 外部只走 **execute** |
 
-成功或耗盡後 execute 回 **STOPPED**，不改狀態。
+成功或耗盡後 execute 回 **任務已停止**，不改狀態。
 
-指令 0 只回 RETURN；「返回後不再讀腳本」是**任務流程**，交給 Mission。
+指令 0 只回 返回；「返回後不再讀腳本」是**任務流程**，交給 Mission。
 
 </div>
 </div>
@@ -750,9 +750,9 @@ java -cp out RoverDemo
 ```
 
 ```text
-OK/14/2/1
-STOPPED/0
-STOPPED/20
+成功/14/2/1
+任務已停止/0
+任務已停止/20
 ```
 
 能源 0（耗盡）或樣本 5（成功）時，Rover 自己拒絕行動——**電池範例的 Battery 沒有這條規則**。
@@ -864,7 +864,7 @@ public class Mission {
 - run 期間與讀結果前，不從其他地方操作同一顆 Rover。
 
 **getOutcome 優先順序（已提供）**
-SUCCESS → EXHAUSTED → RETURNED → UNFINISHED
+任務成功 → 能源耗盡 → 已返回 → 任務未完成
 
 <span class="note">starter 的 0、-1 只是佔位，不算完成。</span>
 
@@ -921,10 +921,10 @@ public int[] countCommands() {              // 已提供：走訪 history 的寫
 
 | TODO | 方法 | 規則 | 完成後應看見 |
 |---|---|---|---|
-| 2 | `countOk()` | 走訪 history，用 `isSuccessful()` 計數並回傳 | 預設 ok=3；`{3,9,0}` ok=0 |
+| 2 | `countOk()` | 走訪 history，用 `isSuccessful()` 計數並回傳 | 預設 成功=3；`{3,9,0}` 成功=0 |
 | 3 | `lowestEnergy()` | 空清單回傳 **-1**；非空先取第一筆，再走訪求最小 | 預設 6 |
 
-<span class="note">-1 只是「沒有紀錄」的訊號，報表看到 0 筆時印 `lowest energy=N/A`（MissionLog 已處理），不能把 -1 當成實際能源。起點也不能用 0。</span>
+<span class="note">-1 只是「沒有紀錄」的訊號，報表看到 0 筆時印 `最低能源=無紀錄`（MissionLog 已處理），不能把 -1 當成實際能源。起點也不能用 0。</span>
 
 <!--
 講者備註：countRejected 會呼叫 countOk，所以 TODO 2 沒完成時 rejected 也會錯。
@@ -966,20 +966,20 @@ public int[] countCommands() { int[] counts = new int[4]; ... return counts; }
 
 每列從 20/0 獨立執行；改 `MissionLog.main` 的固定 script，重新編譯成功才執行；最後恢復 `{1,1,2}`。
 
-| script | energy/samples/actionCount | outcome | steps/ok/rejected/ignored | counts[0..3] | lowest | battery |
+| script | energy/samples/actionCount | 任務結果 | 步數／成功／拒絕／略過 | 指令次數[0..3] | 最低能源 | 電量百分比 |
 |---|---|---|---|---|---|---|
-| **{1,1,2}** | 6/5/3 | SUCCESS | 3/3/0/0 | [0,2,1,0] | 6 | 30.0 |
-| **{3,9,0}** | 20/0/0 | RETURNED | 3/0/2/0 | [1,0,0,1] | 20 | 100.0 |
-| {0} | 20/0/0 | RETURNED | 1/0/0/0 | [1,0,0,0] | 20 | 100.0 |
-| {2,2,2,2,2} | 10/5/5 | SUCCESS | 5/5/0/0 | [0,0,5,0] | 10 | 50.0 |
-| {1,1,1,1} | 2/6/3 | SUCCESS | 3/3/0/1 | [0,3,0,0] | 2 | 10.0 |
-| {2,1} | 12/3/2 | UNFINISHED | 2/2/0/0 | [0,1,1,0] | 12 | 60.0 |
+| **{1,1,2}** | 6/5/3 | 任務成功 | 3/3/0/0 | [0,2,1,0] | 6 | 30.0 |
+| **{3,9,0}** | 20/0/0 | 已返回 | 3/0/2/0 | [1,0,0,1] | 20 | 100.0 |
+| {0} | 20/0/0 | 已返回 | 1/0/0/0 | [1,0,0,0] | 20 | 100.0 |
+| {2,2,2,2,2} | 10/5/5 | 任務成功 | 5/5/0/0 | [0,0,5,0] | 10 | 50.0 |
+| {1,1,1,1} | 2/6/3 | 任務成功 | 3/3/0/1 | [0,3,0,0] | 2 | 10.0 |
+| {2,1} | 12/3/2 | 任務未完成 | 2/2/0/0 | [0,1,1,0] | 12 | 60.0 |
 
 - **課堂先過粗體兩條**；其餘四條課後補。貼完整輸出（回放、counts、摘要、最低能源、終態、battery）。
-- 正常任務日誌**不應出現 STOPPED**。
+- 正常任務日誌**不應出現 任務已停止**。
 
 <!--
-講者備註：{3,9,0} 的三筆 result 是 ALREADY_FULL、UNKNOWN_COMMAND、RETURN，能源皆 20。
+講者備註：{3,9,0} 的三筆 result 是 能源已滿、無效指令、返回，能源皆 20。
 -->
 
 ---
@@ -1032,11 +1032,11 @@ public int[] countCommands() { int[] counts = new int[4]; ... return counts; }
 
 **錯誤副本**
 ```text
-step 3: command=1, result=OK, energy=2
-step 4: command=1, result=STOPPED, energy=2
-counts[0..3]=[0, 4, 0, 0]
-steps=4, ok=3, rejected=1, ignored=0
-final energy=2, samples=6, actionCount=3 -> SUCCESS
+步驟 3: 指令=1, 結果=成功, 能源=2
+步驟 4: 指令=1, 結果=任務已停止, 能源=2
+指令次數[0..3]=[0, 4, 0, 0]
+步數=4, 成功=3, 拒絕=1, 略過=0
+最終能源=2, 樣本數=6, 行動次數=3 -> 任務成功
 ```
 
 </div>
@@ -1044,16 +1044,16 @@ final energy=2, samples=6, actionCount=3 -> SUCCESS
 
 **恢復後**
 ```text
-step 3: command=1, result=OK, energy=2
-counts[0..3]=[0, 3, 0, 0]
-steps=3, ok=3, rejected=0, ignored=1
-final energy=2, samples=6, actionCount=3 -> SUCCESS
+步驟 3: 指令=1, 結果=成功, 能源=2
+指令次數[0..3]=[0, 3, 0, 0]
+步數=3, 成功=3, 拒絕=0, 略過=1
+最終能源=2, 樣本數=6, 行動次數=3 -> 任務成功
 ```
 
 </div>
 </div>
 
-- 最終狀態**一樣是 SUCCESS**——Rover 守住了狀態，但**日誌多了一筆 STOPPED**。
+- 最終狀態**一樣是 任務成功**——Rover 守住了狀態，但**日誌多了一筆 任務已停止**。
 - Rover 管「停止後不再改狀態」；Mission 管「停止後不再讀、不再記」，**兩個檢查各有責任**。
 - 預設 `{1,1,2}` 剛好用完，抓不到這個錯——反例要選**還有剩餘指令**的路線。
 
@@ -1135,11 +1135,11 @@ final energy=2, samples=6, actionCount=3 -> SUCCESS
 
 **正確**
 ```text
-first=true, count=2
-overflow=false, count=2
-fill=true, count=3
-unload=3
-empty=0
+第一次=true, 存量=2
+超量存放=false, 存量=2
+剛好裝滿=true, 存量=3
+卸載=3
+空盒卸載=0
 ```
 
 </div>
@@ -1147,11 +1147,11 @@ empty=0
 
 **錯誤副本**
 ```text
-first=true, count=2
-overflow=true, count=4
-fill=true, count=5
-unload=5
-empty=0
+第一次=true, 存量=2
+超量存放=true, 存量=4
+剛好裝滿=true, 存量=5
+卸載=5
+空盒卸載=0
 ```
 
 </div>
@@ -1295,16 +1295,16 @@ empty=0
 ```powershell
 javac -encoding UTF-8 -d out-teacher teacher/*.java
 java -cp out-teacher FixedScriptMission 2 4 2    # 能源 2、樣本 4、指令 {2}
-java -cp out-teacher MissionLogCheck             # 15/15 passed：沿用第五週完整輸出
-java -cp out-teacher MissionStateCheck           # 16/16 passed：狀態與停止檢查
+java -cp out-teacher MissionLogCheck             # 15/15 項通過：沿用第五週完整輸出
+java -cp out-teacher MissionStateCheck           # 16/16 項通過：狀態與停止檢查
 ```
 
 | 參數 energy samples script… | 結果 |
 |---|---|
-| `0 0 3 1` | EXHAUSTED，0 筆，最低 N/A（一開始就停止） |
-| `20 5 1` | SUCCESS，0 筆 |
-| `2 4 2` | 0/5/1 **SUCCESS**（同時達標與耗盡，成功優先），1 筆 |
-| `20 0` | 空腳本 UNFINISHED，0 筆 |
+| `0 0 3 1` | 能源耗盡，0 筆，最低 無紀錄（一開始就停止） |
+| `20 5 1` | 任務成功，0 筆 |
+| `2 4 2` | 0/5/1 **任務成功**（同時達標與耗盡，成功優先），1 筆 |
+| `20 0` | 空腳本 任務未完成，0 筆 |
 
 <span class="note">學生只記錄觀察，不另寫命令列介面或檢查器；Check 驗的是 teacher 答案，不代表學生 src 已完成。</span>
 

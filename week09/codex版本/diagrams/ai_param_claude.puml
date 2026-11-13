@@ -1,0 +1,37 @@
+﻿@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title E 段：報表參數型態決定「誰能傳進來」
+
+interface SampleSource <<interface>> {
+  + getSamples() : int
+}
+abstract class Rover <<abstract>>
+class HeavyRover
+class SampleTray
+class "SampleReport（模擬 AI 版）" as AiReport #FADBD8 {
+  + {static} print(label : String, source : Rover) : void
+}
+class "SampleReport（修正版）" as FixReport #DFF3E3 {
+  + {static} print(label : String, source : SampleSource) : void
+}
+SampleSource <|.. Rover
+SampleSource <|.. SampleTray
+Rover <|-- HeavyRover
+AiReport ..> Rover : 只收 Rover 家族
+FixReport ..> SampleSource : 收任何實作者
+note bottom of SampleTray
+  SampleTray 不是 Rover
+  → 傳給模擬 AI 版：編譯錯誤
+  → 傳給修正版：可以
+end note
+@enduml

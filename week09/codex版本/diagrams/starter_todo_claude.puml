@@ -1,0 +1,57 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 第九週 starter：起點與 TODO（紅色虛線＝要由你接上的關係）
+
+interface SampleSource <<interface>> #DFF3E3 {
+  TODO 3a：宣告 int getSamples()
+}
+class Rover #FFE8D6 {
+  + getSamples() : int
+  + execute(command : int) : String
+  # exploreYield() : int  {暫時回 2}
+  --
+  TODO 2：改成 abstract class 與 abstract 方法
+  TODO 3b：implements SampleSource，加 @Override
+}
+class StandardRover #DFF3E3 {
+  + StandardRover(energy : int, samples : int)
+  --
+  TODO 1：覆寫 exploreYield()，回 2
+}
+class HeavyRover #F4F4F4 {
+  # exploreYield() : int  {回 3}
+  + drill() : String
+}
+class SampleTray #DFF3E3 {
+  - samples : int  {final}
+  + SampleTray(samples : int)
+  --
+  TODO 3c：implements SampleSource，回傳欄位
+}
+class SampleReport #DFF3E3 {
+  TODO 4：static print(label, source)
+}
+class SampleReportDemo #DFF3E3 {
+  main：建 heavy、tray、empty
+  TODO 4：呼叫 print 三次
+}
+class Mission #F4F4F4
+
+Rover <|-- StandardRover
+Rover <|-- HeavyRover
+Mission --> "1" Rover : rover
+SampleSource <|.[#C0392B,thickness=2]. Rover : TODO 3b
+SampleSource <|.[#C0392B,thickness=2]. SampleTray : TODO 3c
+SampleReport .[#C0392B,thickness=2].> SampleSource : TODO 4
+SampleReportDemo ..> SampleReport
+@enduml

@@ -34,7 +34,7 @@ Mission
   - steps: ArrayList<MissionStep>（final，自己建立，不交出）
   + Mission(rover)
   + run(script)：停止後不讀不記；每個讀入的指令記一筆；指令 0 記錄後結束
-  + getOutcome()：SUCCESS > EXHAUSTED > RETURNED > UNFINISHED
+  + getOutcome()：任務成功 > 能源耗盡 > 已返回 > 任務未完成
   + getStepCount(), getStep(index), countCommands(), countOk(), countRejected()
   + lowestEnergy()：沒有紀錄回傳 -1
 
@@ -44,13 +44,13 @@ Rover
   + Rover(energy, samples)：超出範圍改成最接近的合法值
   + getEnergy(), getSamples(), getActionCount()
   + isSuccess(), isExhausted(), isStopped()
-  + execute(command)：已停止回傳 STOPPED，不改狀態
+  + execute(command)：已停止回傳 任務已停止，不改狀態
   - explore(), scan(), charge()
 
 MissionStep（不可變，與第 5 週相同）
 ```
 
-可觀察結果與第 4、5 週 claude 版相同：從 `new Rover(20, 0)` 出發時輸出逐字相同（已用 10 組參數比對第 5 週教師版）。`STOPPED` 只會在直接呼叫 `Rover.execute` 時看到，不會出現在任務輸出。
+可觀察結果與第 4、5 週 claude 版相同：從 `new Rover(20, 0)` 出發時輸出逐字相同（已用 10 組參數比對第 5 週教師版）。`任務已停止` 只會在直接呼叫 `Rover.execute` 時看到，不會出現在任務輸出。
 
 ## 建議第 7 週入口（繼承基礎）
 

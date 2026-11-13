@@ -1,6 +1,6 @@
 // 第七週起始碼（claude 版本）：重型探測車。繼承 Rover 的狀態、規則與所有 public 方法，再新增鑽探能力。
-// 鑽探：耗能 8、得 3 份樣本、行動次數 +1；已停止回傳 STOPPED，能源不足回傳 NOT_ENOUGH_ENERGY，兩者都不改變狀態。
-// 未完成前可以編譯執行，但 drill 只回傳 NOT_READY，什麼都不做。
+// 鑽探：耗能 8、得 3 份樣本、行動次數 +1；已停止回傳 任務已停止，能源不足回傳 能源不足，兩者都不改變狀態。
+// 未完成前可以編譯執行，但 drill 只回傳 尚未完成，什麼都不做。
 public class HeavyRover extends Rover {
     public static final int DRILL_COST = 8;
     public static final int DRILL_YIELD = 3;
@@ -22,6 +22,6 @@ public class HeavyRover extends Rover {
     // TODO 4：模仿 Rover.explore，用 TODO 1 的方法完成鑽探。
     // 注意：drill 不經過 execute，要自己先檢查停止。
     public String drill() {
-        return "NOT_READY";
+        return "尚未完成";
     }
 }

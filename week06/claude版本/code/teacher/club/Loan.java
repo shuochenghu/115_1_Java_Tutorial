@@ -36,6 +36,6 @@ public class Loan {
 
     public String describe() {
         return equipment.getId() + " " + member.getStudentId() + " " + borrowDate + " -> "
-                + (isActive() ? "(not returned)" : returnDate);
+                + (isActive() ? "（尚未歸還）" : returnDate);
     }
 }

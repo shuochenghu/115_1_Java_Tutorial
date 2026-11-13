@@ -2,7 +2,7 @@
 
 > 本說明初稿由 Anthropic Claude（Claude Code）生成，教師審閱後使用。截止時間與繳交平台依教師公告。
 
-把第四週的任務日誌改成由物件負責：`Rover` 保管狀態與行動規則，`MissionStep` 記錄一步，`MissionLog` 只負責流程與輸出。輸出格式與第四週相同。延續課堂專案，不必從空白檔重寫。
+把第四週的任務日誌改成由物件負責：`Rover` 保管狀態與行動規則，`MissionStep` 記錄一步，`MissionLog` 只負責流程與輸出。沿用第四週的行動規則，報表沿用第四週的繁體中文欄位。延續課堂專案，不必從空白檔重寫。
 
 ## 1. 要完成什麼？
 
@@ -11,12 +11,12 @@
 | TODO | 檔案 | 要求 |
 |---|---|---|
 | 1 | `Rover` | 建構子：energy 限制在 0–20，samples 小於 0 時改為 0，actionCount 為 0；用 `this` 存入欄位 |
-| 2 | `Rover` | `scan()`：能源不足 2 回傳 `NOT_ENOUGH_ENERGY`；`charge()`：已滿回傳 `ALREADY_FULL`，否則 +5 並封頂 20。被拒絕時狀態不變，成功時 actionCount +1 並回傳 `OK` |
+| 2 | `Rover` | `scan()`：能源不足 2 回傳 `能源不足`；`charge()`：已滿回傳 `能源已滿`，否則 +5 並封頂 20。被拒絕時狀態不變，成功時 actionCount +1 並回傳 `成功` |
 | 3 | `MissionStep` | 建構子用 `this` 存入三個欄位；完成後三個欄位改為 `private final` |
 | 4 | `MissionStep` | `getResult()`、`getEnergyAfter()` |
 | 5 | `MissionLog` | `runMission` 每一步（含被拒絕、返回、無效指令）建立一筆 `MissionStep` 加入 `steps`，能源為執行後的值 |
 | 6 | `MissionLog` | `printReplay`：依序印出 `step N: ` 加上 `describe()` |
-| 7 | `MissionStep`＋`MissionLog` | `isRejected()`：結果不是 `OK` 也不是 `RETURN` 時為 true；`printSummary` 用迴圈算出 `steps`、`ok`、`rejected`、`ignored` 與 `lowest energy`（沒有紀錄時不印最低能源） |
+| 7 | `MissionStep`＋`MissionLog` | `isRejected()`：結果不是 `成功` 也不是 `返回` 時為 true；`printSummary` 用迴圈算出步數、成功、拒絕、略過與最低能源（沒有紀錄時不印最低能源） |
 
 限制：
 
@@ -30,13 +30,13 @@
 
 | 參數 | 最終 energy／samples／actionCount | 結果 | 摘要 |
 |---|---|---|---|
-| （無） | 6／5／3 | SUCCESS | `steps=3, ok=3, rejected=0, ignored=0`，`lowest energy=6` |
-| `2 2 2 2 2` | 10／5／5 | SUCCESS | `steps=5, ok=5, rejected=0, ignored=0`，`lowest energy=10` |
-| `3 9 0` | 20／0／0 | RETURNED | `steps=3, ok=0, rejected=2, ignored=0`，`lowest energy=20` |
-| `1 1 1 1` | 2／6／3 | SUCCESS | `steps=3, ok=3, rejected=0, ignored=1`，`lowest energy=2` |
-| `2 1` | 12／3／2 | UNFINISHED | `steps=2, ok=2, rejected=0, ignored=0`，`lowest energy=12` |
+| （無） | 6／5／3 | 任務成功 | `步數=3, 成功=3, 拒絕=0, 略過=0`，`最低能源=6` |
+| `2 2 2 2 2` | 10／5／5 | 任務成功 | `步數=5, 成功=5, 拒絕=0, 略過=0`，`最低能源=10` |
+| `3 9 0` | 20／0／0 | 已返回 | `步數=3, 成功=0, 拒絕=2, 略過=0`，`最低能源=20` |
+| `1 1 1 1` | 2／6／3 | 任務成功 | `步數=3, 成功=3, 拒絕=0, 略過=1`，`最低能源=2` |
+| `2 1` | 12／3／2 | 任務未完成 | `步數=2, 成功=2, 拒絕=0, 略過=0`，`最低能源=12` |
 
-另外執行 `java -cp out RoverTry`，貼上完整輸出；所有 `show` 行都必須是 `OK`。
+另外執行 `java -cp out RoverTry`，貼上完整輸出；所有 `show` 行都必須是 `成功`。
 
 再自訂**一條**你認為能抓到錯誤的測試（`MissionLog` 參數，或在 `RoverTry` 之外另寫的呼叫皆可），寫出內容、預期與實際結果，並說明它在測什麼。
 
@@ -71,7 +71,7 @@
 | 項目 | 通過條件 |
 |---|---|
 | 編譯 | 全新 clone 後在 `java-05` 執行 `javac -encoding UTF-8 -d out src/*.java` 無錯誤 |
-| 功能 | 五條必做測試的最終狀態、結果、摘要與上表一致；`3 9 0` 的回放三步與 `counts=[1, 0, 0, 1]` 正確；`RoverTry` 全部 `OK` |
+| 功能 | 五條必做測試的最終狀態、結果、摘要與上表一致；`3 9 0` 的回放三步與 `指令次數[0..3]=[1, 0, 0, 1]` 正確；`RoverTry` 全部 顯示「相符」 |
 | 封裝 | `Rover`、`MissionStep` 的欄位皆為 `private`，`MissionStep` 欄位為 `final`；沒有 setter；`MissionLog` 只透過方法讀寫狀態 |
 | 自訂測試 | 有內容、預期、實際與說明 |
 | 需求轉換與 AI | E1 六格齊全；E2 至少四項偏差且有呼叫例子、附改寫 Prompt；E3 四筆證據齊全且為實際結果 |

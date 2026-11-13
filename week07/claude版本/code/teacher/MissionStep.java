@@ -24,11 +24,11 @@ public class MissionStep {
     }
 
     public boolean isRejected() {
-        return !result.equals("OK") && !result.equals("RETURN");
+        return !result.equals("成功") && !result.equals("返回");
     }
 
     // 回放用的一行文字，格式與第四週相同。
     public String describe() {
-        return "command=" + command + ", result=" + result + ", energy=" + energyAfter;
+        return "指令=" + command + ", 結果=" + result + ", 能源=" + energyAfter;
     }
 }

@@ -10,7 +10,7 @@
 
 | 使用目的與來源 | Prompt／建議摘要 | 採納或拒絕及理由 | 人工驗證方式與結果 | 最終修改 |
 |---|---|---|---|---|
-| 課堂Code Review，教師設計的模擬AI | 讓重型車探索得3份；建議在子類別新增同名private explore | 拒絕此做法；父類別private方法不被覆寫，execute仍走父類別流程 | 先預測可編譯但不改產量；HeavyRoverTry的after explore與done unchanged為DIFF；加@Override編譯失敗；修正後同入口十五行全OK | 移除無效private方法，改覆寫protected int exploreYield()，保留drill與execute |
+| 課堂Code Review，教師設計的模擬AI | 讓重型車探索得3份；建議在子類別新增同名private explore | 拒絕此做法；父類別private方法不被覆寫，execute仍走父類別流程 | 先預測可編譯但不改產量；HeavyRoverTry的「探索後」與「完成後狀態維持」顯示「不符」；加@Override編譯失敗；修正後同入口十五行都顯示「相符」 | 移除無效private方法，改覆寫protected int exploreYield()，保留drill與execute |
 
 本人E1預測：待填。
 修正前commit／證據：待填。

@@ -7,21 +7,21 @@ public class RoverTry {
         show("new Rover(4, 2)", new Rover(4, 2), "4/2/0");
 
         Rover r = new Rover(20, 0);
-        System.out.println("r.charge() -> " + r.charge() + "  (expect ALREADY_FULL)");
-        System.out.println("r.scan() -> " + r.scan() + "  (expect OK)");
-        System.out.println("r.charge() -> " + r.charge() + "  (expect OK, 18+5 capped at 20)");
+        System.out.println("r.charge() -> " + r.charge() + "  （預期 能源已滿）");
+        System.out.println("r.scan() -> " + r.scan() + "  （預期 成功）");
+        System.out.println("r.charge() -> " + r.charge() + "  （預期 成功, 18+5 封頂為 20）");
         show("r", r, "20/1/2");
 
         Rover low = new Rover(1, 0);
-        System.out.println("low.scan() -> " + low.scan() + "  (expect NOT_ENOUGH_ENERGY)");
-        System.out.println("low.explore() -> " + low.explore() + "  (expect NOT_ENOUGH_ENERGY)");
+        System.out.println("low.scan() -> " + low.scan() + "  （預期 能源不足）");
+        System.out.println("low.explore() -> " + low.explore() + "  （預期 能源不足）");
         show("low", low, "1/0/0");
     }
 
     // 印出 energy/samples/actionCount，並列出預期值方便比對。
     static void show(String label, Rover rover, String expected) {
         String actual = rover.getEnergy() + "/" + rover.getSamples() + "/" + rover.getActionCount();
-        String mark = actual.equals(expected) ? "OK" : "DIFF";
-        System.out.println(label + ": " + actual + "  (expect " + expected + ") " + mark);
+        String mark = actual.equals(expected) ? "相符" : "不符";
+        System.out.println(label + ": " + actual + "  （預期 " + expected + "） " + mark);
     }
 }

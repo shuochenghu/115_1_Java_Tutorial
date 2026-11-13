@@ -136,9 +136,9 @@ resultLog.add(result);
 
 | 索引 | command | result | energy（漏記後） |
 |---|---:|---|---|
-| 0 | 1 | OK | 14 |
-| 1 | 1 | OK | **6 ← 其實是第 3 步** |
-| 2 | 2 | OK | **不存在 → 越界** |
+| 0 | 1 | 成功 | 14 |
+| 1 | 1 | 成功 | **6 ← 其實是第 3 步** |
+| 2 | 2 | 成功 | **不存在 → 越界** |
 
 </div>
 </div>
@@ -346,7 +346,7 @@ public class StepCard {
 
 **① 欄位**：寫在 class 內、方法外；跟著物件存在，建構結束後值仍保留。（區域變數方法結束就消失。）
 
-**② 建構子**：名稱與類別相同、**沒有回傳型態**；`new` 時執行一次，只保存傳入值——不會因 command=1 就去探索扣電。
+**② 建構子**：名稱與類別相同、**沒有回傳型態**；`new` 時執行一次，只保存傳入值——不會因 指令=1 就去探索扣電。
 
 **③ getter**：`public` 他人可呼叫、`int` 回傳整數、`()` 不需參數；只回傳資料，**不印、不改**。
 
@@ -398,9 +398,9 @@ energy = energy;   // 參數指定給自己，欄位還是預設值 0
 ```java
 StepCard first = new StepCard(1, 14);
 StepCard second = new StepCard(2, 12);
-System.out.println("first=" + first.getCommand() + "/" + first.getEnergy());
-System.out.println("second=" + second.getCommand() + "/" + second.getEnergy());
-System.out.println("same object=" + (first == second));
+System.out.println("第一次=" + first.getCommand() + "/" + first.getEnergy());
+System.out.println("第二次=" + second.getCommand() + "/" + second.getEnergy());
+System.out.println("同一個物件=" + (first == second));
 ```
 
 | 時間點 | first 的 command／energy | second 的 command／energy |
@@ -428,9 +428,9 @@ System.out.println("same object=" + (first == second));
 **實際輸出**
 
 ```text
-first=1/14
-second=2/12
-same object=false
+第一次=1/14
+第二次=2/12
+同一個物件=false
 ```
 
 兩次 `new` = 兩個物件，各有自己的欄位。
@@ -556,15 +556,15 @@ public class RoverBattery {
 | `edge` 再 `charge()` | false | 20 |
 
 ```text
-explore=false, energy=5
-charge=true, energy=10
-explore=true, energy=4
-cap=true, energy=20
-full=false, energy=20
+探索=false, 能源=5
+充電=true, 能源=10
+探索=true, 能源=4
+充至上限=true, 能源=20
+已充滿=false, 能源=20
 ```
 
 <!--
-講者備註：先遮住右兩欄與輸出讓學生預測。RoverBattery 只管電池；能源 0 的電池仍可 charge，但作業的任務 energy=0 已經停止，兩者責任不同。
+講者備註：先遮住右兩欄與輸出讓學生預測。RoverBattery 只管電池；能源 0 的電池仍可 charge，但作業的任務 能源=0 已經停止，兩者責任不同。
 -->
 
 ---
@@ -634,8 +634,8 @@ alias.explore();
 ```
 
 ```text
-after alias=14/20
-same reference=true
+建立別名後=14/20
+同一個參考=true
 ```
 
 </div>
@@ -643,10 +643,10 @@ same reference=true
 
 ```text
 first ──┐
-        ├──▶ [ 電池 A  energy=14 ]
+        ├──▶ [ 電池 A  能源=14 ]
 alias ──┘
 
-other ─────▶ [ 電池 B  energy=20 ]
+other ─────▶ [ 電池 B  能源=20 ]
 ```
 
 `alias = first` 複製的是**參考值**，不是電池。
@@ -679,7 +679,7 @@ static void spend(RoverBattery battery) {
 
 static void replaceLocal(RoverBattery battery) {
     battery = new RoverBattery(1); // 只改區域變數
-    System.out.println("inside replacement="
+    System.out.println("方法內新物件的能源="
         + battery.getEnergy());
 }
 ```
@@ -702,7 +702,7 @@ static void replaceLocal(RoverBattery battery) {
 透過副本修改物件 → 呼叫端看得到；把副本改指別的物件 → 呼叫端不受影響。
 
 <!--
-講者備註：不要寫「Java 傳參考」。完整輸出：after alias=14/20、same reference=true、after spend=8、inside replacement=1、after replace=8。
+講者備註：不要寫「Java 傳參考」。完整輸出：建立別名後=14/20、同一個參考=true、扣除能源後=8、方法內新物件的能源=1、重新指定參考後=8。
 -->
 
 ---
@@ -759,10 +759,10 @@ history.add(new StepCard(3, battery.getEnergy()));  // 存 19
 ```
 
 ```text
-command=1, energy=14
-command=3, energy=19
-current=19
-separate records=true
+指令=1, 能源=14
+指令=3, 能源=19
+目前能源=19
+各自獨立的紀錄=true
 ```
 
 **快照** = 建立當時的數值。`new StepCard` 複製了當下的 int，之後充電不會把 14 改成 19。
@@ -789,8 +789,8 @@ SnapshotDemo 執行完兩次 add 後：
 
 | 索引 | 指向的紀錄 |
 |---|---|
-| 0 | command=1、energy=14 |
-| 1 | command=3、energy=19 |
+| 0 | 指令=1、能源=14 |
+| 1 | 指令=3、能源=19 |
 
 `history.get(0).getEnergy()` → 先 get 找到物件，再讀它的欄位，得到 14。
 
@@ -844,7 +844,7 @@ SnapshotDemo 執行完兩次 add 後：
 
 ## 作業目標與必做項目
 
-**只改「怎麼記」，不改「做什麼」**：行動規則、停止時機、報表格式都不變；同一路線改造前後輸出逐字相同。
+行動規則與停止時機沿用第四週。回放資料改由 MissionStep 保存，報表沿用第四週的繁體中文欄位。
 
 | # | 必做 | 講義 |
 |---|---|---|
@@ -884,7 +884,7 @@ MissionStep 只保存與查詢；**扣電、計樣本、停止判斷仍在 Missi
 <span class="note">建構契約：energy 0..20、result 為既有代碼之一且非 null、command 可為任何 int。建構子只存值，合法性由呼叫端維護。</span>
 
 <!--
-講者備註：由需求推設計，而不是把名詞都變成類別。result 代碼：OK、NOT_ENOUGH_ENERGY、ALREADY_FULL、RETURN、UNKNOWN_COMMAND。
+講者備註：由需求推設計，而不是把名詞都變成類別。result 代碼：成功、能源不足、能源已滿、返回、無效指令。
 -->
 
 ---
@@ -907,10 +907,10 @@ public MissionStep(int command, int energy,
 // TODO 2：取代佔位回傳值
 public int getCommand()   { return 0; }
 public int getEnergy()    { return 0; }
-public String getResult() { return "PENDING"; }
+public String getResult() { return "待處理"; }
 
 public boolean isSuccessful() {
-    // TODO 3：以內容比較判斷 result 是否為 OK
+    // TODO 3：以內容比較判斷 result 是否為 成功
     return false;
 }
 ```
@@ -922,11 +922,11 @@ public boolean isSuccessful() {
 |---|---|---|
 | 1 | 用 `this` 把三個參數存進三個欄位 | StepCard 建構子 |
 | 2 | 三個 getter 回傳本物件的欄位 | StepCard getter |
-| 3 | result **內容**為 OK 才回傳 true | 第二週 equals |
+| 3 | result **內容**為 成功 才回傳 true | 第二週 equals |
 
 三個欄位已提供，**不要加 static**。
 
-`isSuccessful()` 只判斷**這一步**是不是 OK，不代表整個任務已收集 5 份樣本。
+`isSuccessful()` 只判斷**這一步**是不是 成功，不代表整個任務已收集 5 份樣本。
 
 </div>
 </div>
@@ -948,8 +948,8 @@ public boolean isSuccessful() {
 暫時放在自己的 `MissionLog.main` 最前面；記錄後**移除**。
 
 ```java
-MissionStep first = new MissionStep(1, 14, new String("OK"));
-MissionStep second = new MissionStep(2, 12, "NOT_ENOUGH_ENERGY");
+MissionStep first = new MissionStep(1, 14, new String("成功"));
+MissionStep second = new MissionStep(2, 12, "能源不足");
 System.out.println(first.getCommand() + "/" + first.getEnergy()
         + "/" + first.getResult() + "/" + first.isSuccessful());
 System.out.println(second.getCommand() + "/" + second.getEnergy()
@@ -960,8 +960,8 @@ System.out.println(second.getCommand() + "/" + second.getEnergy()
 <div>
 
 ```text
-1/14/OK/true
-2/12/NOT_ENOUGH_ENERGY/false
+1/14/成功/true
+2/12/能源不足/false
 ```
 
 </div>
@@ -970,14 +970,14 @@ System.out.println(second.getCommand() + "/" + second.getEnergy()
 | 這組測試在抓什麼 | 若出錯，先查 |
 |---|---|
 | 建立 second 後，first 是否被覆蓋 | 欄位是否誤加 static |
-| `new String("OK")` 內容相同、參考不同 | 是否用 `==` 比字串 |
-| 讀到 0／null／PENDING | `energy = energy`、getter 仍是佔位 |
+| `new String("成功")` 內容相同、參考不同 | 是否用 `==` 比字串 |
+| 讀到 0／null／待處理 | `energy = energy`、getter 仍是佔位 |
 
 </div>
 </div>
 
 <!--
-講者備註：這兩筆是獨立查詢資料，不代表連續兩步任務；12 搭配 NOT_ENOUGH_ENERGY 只是人工測資。new String 只為了製造「內容相同、參考不同」。
+講者備註：這兩筆是獨立查詢資料，不代表連續兩步任務；12 搭配 能源不足 只是人工測資。new String 只為了製造「內容相同、參考不同」。
 -->
 
 ---
@@ -994,9 +994,9 @@ for (int i = 0; i < script.length && running && energy > 0 && samples < 5; i++) 
     int command = script[i];
     String result;
     switch (command) {
-        case 1: ...   // 探索：扣 6 能源、得 2 樣本，或 NOT_ENOUGH_ENERGY
+        case 1: ...   // 探索：扣 6 能源、得 2 樣本，或 能源不足
         ...
-        default: result = "UNKNOWN_COMMAND"; break;
+        default: result = "無效指令"; break;
     }
     // TODO 4 ↓ 放在 switch 之後
     history.add(new MissionStep(command, energy, result));
@@ -1005,10 +1005,10 @@ for (int i = 0; i < script.length && running && energy > 0 && samples < 5; i++) 
 
 - 和 SnapshotDemo 一樣：**行動完成後**才 new 快照——result 才有值，energy 才是行動後的能源。
 - **每一筆已讀的指令**都要記：成功、拒絕、無效、返回都算；停止後的指令不讀也不記。
-- 首次探索後，這筆紀錄是 command=1、energy=14、result="OK"。
+- 首次探索後，這筆紀錄是 指令=1、能源=14、結果="成功"。
 
 <!--
-講者備註：搬到 switch 前，result 未指定會編譯失敗；若只在 OK 分支 add，{3,9,0} 的摘要與 counts 都會錯。
+講者備註：搬到 switch 前，result 未指定會編譯失敗；若只在 成功 分支 add，{3,9,0} 的摘要與 counts 都會錯。
 -->
 
 ---
@@ -1021,20 +1021,20 @@ for (int i = 0; i < script.length && running && energy > 0 && samples < 5; i++) 
 
 ```java
 static void printReplay(ArrayList<MissionStep> history) {
-    System.out.println("=== replay ===");
+    System.out.println("=== 任務回放 ===");
     // TODO 5：用索引 for 迴圈，i 從 0 到 history.size() - 1
     //   MissionStep step = history.get(i);
     //   再用 step.getCommand()、getResult()、getEnergy() 組出一行
 }
 ```
 
-步號顯示 `i + 1`；格式與第四週完全相同：
+步號顯示 `i + 1`；本週回放的中文格式如下。
 
 ```text
-=== replay ===
-step 1: command=1, result=OK, energy=14
-step 2: command=1, result=OK, energy=8
-step 3: command=2, result=OK, energy=6
+=== 任務回放 ===
+步驟 1: 指令=1, 結果=成功, 能源=14
+步驟 2: 指令=1, 結果=成功, 能源=8
+步驟 3: 指令=2, 結果=成功, 能源=6
 ```
 
 <!--
@@ -1057,7 +1057,7 @@ int ok = 0;
 int returned = 0;
 // TODO 6：走訪 history，
 //   isSuccessful() 為 true → ok++
-//   getResult() 內容為 "RETURN" → returned++
+//   getResult() 內容為 "返回" → returned++
 int steps = history.size();          // 以下已提供
 int rejected = steps - ok - returned;
 int ignored = scriptLength - steps;
@@ -1069,20 +1069,20 @@ int ignored = scriptLength - steps;
 | 數字 | 意思 |
 |---|---|
 | steps | 已讀並記錄的指令數 |
-| ok | 結果為 OK 的筆數 |
-| rejected | 拒絕＋無效（不含 RETURN） |
+| ok | 結果為 成功 的筆數 |
+| rejected | 拒絕＋無效（不含 返回） |
 | ignored | 停止後沒讀到的指令數 |
 
 `{3,9,0}`：已滿拒絕、無效、返回
-→ steps=3、ok=0、returned=1、**rejected=2**
+→ 步數=3、成功=0、returned=1、**拒絕=2**
 
 `{1,1,1,1}`：第 3 筆就達標
-→ steps=3、**ignored=1**
+→ 步數=3、**略過=1**
 
 </div>
 </div>
 
-<span class="note">RETURN 單獨計：不算成功，也不算拒絕。countCommands 已提供；因為清單元素不再是 Integer，它先 step.getCommand() 再計數。</span>
+<span class="note">返回 單獨計：不算成功，也不算拒絕。countCommands 已提供；因為清單元素不再是 Integer，它先 step.getCommand() 再計數。</span>
 
 <!--
 講者備註：迴圈本體由學生寫；字串內容比較用 equals。
@@ -1098,7 +1098,7 @@ int ignored = scriptLength - steps;
 
 ```java
 if (history.isEmpty()) {
-    System.out.println("lowest energy=N/A");      // 空清單不能讀第 0 筆
+    System.out.println("最低能源=無紀錄");      // 空清單不能讀第 0 筆
 } else {
     int lowest = history.get(0).getEnergy();      // 用首筆當起點
     for (MissionStep step : history) {
@@ -1106,7 +1106,7 @@ if (history.isEmpty()) {
             lowest = step.getEnergy();
         }
     }
-    System.out.println("lowest energy=" + lowest);
+    System.out.println("最低能源=" + lowest);
 }
 ```
 
@@ -1124,22 +1124,22 @@ if (history.isEmpty()) {
 
 <div class="ex"><span class="st">starter/MissionLog.java</span></div>
 
-## E3｜驗收：同一路線，輸出要和上週一樣
+## E3｜驗收：用同一路線比對數值與停止時機
 
-每列從 energy=20、samples=0 獨立執行；改 main 的 `int[] script` 後重新編譯。
+每列從 能源=20、樣本數=0 獨立執行；改 main 的 `int[] script` 後重新編譯。
 
-| script | 能源／樣本／成功行動 | outcome | steps/ok/rejected/ignored | counts[0..3] | lowest |
+| script | 能源／樣本／成功行動 | 任務結果 | 步數／成功／拒絕／略過 | 指令次數[0..3] | 最低能源 |
 |---|---|---|---|---|---|
-| **{1,1,2}** | 6/5/3 | SUCCESS | 3/3/0/0 | [0,2,1,0] | 6 |
-| **{3,9,0}** | 20/0/0 | RETURNED | 3/0/2/0 | [1,0,0,1] | 20 |
-| {0} | 20/0/0 | RETURNED | 1/0/0/0 | [1,0,0,0] | 20 |
-| {2,2,2,2,2} | 10/5/5 | SUCCESS | 5/5/0/0 | [0,0,5,0] | 10 |
-| {1,1,1,1} | 2/6/3 | SUCCESS | 3/3/0/1 | [0,3,0,0] | 2 |
-| {2,1} | 12/3/2 | UNFINISHED | 2/2/0/0 | [0,1,1,0] | 12 |
+| **{1,1,2}** | 6/5/3 | 任務成功 | 3/3/0/0 | [0,2,1,0] | 6 |
+| **{3,9,0}** | 20/0/0 | 已返回 | 3/0/2/0 | [1,0,0,1] | 20 |
+| {0} | 20/0/0 | 已返回 | 1/0/0/0 | [1,0,0,0] | 20 |
+| {2,2,2,2,2} | 10/5/5 | 任務成功 | 5/5/0/0 | [0,0,5,0] | 10 |
+| {1,1,1,1} | 2/6/3 | 任務成功 | 3/3/0/1 | [0,3,0,0] | 2 |
+| {2,1} | 12/3/2 | 任務未完成 | 2/2/0/0 | [0,1,1,0] | 12 |
 
 - **課堂先過粗體兩條**，其餘四條課後補齊本人實測。
 - counts 算已讀的合法指令（含被拒絕的）；actionCount 只算成功行動。
-- 貼**完整輸出**（回放、counts、摘要、最低能源、終態、battery），不能只看最後的 SUCCESS。繳交前 script 恢復 `{1,1,2}`。
+- 貼**完整輸出**（回放、counts、摘要、最低能源、終態、battery），不能只看最後的 任務成功。繳交前 script 恢復 `{1,1,2}`。
 
 <!--
 講者備註：battery 百分比：{1,1,2} 為 30.0、{3,9,0} 為 100.0。主作業不讀 args。
@@ -1274,9 +1274,9 @@ public class SampleCase {
 
 | # | 模擬建議 | 在副本這樣改 | 用什麼抓 | 錯誤副本會看到 |
 |---|---|---|---|---|
-| 1 | 「加 static 到處都好讀」 | 自己的 MissionStep 三欄加 static | E1 兩物件 | 第一筆變 `2/12/NOT_ENOUGH_ENERGY/false` |
-| 2 | 「固定代碼用 == 就好」 | `return result == "OK";` | E1 的 `new String("OK")` | 第一筆 isSuccessful 變 **false** |
-| 3 | 「把電池本身存進清單」 | 範例 SnapshotDemo 改存同一顆電池 | 逐筆讀能源 | `19/19`、same object=true |
+| 1 | 「加 static 到處都好讀」 | 自己的 MissionStep 三欄加 static | E1 兩物件 | 第一筆變 `2/12/能源不足/false` |
+| 2 | 「固定代碼用 == 就好」 | `return result == "成功";` | E1 的 `new String("成功")` | 第一筆 isSuccessful 變 **false** |
+| 3 | 「把電池本身存進清單」 | 範例 SnapshotDemo 改存同一顆電池 | 逐筆讀能源 | `19/19`、同一個物件=true |
 
 **修正後一律重測**：同一個反例 ＋ 自己 MissionLog 的 `{1,1,2}` 與 `{3,9,0}`。
 講義 F3 證據表：選項與預測、錯誤結果、最小修正與理由、修正後結果、兩條路線完整輸出。
@@ -1309,7 +1309,7 @@ battery.charge();
 history.add(battery);
 System.out.println(history.get(0).getEnergy() + "/"
         + history.get(1).getEnergy());
-System.out.println("same object="
+System.out.println("同一個物件="
         + (history.get(0) == history.get(1)));
 ```
 
@@ -1325,7 +1325,7 @@ System.out.println("same object="
 
 兩種寫法的目前電池都是 19——**只看最後能源抓不到這個錯**。
 
-修正：恢復原 SnapshotDemo，確認 1/14、3/19、separate records=true。
+修正：恢復原 SnapshotDemo，確認 1/14、3/19、各自獨立的紀錄=true。
 
 </div>
 </div>
@@ -1387,7 +1387,7 @@ System.out.println("same object="
 ## H｜繳交與保存（15 分鐘）
 
 1. 正式 src 保留正確版：欄位不加 static、用 equals；main 的 script 恢復 `{1,1,2}`；**移除 E1 暫時輸出**。
-2. 重新編譯執行；新副本應看到回放能源 14、8、6，終態 `6/5/3 SUCCESS`，`battery=30.0`。
+2. 重新編譯執行；新副本應看到回放能源 14、8、6，終態 `6/5/3 任務成功`，`電量百分比=30.0`。
 3. GitHub Desktop：檢查差異 → commit → push → 到遠端核對；另取回新副本重編譯。
 
 | 位置 | 繳交內容 |
@@ -1459,11 +1459,11 @@ java -cp out-teacher MissionLogCheck             # 15 組完整輸出回歸
 
 | 初始能源/樣本；script | 參數 | 結果 |
 |---|---|---|
-| 5/0；{1,3,0} | `5 0 1 3 0` | 10/0/1 RETURNED，3 筆，最低 5 |
-| 2/4；{2} | `2 4 2` | 0/5/1 **SUCCESS**（達標優先於耗盡），1 筆 |
-| 0/0；{3,1} | `0 0 3 1` | EXHAUSTED，**0 筆**（一開始就停止） |
-| 20/5；{1} | `20 5 1` | SUCCESS，0 筆 |
-| 20/0；{} | `20 0` | UNFINISHED，最低 N/A |
+| 5/0；{1,3,0} | `5 0 1 3 0` | 10/0/1 已返回，3 筆，最低 5 |
+| 2/4；{2} | `2 4 2` | 0/5/1 **任務成功**（達標優先於耗盡），1 筆 |
+| 0/0；{3,1} | `0 0 3 1` | 能源耗盡，**0 筆**（一開始就停止） |
+| 20/5；{1} | `20 5 1` | 任務成功，0 筆 |
+| 20/0；{} | `20 0` | 任務未完成，最低 無紀錄 |
 
 <span class="note">學生只記錄終態與筆數，不另寫命令列介面或檢查器；Check 驗的是 teacher 答案，不代表學生 src 已完成。</span>
 

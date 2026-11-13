@@ -30,7 +30,7 @@
 
 目前為47頁。第7–12頁補明類別是規格、new建立物件、變數保存參考，欄位宣告位置、建構只存值、查詢方法的public/int/空括號及相同內容不代表同一物件。第16–20頁補充充電規則與合法初值，區分電池能源0可充電與任務能源0已停止，說明static的使用對象與參考相等。
 
-第26頁明示isSuccessful是單步OK，並非整個任務已成功。第28頁只顯示switch後TODO 4應填的新增位置，原本已提供的空清單宣告由文字交代，避免學生放錯位置或重複宣告；新增第29頁逐步解釋new/add/get與索引內的物件。第31–33頁分清已讀指令、成功行動、返回與未讀筆數。第39頁提供待填Prompt格式；第40–43頁修正後重測入口為第27、33頁，選項3明示只替換main內容並保留外殼。
+第26頁明示isSuccessful是單步成功，並非整個任務已成功。第28頁只顯示switch後TODO 4應填的新增位置，原本已提供的空清單宣告由文字交代，避免學生放錯位置或重複宣告；新增第29頁逐步解釋new/add/get與索引內的物件。第31–33頁分清已讀指令、成功行動、返回與未讀筆數。第39頁提供待填Prompt格式；第40–43頁修正後重測入口為第27、33頁，選項3明示只替換main內容並保留外殼。
 
 以上只有既有內容的說明、拆頁與教師工具操作，六個TODO、150分鐘配置及必做／選做維持。下方2026-10-29補充保留當時45頁版的紀錄；目前頁碼以本段及上方對照表為準。
 
@@ -38,9 +38,9 @@
 
 第2頁從正常三清單與「漏記第2步能源」的對照帶課：回放以相同索引取三欄，索引1錯把第3步能源6當成第2步，索引2則讀取越界。本週的物件表示讓同一步資料一起交付，但仍需正確傳值、每步建立與新增；不是宣稱物件自動避免所有漏記。
 
-第8–11頁交代資料意義、建構呼叫與查詢的呼叫端；第17–19頁用目前能源14→19、歷史保留14區分資料角色及實例／static；第21頁接續first=14，spend後8、區域改指向1但first仍8。第23–24頁明確給快照的起點與預期；第25頁區分兩欄StepCard示範與三欄MissionStep作業，後者不執行任務行動。
+第8–11頁交代資料意義、建構呼叫與查詢的呼叫端；第17–19頁用目前能源14→19、歷史保留14區分資料角色及實例／static；第21頁接續第一次=14，spend後8、區域改指向1但first仍8。第23–24頁明確給快照的起點與預期；第25頁區分兩欄StepCard示範與三欄MissionStep作業，後者不執行任務行動。
 
-第26–32頁補明TODO位置、先完成小類別再整合、查詢測試與任務輸入的不同用途、回放格式、摘要各筆數與最低值處理。第27頁的第二筆能源12／NOT_ENOUGH_ENERGY是人工查詢資料，不是聲稱能源12時掃描會被拒絕；正式任務結果必須仍依行動規則產生。第30頁的steps/ok/returned/rejected為3/0/1/2；第32頁終態數字為energy/samples/actionCount，不是日誌筆數。
+第26–32頁補明TODO位置、先完成小類別再整合、查詢測試與任務輸入的不同用途、回放格式、摘要各筆數與最低值處理。第27頁的第二筆能源12／能源不足是人工查詢資料，不是聲稱能源12時掃描會被拒絕；正式任務結果必須仍依行動規則產生。第30頁的steps/ok/returned/rejected為3/0/1/2；第32頁終態數字為energy/samples/actionCount，不是日誌筆數。
 
 第33頁講清成功優先及開始已停止的情形；第34–37頁保留獨立設計與至少四項偏差，僅提供一個錯存到4的審查示例及Prompt規格句，不替學生完成整張卡或偏差表。第38–41頁維持三選一，操作與重測直接指向第27、32頁，選項3補上列印。第42頁以記錄時機錯誤指出private的限制；第43頁明示RoverBattery僅為示範，主任務尚未把目前狀態交給它。第44頁標明預設腳本與新副本驗收輸出。原有必做、選做、六個TODO與時間安排維持。
 
@@ -100,13 +100,13 @@ Java 一律傳值；對物件是複製參考值。傳入方法後修改同一物
 
 ### A
 
-1. 6／5／3 SUCCESS。2. 長度相同不保證語意對齊；單獨排序能源會讓同一步指令配錯能源。3. 可能越界，也可能索引仍在範圍卻配錯資料。4. command、行動後 energy、result 一次保存。
+1. 6／5／3 任務成功。2. 長度相同不保證語意對齊；單獨排序能源會讓同一步指令配錯能源。3. 可能越界，也可能索引仍在範圍卻配錯資料。4. command、行動後 energy、result 一次保存。
 
 ### B
 
 B1：class 是類別宣告；private int energy 是實例欄位；建構子在建立時初始化；this.energy 指目前物件欄位、energy 指參數；StepCard 為型態、first 為參考變數、new 為建立運算式；getEnergy 的對象是 first 指向的物件，回傳 int。
 
-B2：第一個 new 後 first=1/14；第二個 new 後 first 仍1/14、second=2/12；輸出 `first=1/14`、`second=2/12`、`same object=false`。兩次 new 建立不同實例，內容相同也不自動變同物件。
+B2：第一個 new 後 第一次=1/14；第二個 new 後 first 仍1/14、第二次=2/12；輸出 `第一次=1/14`、`第二次=2/12`、`同一個物件=false`。兩次 new 建立不同實例，內容相同也不自動變同物件。
 
 B3：直接存取會報 private access；new StepCard() 會報建構引數不符。編譯訊息依 JDK 語言不同，驗收抓原因，不要求逐字抄固定訊息。
 
@@ -120,7 +120,7 @@ D1：alias 與 first 指同一電池，other 是另一個。alias.explore 後14/
 
 D2：學生填實際 IDEA／SDK／GUI；教師不可先填作者沒做過的成功。依官方文件核對一般 Java 專案、SDK、來源根與 main；本週不跟隨新版文件的 compact source／Java25範例要求。
 
-D3：第0筆1/14，第1筆3/19，目前能源19，separate records=true。清單不自動複製；重複 add 同一物件可以有兩個索引但只有一個物件。
+D3：第0筆1/14，第1筆3/19，目前能源19，各自獨立的紀錄=true。清單不自動複製；重複 add 同一物件可以有兩個索引但只有一個物件。
 
 ### E：六個 TODO 答案
 
@@ -128,29 +128,29 @@ TODO 1：`this.command=command; this.energy=energy; this.result=result;`。
 
 TODO 2：三個 getter 分別 `return command;`、`return energy;`、`return result;`。
 
-TODO 3：`return "OK".equals(result);`。E1 兩行是 `1/14/OK/true`、`2/12/NOT_ENOUGH_ENERGY/false`，即使建立 second 後 first 也不變。
+TODO 3：`return "成功".equals(result);`。E1 兩行是 `1/14/成功/true`、`2/12/能源不足/false`，即使建立 second 後 first 也不變。
 
-TODO 4：`history.add(new MissionStep(command, energy, result));`，位於 switch 之後。不得只在 OK 分支記錄。
+TODO 4：`history.add(new MissionStep(command, energy, result));`，位於 switch 之後。不得只在 成功 分支記錄。
 
 TODO 5：用 i 走訪；`MissionStep step=history.get(i);`，再以三個 getter 印出既有格式。完整碼見 teacher/MissionLog.java。
 
-TODO 6：從0開始；`if(step.isSuccessful()) ok++;`、`if("RETURN".equals(step.getResult())) returned++;`。rejected 是 steps-ok-returned，不把 RETURN 算拒絕。
+TODO 6：從0開始；`if(step.isSuccessful()) ok++;`、`if("返回".equals(step.getResult())) returned++;`。rejected 是 steps-ok-returned，不把 返回 算拒絕。
 
 E3 六路線的 counts／摘要／最低值見 assignment。預設完整輸出：
 
 ```text
-=== replay ===
-step 1: command=1, result=OK, energy=14
-step 2: command=1, result=OK, energy=8
-step 3: command=2, result=OK, energy=6
-counts[0..3]=[0, 2, 1, 0]
-steps=3, ok=3, rejected=0, ignored=0
-lowest energy=6
-final energy=6, samples=5, actionCount=3 -> SUCCESS
-battery=30.0
+=== 任務回放 ===
+步驟 1: 指令=1, 結果=成功, 能源=14
+步驟 2: 指令=1, 結果=成功, 能源=8
+步驟 3: 指令=2, 結果=成功, 能源=6
+指令次數[0..3]=[0, 2, 1, 0]
+步數=3, 成功=3, 拒絕=0, 略過=0
+最低能源=6
+最終能源=6, 樣本數=5, 行動次數=3 -> 任務成功
+電量百分比=30.0
 ```
 
-教師固定狀態：5/0+{1,3,0}為10/0/1 RETURNED、3筆、最低5；2/4+{2}為0/5/1 SUCCESS、1筆、最低0；0/0+{3,1}為EXHAUSTED、0筆、最低N/A；20/5+{1}為SUCCESS、0筆、最低N/A；20/0+{}為UNFINISHED、0筆、最低N/A。
+教師固定狀態：5/0+{1,3,0}為10/0/1 已返回、3筆、最低5；2/4+{2}為0/5/1 任務成功、1筆、最低0；0/0+{3,1}為能源耗盡、0筆、最低無紀錄；20/5+{1}為任務成功、0筆、最低無紀錄；20/0+{}為任務未完成、0筆、最低無紀錄。
 
 ### F
 
@@ -192,9 +192,9 @@ F3反例三選一：
 
 | 選項 | 錯誤副本預期表現 | 最小修正及重測 |
 |---|---|---|
-| 1 static共享資料 | E1第一行被覆蓋成2/12/NOT_ENOUGH_ENERGY/false | 恢復實例欄位；E1第一行回到1/14/OK/true，兩條任務路線再測 |
-| 2 ==內容比較 | new String("OK")的isSuccessful為false；任務常值可能偶然通過 | 改equals；E1與兩條任務路線再測 |
-| 3 保存可變電池參考 | 輸出19/19及same object=true；探索後本應保留的14消失 | 恢復每步new StepCard的原SnapshotDemo；兩筆command/energy為1/14、3/19，current=19、separate records=true；兩條任務路線再測 |
+| 1 static共享資料 | E1第一行被覆蓋成2/12/能源不足/false | 恢復實例欄位；E1第一行回到1/14/成功/true，兩條任務路線再測 |
+| 2 ==內容比較 | new String("成功")的isSuccessful為false；任務常值可能偶然通過 | 改equals；E1與兩條任務路線再測 |
+| 3 保存可變電池參考 | 輸出19/19及同一個物件=true；探索後本應保留的14消失 | 恢復每步new StepCard的原SnapshotDemo；兩筆command/energy為1/14、3/19，目前能源=19、各自獨立的紀錄=true；兩條任務路線再測 |
 
 選項3的清單確實有兩筆，但兩個索引指向同一電池，add不複製物件。正式快照保存的是當時int值，不因後來充電而改變。此活動使用原有RoverBattery，不需引入完整Rover。工具verify.py會在暫存副本重現錯誤輸出，並以正式SnapshotDemo完整輸出檢查修正結果。
 
@@ -208,13 +208,13 @@ G：宣告參考變數不等於建立物件；this指目前實例；資料欄位
 
 | 現象 | 優先檢查 |
 |---|---|
-| 三欄仍0/null或讀取PENDING | 建構是否寫energy=energy、getter是否仍佔位 |
+| 三欄仍0/null或讀取待處理 | 建構是否寫能源=energy、getter是否仍佔位 |
 | 第一次物件建立後被第二次蓋掉 | 欄位是否static |
 | 常值測試過，new String卻失敗 | 是否以==比較內容 |
 | 快照兩筆能源都變成最後值 | 是否存同一可變物件的參考，未保存當時數值 |
 | 同套件直接寫欄位居然能編譯 | 是否省略private，誤套C#類別欄位預設規則 |
 | 日誌能源早一步 | 建立記錄是否放在switch之前 |
-| {3,9,0}只剩返回或空記錄 | 是否只保存OK |
+| {3,9,0}只剩返回或空記錄 | 是否只保存成功 |
 | 最低能源0但每步都大於0 | 最低值初始值是否用0 |
 | 找不到main | 是否選了資料類別執行 |
 | duplicate class／cannot find symbol | 同名教師檔混編，或src來源根與相依檔不在同一專案 |

@@ -5,16 +5,16 @@ import java.util.Arrays;
 public class ScriptArgs {
     public static void main(String[] args) {
         // C# 的 Main(string[] args) 同樣不含程式名稱；args[0] 就是第一個參數。
-        System.out.println("args.length = " + args.length);
-        System.out.println("args = " + Arrays.toString(args));
+        System.out.println("參數個數 = " + args.length);
+        System.out.println("命令列參數 = " + Arrays.toString(args));
 
         if (args.length == 0) {
-            System.out.println("no arguments; try: java -cp out ScriptArgs 1 1 2");
+            System.out.println("未提供參數，可執行 java -cp out ScriptArgs 1 1 2");
             return;
         }
 
         // args 裡都是字串，"1" + "1" 是字串串接，不是加法。
-        System.out.println("args[0] + args[0] = " + (args[0] + args[0]));
+        System.out.println("第一個參數與自身串接 = " + (args[0] + args[0]));
 
         // 轉成 int 才能計算。C#：int.Parse(...)；Java：Integer.parseInt(...)
         int[] script = new int[args.length];
@@ -25,7 +25,7 @@ public class ScriptArgs {
         for (int command : script) {
             total += command;
         }
-        System.out.println("script = " + Arrays.toString(script) + ", sum = " + total);
+        System.out.println("指令腳本 = " + Arrays.toString(script) + ", 加總 = " + total);
         // 輸入 "abc" 會得到 NumberFormatException；本週約定只輸入整數，例外處理在第十二週。
     }
 }

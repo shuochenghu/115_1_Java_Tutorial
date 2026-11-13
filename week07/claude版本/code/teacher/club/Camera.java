@@ -17,6 +17,6 @@ public class Camera extends Equipment {
 
     // 借出時核對用的一行文字；標籤用繼承來的 getLabel，不另存編號與名稱。
     public String checklist() {
-        return getLabel() + " | cards=" + memoryCards;
+        return getLabel() + " | 記憶卡數=" + memoryCards;
     }
 }

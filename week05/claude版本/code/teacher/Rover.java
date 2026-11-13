@@ -38,35 +38,35 @@ public class Rover {
 
     public String explore() {
         if (energy < 6) {
-            return "NOT_ENOUGH_ENERGY";
+            return "能源不足";
         }
         energy -= 6;
         samples += 2;
         actionCount++;
-        return "OK";
+        return "成功";
     }
 
     // TODO 2：模仿 explore 完成 scan 與 charge；被拒絕時狀態不變。
     public String scan() {
         if (energy < 2) {
-            return "NOT_ENOUGH_ENERGY";
+            return "能源不足";
         }
         energy -= 2;
         samples++;
         actionCount++;
-        return "OK";
+        return "成功";
     }
 
     public String charge() {
         if (energy >= CAPACITY) {
-            return "ALREADY_FULL";
+            return "能源已滿";
         }
         energy += 5;
         if (energy > CAPACITY) {
             energy = CAPACITY;
         }
         actionCount++;
-        return "OK";
+        return "成功";
     }
 
     // 把指令代碼轉成對應的行動；0 是返回，其他代碼是無效指令，都不改變狀態。
@@ -79,9 +79,9 @@ public class Rover {
             case 3:
                 return charge();
             case 0:
-                return "RETURN";
+                return "返回";
             default:
-                return "UNKNOWN_COMMAND";
+                return "無效指令";
         }
     }
 

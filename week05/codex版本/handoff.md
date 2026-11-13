@@ -2,15 +2,15 @@
 
 ## 從第四週承接
 
-依據 [第四週 handoff](../../week04/codex版本/handoff.md) 與教師 MissionLog。本週保留所有可觀察任務規則、輸出格式、counts、摘要與最低能源定義，只把三條平行日誌換成一條物件日誌。
+依據 [第四週 handoff](../../week04/codex版本/handoff.md) 與教師 MissionLog。本週把三條平行日誌換成一條物件日誌。行動規則、指令次數、摘要及最低能源的計算沿用第四週，報表沿用第四週的繁體中文欄位。
 
 | 第四週 | 第五週 | 保持的意思 |
 |---|---|---|
 | commandLog[i] | history.get(i).getCommand() | 第 i+1 筆已讀指令，可為無效整數 |
 | energyLog[i] | history.get(i).getEnergy() | 同一步執行後能源，不含初始狀態 |
 | resultLog[i] | history.get(i).getResult() | 同一步結果代碼 |
-| frequency(resultLog,"OK") | step.isSuccessful() 搭配迴圈 | OK 的筆數 |
-| min(energyLog) | getter 搭配最小值迴圈 | 空日誌仍為 N/A |
+| frequency(resultLog,"成功") | step.isSuccessful() 搭配迴圈 | 成功 的筆數 |
+| min(energyLog) | getter 搭配最小值迴圈 | 空日誌仍為 無紀錄 |
 
 ## 精確契約
 
@@ -18,10 +18,10 @@
 - 容量20；探索耗6得2，掃描耗2得1，充電加5封頂20，至少5份樣本成功。拒絕不改狀態；只有成功行動增加 actionCount。
 - 每讀一筆指令，在執行後 `new MissionStep(command, energy, result)` 再 add。返回、拒絕、無效也記錄；停止後的指令不讀、不記錄。
 - MissionStep 三個 private 實例欄位為 int command、int energy、String result；單一 public 三參數建構子，三個 public getter、public boolean isSuccessful()；不提供 setter，不輸出文字，不包含 static 的資料欄位。
-- result 為 OK、NOT_ENOUGH_ENERGY、ALREADY_FULL、RETURN、UNKNOWN_COMMAND 其中之一。建構子只存值，合法性及欄位語意一致由呼叫端維護；不宣稱自動檢查。
+- result 為 成功、能源不足、能源已滿、返回、無效指令 其中之一。建構子只存值，合法性及欄位語意一致由呼叫端維護；不宣稱自動檢查。
 - counts[k] 統計已讀合法指令 k，包含拒絕與返回；無效整數不進 counts。
-- steps=history.size()；ok=OK筆數；rejected=steps-ok-RETURN筆數；ignored=script.length-steps。
-- 最低能源只看已記錄的行動後能源；沒有記錄為 N/A。任務開始與每輪前檢查停止；終態依 SUCCESS、EXHAUSTED、RETURNED、UNFINISHED 優先判斷。
+- 步數=history.size()；成功=成功筆數；拒絕=steps-ok-RETURN筆數；略過=script.length-steps。
+- 最低能源只看已記錄的行動後能源；沒有記錄為 無紀錄。任務開始與每輪前檢查停止；終態依 任務成功、能源耗盡、已返回、任務未完成 優先判斷。
 - 類別只保存所需值；私有欄位與不提供 setter 限制外部修改，不能保證使用者不傳錯數值。清單可變，記錄對外只讀；這兩件事分開解釋。
 
 ## 第五週新增與支援

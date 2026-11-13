@@ -14,24 +14,24 @@
 
 每個新Mission搭配一個新Rover，只run一次；script非null，energy 0..20、samples非負。學生使用20/0，教師另示範邊界。只在合法整數契約內操作，不新增Scanner、命令列解析、例外處理、繼承、泛型設計或JUnit。
 
-探索耗6得2、掃描耗2得1、充電+5封頂20，成功行動才增加actionCount。返回、無效及被拒絕的指令都保留；已停止後不讀、不記。優先SUCCESS、EXHAUSTED、RETURNED、UNFINISHED。MissionStep仍保存行動後數值快照，建構順序`command, energy, result`，無setter。Rover停止後直接execute回STOPPED；正常Mission日誌不應出現STOPPED。
+探索耗6得2、掃描耗2得1、充電+5封頂20，成功行動才增加actionCount。返回、無效及被拒絕的指令都保留；已停止後不讀、不記。優先任務成功、能源耗盡、已返回、任務未完成。MissionStep仍保存行動後數值快照，建構順序`command, energy, result`，無setter。Rover停止後直接execute回任務已停止；正常Mission日誌不應出現任務已停止。
 
 ## 本人測試與驗收數字
 
 六路線完整輸出放LAB_REPORT，包含回放、counts、摘要、最低能源、最終狀態及battery。不同路線的輸出可用折疊區塊保存，不只截最後一行。
 
-| script | 最終energy/samples/actionCount | outcome | steps/ok/rejected/ignored | counts[0..3] | lowest | battery |
+| script | 最終energy/samples/actionCount | 任務結果 | 步數／成功／拒絕／略過 | 指令次數[0..3] | 最低能源 | 電量百分比 |
 |---|---|---|---|---|---|---|---|
-| {0} | 20/0/0 | RETURNED | 1/0/0/0 | [1,0,0,0] | 20 | 100.0 |
-| {1,1,2} | 6/5/3 | SUCCESS | 3/3/0/0 | [0,2,1,0] | 6 | 30.0 |
-| {2,2,2,2,2} | 10/5/5 | SUCCESS | 5/5/0/0 | [0,0,5,0] | 10 | 50.0 |
-| {3,9,0} | 20/0/0 | RETURNED | 3/0/2/0 | [1,0,0,1] | 20 | 100.0 |
-| {1,1,1,1} | 2/6/3 | SUCCESS | 3/3/0/1 | [0,3,0,0] | 2 | 10.0 |
-| {2,1} | 12/3/2 | UNFINISHED | 2/2/0/0 | [0,1,1,0] | 12 | 60.0 |
+| {0} | 20/0/0 | 已返回 | 1/0/0/0 | [1,0,0,0] | 20 | 100.0 |
+| {1,1,2} | 6/5/3 | 任務成功 | 3/3/0/0 | [0,2,1,0] | 6 | 30.0 |
+| {2,2,2,2,2} | 10/5/5 | 任務成功 | 5/5/0/0 | [0,0,5,0] | 10 | 50.0 |
+| {3,9,0} | 20/0/0 | 已返回 | 3/0/2/0 | [1,0,0,1] | 20 | 100.0 |
+| {1,1,1,1} | 2/6/3 | 任務成功 | 3/3/0/1 | [0,3,0,0] | 2 | 10.0 |
+| {2,1} | 12/3/2 | 任務未完成 | 2/2/0/0 | [0,1,1,0] | 12 | 60.0 |
 
-RoverDemo須得到`OK/14/2/1`、`STOPPED/0`、`STOPPED/20`三行。RelationDemo與SampleCaseDemo完整輸出見[examples/README](examples/README.md)。E3錯誤版第二行應為`overflow=true, count=4`；修正後`overflow=false, count=2`，再填到3、卸空3、空盒卸空0。
+RoverDemo須得到`成功/14/2/1`、`任務已停止/0`、`任務已停止/20`三行。RelationDemo與SampleCaseDemo完整輸出見[examples/README](examples/README.md)。E3錯誤版第二行應為`超量存放=true, 存量=4`；修正後`超量存放=false, 存量=2`，再填到3、卸空3、空盒卸空0。
 
-教師另以FixedScriptMission示範初始零能源、初始已達標、2格4份加掃描的成功優先、空腳本；學生記觀察而非冒充本人操作。沒有紀錄時lowestEnergy方法回-1，但報表必須印`lowest energy=N/A`，不能把-1當實際能源。
+教師另以FixedScriptMission示範初始零能源、初始已達標、2格4份加掃描的成功優先、空腳本；學生記觀察而非冒充本人操作。沒有紀錄時lowestEnergy方法回-1，但報表必須印`最低能源=無紀錄`，不能把-1當實際能源。
 
 ## 繳交
 

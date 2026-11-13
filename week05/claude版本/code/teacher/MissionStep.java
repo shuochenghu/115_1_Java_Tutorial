@@ -25,13 +25,13 @@ public class MissionStep {
         return energyAfter;
     }
 
-    // TODO 7：不是 OK、也不是 RETURN，就是被拒絕或無效的一步。
+    // TODO 7：不是 成功、也不是 返回，就是被拒絕或無效的一步。
     public boolean isRejected() {
-        return !result.equals("OK") && !result.equals("RETURN");
+        return !result.equals("成功") && !result.equals("返回");
     }
 
     // 回放用的一行文字，格式與第四週相同。
     public String describe() {
-        return "command=" + command + ", result=" + result + ", energy=" + energyAfter;
+        return "指令=" + command + ", 結果=" + result + ", 能源=" + energyAfter;
     }
 }

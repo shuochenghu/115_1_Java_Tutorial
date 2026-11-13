@@ -76,7 +76,7 @@ C1：`args` 的元素是 `String`，`+` 是字串串接。
 | `frequency(…, 8)` | `1` |
 | 100 `==` 100 | `true` |
 | 1000 `==` 1000 | `false` |
-| 從前往後刪 | `[OK, UNKNOWN, OK]` |
+| 從前往後刪 | `[成功, 無效指令, 成功]` |
 
 D1：錯誤訊息含 `unexpected type`，以及 `required: reference`、`found: int`。
 D3：刪除索引 i 後，原本在 i+1 的元素補到 i，但迴圈接著檢查 i+1，跳過了補上來的元素。
@@ -85,7 +85,7 @@ D4：`size()`、`get(i)`、`set(i, x)`、`remove(Integer.valueOf(0))`。
 `Integer` 快取的範圍 -128..127 是 Java 規格保證的下限，實作可以放大。課堂上只需說「小數字剛好相等，不能依賴」。
 
 ### E
-- E1：看不到。第 3 步後樣本 6 ≥ 5，迴圈 `break`；第 4 個指令計入 `ignored=1`。
+- E1：看不到。第 3 步後樣本 6 ≥ 5，迴圈 `break`；第 4 個指令計入 `略過=1`。
 - E2：指令是 0–3 的固定小範圍，直接當索引最簡單；步數事先未知，需要能成長的容器。
 - E3：`state` 是陣列，`runMission` 透過參考修改同一個物件的元素（同 B 的 `explore`）。
 
@@ -95,18 +95,18 @@ TODO 參考解答見 `code/teacher/MissionLog.java`。巡堂時常見錯誤：
 |---|---|---|
 | TODO 1 用 `script.length` 當迴圈上限，但 `script` 尚未建立 | 編譯錯誤或長度 0 | 「新陣列應該多長？」 |
 | TODO 2 在 `applyCommand` 之前加入 `energyLog` | 回放中的能源是前一步的值 | 「這一步做完後剩多少？」 |
-| TODO 2 只在 `OK` 時記錄 | `3 9 0` 回放只剩 1 步 | 「回放要不要看得到失敗？」 |
+| TODO 2 只在 `成功` 時記錄 | `3 9 0` 回放只剩 1 步 | 「回放要不要看得到失敗？」 |
 | TODO 3 用加強版 for 走訪 `commandLog` | 拿不到另外兩條清單的對應值 | 「另外兩條要用什麼索引？」 |
 | TODO 4 沒有檢查範圍 | `3 9 0` 當掉 | 讓學生自己讀例外訊息 |
-| TODO 5 用 `==` 比較 `"OK"` | 通常結果是對的（字串常值共用同一物件），卻是錯誤寫法 | 回到第 2 週的 `equals` |
-| TODO 5 `rejected` 把 RETURN 也算進去 | `3 9 0` 得到 `rejected=3` | 回頭看 `rejected` 的定義 |
+| TODO 5 用 `==` 比較 `"成功"` | 通常結果是對的（字串常值共用同一物件），卻是錯誤寫法 | 回到第 2 週的 `equals` |
+| TODO 5 `rejected` 把 返回 也算進去 | `3 9 0` 得到 `拒絕=3` | 回頭看 `rejected` 的定義 |
 
 ### F2 參考判斷
 | 建議 | 判斷 | Prompt 該補 |
 |---|---|---|
 | `HashMap<Integer, Integer>` 計數 | 可行，但鍵是 0–3 連續小整數，`int[4]` 更簡單；Map 要處理鍵不存在的情況 | 「幾筆／範圍」：指令只有 0–3 |
 | `int[100]` 記歷程 | 有上限，還要另外維護 count；超過 100 步會越界 | 「幾筆」：步數事先未知 |
-| 一條 `ArrayList<String>` 存 `"1,OK,14"` | 可行但失去型態；取能源要 `split` 加 `parseInt`，不能直接用 `Collections.min` | 「存什麼」：三個欄位與各自型態；「要做什麼」：找最低能源 |
+| 一條 `ArrayList<String>` 存 `"1,成功,14"` | 可行但失去型態；取能源要 `split` 加 `parseInt`，不能直接用 `Collections.min` | 「存什麼」：三個欄位與各自型態；「要做什麼」：找最低能源 |
 
 學生若主張「自訂一個 Step 類別」，這是正確的直覺，但屬第 5 週內容。請他記在 G4。
 
@@ -118,9 +118,9 @@ TODO 參考解答見 `code/teacher/MissionLog.java`。巡堂時常見錯誤：
 |---|---|---|---|
 | 1 | 回放正常，接著 `ArrayIndexOutOfBoundsException: Index 9 out of bounds for length 4`，發生在 `countCommands` | 恢復 `if (command >= 0 && command < counts.length)` | 拒絕：「指令只有 0–3」只對合法輸入成立，日誌本來就會記錄無效指令 |
 | 2 | 印完 3 步後 `IndexOutOfBoundsException: Index 3 out of bounds for length 3`，發生在 `ArrayList.get`（`printReplay`） | 改回 `<` | 拒絕：最後索引是 `size() - 1` |
-| 3 | 回放只剩 `9 UNKNOWN_COMMAND` 與 `0 RETURN` 兩步；`counts=[1, 0, 0, 0]`；摘要 `steps=2, rejected=1, ignored=1` | 改成從後往前（`for (int i = resultLog.size() - 1; i >= 0; i--)`） | 修正後也要指出副作用：刪除日誌會讓 `ignored` 和 `counts` 失真，因此「回放時跳過」優於「刪掉資料」 |
+| 3 | 回放只剩 `9 無效指令` 與 `0 返回` 兩步；`指令次數=[1, 0, 0, 0]`；摘要 `步數=2, 拒絕=1, 略過=1` | 改成從後往前（`for (int i = resultLog.size() - 1; i >= 0; i--)`） | 修正後也要指出副作用：刪除日誌會讓 `ignored` 和 `counts` 失真，因此「回放時跳過」優於「刪掉資料」 |
 
-第 3 題修正後，`3 9 0` 回放只剩 `0 RETURN`，`ignored` 會被算成 2，仍然錯誤。這是好的討論點：AI 的建議改變了資料本身，不只是顯示方式。接受學生「拒絕整個建議，改成在 `printReplay` 跳過非 OK」的答案。
+第 3 題修正後，`3 9 0` 回放只剩 `0 返回`，`ignored` 會被算成 2，仍然錯誤。這是好的討論點：AI 的建議改變了資料本身，不只是顯示方式。接受學生「拒絕整個建議，改成在 `printReplay` 跳過非 成功」的答案。
 
 ## 評分重點
 

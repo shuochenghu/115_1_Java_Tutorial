@@ -1,0 +1,60 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+skinparam packageBorderColor #8899AA
+hide circle
+hide empty members
+left to right direction
+title 第 6 週：四個類別的分工與關係
+
+class MissionLog #FFE8D6 {
+  + {static} main(args : String[]) : void
+  ~ {static} runMission(script : int[], energy : int, samples : int) : void
+  ~ {static} printReplay(mission : Mission) : void
+  ~ {static} printSummary(scriptLength : int, mission : Mission) : void
+}
+class Mission #DFF3E3 {
+  - rover : Rover
+  - history : ArrayList<MissionStep>
+  - returned : boolean
+  + run(script : int[]) : void
+  + getOutcome() : String
+  + getStep(index : int) : MissionStep
+  + countCommands() : int[]
+  + countOk() / countRejected() / lowestEnergy() : int
+}
+class Rover #DFF3E3 {
+  - energy : int
+  - samples : int
+  - actionCount : int
+  + execute(command : int) : String
+  + isStopped() : boolean
+  - explore() / scan() / charge() : String
+}
+class MissionStep #F4F4F4 {
+  - command : int
+  - energy : int
+  - result : String
+}
+class FixedScriptMission #F4F4F4
+class RoverDemo #DFF3E3
+
+FixedScriptMission ..> MissionLog : runMission
+MissionLog ..> Mission : new、run、查結果
+MissionLog ..> Rover : new、讀狀態
+MissionLog ..> MissionStep : 讀 getter
+Mission --> "1" Rover : rover 欄位
+Mission --> "0..*" MissionStep : history 欄位
+RoverDemo ..> Rover
+legend bottom
+  實線箭頭＝<b>關聯</b>：用欄位持續保存　　虛線箭頭＝<b>相依</b>：只在方法裡建立或使用
+  <back:#DFF3E3>　新增　</back>  <back:#FFE8D6>　修改　</back>  <back:#F4F4F4>　沿用第 5 週　</back>
+endlegend
+@enduml

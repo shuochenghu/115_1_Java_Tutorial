@@ -1,0 +1,30 @@
+@startuml
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+skinparam sequenceMessageAlign left
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+hide footbox
+title 第 6 週：MissionLog.runMission({1,1,2}, 20, 0) 的呼叫順序
+participant "MissionLog" as L
+participant "Mission" as M
+participant "Rover" as R
+participant "MissionStep" as S
+L -> R ** : new Rover(20, 0)
+L -> M ** : new Mission(rover)
+L -> M : run({1,1,2})
+loop 每一筆指令
+  M -> R : isStopped()?
+  note right of M : 已停止就離開迴圈，\n後面的指令算「略過」
+  M -> R : execute(command)
+  R --> M : "成功" 等結果
+  M -> R : getEnergy()
+  M -> S ** : new MissionStep(command, 能源, 結果)
+  note right of S : 存的是當下的數值，\n不是 Rover 的參考
+end
+L -> M : getStep(i)、countOk()…
+L -> R : getEnergy()、getSamples()…
+note over L : 報表文字仍由 MissionLog 印出
+@enduml

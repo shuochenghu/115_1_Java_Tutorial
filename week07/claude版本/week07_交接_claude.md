@@ -30,7 +30,7 @@ Rover（父類別）
   + CAPACITY = 20, TARGET_SAMPLES = 5
   + Rover(energy, samples)：超出範圍改成最接近的合法值
   + getEnergy(), getSamples(), getActionCount(), isSuccess(), isExhausted(), isStopped()
-  + execute(command)：已停止回傳 STOPPED；1 探索、2 掃描、3 充電、0 RETURN、其他 UNKNOWN_COMMAND
+  + execute(command)：已停止回傳 任務已停止；1 探索、2 掃描、3 充電、0 返回、其他 無效指令
   # spendEnergy(amount) : boolean   amount <= 0 或 > energy 回傳 false 且不變；否則扣除
   # addSamples(amount)              amount > 0 才增加
   # countAction()
@@ -41,14 +41,14 @@ HeavyRover extends Rover
   - drillCount
   + HeavyRover(energy, samples)：super(energy, samples)，drillCount = 0
   + getDrillCount()
-  + drill()：已停止 STOPPED；能源不足 NOT_ENOUGH_ENERGY；成功 −8、+3、行動 +1、鑽探 +1 回傳 OK
+  + drill()：已停止 任務已停止；能源不足 能源不足；成功 −8、+3、行動 +1、鑽探 +1 回傳 成功
 
 Mission、MissionStep、MissionLog：與第 6 週相同（只改檔頭說明）
 ```
 
 `MissionLog` 從 `new Rover(20, 0)` 出發的輸出與第 5、6 週 claude 版逐字相同（已用 10 組參數比對第 6 週教師版）。
 
-`new Mission(new HeavyRover(20, 0))` 能編譯並正常執行（已實測預設腳本 `SUCCESS`、3 步），但 `Mission` 不會呼叫 `drill`，指令 1 仍得 2 份。本週只在課末檢核第 5 題預告，沒有當成教學內容。
+`new Mission(new HeavyRover(20, 0))` 能編譯並正常執行（已實測預設腳本 `任務成功`、3 步），但 `Mission` 不會呼叫 `drill`，指令 1 仍得 2 份。本週只在課末檢核第 5 題預告，沒有當成教學內容。
 
 作業延伸：`code/teacher/club/` 的 `Equipment`（多了 `getLabel()`）、`Camera`、`Projector`。兩個子類別各有一個名稱相同、但父類別沒有的 `checklist()`。
 

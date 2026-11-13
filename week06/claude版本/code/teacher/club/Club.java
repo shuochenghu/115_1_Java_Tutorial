@@ -17,30 +17,30 @@ public class Club {
         equipments.add(equipment);
     }
 
-    // 回傳 OK、UNKNOWN_EQUIPMENT、ON_LOAN 或 LIMIT_REACHED；被拒絕時不建立紀錄。
+    // 回傳 成功、查無器材、已借出 或 已達借用上限；被拒絕時不建立紀錄。
     public String borrow(Member member, Equipment equipment, String date) {
         if (!equipments.contains(equipment)) {
-            return "UNKNOWN_EQUIPMENT";
+            return "查無器材";
         }
         if (isOnLoan(equipment)) {
-            return "ON_LOAN";
+            return "已借出";
         }
         if (countActiveLoans(member) >= MAX_ACTIVE_LOANS) {
-            return "LIMIT_REACHED";
+            return "已達借用上限";
         }
         loans.add(new Loan(member, equipment, date));
-        return "OK";
+        return "成功";
     }
 
-    // 找到這件器材未歸還的紀錄並結案；沒有借出就回傳 NOT_ON_LOAN。
+    // 找到這件器材未歸還的紀錄並結案；沒有借出就回傳 未借出。
     public String giveBack(Equipment equipment, String date) {
         for (Loan loan : loans) {
             if (loan.isActive() && loan.getEquipment() == equipment) {
                 loan.close(date);
-                return "OK";
+                return "成功";
             }
         }
-        return "NOT_ON_LOAN";
+        return "未借出";
     }
 
     // 用 == 比較：同一位社員、同一件器材指的是同一個物件（物件相等的 equals 留到第 7–8 週）。
@@ -75,6 +75,6 @@ public class Club {
                 report += loan.describe() + "\n";
             }
         }
-        return report.isEmpty() ? "(none)" : report.trim();
+        return report.isEmpty() ? "（無）" : report.trim();
     }
 }

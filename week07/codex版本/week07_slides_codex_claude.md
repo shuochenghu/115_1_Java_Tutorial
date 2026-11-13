@@ -140,7 +140,7 @@ AI 協作：**追蹤** AI 生成的子類別，用反例找出「兩份狀態」
 </div>
 
 <!--
-講者備註：A 答案：A1 Rover 保存目前狀態與行動規則；Mission 處理腳本、停止與歷史；MissionStep 保存一筆快照；MissionLog 固定腳本與報表。A2 日誌是過去的快照。A3 6/5/3 SUCCESS。A4 MemberDemo、MissionLog 可跑；HeavyRoverTry 有 DIFF。
+講者備註：A 答案：A1 Rover 保存目前狀態與行動規則；Mission 處理腳本、停止與歷史；MissionStep 保存一筆快照；MissionLog 固定腳本與報表。A2 日誌是過去的快照。A3 6/5/3 任務成功。A4 MemberDemo、MissionLog 可跑；HeavyRoverTry 有 不符。
 -->
 
 ---
@@ -309,7 +309,7 @@ public VipMember(String name) {
     super(name);          // 先建父類別那部分
     bonusCount = 0;
     System.out.println(
-      "VipMember constructor: " + name);
+      "VipMember 建構子: " + name);
 }
 ```
 
@@ -322,7 +322,7 @@ public VipMember(String name) {
 | Amy 點數 | ？ |
 | Bob 點數／加贈次數 | ？ |
 
-<span class="note">Member 的建構子會印 `Member constructor: 名字`。`price / 10` 是整數除法。</span>
+<span class="note">Member 的建構子會印 `Member 建構子: 名字`。`price / 10` 是整數除法。</span>
 
 </div>
 </div>
@@ -343,12 +343,12 @@ public VipMember(String name) {
 <div>
 
 ```text
-Member constructor: Amy
-Member constructor: Bob
-VipMember constructor: Bob
-Amy points=12
-Bob points=28
-Bob bonus=1
+Member 建構子: Amy
+Member 建構子: Bob
+VipMember 建構子: Bob
+Amy 的點數=12
+Bob 的點數=28
+Bob 的獎勵次數=1
 ```
 
 </div>
@@ -622,9 +622,9 @@ bob.claimBonus();
 |---|---|---|
 | 1 | **TODO 1**：Rover 的 `spendEnergy`，並用它重構 explore、scan | D2 |
 | 2 | **TODO 2**：HeavyRover 自己的 `drillCount`；**TODO 3**：`drill()` | D3、D4 |
-| 3 | HeavyRoverTry 十五行全 OK，再提出一個自己的反例 | D4、D5 |
+| 3 | HeavyRoverTry 十五行全 成功，再提出一個自己的反例 | D4、D5 |
 | 4 | 六條舊路線完整輸出不變（課堂先做兩條） | D5 |
-| 5 | 模擬 AI 追蹤：預測、DIFF 證據、兩份狀態圖、最小修正、重測 | E |
+| 5 | 模擬 AI 追蹤：預測、不符 證據、兩份狀態圖、最小修正、重測 | E |
 | 6 | **課後獨立遷移**：CargoRover 或自訂一個子類別＋測試入口 | 作業二 |
 | 7 | 指定成員的繼承圖、DESIGN.md、F 檢核、G 保存 | D1、D5、F、G |
 
@@ -660,21 +660,21 @@ bob.claimBonus();
 起始時 MissionLog 和上週完成版一樣：
 
 ```text
-final energy=6, samples=5, actionCount=3 -> SUCCESS
+最終能源=6, 樣本數=5, 行動次數=3 -> 任務成功
 ```
 
-但 HeavyRoverTry 出現 DIFF：
+但 HeavyRoverTry 出現 不符：
 
 ```text
-drill: NOT_READY (expect OK) DIFF
-after drill: 20/0/0/0 (expect 12/3/1/1) DIFF
+鑽探: 尚未完成 （預期 成功） 不符
+鑽探後: 20/0/0/0 （預期 12/3/1/1） 不符
 ...
 ```
 
 </div>
 </div>
 
-**舊任務成功 ≠ 本週 TODO 完成。** 全部完成後，HeavyRoverTry 十五行都是 OK。
+**舊任務成功 ≠ 本週 TODO 完成。** 全部完成後，HeavyRoverTry 十五行都是 顯示「相符」。
 
 <!--
 講者備註：starter 只是安全起點。spendEnergy 目前回 false 但還沒接上 explore、scan，所以舊任務仍可執行。
@@ -779,10 +779,10 @@ protected void countAction() {
 
 ```java
 private String explore() {
-    if (!spendEnergy(6)) { return "NOT_ENOUGH_ENERGY"; }
+    if (!spendEnergy(6)) { return "能源不足"; }
     addSamples(2);
     countAction();
-    return "OK";
+    return "成功";
 }
 ```
 
@@ -817,7 +817,7 @@ public class HeavyRover extends Rover {
     }
 
     public int getDrillCount() { return 0; }    // 改成回傳欄位
-    public String drill() { return "NOT_READY"; }   // TODO 3
+    public String drill() { return "尚未完成"; }   // TODO 3
 }
 ```
 
@@ -840,9 +840,9 @@ public class HeavyRover extends Rover {
 
 | 條件 | 回傳 | 狀態 |
 |---|---|---|
-| `isStopped()` 為 true | `STOPPED` | 全部不變 |
-| 未停止，但能源不足 8 | `NOT_ENOUGH_ENERGY` | 全部不變 |
-| 未停止且能源足夠 | `OK` | energy −8、samples +3、actionCount +1、drillCount +1 |
+| `isStopped()` 為 true | `任務已停止` | 全部不變 |
+| 未停止，但能源不足 8 | `能源不足` | 全部不變 |
+| 未停止且能源足夠 | `成功` | energy −8、samples +3、actionCount +1、drillCount +1 |
 
 - 用提供的 `DRILL_COST`、`DRILL_YIELD`。
 - **先**檢查停止，**再**用 `spendEnergy`；只有成功才更新另外三項。
@@ -851,7 +851,7 @@ public class HeavyRover extends Rover {
 <span class="note">教師此時不展示完整方法。探索示範、掃描模仿、鑽探獨立。</span>
 
 <!--
-講者備註：常見錯誤：只回 OK 卻沒更新；漏 countAction；達標後仍可鑽探（漏停止檢查）；能源不足卻變負數（先扣後檢查）。
+講者備註：常見錯誤：只回 成功 卻沒更新；漏 countAction；達標後仍可鑽探（漏停止檢查）；能源不足卻變負數（先扣後檢查）。
 -->
 
 ---
@@ -870,10 +870,10 @@ public class HeavyRover extends Rover {
 | `execute(1)` | ？ | ？ | ？ | ？ | ？ |
 | `drill()` | ？ | ？ | ？ | ？ | ？ |
 
-**D4-2**：自己設計一個能抓到「**只回 OK 卻沒更新狀態**」的案例，寫預期、實際與理由。
+**D4-2**：自己設計一個能抓到「**只回 成功 卻沒更新狀態**」的案例，寫預期、實際與理由。
 
 <!--
-講者備註：答案：drill OK 12/3/1/1；execute(1) 探索 OK 6/5/2/1（樣本 5 已達標）；drill STOPPED 6/5/2/1 不變。D4-2 可接受例：從 8/2 鑽探得 0/5/1/1（同時達標與耗盡），或第一次鑽探後查四個 getter。
+講者備註：答案：drill 成功 12/3/1/1；execute(1) 探索 成功 6/5/2/1（樣本 5 已達標）；drill 任務已停止 6/5/2/1 不變。D4-2 可接受例：從 8/2 鑽探得 0/5/1/1（同時達標與耗盡），或第一次鑽探後查四個 getter。
 -->
 
 ---
@@ -884,19 +884,19 @@ public class HeavyRover extends Rover {
 
 ## D5｜行為與圖的檢查
 
-1. 編譯 `src/*.java`，跑 **HeavyRoverTry**：十五行都要 `OK`，貼完整輸出。
+1. 編譯 `src/*.java`，跑 **HeavyRoverTry**：十五行都要 `成功`，貼完整輸出。
 2. 跑主任務 `{1,1,2}`、`{3,9,0}` 完整輸出（改 MissionLog 的固定 script、重編譯；做完恢復 `{1,1,2}`）。
 
 <style scoped>table { font-size: 18px; }</style>
 
-| script | energy/samples/actionCount | outcome | steps/ok/rejected/ignored | counts[0..3] | lowest | battery |
+| script | energy/samples/actionCount | 任務結果 | 步數／成功／拒絕／略過 | 指令次數[0..3] | 最低能源 | 電量百分比 |
 |---|---|---|---|---|---|---|
-| **{1,1,2}** | 6/5/3 | SUCCESS | 3/3/0/0 | [0,2,1,0] | 6 | 30.0 |
-| **{3,9,0}** | 20/0/0 | RETURNED | 3/0/2/0 | [1,0,0,1] | 20 | 100.0 |
-| {0} | 20/0/0 | RETURNED | 1/0/0/0 | [1,0,0,0] | 20 | 100.0 |
-| {2,2,2,2,2} | 10/5/5 | SUCCESS | 5/5/0/0 | [0,0,5,0] | 10 | 50.0 |
-| {1,1,1,1} | 2/6/3 | SUCCESS | 3/3/0/1 | [0,3,0,0] | 2 | 10.0 |
-| {2,1} | 12/3/2 | UNFINISHED | 2/2/0/0 | [0,1,1,0] | 12 | 60.0 |
+| **{1,1,2}** | 6/5/3 | 任務成功 | 3/3/0/0 | [0,2,1,0] | 6 | 30.0 |
+| **{3,9,0}** | 20/0/0 | 已返回 | 3/0/2/0 | [1,0,0,1] | 20 | 100.0 |
+| {0} | 20/0/0 | 已返回 | 1/0/0/0 | [1,0,0,0] | 20 | 100.0 |
+| {2,2,2,2,2} | 10/5/5 | 任務成功 | 5/5/0/0 | [0,0,5,0] | 10 | 50.0 |
+| {1,1,1,1} | 2/6/3 | 任務成功 | 3/3/0/1 | [0,3,0,0] | 2 | 10.0 |
+| {2,1} | 12/3/2 | 任務未完成 | 2/2/0/0 | [0,1,1,0] | 12 | 60.0 |
 
 3. 在 heavy_practice.puml 補 **三個 `#` 方法**、HeavyRover 的常數／欄位／建構子／兩個方法，重新產 SVG，DESIGN.md 引用。**不畫** Mission→HeavyRover（Mission 程式沒用到它）。
 
@@ -930,11 +930,11 @@ public class HeavyRover extends Rover {
     }
     public int getDrillCount() { return drillCount; }
     public String drill() {
-        if (energy < 8) { return "NOT_ENOUGH_ENERGY"; }
+        if (energy < 8) { return "能源不足"; }
         energy -= 8;
         samples += 3;
         drillCount++;
-        return "OK";
+        return "成功";
     }
 }
 ```
@@ -967,32 +967,32 @@ public class HeavyRover extends Rover {
 
 <div class="ex"><span class="ai">ai/HeavyRover.java</span><span class="st">starter/HeavyRoverTry.java</span></div>
 
-## E2｜在 ai-check 實際執行：DIFF 證據
+## E2｜在 ai-check 實際執行：不符 證據
 
 把**完成的 Rover**、HeavyRoverTry 和這份 **AI HeavyRover** 放進 `java-07/ai-check`，單獨編譯，**不混正式 src**。
 
 <style scoped>pre { font-size: 17px; line-height: 1.25; } ul { margin: 6px 0; }</style>
 
 ```text
-drill: OK (expect OK) OK
-after drill: 20/0/0/1 (expect 12/3/1/1) DIFF
-explore: OK (expect OK) OK
-after explore: 14/2/1/1 (expect 6/5/2/1) DIFF
-done drill: OK (expect STOPPED) DIFF
+鑽探: 成功 （預期 成功） 相符
+鑽探後: 20/0/0/1 （預期 12/3/1/1） 不符
+探索: 成功 （預期 成功） 相符
+探索後: 14/2/1/1 （預期 6/5/2/1） 不符
+任務完成後鑽探: 成功 （預期 任務已停止） 不符
 ...
-zero cannot charge: OK (expect STOPPED) DIFF
-initial zero: NOT_ENOUGH_ENERGY (expect STOPPED) DIFF
-initial success: OK (expect STOPPED) DIFF
+能源耗盡後無法充電: 成功 （預期 任務已停止） 不符
+初始能源為零: 能源不足 （預期 任務已停止） 不符
+初始已達標: 成功 （預期 任務已停止） 不符
 ```
 
-- drill 回 **OK**，可是 getter 讀到的能源、樣本、行動數**都沒變**；行動數從沒加過。
-- 8 格的車 drill 後，Rover 看到的能源仍是 8，所以 `execute(3)` 充電成功——本來應該已耗盡、回 STOPPED。
+- drill 回 **成功**，可是 getter 讀到的能源、樣本、行動數**都沒變**；行動數從沒加過。
+- 8 格的車 drill 後，Rover 看到的能源仍是 8，所以 `execute(3)` 充電成功——本來應該已耗盡、回 任務已停止。
 - 初始就達標（20/5）還能 drill——**沒有停止檢查**。
 
-**E2**：至少保留 after drill、done drill、zero cannot charge 三行，寫下實際和你的預測差在哪。
+**E2**：至少保留 鑽探後、任務完成後鑽探、能源耗盡後無法充電 三行，寫下實際和你的預測差在哪。
 
 <!--
-講者備註：輸出為節錄，完整十五行有 9 行 DIFF。done drill 回 OK：Rover 那份是 14/2 未停止，而 AI 的 drill 檢查子類別那份 energy（12 格）。
+講者備註：輸出為節錄，完整十五行有 9 行 不符。done drill 回 成功：Rover 那份是 14/2 未停止，而 AI 的 drill 檢查子類別那份 energy（12 格）。
 -->
 
 ---
@@ -1011,7 +1011,7 @@ initial success: OK (expect STOPPED) DIFF
 **E4（5 分）**：先用 `[AI]` commit 保留原文，再做最小修正，用 `[fix]` commit：
 1. 刪掉重複的 energy、samples 欄位與建構子裡的設定。
 2. drill 改用 `isStopped`、`spendEnergy`、`addSamples`、`countAction`。
-3. 重測 HeavyRoverTry 十五行全 OK。
+3. 重測 HeavyRoverTry 十五行全 成功。
 
 <span class="note">先刪欄位會看到 private 存取錯誤——這是提示你改用 protected 方法，不是要你把欄位改成 protected。</span>
 
@@ -1058,9 +1058,9 @@ initial success: OK (expect STOPPED) DIFF
 - `private int cargo`，初始 0，`getCargo()`
 - 容量固定 3；貨物不是科學樣本
 - `String load(int amount)`：
-  - 已停止 → `STOPPED`
-  - `amount <= 0` 或超過剩餘貨位 → `REJECTED`
-  - 其餘 → cargo 增加，回 `OK`
+  - 已停止 → `任務已停止`
+  - `amount <= 0` 或超過剩餘貨位 → `已拒絕`
+  - 其餘 → cargo 增加，回 `成功`
 - **不耗能源、不加樣本、不加 actionCount**
 
 </div>
@@ -1068,11 +1068,11 @@ initial success: OK (expect STOPPED) DIFF
 
 | 呼叫 | 回傳／cargo |
 |---|---|
-| (20,0) `load(2)`、`load(2)`、`load(1)` | OK/2、REJECTED/2、OK/3 |
-| 接著 `load(0)` | REJECTED/3 |
+| (20,0) `load(2)`、`load(2)`、`load(1)` | 成功/2、已拒絕/2、成功/3 |
+| 接著 `load(0)` | 已拒絕/3 |
 | 原有三個 getter | 20、0、0 |
-| (0,0) `load(1)` | STOPPED/0 |
-| (20,5) `load(1)` | STOPPED/0 |
+| (0,0) `load(1)` | 任務已停止/0 |
+| (20,5) `load(1)` | 任務已停止/0 |
 
 另補一個負數或剛好滿載的案例。
 
@@ -1176,15 +1176,15 @@ initial success: OK (expect STOPPED) DIFF
 
 ```powershell
 javac -encoding UTF-8 -d out-teacher teacher/*.java
-java -cp out-teacher HeavyRoverTry       # 十五行全 OK
-java -cp out-teacher InheritanceCheck    # 45 inheritance checks passed
-java -cp out-teacher MissionLogCheck     # 15/15 passed：沿用第五、六週完整輸出
-java -cp out-teacher MissionStateCheck   # 16/16 passed：狀態與停止規則
+java -cp out-teacher HeavyRoverTry       # 十五行全 成功
+java -cp out-teacher InheritanceCheck    # 45 項繼承檢查通過
+java -cp out-teacher MissionLogCheck     # 15/15 項通過：沿用第五、六週完整輸出
+java -cp out-teacher MissionStateCheck   # 16/16 項通過：狀態與停止規則
 ```
 
 | 學生程式出現 | 優先檢查 |
 |---|---|
-| drill 回 OK 但 getter 沒變 | 是否另宣告同名狀態 |
+| drill 回 成功 但 getter 沒變 | 是否另宣告同名狀態 |
 | drill 成功但 actionCount 少 1 | 成功路徑是否 countAction |
 | 達標後仍能鑽探 | 新入口沒檢查停止；execute 不會替它擋 |
 | 舊輸出都對，但 TODO 1 未完成 | 讀 explore、scan 是否真的重構 |
@@ -1239,14 +1239,14 @@ java -cp out-teacher MissionStateCheck   # 16/16 passed：狀態與停止規則
 
 ```java
 public String drill() {
-    if (isStopped()) { return "STOPPED"; }
+    if (isStopped()) { return "任務已停止"; }
     if (!spendEnergy(DRILL_COST)) {
-        return "NOT_ENOUGH_ENERGY";
+        return "能源不足";
     }
     addSamples(DRILL_YIELD);
     countAction();
     drillCount++;
-    return "OK";
+    return "成功";
 }
 ```
 
@@ -1274,12 +1274,12 @@ public String drill() {
 
 ```java
 public String load(int amount) {
-    if (isStopped()) { return "STOPPED"; }
+    if (isStopped()) { return "任務已停止"; }
     if (amount <= 0 || amount > 3 - cargo) {
-        return "REJECTED";
+        return "已拒絕";
     }
     cargo += amount;
-    return "OK";
+    return "成功";
 }
 ```
 
@@ -1289,13 +1289,13 @@ public String load(int amount) {
 CargoRoverTry 預期：
 
 ```text
-OK/2
-REJECTED/2
-OK/3
-REJECTED/3
+成功/2
+已拒絕/2
+成功/3
+已拒絕/3
 20/0/0
-STOPPED/0
-STOPPED/0
+任務已停止/0
+任務已停止/0
 ```
 
 - 用 `amount > 3 - cargo`，避免先相加再判斷。

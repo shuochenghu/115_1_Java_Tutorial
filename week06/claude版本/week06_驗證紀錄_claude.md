@@ -76,3 +76,10 @@
 4. 教師審閱講義、教師筆記、投影片後，依需要修訂並重新匯出 HTML（README 有指令）。
 
 重新產生類別圖需要 PlantUML jar：本次使用的 `plantuml-mit-1.2026.9.jar` 放在作者電腦的暫存目錄，沒有放進專案；換電腦時從 [PlantUML GitHub Releases](https://github.com/plantuml/plantuml/releases) 重新下載，指令見 README「重新產生類別圖與投影片」。只改文字、不改圖時不需要它。
+
+## 2026-11-11 繁體中文輸出驗證
+
+- OpenJDK 22，使用 javac -encoding UTF-8 -Xlint:all 分開編譯範例、學生起始碼及教師解答。以 UTF-8 擷取主控台輸出。
+- 執行本週範例、起始碼入口及教師解答的 main。教師檢查程式未報失敗。
+- 歷史驗證中的英文輸出反映當時的程式，現行預期輸出以本週講義和教師筆記為準。
+- Marp CLI 4.5.1 重新匯出 1 份 HTML（41 頁）。以無頭 Chromium 檢查程式碼區塊與表格的版面邊界，未偵測到溢出。

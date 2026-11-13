@@ -154,3 +154,10 @@ Marp CLI 4.5.1／Core 4.4.0同步匯出47頁HTML；無頭Chrome與puppeteer-core
 ### 同日改版：examples 教學與 starter 作業分開
 
 依使用者要求重排為47頁：第一部分（第5–23頁）只用 examples 教 B–D，static 頁改用 StepCard、new／add／get 頁改用 SnapshotDemo 的 `ArrayList<StepCard>`，末頁對照範例工具與作業 TODO；第二部分（第24–43頁）以 starter 說明作業目標、TODO 1–6、E1／E3、F1–F4、G、H 與評分；附錄（第44–46頁）放 teacher 的 FixedScriptMission／Check 與 UML 預告。左上標籤分色：藍 examples、綠 starter、灰 teacher；頁尾依段落標示。TODO 6 頁原本列出完整迴圈，改為只留註解提示，避免投影作業答案。重新以 Marp 匯出 HTML 與47頁 PNG，逐頁縮圖巡視，第45頁註解貼近頁尾已縮短後複核。程式未改，未重跑 Java。
+
+## 2026-11-11 繁體中文輸出驗證
+
+- OpenJDK 22，使用 javac -encoding UTF-8 -Xlint:all 分開編譯範例、學生起始碼及教師解答。以 UTF-8 擷取主控台輸出。
+- 執行該週 tools/verify.py，中文預期輸出、教師檢查與原有回歸案例通過。
+- 歷史驗證中的英文輸出反映當時的程式，現行預期輸出以本週講義和教師筆記為準。
+- Marp CLI 4.5.1 重新匯出 2 份 HTML（47/47 頁）。以無頭 Chromium 檢查程式碼區塊與表格的版面邊界，未偵測到溢出。

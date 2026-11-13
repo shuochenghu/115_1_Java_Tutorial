@@ -7,14 +7,14 @@ public class RelationDemo {
         Flashlight b = new Flashlight("B", shared);
         Flashlight c = new Flashlight("C", new Battery(10, 10));
 
-        System.out.println("A on 6 min: " + a.turnOn(6));
-        System.out.println("B on 6 min: " + b.turnOn(6));
-        System.out.println("C on 6 min: " + c.turnOn(6));
-        System.out.println("shared level: " + shared.getLevel());
+        System.out.println("燈具 A 開啟 6 分鐘： " + a.turnOn(6));
+        System.out.println("燈具 B 開啟 6 分鐘： " + b.turnOn(6));
+        System.out.println("燈具 C 開啟 6 分鐘： " + c.turnOn(6));
+        System.out.println("共用電池電量： " + shared.getLevel());
 
         Charger charger = new Charger();
-        System.out.println("refill shared: +" + charger.refill(shared));
-        System.out.println("B on 6 min: " + b.turnOn(6));
-        System.out.println("shared level: " + shared.getLevel());
+        System.out.println("替共用電池充電： +" + charger.refill(shared));
+        System.out.println("燈具 B 開啟 6 分鐘： " + b.turnOn(6));
+        System.out.println("共用電池電量： " + shared.getLevel());
     }
 }

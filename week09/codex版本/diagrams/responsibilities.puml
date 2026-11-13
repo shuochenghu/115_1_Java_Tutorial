@@ -1,0 +1,30 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 18
+skinparam shadowing false
+top to bottom direction
+
+interface SampleSource {
+  + getSamples() : int
+}
+
+abstract class Rover {
+  + execute(command : int) : String
+  + getSamples() : int
+  {abstract} # exploreYield() : int
+}
+
+class StandardRover
+class HeavyRover
+class SampleTray
+class Mission
+class SampleReport
+
+StandardRover --|> Rover
+HeavyRover --|> Rover
+Rover ..|> SampleSource
+SampleTray ..|> SampleSource
+Mission --> Rover : rover
+SampleReport ..> SampleSource : print 參數
+@enduml

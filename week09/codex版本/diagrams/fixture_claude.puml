@@ -1,0 +1,33 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title examples/：同一個介面，兩種寫法的實作類別
+
+interface SampleSource <<interface>> {
+  + getSamples() : int
+}
+class FixtureDemo {
+  + {static} main(args : String[]) : void
+  - {static} show(source : SampleSource) : void
+}
+class "FixtureDemo.FixedSampleSource" as Fixed <<private static 巢狀類別>> #DFF3E3 {
+  + getSamples() : int  {回 2}
+}
+class "（匿名類別）" as Anon <<寫在 main 裡的 new SampleSource() { ... }>> #FFE8D6 {
+  + getSamples() : int  {回 2}
+}
+FixtureDemo +-- Fixed
+SampleSource <|.. Fixed
+SampleSource <|.. Anon
+FixtureDemo ..> Anon : main 當場建立
+FixtureDemo ..> SampleSource : show 參數
+@enduml

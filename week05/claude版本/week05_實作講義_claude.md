@@ -27,7 +27,7 @@
    java -cp out MissionLog
    ```
 
-   起始碼能執行，最後一行是 `final energy=0, samples=0, actionCount=0 -> EXHAUSTED`。這**不是**第四週的結果，原因在 D 段揭曉。
+   起始碼能執行，最後一行是 `最終能源=0, 樣本數=0, 行動次數=0 -> 能源耗盡`。這**不是**第四週的結果，原因在 D 段揭曉。
 
 上週留下兩個問題，請各用一句話回答：
 
@@ -113,7 +113,7 @@ A、B 段的兩檔範例用命令列或 VS Code 即可，不必為它們開 Inte
 
 ## D｜任務日誌改用物件（40 分鐘，Deitel 8.2–8.4、8.7）
 
-任務的輸出格式、規則與第四週**完全相同**；改變的是資料放在哪裡、由誰負責。
+任務沿用第四週的行動規則，報表沿用第四週的繁體中文欄位。本週重新分配資料與方法的責任。
 
 | 類別 | 負責 | 對照第四週 |
 |---|---|---|
@@ -133,13 +133,13 @@ A、B 段的兩檔範例用命令列或 VS Code 即可，不必為它們開 Inte
 | 6 | `MissionLog` | `printReplay` | 模仿 |
 | 7 | `MissionStep`＋`MissionLog` | `isRejected()` 與 `printSummary` | 獨立 |
 
-D1. 動手前先回答：起始碼為什麼印出 `final energy=0, samples=0, actionCount=0 -> EXHAUSTED`？（提示：`Rover` 的建構子目前是空的，A 段看過欄位的預設值。）待填
+D1. 動手前先回答：起始碼為什麼印出 `最終能源=0, 樣本數=0, 行動次數=0 -> 能源耗盡`？（提示：`Rover` 的建構子目前是空的，A 段看過欄位的預設值。）待填
 
 ### D2. TODO 1–2：Rover（跟做＋模仿）
 
-完成後執行 `java -cp out RoverTry`，每一行都應出現 `OK` 或與 `expect` 相同的結果。
+完成後執行 `java -cp out RoverTry`，比對實際值和括號內的預期值。帶有檢查標記的行應顯示「相符」。
 
-| `RoverTry` 的行 | 實際輸出 | 和 expect 一致？ |
+| `RoverTry` 的行 | 實際輸出 | 和預期一致？ |
 |---|---|---|
 | `new Rover(25, -3)` | 待填 | 待填 |
 | 第一次 `r.charge()` | 待填 | 待填 |
@@ -160,26 +160,26 @@ D3-2. `MissionStep` 為什麼不提供 `setResult(String)`？待填
 
 ### D4. TODO 5–7：MissionLog（跟做＋模仿＋獨立）
 
-TODO 5 只需要一行。TODO 7 的 `printSummary` 不能再用 `Collections.frequency(resultLog, "OK")` 或 `Collections.min(energyLog)`：清單裡的元素是 `MissionStep`，請用迴圈搭配 getter 與 `isRejected()`。
+TODO 5 只需要一行。TODO 7 的 `printSummary` 不能再用 `Collections.frequency(resultLog, "成功")` 或 `Collections.min(energyLog)`：清單裡的元素是 `MissionStep`，請用迴圈搭配 getter 與 `isRejected()`。
 
 必做測試（每列重新執行一次）：
 
 | 參數 | 最終 E／S／A | 結果 | 摘要 | 實際（貼回放之後的四行） |
 |---|---|---|---|---|
-| （無） | 6／5／3 | SUCCESS | `steps=3, ok=3, rejected=0, ignored=0`，`lowest energy=6` | 待填 |
-| `2 2 2 2 2` | 10／5／5 | SUCCESS | `steps=5, ok=5, rejected=0, ignored=0`，`lowest energy=10` | 待填 |
-| `3 9 0` | 20／0／0 | RETURNED | `steps=3, ok=0, rejected=2, ignored=0`，`lowest energy=20` | 待填 |
-| `1 1 1 1` | 2／6／3 | SUCCESS | `steps=3, ok=3, rejected=0, ignored=1`，`lowest energy=2` | 待填 |
-| `2 1` | 12／3／2 | UNFINISHED | `steps=2, ok=2, rejected=0, ignored=0`，`lowest energy=12` | 待填 |
+| （無） | 6／5／3 | 任務成功 | `步數=3, 成功=3, 拒絕=0, 略過=0`，`最低能源=6` | 待填 |
+| `2 2 2 2 2` | 10／5／5 | 任務成功 | `步數=5, 成功=5, 拒絕=0, 略過=0`，`最低能源=10` | 待填 |
+| `3 9 0` | 20／0／0 | 已返回 | `步數=3, 成功=0, 拒絕=2, 略過=0`，`最低能源=20` | 待填 |
+| `1 1 1 1` | 2／6／3 | 任務成功 | `步數=3, 成功=3, 拒絕=0, 略過=1`，`最低能源=2` | 待填 |
+| `2 1` | 12／3／2 | 任務未完成 | `步數=2, 成功=2, 拒絕=0, 略過=0`，`最低能源=12` | 待填 |
 
-E／S／A = energy／samples／actionCount。`3 9 0` 另外貼上完整輸出（含回放）；回放與 `counts` 應與第四週相同：
+E／S／A = energy／samples／actionCount。`3 9 0` 另外貼上完整輸出（含回放）；下方以繁體中文顯示回放，指令次數延續第四週同一路線的結果：
 
 ```text
-=== replay ===
-step 1: command=3, result=ALREADY_FULL, energy=20
-step 2: command=9, result=UNKNOWN_COMMAND, energy=20
-step 3: command=0, result=RETURN, energy=20
-counts[0..3]=[1, 0, 0, 1]
+=== 任務回放 ===
+步驟 1: 指令=3, 結果=能源已滿, 能源=20
+步驟 2: 指令=9, 結果=無效指令, 能源=20
+步驟 3: 指令=0, 結果=返回, 能源=20
+指令次數[0..3]=[1, 0, 0, 1]
 ```
 
 D4-1. 第四週新增一步要寫三行 `add`，本週只要一行。除了少打字，還避免了什麼錯誤？待填
@@ -251,7 +251,7 @@ public class SampleBay {
 
 ### E3. AI 除錯三選一（7 分鐘＋課後）
 
-**先 commit 你完成的程式**，再把 `src` 複製到 `115_1_Java` repo **以外**的資料夾（例如桌面的 `w05-ai-test`），在副本重現錯誤；副本不要 commit。以下三種**模擬 AI 修改**都讓預設腳本的最後一行維持 `6／5／3 SUCCESS`：
+**先 commit 你完成的程式**，再把 `src` 複製到 `115_1_Java` repo **以外**的資料夾（例如桌面的 `w05-ai-test`），在副本重現錯誤；副本不要 commit。以下三種**模擬 AI 修改**都讓預設腳本的最後一行維持 `6／5／3 任務成功`：
 
 1. AI 說「直接存探測車比較省事，之後要什麼都能查」，把 `MissionStep` 改成保存 `Rover`：
 
@@ -276,7 +276,7 @@ public class SampleBay {
    public String charge() {
        energy = Math.min(energy + 5, CAPACITY);
        actionCount++;
-       return "OK";
+       return "成功";
    }
    ```
 
@@ -305,8 +305,8 @@ public class SampleBay {
 |---|---|---|---|
 | 反例：AI 版 | 待填 | 待填 | 待填 |
 | 反例：最小修正後 | 同上 | 待填 | 待填 |
-| 修正後一般成功 | `MissionLog 2 2 2 2 2` | 10／5／5 SUCCESS，回放能源 18、16、14、12、10 | 待填 |
-| 修正後拒絕／返回 | `MissionLog 3 9 0` | 20／0／0 RETURNED，`ok=0, rejected=2` | 待填 |
+| 修正後一般成功 | `MissionLog 2 2 2 2 2` | 10／5／5 任務成功，回放能源 18、16、14、12、10 | 待填 |
+| 修正後拒絕／返回 | `MissionLog 3 9 0` | 20／0／0 已返回，`成功=0, 拒絕=2` | 待填 |
 
 最小修正是什麼？採納或拒絕這個 AI 建議？理由：待填
 

@@ -26,7 +26,7 @@ def compile_to(files, out):
 
 
 def java(out, name):
-    return run(["java", "-cp", out, name])
+    return run(["java", "-Dstdout.encoding=UTF-8", "-cp", out, name])
 
 
 def static_checks():
@@ -75,12 +75,12 @@ def main():
         for group in ["examples", "starter", "teacher"]:
             compile_to(sorted((BASE / group).glob("*.java")), work / group)
             print("PASS compile", group)
-        example_expected = ("Member constructor: Amy\nMember constructor: Bob\nVipMember constructor: Bob\n"
-                            "Amy points=12\nBob points=28\nBob bonus=1\n")
+        example_expected = ("Member 建構子: Amy\nMember 建構子: Bob\nVipMember 建構子: Bob\n"
+                            "Amy 的點數=12\nBob 的點數=28\nBob 的獎勵次數=1\n")
         assert java(work / "examples", "MemberDemo") == example_expected
         print("PASS MemberDemo full output")
-        for name, expected in [("MissionLogCheck", "15/15 passed"), ("MissionStateCheck", "16/16 passed"),
-                               ("InheritanceCheck", "inheritance checks passed")]:
+        for name, expected in [("MissionLogCheck", "15/15 項通過"), ("MissionStateCheck", "16/16 項通過"),
+                               ("InheritanceCheck", "項繼承檢查通過")]:
             output = java(work / "teacher", name)
             assert expected in output, output
             print(output.strip())
@@ -88,31 +88,31 @@ def main():
         compile_to(supplied, work / "student")
         assert java(work / "student", "MemberDemo") == example_expected
         assert java(work / "student", "MissionLog") == java(work / "teacher", "MissionLog")
-        assert "DIFF" in java(work / "student", "HeavyRoverTry")
+        assert "不符" in java(work / "student", "HeavyRoverTry")
         print("PASS initial nine-file src, old behavior and unfinished drill")
         complete = [p for p in supplied if p.name not in {"Rover.java", "HeavyRover.java"}]
         complete += [BASE / "teacher/Rover.java", BASE / "teacher/HeavyRover.java"]
         compile_to(complete, work / "complete")
         output = java(work / "complete", "HeavyRoverTry")
-        assert output.count(") OK") == 15 and "DIFF" not in output, output
+        assert output.count("） 相符") == 15 and "不符" not in output, output
         print("PASS completed student setup, fifteen drill checks")
         compile_to([BASE / "teacher/Rover.java", *sorted((BASE / "teacher/transfer").glob("*.java"))], work / "transfer")
-        cargo_expected = "OK/2\nREJECTED/2\nOK/3\nREJECTED/3\n20/0/0\nSTOPPED/0\nSTOPPED/0\n"
+        cargo_expected = "成功/2\n已拒絕/2\n成功/3\n已拒絕/3\n20/0/0\n任務已停止/0\n任務已停止/0\n"
         assert java(work / "transfer", "CargoRoverTry") == cargo_expected
         # 加上預先決定的負數與超量邊界，不只重跑參考入口。
         probe = work / "CargoProbe.java"
-        probe.write_text('public class CargoProbe { public static void main(String[] a) { CargoRover c = new CargoRover(20, 0); if (!"REJECTED".equals(c.load(-1)) || c.getCargo() != 0 || !"REJECTED".equals(c.load(4)) || c.getCargo() != 0 || !"OK".equals(c.load(3)) || c.getCargo() != 3 || !"REJECTED".equals(c.load(1)) || c.getCargo() != 3) { throw new AssertionError("cargo boundary"); } } }', encoding="utf-8")
+        probe.write_text('public class CargoProbe { public static void main(String[] a) { CargoRover c = new CargoRover(20, 0); if (!"已拒絕".equals(c.load(-1)) || c.getCargo() != 0 || !"已拒絕".equals(c.load(4)) || c.getCargo() != 0 || !"成功".equals(c.load(3)) || c.getCargo() != 3 || !"已拒絕".equals(c.load(1)) || c.getCargo() != 3) { throw new AssertionError("cargo boundary"); } } }', encoding="utf-8")
         compile_to([BASE / "teacher/Rover.java", BASE / "teacher/transfer/CargoRover.java", probe], work / "cargo-probe")
         java(work / "cargo-probe", "CargoProbe")
         print("PASS Cargo transfer full output and independent boundary probe")
         # 讓AI錯誤版與正式版在不同輸出位置。
         compile_to([BASE / "teacher/Rover.java", BASE / "ai/HeavyRover.java", BASE / "starter/HeavyRoverTry.java"], work / "ai")
         wrong = java(work / "ai", "HeavyRoverTry")
-        assert "after drill: 20/0/0/1" in wrong and "DIFF" in wrong
-        assert "zero cannot charge: OK" in wrong
-        print("PASS AI counterexample reproduced; DIFF lines:")
-        print("\n".join(line for line in wrong.splitlines() if line.endswith("DIFF")))
-        assert "DIFF" not in java(work / "complete", "HeavyRoverTry")
+        assert "鑽探後: 20/0/0/1" in wrong and "不符" in wrong
+        assert "能源耗盡後無法充電: 成功" in wrong
+        print("PASS AI counterexample reproduced; 不符 lines:")
+        print("\n".join(line for line in wrong.splitlines() if line.endswith("不符")))
+        assert "不符" not in java(work / "complete", "HeavyRoverTry")
         print("PASS restored correct implementation")
         # 隔離實驗：建構與private錯誤，從完整範例每次只改一處。
         for label, old, new, diagnostic in [
@@ -133,10 +133,10 @@ def main():
         p = protected_sources / "MemberDemo.java"
         p.write_text(p.read_text(encoding="utf-8").replace("amy.buy(120);", "bob.addPoints(5);\n        amy.buy(120);"), encoding="utf-8")
         compile_to(sorted(protected_sources.glob("*.java")), work / "protected-out")
-        assert "Bob points=33" in java(work / "protected-out", "MemberDemo")
+        assert "Bob 的點數=33" in java(work / "protected-out", "MemberDemo")
         print("PASS same-package protected access")
         mutations = [
-            ("HeavyRover.java", 'if (isStopped()) { return "STOPPED"; }', "// missing stop"),
+            ("HeavyRover.java", 'if (isStopped()) { return "任務已停止"; }', "// missing stop"),
             ("HeavyRover.java", "        countAction();", "        // missing action count"),
             ("HeavyRover.java", "private int drillCount;", "private int drillCount;\n    private int energy;"),
             ("Rover.java", "protected boolean spendEnergy", "public boolean spendEnergy"),
@@ -150,7 +150,7 @@ def main():
             assert old in text
             p.write_text(text.replace(old, new), encoding="utf-8")
             compile_to(sorted(sources.glob("*.java")), work / f"mutant-out-{i}")
-            run(["java", "-cp", work / f"mutant-out-{i}", "InheritanceCheck"], success=False)
+            run(["java", "-Dstdout.encoding=UTF-8", "-cp", work / f"mutant-out-{i}", "InheritanceCheck"], success=False)
         print("PASS five detected behavior/design mutations")
     static_checks()
     print("ALL CHECKS PASSED")

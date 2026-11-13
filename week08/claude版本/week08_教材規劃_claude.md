@@ -63,7 +63,7 @@
 ```text
 Rover
   # exploreYield() : int        回傳 2；explore() 改成 addSamples(exploreYield())
-  + toString() : String         "energy=E, samples=S, actions=A"
+  + toString() : String         "能源=E, 樣本數=S, actions=A"
 
 HeavyRover extends Rover
   # exploreYield() : int        @Override，回傳 3
@@ -84,12 +84,12 @@ HeavyRover extends Rover
 
 | 起始 | 腳本 | 結果 | 最後狀態（`toString`） |
 |---|---|---|---|
-| `Rover(20, 0)` | `1 1 1 0` | `SUCCESS`，3 步 | `energy=2, samples=6, actions=3` |
-| `HeavyRover(20, 0)` | `1 1 1 0` | `SUCCESS`，2 步 | `HEAVY energy=8, samples=6, actions=2, drills=0` |
-| `HeavyRover(6, 4)` | `1` | `SUCCESS`，1 步（同時耗盡，成功優先） | `HEAVY energy=0, samples=7, actions=1, drills=0` |
-| `HeavyRover(5, 4)` | `1 0` | `RETURNED`，2 步（能源不足被拒） | `HEAVY energy=5, samples=4, actions=0, drills=0` |
-| `HeavyRover(20, 5)` | `1` | `SUCCESS`，0 步（一開始就已停止） | `HEAVY energy=20, samples=5, actions=0, drills=0` |
-| `HeavyRover(20, 0)` | `3 2 1 1` | `SUCCESS`，4 步（充電 `ALREADY_FULL` 被拒） | `HEAVY energy=6, samples=7, actions=3, drills=0` |
+| `Rover(20, 0)` | `1 1 1 0` | `任務成功`，3 步 | `能源=2, 樣本數=6, actions=3` |
+| `HeavyRover(20, 0)` | `1 1 1 0` | `任務成功`，2 步 | `HEAVY 能源=8, 樣本數=6, actions=2, drills=0` |
+| `HeavyRover(6, 4)` | `1` | `任務成功`，1 步（同時耗盡，成功優先） | `HEAVY 能源=0, 樣本數=7, actions=1, drills=0` |
+| `HeavyRover(5, 4)` | `1 0` | `已返回`，2 步（能源不足被拒） | `HEAVY 能源=5, 樣本數=4, actions=0, drills=0` |
+| `HeavyRover(20, 5)` | `1` | `任務成功`，0 步（一開始就已停止） | `HEAVY 能源=20, 樣本數=5, actions=0, drills=0` |
+| `HeavyRover(20, 0)` | `3 2 1 1` | `任務成功`，4 步（充電 `能源已滿` 被拒） | `HEAVY 能源=6, 樣本數=7, actions=3, drills=0` |
 
 另確認：`Rover x = new HeavyRover(20, 0); x.drill();` 編譯錯誤 `cannot find symbol`——這是「能呼叫什麼看變數型態」的現場證據。正式製作時要在乾淨目錄重新驗證，並與第 7 週 `MissionLog` 逐字比對（`Rover` 的輸出不得改變）。
 
@@ -102,7 +102,7 @@ HeavyRover extends Rover
 | 方法名拼錯成 `exploreYeild` 且沒加 `@Override` | **能編譯**，`HeavyRover(20,0)` 跑 `1 1 1 0` 仍要 3 步、每次得 2 份 | 覆寫簽章是否真的對上？有沒有 `@Override`？ |
 | 同上但有加 `@Override` | `method does not override or implement a method from a supertype` | （對照組：示範 `@Override` 的價值） |
 | 覆寫改成 `private` | `attempting to assign weaker access privileges; was protected` | 覆寫不能縮小存取範圍 |
-| 覆寫 `execute`，自己重寫指令 1（`spendEnergy(6)`、`addSamples(3)`、`countAction()`），其他 `super.execute(command)` | **能編譯**；`HeavyRover(20,5)` 已成功仍可探索，回傳 `OK`，樣本變 8——繞過了父類別的停止檢查 | 是否在子類別重複父類別規則？覆寫後父類別的保護還在嗎？ |
+| 覆寫 `execute`，自己重寫指令 1（`spendEnergy(6)`、`addSamples(3)`、`countAction()`），其他 `super.execute(command)` | **能編譯**；`HeavyRover(20,5)` 已成功仍可探索，回傳 `成功`，樣本變 8——繞過了父類別的停止檢查 | 是否在子類別重複父類別規則？覆寫後父類別的保護還在嗎？ |
 
 正式的模擬 AI 檔建議只放 2–3 個缺陷（例如「拼錯＋無 `@Override`」與「覆寫 `execute` 重複規則、漏停止檢查」），另外一個做成講義中的小實驗，避免學生在一個檔案裡找太多錯而變成挑錯遊戲。
 
@@ -121,7 +121,7 @@ HeavyRover extends Rover
 
 ### 4.4 輔助短篇：飲料店會員（沿用第 7 週範例）
 
-第 7 週的 `Member` 已有 `describe()`，`VipMember` 直接繼承。本週 `VipMember` 以 `@Override` 改寫成 `super.describe() + " bonus=" + bonusCount`。這回收第 7 週 A3 留下的「`bob.describe()` 沒有 VIP 資料」與 B5 的 `Member@雜湊碼`。範例要讓學生先預測，再加 `toString` 看 `println(bob)` 變化。範例只新增「覆寫」這一項負擔，不新增業務規則。
+第 7 週的 `Member` 已有 `describe()`，`VipMember` 直接繼承。本週 `VipMember` 以 `@Override` 改寫成 `super.describe() + " 獎勵次數=" + bonusCount`。這回收第 7 週 A3 留下的「`bob.describe()` 沒有 VIP 資料」與 B5 的 `Member@雜湊碼`。範例要讓學生先預測，再加 `toString` 看 `println(bob)` 變化。範例只新增「覆寫」這一項負擔，不新增業務規則。
 
 ### 4.5 作業短篇：社團器材（沿用第 7 週作業）
 
@@ -176,7 +176,7 @@ HeavyRover extends Rover
 | `week08_交接_claude.md` | 給第 9 週的能力與資料契約 |
 | `week08_驗證紀錄_claude.md` | 實測結果與未驗證項目 |
 | `code/examples/` | `Member`（沿用，加 `toString`）、`VipMember`（覆寫 `describe`、`toString`）、`OverrideDemo` |
-| `code/starter/` | `Rover`（TODO 1–2）、`HeavyRover`（TODO 1–2 的子類別部分）、沿用的 `Mission`／`MissionStep`／`MissionLog`、`MissionCompare`、`HeavyRoverTry`；可編譯、安全結束，佔位結果以 `DIFF` 標出 |
+| `code/starter/` | `Rover`（TODO 1–2）、`HeavyRover`（TODO 1–2 的子類別部分）、沿用的 `Mission`／`MissionStep`／`MissionLog`、`MissionCompare`、`HeavyRoverTry`；可編譯、安全結束，佔位結果以 `不符` 標出 |
 | `code/starter/club/` | `Equipment`（加預設 `checklist`）、`ShelfTry` |
 | `code/ai/` | 模擬 AI 的 `HeavyRover`（刻意含錯，不是參考答案） |
 | `code/teacher/`、`code/teacher/club/` | 完整解答與檢查程式（延續 `HeavyRoverCheck`、`ShelfCheck` 的寫法） |

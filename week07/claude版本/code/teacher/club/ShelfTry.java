@@ -8,21 +8,21 @@ public class ShelfTry {
         Camera cam = new Camera("CAM-01", "Sony A7", 2);
         check("cam.getLabel()", cam.getLabel(), "CAM-01 Sony A7");   // 繼承來的方法
         check("cam.getId()", cam.getId(), "CAM-01");
-        check("cam.checklist()", cam.checklist(), "CAM-01 Sony A7 | cards=2");
+        check("cam.checklist()", cam.checklist(), "CAM-01 Sony A7 | 記憶卡數=2");
 
         Camera odd = new Camera("CAM-02", "Canon R50", -1);
         check("odd.getMemoryCards()", "" + odd.getMemoryCards(), "0");
-        check("odd.checklist()", odd.checklist(), "CAM-02 Canon R50 | cards=0");
+        check("odd.checklist()", odd.checklist(), "CAM-02 Canon R50 | 記憶卡數=0");
 
         Projector big = new Projector("PRJ-01", "Epson X49", true);
-        check("big.checklist()", big.checklist(), "PRJ-01 Epson X49 | screen=yes");
+        check("big.checklist()", big.checklist(), "PRJ-01 Epson X49 | 需要布幕=是");
         Projector mini = new Projector("PRJ-02", "Mini Beam", false);
         check("mini.needsScreen()", "" + mini.needsScreen(), "false");
-        check("mini.checklist()", mini.checklist(), "PRJ-02 Mini Beam | screen=no");
+        check("mini.checklist()", mini.checklist(), "PRJ-02 Mini Beam | 需要布幕=否");
     }
 
     static void check(String label, String actual, String expected) {
-        String mark = actual.equals(expected) ? "OK" : "DIFF";
-        System.out.println(label + " -> " + actual + "  (expect " + expected + ") " + mark);
+        String mark = actual.equals(expected) ? "相符" : "不符";
+        System.out.println(label + " -> " + actual + "  （預期 " + expected + "） " + mark);
     }
 }

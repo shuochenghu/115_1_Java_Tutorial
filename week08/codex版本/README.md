@@ -67,7 +67,7 @@ java -cp out HeavyRoverTry
 java -cp out CompareMissions
 ```
 
-起始碼能編譯，MissionLog仍正確；HeavyRoverTry有兩行DIFF，CompareMissions印NOT_READY。這些是未完成標示。三組TODO完成後，HeavyRoverTry十五行全OK，CompareMissions兩段完整報表符合教師筆記D5。
+起始碼能編譯，MissionLog仍正確；HeavyRoverTry有兩行不符，CompareMissions印尚未完成。這些是未完成標示。三組TODO完成後，HeavyRoverTry十五行都顯示「相符」，CompareMissions兩段完整報表符合教師筆記D5。
 
 ## 精確契約與版本變動
 

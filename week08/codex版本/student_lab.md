@@ -75,13 +75,13 @@ D1-1. 為何不能只在HeavyRover新增同名private explore，就宣稱已改�
 
 開src/Rover.java。protected int exploreYield()回2已提供。自行修改private explore中的樣本增加來源；扣能源、拒絕、行動計次與回傳值保留。不可改成從main直接加樣本。
 
-檢查點：重編譯、執行MissionLog，預設{1,1,2}仍為6/5/3、SUCCESS。執行HeavyRoverTry仍有兩行DIFF是合理的，因為TODO 2尚未完成。記實際：待填。
+檢查點：重編譯、執行MissionLog，預設{1,1,2}仍為6/5/3、任務成功。執行HeavyRoverTry仍有兩行不符是合理的，因為TODO 2尚未完成。記實際：待填。
 
 ### D3 TODO 2：獨立完成HeavyRover覆寫（9分鐘）
 
 自行寫出方法宣告與@Override，名稱、參數與回傳型態對照父類別，保留protected，固定回3。不能增加欄位、扣能源或多加一次行動；不改private explore、execute及drill。
 
-完成後執行HeavyRoverTry，貼十五行完整輸出，應全OK。若失敗，先找哪個狀態不同，再看程式：待填。
+完成後執行HeavyRoverTry，貼十五行完整輸出，應全成功。若失敗，先找哪個狀態不同，再看程式：待填。
 
 追蹤新HeavyRover(20,0)連續drill、execute(1)、drill：
 
@@ -97,13 +97,13 @@ D1-1. 為何不能只在HeavyRover新增同名private explore，就宣稱已改�
 
 1. 兩個參考都宣告為Rover，分別指向new Rover(20,0)與new HeavyRover(20,0)。
 2. 每台車各交給一個新Mission，分別run同一份script一次。
-3. 各呼叫show，標籤用normal與heavy，傳入相應車、任務及script.length。
+3. 各呼叫show，標籤用「一般探測車」與「重型探測車」，傳入相應車、任務及script.length。
 
 不加入if車種判斷，不改Mission，不把同一台車交給兩個任務。先預測兩段結果再執行：待填。
 
 ### D5 比較與本人反例（15分鐘）
 
-貼CompareMissions兩段完整輸出，解釋兩個差異：為何heavy少一筆掃描、為何最低能源與battery不同？待填。
+貼CompareMissions兩段完整輸出，解釋兩個差異：為何重型探測車少一筆掃描、為何最低能源與battery不同？待填。
 
 另在experiments建立自訂測試入口，沿用完成的Rover、HeavyRover、Mission、MissionStep；每次新車、新任務。先預測再實測，記回傳或outcome及全部三個狀態，不必重寫報表。
 
@@ -113,7 +113,7 @@ D1-1. 為何不能只在HeavyRover新增同名private explore，就宣稱已改�
 | 5格、0份，腳本{1} | 待填 | 待填 |
 | 自己設計一個可抓錯的案例 | 待填 | 待填 |
 
-自己案例要寫「能抓到何種錯誤」，例如覆寫多計次、停止後仍讀指令或產量方法從未被呼叫；不能只有換數字與貼OK。
+自己案例要寫「能抓到何種錯誤」，例如覆寫多計次、停止後仍讀指令或產量方法從未被呼叫；不能只有換數字與貼成功。
 
 ## E｜AI Code Review（25分鐘）
 
@@ -123,11 +123,11 @@ D1-1. 為何不能只在HeavyRover新增同名private explore，就宣稱已改�
 
 E1（5分）. 不跑程式，先預測能否編譯及鑽探後探索的samples。用commit保存本人D段完成碼及預測：待填。
 
-E2（6分）. 保存[AI]原文後執行，貼兩行DIFF及其上下文。它能編譯是否已滿足需求？請指出execute實際走哪個private explore、又呼叫哪個產量方法：待填。
+E2（6分）. 保存[AI]原文後執行，貼兩行不符及其上下文。它能編譯是否已滿足需求？請指出execute實際走哪個private explore、又呼叫哪個產量方法：待填。
 
 E3（4分）. 在ai-check副本的private explore前加@Override，只編譯，記診斷，然後還原。再檢查「把父類別產量方法改static」是否符合本週實例覆寫的設計，文字判讀即可：待填。
 
-E4（7分）. 移除無效的子類別private explore，改在正確產量方法覆寫；不用重寫execute、不改父類別private狀態或drill。重編譯，用相同入口重測十五行全OK，記最小修改並以[fix] commit保存：待填。
+E4（7分）. 移除無效的子類別private explore，改在正確產量方法覆寫；不用重寫execute、不改父類別private狀態或drill。重編譯，用相同入口重測十五行都顯示「相符」，記最小修改並以[fix] commit保存：待填。
 
 E5（3分）. 用三至五句補強Prompt，包含可覆寫方法的精確宣告、禁止改狀態與預期案例。AI_USAGE記教師模擬來源，若另用真實AI再分開揭露：待填。
 

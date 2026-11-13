@@ -141,7 +141,7 @@ MissionStep已把一步資料放在一起，但其他任務責任仍集中。
 | energy、samples、actionCount區域變數 | Rover欄位 |
 | switch裡的探索、掃描、充電 | Rover.execute與私有行動方法 |
 | 腳本迴圈、history、返回控制 | Mission.run與欄位 |
-| 終態、指令統計、OK／拒絕、最低值 | Mission查詢方法 |
+| 終態、指令統計、成功／拒絕、最低值 | Mission查詢方法 |
 | 回放與摘要文字 | 仍由MissionLog輸出 |
 
 **行動規則與對外輸出保持，改變的是責任所在位置。**

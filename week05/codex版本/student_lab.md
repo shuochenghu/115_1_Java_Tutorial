@@ -65,7 +65,7 @@ private 限制其他類別直接存取。已有有參數建構子時，編譯器
 
 explore 在能源不足時回傳 false 並保留原值；charge 以方法集中封頂規則。若開放任意 `setEnergy(999)`，誰需要負責檢查？待填。為何歷史 StepCard 不需要 setter，但目前電池仍可透過方法改變？待填。
 
-private 只控制存取，數值範圍要由契約與程式維護。電池物件只管能源，沒有任務是否結束的資訊；BatteryDemo 中可對 0 能源電池呼叫 charge，但主任務 energy=0 已停止，不能再讀充電指令。
+private 只控制存取，數值範圍要由契約與程式維護。電池物件只管能源，沒有任務是否結束的資訊；BatteryDemo 中可對 0 能源電池呼叫 charge，但主任務 能源=0 已停止，不能再讀充電指令。
 
 ### C1 C# 的存取習慣，哪些能直接沿用？
 
@@ -127,28 +127,28 @@ ArrayList 保存的是物件的參考值；如果兩次 add 同一個可變物�
 
 - TODO 1：建構子保存 command、energy、result，以 this 區分同名欄位。三欄均為 private 實例欄位，不加 static。
 - TODO 2：getter 回傳自己的欄位。getter 不修改狀態、不印出文字。
-- TODO 3：isSuccessful 只在 result 內容為 OK 時回傳 true。沿用第二週 equals，不依賴字串常值池。
+- TODO 3：isSuccessful 只在 result 內容為 成功 時回傳 true。沿用第二週 equals，不依賴字串常值池。
 
 在自己的 MissionLog.main 最前暫加以下檢查；在兩個物件都建立後才讀 first，以免漏掉共享欄位問題。記錄後移除，恢復原 main。
 
 ```java
-MissionStep first = new MissionStep(1, 14, new String("OK"));
-MissionStep second = new MissionStep(2, 12, "NOT_ENOUGH_ENERGY");
+MissionStep first = new MissionStep(1, 14, new String("成功"));
+MissionStep second = new MissionStep(2, 12, "能源不足");
 System.out.println(first.getCommand() + "/" + first.getEnergy()
         + "/" + first.getResult() + "/" + first.isSuccessful());
 System.out.println(second.getCommand() + "/" + second.getEnergy()
         + "/" + second.getResult() + "/" + second.isSuccessful());
 ```
 
-以上兩筆是獨立測試資料，不代表連續兩步任務的實際結果；用來檢查欄位獨立、getter與字串內容比較。new String("OK") 沿用第二週的反例手法，刻意使字串參考不同；只用於檢查內容比較。預測兩行：待填；本人實際：待貼。
+以上兩筆是獨立測試資料，不代表連續兩步任務的實際結果；用來檢查欄位獨立、getter與字串內容比較。new String("成功") 沿用第二週的反例手法，刻意使字串參考不同；只用於檢查內容比較。預測兩行：待填；本人實際：待貼。
 
 ### E2 TODO 4–6：每步一個物件
 
 - TODO 4：switch 完成後、每輪結束前，新增 `new MissionStep(command, energy, result)`；所有已讀指令都記，不只記成功。不要搬到 switch 前。
-- TODO 5：依 history 索引取得一筆物件，以 getter 印 `step 1: command=1, result=OK, energy=14`。先取得物件，再取欄位。
-- TODO 6：走訪 history，以 isSuccessful 計 ok，以 getResult 內容為 RETURN 計 returned；後面的 rejected、ignored、空清單與最低值已提供。
+- TODO 5：依 history 索引取得一筆物件，以 getter 印 `步驟 1: 指令=1, 結果=成功, 能源=14`。先取得物件，再取欄位。
+- TODO 6：走訪 history，以 isSuccessful 計 ok，以 getResult 內容為 返回 計 returned；後面的 rejected、ignored、空清單與最低值已提供。
 
-清單宣告已提供。new建立一筆MissionStep，add保存其參考，get依索引取回同一物件；get本身不會建立新記錄。isSuccessful只表示當步result為OK，不表示任務已收集5份樣本。
+清單宣告已提供。new建立一筆MissionStep，add保存其參考，get依索引取回同一物件；get本身不會建立新記錄。isSuccessful只表示當步result為成功，不表示任務已收集5份樣本。
 
 每完成一組就編譯執行。為何 countCommands 現在要先取得 step.getCommand？待填。為何不能直接對 history 使用 Collections.min 取得能源最小值？待填，本週不用 Comparator 解決。
 
@@ -158,12 +158,12 @@ System.out.println(second.getCommand() + "/" + second.getEnergy()
 
 | script | 預期最終狀態／結果 | 預期 steps/ok/rejected/ignored | 本人實際與相符否 |
 |---|---|---|---|
-| {0} | 20/0/0 RETURNED | 1/0/0/0 | 待填 |
-| {1,1,2} | 6/5/3 SUCCESS | 3/3/0/0 | 待填 |
-| {2,2,2,2,2} | 10/5/5 SUCCESS | 5/5/0/0 | 待填 |
-| {3,9,0} | 20/0/0 RETURNED | 3/0/2/0 | 待填 |
-| {1,1,1,1} | 2/6/3 SUCCESS | 3/3/0/1 | 待填 |
-| {2,1} | 12/3/2 UNFINISHED | 2/2/0/0 | 待填 |
+| {0} | 20/0/0 已返回 | 1/0/0/0 | 待填 |
+| {1,1,2} | 6/5/3 任務成功 | 3/3/0/0 | 待填 |
+| {2,2,2,2,2} | 10/5/5 任務成功 | 5/5/0/0 | 待填 |
+| {3,9,0} | 20/0/0 已返回 | 3/0/2/0 | 待填 |
+| {1,1,1,1} | 2/6/3 任務成功 | 3/3/0/1 | 待填 |
+| {2,1} | 12/3/2 任務未完成 | 2/2/0/0 | 待填 |
 
 完整輸出（回放、counts、摘要、最低能源、終態、battery）：待貼。恢復 `{1,1,2}`。
 
@@ -222,7 +222,7 @@ public class SampleCase {
 先保存人工正確版，再把 src 複製到學期 repo 以外的練習目錄。錯誤只放副本，正式 src 最後保持正確。
 
 1. 「欄位加 static 可以讓所有地方方便讀取。」把副本 MissionStep 三欄改成 static，用 E1 在兩個物件都建立後讀取。
-2. 「固定代碼用 == 比較就好。」把副本 isSuccessful 改為 `return result == "OK";`，用 E1 的 new String("OK") 檢查。
+2. 「固定代碼用 == 比較就好。」把副本 isSuccessful 改為 `return result == "成功";`，用 E1 的 new String("成功") 檢查。
 3. 「把電池本身存進清單，之後讀能源就好。」在 SnapshotDemo 副本中，只將 main 的內容換成以下片段；保留原 import。先預測第一筆是不是仍保留探索後的能源，再編譯執行。
 
 ```java
@@ -234,7 +234,7 @@ battery.charge();
 history.add(battery);
 System.out.println(history.get(0).getEnergy() + "/"
         + history.get(1).getEnergy());
-System.out.println("same object=" + (history.get(0) == history.get(1)));
+System.out.println("同一個物件=" + (history.get(0) == history.get(1)));
 ```
 
 選項3只改「保存歷史的方式」，呼叫順序仍是探索再充電。以為有兩筆就有兩個獨立物件，會漏看什麼？待填。最小的概念修正是每步建立 StepCard，保存當時數值；實作時恢復原 SnapshotDemo，再比對第0筆與第1筆的能源。這個小反例不要求另寫 Rover 類別，也不更動主任務規則。

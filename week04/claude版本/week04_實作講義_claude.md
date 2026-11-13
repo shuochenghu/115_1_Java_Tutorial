@@ -23,7 +23,7 @@
    java -cp out MissionLog
    ```
 
-   起始碼能執行，最後一行應為 `final energy=6, samples=5, actionCount=3 -> SUCCESS`。
+   起始碼能執行，最後一行應為 `最終能源=6, 樣本數=5, 行動次數=3 -> 任務成功`。
 
 上週的問題：只看最後一行 `6／5／3`，能不能知道每一步是什麼？寫出至少兩種可能的指令順序：待填
 
@@ -103,7 +103,7 @@ D2. **先預測**再執行：
 | `Collections.frequency([14, 8, 20, 6], 8)` | 待填 | 待填 |
 | `Integer` 100 `==` 100 | 待填 | 待填 |
 | `Integer` 1000 `==` 1000 | 待填 | 待填 |
-| 從前往後刪除不是 OK 的元素 | 待填 | 待填 |
+| 從前往後刪除不是 成功 的元素 | 待填 | 待填 |
 
 D3. 用自己的話解釋「從前往後刪除」為什麼會漏掉一個：待填
 
@@ -123,7 +123,7 @@ D4. 完成對照表：
 資料放法：
 
 - `int[] state = {20, 0, 0}`：位置 `ENERGY=0`、`SAMPLES=1`、`ACTIONS=2`
-- 三條平行日誌：`commandLog`、`energyLog`（執行後的能源）、`resultLog`（`OK`、`NOT_ENOUGH_ENERGY`、`ALREADY_FULL`、`UNKNOWN_COMMAND`、`RETURN`）
+- 三條平行日誌：`commandLog`、`energyLog`（執行後的能源）、`resultLog`（`成功`、`能源不足`、`能源已滿`、`無效指令`、`返回`）
 - 腳本用完前任務若已結束（成功、耗盡、返回），剩下的指令不執行
 
 | TODO | 方法 | 支援程度 | 時間 |
@@ -142,11 +142,11 @@ D4. 完成對照表：
 
 | 參數 | 預期 E／S／A | 預期結果 | 預期摘要 | 實際 |
 |---|---|---|---|---|
-| （無） | 6／5／3 | SUCCESS | `steps=3, ok=3, rejected=0, ignored=0` | 待填 |
-| `2 2 2 2 2` | 10／5／5 | SUCCESS | `steps=5, ok=5, rejected=0, ignored=0` | 待填 |
-| `3 9 0` | 20／0／0 | RETURNED | `steps=3, ok=0, rejected=2, ignored=0` | 待填 |
-| `1 1 1 1` | 2／6／3 | SUCCESS | `steps=3, ok=3, rejected=0, ignored=1` | 待填 |
-| `2 1` | 12／3／2 | UNFINISHED | `steps=2, ok=2, rejected=0, ignored=0` | 待填 |
+| （無） | 6／5／3 | 任務成功 | `步數=3, 成功=3, 拒絕=0, 略過=0` | 待填 |
+| `2 2 2 2 2` | 10／5／5 | 任務成功 | `步數=5, 成功=5, 拒絕=0, 略過=0` | 待填 |
+| `3 9 0` | 20／0／0 | 已返回 | `步數=3, 成功=0, 拒絕=2, 略過=0` | 待填 |
+| `1 1 1 1` | 2／6／3 | 任務成功 | `步數=3, 成功=3, 拒絕=0, 略過=1` | 待填 |
+| `2 1` | 12／3／2 | 任務未完成 | `步數=2, 成功=2, 拒絕=0, 略過=0` | 待填 |
 
 `3 9 0` 的 `counts[0..3]` 應為 `[1, 0, 0, 1]`：指令 9 不計數，程式也不能當掉。
 
@@ -180,7 +180,7 @@ E3. `runMission` 修改了 `state`，`main` 為什麼看得到最終值？（連
 |---|---|---|---|
 | 統計指令 0–3 各用幾次 | `HashMap<Integer, Integer>` | 待填 | 待填 |
 | 記錄每一步歷程 | `int[] log = new int[100]` | 待填 | 待填 |
-| 記錄每一步歷程 | 一條 `ArrayList<String>`，每筆存 `"1,OK,14"` | 待填 | 待填 |
+| 記錄每一步歷程 | 一條 `ArrayList<String>`，每筆存 `"1,成功,14"` | 待填 | 待填 |
 
 若你用真實 AI 工具，請把實際 Prompt 與回覆摘要記在 `AI_USAGE.md`，不要拿本表冒充真實對話。
 
@@ -197,7 +197,7 @@ E3. `runMission` 修改了 `state`，`main` 為什麼看得到最終值？（連
            ArrayList<String> resultLog) {
        for (int i = 0; i < resultLog.size(); i++) {
            String r = resultLog.get(i);
-           if (!r.equals("OK") && !r.equals("RETURN")) {
+           if (!r.equals("成功") && !r.equals("返回")) {
                commandLog.remove(i);
                energyLog.remove(i);
                resultLog.remove(i);
@@ -212,8 +212,8 @@ E3. `runMission` 修改了 `state`，`main` 為什麼看得到最終值？（連
 |---|---|---|---|
 | 反例：修改前（AI 版） | 待填 | 待填 | 待填 |
 | 反例：最小修正後 | 同上 | 待填 | 待填 |
-| 修正後一般成功 | `2 2 2 2 2` | 10／5／5 SUCCESS | 待填 |
-| 修正後拒絕／返回 | `3 9 0` | 20／0／0 RETURNED，回放 3 步 | 待填 |
+| 修正後一般成功 | `2 2 2 2 2` | 10／5／5 任務成功 | 待填 |
+| 修正後拒絕／返回 | `3 9 0` | 20／0／0 已返回，回放 3 步 | 待填 |
 
 最小修正是什麼？採納或拒絕這個 AI 建議？理由：待填
 

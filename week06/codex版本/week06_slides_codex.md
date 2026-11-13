@@ -100,7 +100,7 @@ style: |
 
 填講義A；我們保留既有規則，改變內部責任。
 
-<!-- 教師提示：歷史快照；runMission區域變數；複製參考值；6/5/3 SUCCESS。這是診斷，不假定全班已熟練。 -->
+<!-- 教師提示：歷史快照；runMission區域變數；複製參考值；6/5/3 任務成功。這是診斷，不假定全班已熟練。 -->
 
 ---
 ## B｜一個類別的三格
@@ -247,7 +247,7 @@ System.out.println(rover.getEnergy());
 
 - energy、samples、actionCount變成**物件欄位**。
 - explore、scan、charge是private，外部經execute。
-- 成功／耗盡後execute回STOPPED，不改狀態。
+- 成功／耗盡後execute回任務已停止，不改狀態。
 
 先在VS Code跑 **Rover＋RoverDemo兩檔**。
 
@@ -258,9 +258,9 @@ System.out.println(rover.getEnergy());
 
 | 操作 | 預期輸出 |
 |---|---|
-| 20/0探索一次 | OK/14/2/1 |
-| 0/0直接充電 | STOPPED/0 |
-| 20/5直接探索 | STOPPED/20 |
+| 20/0探索一次 | 成功/14/2/1 |
+| 0/0直接充電 | 任務已停止/0 |
+| 20/5直接探索 | 任務已停止/20 |
 
 Rover保護自己的狀態；誰負責**停止讀腳本與記錄**？
 
@@ -308,7 +308,7 @@ Rover保護自己的狀態；誰負責**停止讀腳本與記錄**？
 | TODO | 方法 | 責任 |
 |---|---|---|
 | 1 帶做 | run | 停止檢查、執行、快照、返回 |
-| 2 模仿 | countOk | 走訪history計算OK |
+| 2 模仿 | countOk | 走訪history計算成功 |
 | 3 獨立 | lowestEnergy | 空清單-1；其他用迴圈找最低 |
 
 其他檔案與方法已提供；starter可編譯不代表已完成功能。
@@ -339,7 +339,7 @@ for (MissionStep step : history) {
 ```
 
 - 最低值：先判空，再取第一筆作初值。
-- 空清單方法回-1，**報表印N/A**。
+- 空清單方法回-1，**報表印無紀錄**。
 - getStep交出單筆；不提供內部可變history清單。
 
 若有getHistory，外部clear會破壞什麼？
@@ -351,8 +351,8 @@ for (MissionStep step : history) {
 
 | script | 最後狀態 | steps/ok/rejected/ignored |
 |---|---|---|
-| {1,1,2} | 6/5/3 SUCCESS | 3/3/0/0 |
-| {3,9,0} | 20/0/0 RETURNED | 3/0/2/0 |
+| {1,1,2} | 6/5/3 任務成功 | 3/3/0/0 |
+| {3,9,0} | 20/0/0 已返回 | 3/0/2/0 |
 
 比對完整輸出：回放、counts、摘要、最低值、終態與battery。
 
@@ -366,11 +366,11 @@ for (MissionStep step : history) {
 副本拿掉Mission.run的停止檢查，跑`{1,1,1,1}`：
 
 ```text
-step 4: command=1, result=STOPPED, energy=2
-steps=4, ok=3, rejected=1, ignored=0
+步驟 4: 指令=1, 結果=任務已停止, 能源=2
+步數=4, 成功=3, 拒絕=1, 略過=0
 ```
 
-最終仍SUCCESS，但日誌錯了。
+最終仍任務成功，但日誌錯了。
 
 Rover守**狀態**；Mission守**停止後不讀、不記**。
 

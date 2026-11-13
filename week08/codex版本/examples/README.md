@@ -19,12 +19,12 @@ java -cp out MemberDemo
 <summary>完成預測後展開</summary>
 
 ```text
-Member constructor: Amy
-Member constructor: Bob
-VipMember constructor: Bob
-Member Amy / points=12
-VIP Bob / points=28 / bonus=1
-VIP Bob / points=28 / bonus=1
+Member 建構子: Amy
+Member 建構子: Bob
+VipMember 建構子: Bob
+會員 Amy / 點數=12
+VIP 會員 Bob / 點數=28 / 獎勵次數=1
+VIP 會員 Bob / 點數=28 / 獎勵次數=1
 ```
 
 </details>

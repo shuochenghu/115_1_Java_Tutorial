@@ -25,11 +25,11 @@ public class MissionLog {
 
         printReplay(commandLog, energyLog, resultLog);
         int[] counts = countCommands(commandLog);
-        System.out.println("counts[0..3]=" + Arrays.toString(counts));
+        System.out.println("指令次數[0..3]=" + Arrays.toString(counts));
         printSummary(script, energyLog, resultLog);
         // runMission 改的是同一個陣列物件，所以 main 看得到最終狀態。
-        System.out.println("final energy=" + state[ENERGY] + ", samples=" + state[SAMPLES]
-                + ", actionCount=" + state[ACTIONS] + " -> " + outcome);
+        System.out.println("最終能源=" + state[ENERGY] + ", 樣本數=" + state[SAMPLES]
+                + ", 行動次數=" + state[ACTIONS] + " -> " + outcome);
     }
 
     // TODO 1：命令列參數都是字串，逐一轉成 int 存入新陣列。
@@ -53,13 +53,13 @@ public class MissionLog {
         }
         // 判斷順序與第三週相同：同時耗盡與達標時成功優先。
         if (state[SAMPLES] >= 5) {
-            return "SUCCESS";
+            return "任務成功";
         } else if (state[ENERGY] == 0) {
-            return "EXHAUSTED";
+            return "能源耗盡";
         } else if (!commandLog.isEmpty() && commandLog.get(commandLog.size() - 1) == 0) {
-            return "RETURNED";
+            return "已返回";
         } else {
-            return "UNFINISHED";
+            return "任務未完成";
         }
     }
 
@@ -68,42 +68,42 @@ public class MissionLog {
         switch (command) {
             case 1:
                 if (state[ENERGY] < 6) {
-                    return "NOT_ENOUGH_ENERGY";
+                    return "能源不足";
                 }
                 state[ENERGY] -= 6;
                 state[SAMPLES] += 2;
                 state[ACTIONS]++;
-                return "OK";
+                return "成功";
             case 2:
                 if (state[ENERGY] < 2) {
-                    return "NOT_ENOUGH_ENERGY";
+                    return "能源不足";
                 }
                 state[ENERGY] -= 2;
                 state[SAMPLES]++;
                 state[ACTIONS]++;
-                return "OK";
+                return "成功";
             case 3:
                 if (state[ENERGY] >= 20) {
-                    return "ALREADY_FULL";
+                    return "能源已滿";
                 }
                 state[ENERGY] += 5;
                 if (state[ENERGY] > 20) {
                     state[ENERGY] = 20;
                 }
                 state[ACTIONS]++;
-                return "OK";
+                return "成功";
             case 0:
-                return "RETURN";
+                return "返回";
             default:
-                return "UNKNOWN_COMMAND";
+                return "無效指令";
         }
     }
 
     // TODO 3：用同一個索引 i 讀三條日誌；size() 是最後索引 + 1。
     static void printReplay(ArrayList<Integer> commandLog, ArrayList<Integer> energyLog,
             ArrayList<String> resultLog) {
-        System.out.println("=== replay ===");
-        // 輸出格式：step 1: command=1, result=OK, energy=14
+        System.out.println("=== 任務回放 ===");
+        // 輸出格式：step 1: command=1, result=成功, energy=14
 
     }
 
@@ -116,11 +116,11 @@ public class MissionLog {
 
     // TODO 5：用 Collections 的現成方法整理摘要，不自己寫找最小值的迴圈。
     static void printSummary(int[] script, ArrayList<Integer> energyLog, ArrayList<String> resultLog) {
-        // 需要的值：steps（日誌筆數）、ok（結果為 "OK" 的筆數）、
-        // rejected（不是 OK 也不是 RETURN 的筆數）、ignored（腳本中沒被執行的指令數）、
+        // 需要的值：steps（日誌筆數）、ok（結果為 "成功" 的筆數）、
+        // rejected（不是 成功 也不是 返回 的筆數）、ignored（腳本中沒被執行的指令數）、
         // lowest energy（energyLog 的最小值，日誌為空時不印）。
         // 輸出格式：steps=3, ok=3, rejected=0, ignored=0
         //          lowest energy=6
-        System.out.println("TODO 5: summary");
+        System.out.println("待辦 5：印出摘要");
     }
 }

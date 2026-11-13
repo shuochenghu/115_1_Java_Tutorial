@@ -1,0 +1,64 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 第九週（codex teacher）：抽象 Rover ＋ 介面 SampleSource
+
+legend top right
+  <back:#DFF3E3>　新增　</back>  <back:#FFE8D6>　修改　</back>  <back:#F4F4F4>　與第八週相同　</back>
+endlegend
+
+interface SampleSource <<interface>> #DFF3E3 {
+  + getSamples() : int
+}
+abstract class Rover <<abstract>> #FFE8D6 {
+  - energy : int
+  - samples : int
+  - actionCount : int
+  + Rover(energy : int, samples : int)
+  + getSamples() : int  {@Override}
+  + execute(command : int) : String
+  # {abstract} exploreYield() : int
+  - explore() : String
+}
+class StandardRover #DFF3E3 {
+  + StandardRover(energy : int, samples : int)
+  # exploreYield() : int  {回 2}
+}
+class HeavyRover #F4F4F4 {
+  - drillCount : int
+  + drill() : String
+  # exploreYield() : int  {回 3}
+}
+class SampleTray #DFF3E3 {
+  - samples : int  {final}
+  + SampleTray(samples : int)
+  + getSamples() : int
+}
+class SampleReport #DFF3E3 {
+  + {static} print(label : String, source : SampleSource) : void
+}
+class Mission #F4F4F4 {
+  - rover : Rover
+  + run(script : int[]) : void
+}
+class "MissionLog / CompareMissions" as Entry #FFE8D6 {
+  new Rover(...) → new StandardRover(...)
+}
+
+SampleSource <|.. Rover
+SampleSource <|.. SampleTray
+Rover <|-- StandardRover
+Rover <|-- HeavyRover
+Mission --> "1" Rover : rover
+SampleReport ..> SampleSource : print 參數
+Entry ..> StandardRover : new
+@enduml

@@ -21,10 +21,10 @@
 - commandLog[i]、energyLog[i]、resultLog[i] 同屬第 i+1 步，三條長度相等。
 - energyLog 保存每一步結束後能源；不包含初始能源。
 - counts[k] 計「已讀指令 k」的筆數，包含被拒絕的合法指令與返回；無效指令不進 counts。
-- steps 是日誌筆數；ok 是 OK 筆數；rejected 是既非 OK 也非 RETURN 的筆數；ignored 是腳本長度減 steps。
-- 最低能源只統計 energyLog；空清單輸出 lowest energy=N/A。
+- steps 是日誌筆數；ok 是 成功 筆數；rejected 是既非 成功 也非 返回 的筆數；ignored 是腳本長度減 steps。
+- 最低能源只統計 energyLog；空清單輸出 最低能源=無紀錄。
 - 執行前及每輪檢查能源與樣本；初始已耗盡或已達標時日誌為空。
-- 結果判斷優先順序：SUCCESS、EXHAUSTED、RETURNED、UNFINISHED。腳本用完但未停止是 UNFINISHED，不自動當成返回。
+- 結果判斷優先順序：任務成功、能源耗盡、已返回、任務未完成。腳本用完但未停止是 任務未完成，不自動當成返回。
 
 ## 範圍與支援
 

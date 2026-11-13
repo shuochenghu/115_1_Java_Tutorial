@@ -87,10 +87,10 @@ C3. 在MemberDemo裡、兩次buy之前加`bob.addPoints(5);`，先預測能否�
 
 ```java
 private String explore() {
-    if (!spendEnergy(6)) { return "NOT_ENOUGH_ENERGY"; }
+    if (!spendEnergy(6)) { return "能源不足"; }
     addSamples(2);
     countAction();
-    return "OK";
+    return "成功";
 }
 ```
 
@@ -109,9 +109,9 @@ D3-1. 為何不能另外宣告energy、samples來解決private存取問題？待
 
 | 條件 | 回傳 | 狀態 |
 |---|---|---|
-| isStopped()為true | STOPPED | 全部不變 |
-| 未停止但能源不足8 | NOT_ENOUGH_ENERGY | 全部不變 |
-| 未停止且能源足夠 | OK | energy-8、samples+3、actionCount+1、drillCount+1 |
+| isStopped()為true | 任務已停止 | 全部不變 |
+| 未停止但能源不足8 | 能源不足 | 全部不變 |
+| 未停止且能源足夠 | 成功 | energy-8、samples+3、actionCount+1、drillCount+1 |
 
 使用提供的DRILL_COST、DRILL_YIELD。先檢查停止，再使用spendEnergy；只有成功才更新另外三項。drill是新增公開入口，不經過execute；不能以execute已有停止檢查為由省略。
 
@@ -123,7 +123,7 @@ D4-1. 全新20/0的HeavyRover依序執行，先追蹤再跑：
 | execute(1) | 待填 | 待填 | 待填 | 待填 | 待填 |
 | drill() | 待填 | 待填 | 待填 | 待填 | 待填 |
 
-D4-2. 自己選一個能抓到「只回OK卻沒更新」的案例，寫預期、實際與理由：待填。
+D4-2. 自己選一個能抓到「只回成功卻沒更新」的案例，寫預期、實際與理由：待填。
 
 ### D5 行為與圖的檢查（10分鐘）
 
@@ -139,11 +139,11 @@ D4-2. 自己選一個能抓到「只回OK卻沒更新」的案例，寫預期、
 
 E1（5分）. 看原文，先預測能否編譯，以及drill後getter會讀到什麼。先commit自己的D段完成碼與預測，再看實際結果：待填。
 
-E2（7分）. 在ai-check執行上述編譯命令及HeavyRoverTry，貼全部DIFF行。至少保留「after drill」「done drill」「zero cannot charge」的證據。實際和預測差在哪：待填。
+E2（7分）. 在ai-check執行上述編譯命令及HeavyRoverTry，貼全部不符行。至少保留「鑽探後」「任務完成後鑽探」「能源耗盡後無法充電」的證據。實際和預測差在哪：待填。
 
 E3（5分）. 畫一個HeavyRover物件：Rover宣告的energy／samples，與AI子類別另宣告的energy／samples各是多少？getEnergy讀哪一份？不要畫成兩台車：待填。
 
-E4（5分）. 用[AI] commit保留模擬原文，再刪掉重複欄位與設定、改用protected方法、補停止檢查與行動次數，重測十五行全部OK，另用[fix] commit保存。記最小修正及重測：待填。修正前後不能一起混編。
+E4（5分）. 用[AI] commit保留模擬原文，再刪掉重複欄位與設定、改用protected方法、補停止檢查與行動次數，重測十五行全部顯示「相符」，另用[fix] commit保存。記最小修正及重測：待填。修正前後不能一起混編。
 
 E5（3分）. 用三到五句補強Prompt：附上父類別公開／protected方法、狀態只有一份、拒絕不變、停止優先、不可覆寫與要求反例。填AI_USAGE；沒有使用真實AI就明寫來源為教師模擬：待填。
 

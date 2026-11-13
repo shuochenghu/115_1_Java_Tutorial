@@ -11,11 +11,11 @@
 - 版本只限week06/codex版本；原教材、前週及Claude版保留。
 - main固定int[] script，預設1/1/2；不讀命令列args。
 - 每次新建Rover與Mission，只run一次，script非null；初始energy 0..20、samples非負。run與查結果期間不由外部另外操作同一Rover。不承諾重複run、共享Rover或並行行為。
-- Rover保存energy、samples、actionCount，集中execute入口；成功／耗盡時回STOPPED，不改狀態；探索／掃描／充電private。指令0返回由Mission控制流程。
-- Mission保存rover、history、returned；只在未停止時讀下一筆，先execute再new MissionStep；每筆已讀指令都記，0記完再停。結果順序SUCCESS、EXHAUSTED、RETURNED、UNFINISHED。
+- Rover保存energy、samples、actionCount，集中execute入口；成功／耗盡時回任務已停止，不改狀態；探索／掃描／充電private。指令0返回由Mission控制流程。
+- Mission保存rover、history、returned；只在未停止時讀下一筆，先execute再new MissionStep；每筆已讀指令都記，0記完再停。結果順序任務成功、能源耗盡、已返回、任務未完成。
 - MissionStep檔案逐位元組沿用第五週教師版，建構順序command/energy/result，getter名稱getEnergy；無setter，非final欄位，不要求新增final。
-- counts計已讀0..3（含拒絕與0），無效整數不計；steps日誌數、ok成功行動數、rejected排除OK與RETURN、ignored腳本長度減steps。
-- lowestEnergy無紀錄回-1，報表印N/A；有紀錄只看行動後快照。battery格式仍保留。15項既有完整輸出期望逐位元組沿用第五週MissionLogCheck。
+- counts計已讀0..3（含拒絕與0），無效整數不計；steps日誌數、ok成功行動數、rejected排除成功與返回、ignored腳本長度減steps。
+- lowestEnergy無紀錄回-1，報表印無紀錄；有紀錄只看行動後快照。battery格式仍保留。15項既有完整輸出期望逐位元組沿用第五週MissionLogCheck。
 - getStep交出單筆對外只讀資料；不交出內部可變history；countCommands回新陣列。
 
 ## 類別圖契約

@@ -12,10 +12,10 @@ public class Projector extends Equipment {
     }
 
     public String checklist() {
-        String screen = "no";
+        String screen = "否";
         if (needsScreen) {
-            screen = "yes";
+            screen = "是";
         }
-        return getLabel() + " | screen=" + screen;
+        return getLabel() + " | 需要布幕=" + screen;
     }
 }

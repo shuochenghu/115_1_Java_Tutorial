@@ -51,7 +51,7 @@ public class Rover {
     // 外部唯一的行動入口。0 是返回，其他未定義代碼是無效指令，都不改變狀態。
     public String execute(int command) {
         if (isStopped()) {
-            return "STOPPED";
+            return "任務已停止";
         }
         switch (command) {
             case 1:
@@ -61,9 +61,9 @@ public class Rover {
             case 3:
                 return charge();
             case 0:
-                return "RETURN";
+                return "返回";
             default:
-                return "UNKNOWN_COMMAND";
+                return "無效指令";
         }
     }
 
@@ -75,34 +75,34 @@ public class Rover {
     // TODO 2：TODO 1 完成後，探索與掃描改用上面的方法，規則只寫在一個地方；結果必須與第六週相同。
     private String explore() {
         if (energy < 6) {
-            return "NOT_ENOUGH_ENERGY";
+            return "能源不足";
         }
         energy -= 6;
         samples += 2;
         actionCount++;
-        return "OK";
+        return "成功";
     }
 
     private String scan() {
         if (energy < 2) {
-            return "NOT_ENOUGH_ENERGY";
+            return "能源不足";
         }
         energy -= 2;
         samples++;
         actionCount++;
-        return "OK";
+        return "成功";
     }
 
     // 充電是增加能源，不屬於上面三個方法的工作，維持第六週的寫法。
     private String charge() {
         if (energy >= CAPACITY) {
-            return "ALREADY_FULL";
+            return "能源已滿";
         }
         energy += 5;
         if (energy > CAPACITY) {
             energy = CAPACITY;
         }
         actionCount++;
-        return "OK";
+        return "成功";
     }
 }

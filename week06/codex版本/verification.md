@@ -87,3 +87,10 @@
 - CLI：RelationDemo、SampleCaseDemo、RoverDemo、starter MissionLog（空日誌）、teacher MissionLog 預設路線輸出與投影片一致；MissionLogCheck 15/15、MissionStateCheck 16/16；FixedScriptMission `0 0 3 1`、`20 5 1`、`2 4 2`、`20 0`、`20 0 3 9 0` 與投影片表格一致。另在暫存副本重現兩個反例：刪除 Mission.run 停止檢查跑 `{1,1,1,1}` 得第4筆 STOPPED、steps=4／rejected=1／ignored=0；刪除 SampleCase 超量條件得 overflow=true／count=4、fill 5、unload 5。六路線其餘四條依 assignment 核對，本次未逐條重跑。
 - 投影片：Marp CLI（npx @marp-team/marp-cli@latest）以 `--html` 匯出 HTML；另以 `--allow-local-files --images png` 匯出44頁 PNG，用縮圖聯絡表逐頁巡視。修正第6、10、18、25頁下緣溢出，第13頁關係圖過小，第21頁 Rover 程式被自動縮小，第29頁六路線表右側截斷，修正後重看修改頁。第21、25頁程式為節錄，講者備註已說明。
 - 未驗證：無頭瀏覽器自動溢出量測、教室投影可讀性、學生試教。尚未提交。
+
+## 2026-11-11 繁體中文輸出驗證
+
+- OpenJDK 22，使用 javac -encoding UTF-8 -Xlint:all 分開編譯範例、學生起始碼及教師解答。以 UTF-8 擷取主控台輸出。
+- 執行該週 tools/verify.py，中文預期輸出、教師檢查與原有回歸案例通過。
+- 歷史驗證中的英文輸出反映當時的程式，現行預期輸出以本週講義和教師筆記為準。
+- Marp CLI 4.5.1 重新匯出 3 份 HTML（9/37/44 頁）。以無頭 Chromium 檢查程式碼區塊與表格的版面邊界，未偵測到溢出。

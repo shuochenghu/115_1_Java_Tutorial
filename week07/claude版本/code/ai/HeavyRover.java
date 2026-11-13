@@ -18,11 +18,11 @@ public class HeavyRover extends Rover {
 
     public String drill() {
         if (energy < 8) {
-            return "NOT_ENOUGH_ENERGY";
+            return "能源不足";
         }
         energy -= 8;
         samples += 3;
         drillCount++;
-        return "OK";
+        return "成功";
     }
 }

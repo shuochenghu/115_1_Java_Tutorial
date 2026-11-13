@@ -1,0 +1,46 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+skinparam packageBorderColor #8899AA
+hide circle
+hide empty members
+title 第 5 週：同一步的三個資料，裝進一個 MissionStep 物件
+
+class MissionLog #FFE8D6 {
+  + {static} main(args : String[]) : void
+  ~ {static} runMission(script, energy, samples) : void
+  ~ {static} countCommands(history) : int[]
+  ~ {static} printReplay(history) : void
+  ~ {static} printSummary(scriptLength, history) : void
+}
+class MissionStep #DFF3E3 {
+  - command : int
+  - energy : int
+  - result : String
+  + MissionStep(command, energy, result)
+  + getCommand() : int
+  + getEnergy() : int
+  + getResult() : String
+  + isSuccessful() : boolean
+}
+class FixedScriptMission #F4F4F4
+FixedScriptMission ..> MissionLog : 呼叫 runMission
+MissionLog ..> MissionStep : new MissionStep(...)\n讀 getter
+note left of MissionLog
+  energy、samples、actionCount
+  <b>仍是 runMission 的區域變數</b>
+  行動規則的 switch 也還在這裡
+  → 第 6 週要處理
+end note
+note right of MissionStep
+  建構子一次收齊三個值，
+  沒有 setter：已發生的紀錄不再修改
+end note
+@enduml

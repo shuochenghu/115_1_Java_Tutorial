@@ -15,13 +15,13 @@ Battery、Lamp、Charger、RelationDemo四檔合作。Battery只管理能源，�
 完整輸出：
 
 ```text
-A=true
-B=false
-C=true
-shared=2
-charge=true
-B again=true
-shared=1
+燈具 A=true
+燈具 B=false
+燈具 C=true
+共用電池能源=2
+充電=true
+燈具 B 再開啟=true
+共用電池能源=1
 ```
 
 A、B共用8格電池；A用6剩2，B被拒絕；C有獨立電池。充電後共享能源7，再用6剩1。多重性描述模型允許的數量，不是這次main恰好建立幾個物件。Battery建構energy 0..20，use正整數；不處理契約外值。
@@ -31,11 +31,11 @@ A、B共用8格電池；A用6剩2，B被拒絕；C有獨立電池。充電後共
 SampleCase沿用上週教師參考，不假設學生已實作。容量建構時修正到1..8；只接受正數且放得下的整批，拒絕不改狀態；unload回傳卸下份數並清空。完整輸出：
 
 ```text
-first=true, count=2
-overflow=false, count=2
-fill=true, count=3
-unload=3
-empty=0
+第一次=true, 存量=2
+超量存放=false, 存量=2
+剛好裝滿=true, 存量=3
+卸載=3
+空盒卸載=0
 ```
 
-E3只在副本暫改store，拿掉「超過剩餘空間」的判斷。錯誤輸出應變成overflow=true,count=4，之後fill至5、unload=5。恢復條件後重跑本範例及兩條主任務路線。這是教師自編模擬建議，不是真實AI回覆。
+E3只在副本暫改store，拿掉「超過剩餘空間」的判斷。錯誤輸出應變成超量存放=true,count=4，之後fill至5、卸載=5。恢復條件後重跑本範例及兩條主任務路線。這是教師自編模擬建議，不是真實AI回覆。

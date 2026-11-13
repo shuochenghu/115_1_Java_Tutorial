@@ -17,14 +17,14 @@ public class MissionStep {
 
     // TODO 4：模仿 getCommand，回傳對應的欄位。
     public String getResult() {
-        return "TODO";
+        return "待實作";
     }
 
     public int getEnergyAfter() {
         return -1;
     }
 
-    // TODO 7：不是 "OK"、也不是 "RETURN"，就是被拒絕或無效的一步，回傳 true。
+    // TODO 7：不是 "成功"、也不是 "返回"，就是被拒絕或無效的一步，回傳 true。
     // 提示：字串內容比較用 equals（第二週）。
     public boolean isRejected() {
         return false;
@@ -32,6 +32,6 @@ public class MissionStep {
 
     // 已提供：回放用的一行文字，格式與第四週相同。
     public String describe() {
-        return "command=" + command + ", result=" + result + ", energy=" + energyAfter;
+        return "指令=" + command + ", 結果=" + result + ", 能源=" + energyAfter;
     }
 }

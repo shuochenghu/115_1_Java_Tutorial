@@ -17,7 +17,7 @@
 
 | # | 來源 | 使用目的 | 主要 Prompt 摘要 | AI 回覆採納／未採納原因 | 人工驗證方式 | 最終修改內容 | 對應 commit |
 |---|---|---|---|---|---|---|---|
-| 範例 | 教師模擬回覆 | 講義 E 段：追蹤 AI 寫的 `HeavyRover` | （模擬回覆）「繼承 Rover 的 HeavyRover，多一個 drill」 | 未採納重新宣告的 `energy`、`samples`：`drill` 改的是子類別自己的那一份，`getEnergy()` 仍是 20；採納 `drillCount` 欄位與 `getDrillCount()` | 加上 `super` 後跑 `HeavyRoverTry`，`h: 20/0/0 drill=1` 為 DIFF；刪掉重複欄位後編譯器指出 `energy has private access` | 改用 `spendEnergy`、`addSamples`、`countAction`，補停止檢查；`HeavyRoverTry` 15 行全 OK | `[AI] 模擬回覆原文`、`[fix] 移除重複欄位並補停止檢查` |
+| 範例 | 教師模擬回覆 | 講義 E 段：追蹤 AI 寫的 `HeavyRover` | （模擬回覆）「繼承 Rover 的 HeavyRover，多一個 drill」 | 未採納重新宣告的 `energy`、`samples`：`drill` 改的是子類別自己的那一份，`getEnergy()` 仍是 20；採納 `drillCount` 欄位與 `getDrillCount()` | 加上 `super` 後跑 `HeavyRoverTry`，`h: 20/0/0 鑽探次數=1` 為 不符；刪掉重複欄位後編譯器指出 `energy has private access` | 改用 `spendEnergy`、`addSamples`、`countAction`，補停止檢查；`HeavyRoverTry` 15 行都顯示「相符」 | `[AI] 模擬回覆原文`、`[fix] 移除重複欄位並補停止檢查` |
 | 範例 | 真實 AI（示意，非真實紀錄） | 作業第 2 部分：問 `super` 的用途 | 貼上 `Equipment` 類別圖，問「為什麼 Camera 的建構子一定要呼叫 super(id, name)」 | 採納「Equipment 沒有無參數建構子，不寫就編譯錯誤」；未採納它建議「在 Equipment 加無參數建構子」，因為那樣器材可以沒有編號 | 把 `super(id, name)` 註解掉重新編譯，錯誤訊息與 AI 說的一致 | 不修改 `Equipment`；在 README 寫下理由 | `[manual] Camera 與 Projector` |
 | 1 | | | | | | | |
 | 2 | | | | | | | |

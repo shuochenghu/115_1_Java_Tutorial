@@ -116,7 +116,7 @@ HeavyRover     ？？？
 | 10–30 | A. extends | `InheritDemo` 預測表 |
 | 30–50 | B. 建構子、super、private 與 protected | 兩個錯誤訊息實驗 |
 | 50–60 | C. is-a 還是 has-a、繼承的類別圖 | 判斷表 |
-| 60–100 | D. 重型探測車 TODO 1–5 | `HeavyRoverTry` 全部 OK |
+| 60–100 | D. 重型探測車 TODO 1–5 | `HeavyRoverTry` 全部 顯示「相符」 |
 | 100–130 | E. AI 生成繼承程式碼閱讀與追蹤 | `ai-check/`、問題表 |
 | 130–135 | F. 課末檢核 | |
 | 135–150 | G. 保存、推送 | GitHub 紀錄 |
@@ -139,7 +139,7 @@ HeavyRover     ？？？
 ```powershell
 javac -encoding UTF-8 -d out src/*.java
 java -cp out MissionLog         # 與第 6 週相同
-java -cp out HeavyRoverTry      # 有好幾行 DIFF
+java -cp out HeavyRoverTry      # 有好幾行 不符
 ```
 
 **先不要**複製 `starter/club/`（作業）、`ai/`（E 段）、`teacher/`
@@ -243,13 +243,13 @@ public class VipMember extends Member {
 ## A1｜先預測，再執行
 
 ```java
-System.out.println("new VipMember:");
+System.out.println("建立 VipMember：");
 VipMember bob = new VipMember("V001", "Bob");
-System.out.println("amy buy 120 -> +" + amy.buy(120));
-System.out.println("bob buy 85 -> +" + bob.buy(85));
-System.out.println("bob bonus -> " + bob.claimBonus());
+System.out.println("Amy 消費 120，增加點數：" + amy.buy(120));
+System.out.println("Bob 消費 85，增加點數：" + bob.buy(85));
+System.out.println("Bob 領取獎勵：" + bob.claimBonus());
 System.out.println(bob.describe());
-System.out.println("parent of Member: " + amy.getClass().getSuperclass().getName());
+System.out.println("Member 的父類別：" + amy.getClass().getSuperclass().getName());
 ```
 
 - `new VipMember` 之後印出幾行？哪一行先？
@@ -297,9 +297,9 @@ Deitel 9.3–9.6
 ## B1｜誰的建構子先執行？
 
 ```text
-new VipMember:
-  [Member constructor] V001
-  [VipMember constructor] V001
+建立 VipMember：
+  [Member 建構子] V001
+  [VipMember 建構子] V001
 ```
 
 - 子類別物件裡**有一份父類別的部分**，要先建好
@@ -483,7 +483,7 @@ TODO 1–5
 
 IntelliJ：開啟 `java-07`，對 `HeavyRover` 按 **Ctrl＋H** 看繼承階層
 
-動手前：`java -cp out HeavyRoverTry` 有幾行 `DIFF`？
+動手前：`java -cp out HeavyRoverTry` 有幾行 `不符`？
 
 ---
 
@@ -514,11 +514,11 @@ protected void countAction() { … }
 ```java
 private String explore() {
     if (!spendEnergy(6)) {
-        return "NOT_ENOUGH_ENERGY";
+        return "能源不足";
     }
     addSamples(2);
     countAction();
-    return "OK";
+    return "成功";
 }
 ```
 
@@ -559,9 +559,9 @@ public class HeavyRover extends Rover {
 <div>
 
 規格：
-- 已停止 → `STOPPED`
-- 能源不足 → `NOT_ENOUGH_ENERGY`
-- 成功：能源 −8、樣本 +3、行動 +1、鑽探 +1 → `OK`
+- 已停止 → `任務已停止`
+- 能源不足 → `能源不足`
+- 成功：能源 −8、樣本 +3、行動 +1、鑽探 +1 → `成功`
 - 被拒絕：狀態都不變
 
 **`explore` 不必檢查停止，`drill` 卻一定要。為什麼？**
@@ -591,7 +591,7 @@ public class HeavyRover extends Rover {
 `execute` 是從 `Rover` 繼承來的：重型探測車照樣能探索、掃描、充電
 
 <!--
-講者備註：OK 12/3/1/1；OK 6/5/2/1；STOPPED 6/5/2/1。
+講者備註：成功 12/3/1/1；成功 6/5/2/1；任務已停止 6/5/2/1。
 -->
 
 ---
@@ -673,12 +673,12 @@ public class HeavyRover extends Rover {
 
     public String drill() {
         if (energy < 8) {
-            return "NOT_ENOUGH_ENERGY";
+            return "能源不足";
         }
         energy -= 8;
         samples += 3;
         drillCount++;
-        return "OK";
+        return "成功";
     }
     // getDrillCount() 省略
 }
@@ -722,12 +722,12 @@ HeavyRover.java:9: error: constructor Rover in class Rover cannot be applied to 
 ## E3｜測試：看起來成功，狀態卻沒變
 
 ```text
-h.drill() -> OK  (expect OK) OK
-h: 20/0/0 drill=1  (expect 12/3/1 drill=1) DIFF
-h.isSuccess() -> false  (expect true) DIFF
-h.drill() -> OK  (expect STOPPED) DIFF
-exact.execute(3) -> OK  (expect STOPPED) DIFF
-empty.drill() -> NOT_ENOUGH_ENERGY  (expect STOPPED) DIFF
+h.drill() -> 成功  （預期 成功） 相符
+h: 20/0/0 鑽探次數=1  （預期 12/3/1 鑽探次數=1） 不符
+h.isSuccess() -> false  （預期 true） 不符
+h.drill() -> 成功  （預期 任務已停止） 不符
+exact.execute(3) -> 成功  （預期 任務已停止） 不符
+empty.drill() -> 能源不足  （預期 任務已停止） 不符
 ```
 
 <div class="small">（節錄 15 行中的 6 行）</div>
@@ -749,8 +749,8 @@ empty.drill() -> NOT_ENOUGH_ENERGY  (expect STOPPED) DIFF
 
 ```text
 h ──> HeavyRover 物件
-  Rover 的部分：     energy=20 samples=0
-  HeavyRover 的部分：energy=12 samples=3
+  Rover 的部分：     能源=20 樣本數=0
+  HeavyRover 的部分：能源=12 樣本數=3
 ```
 
 </div>
@@ -772,14 +772,14 @@ h ──> HeavyRover 物件
 | 問題 | 證據 |
 |---|---|
 | 沒有 `super(...)` | 編譯錯誤 |
-| 重複宣告 `energy`、`samples` | `h: 20/0/0 drill=1` |
-| 沒有停止檢查 | 達標後 `drill() -> OK` |
+| 重複宣告 `energy`、`samples` | `h: 20/0/0 鑽探次數=1` |
+| 沒有停止檢查 | 達標後 `drill() -> 成功` |
 | 沒有增加行動次數 | 鑽探後 actionCount 仍是 0 |
 
 修正：
 1. 刪掉重複的欄位 → `energy has private access in Rover`：**好的錯誤**，編譯器替你抓
 2. 改用 `spendEnergy`、`addSamples`、`countAction`，補上 `isStopped()` 檢查
-3. 重測到 `HeavyRoverTry` 全部 `OK`；先 `[AI]` commit 原文，再 `[fix]` commit 修正
+3. 重測到 `HeavyRoverTry` 全部 顯示「相符」；先 `[AI]` commit 原文，再 `[fix]` commit 修正
 
 **「存取不到」應該找父類別提供的方法，不是另建一份**
 
@@ -849,7 +849,7 @@ java-07/
 <div>
 
 1. **重型探測車**：TODO 1–4、五條測試、`RoverTry`、`HeavyRoverTry`
-2. **社團器材**：依圖寫 `Camera`、`Projector`，`ShelfTry` 全部 OK
+2. **社團器材**：依圖寫 `Camera`、`Projector`，`ShelfTry` 全部 顯示「相符」
 3. **追蹤模擬 AI 的 `Camera`**：能編譯，卻印出 `null null`？
 4. **`DESIGN.md`**：繼承圖、is-a 表、自選一種器材設計子類別、兩份 AI 追蹤紀錄
 

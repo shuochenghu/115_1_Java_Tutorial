@@ -20,7 +20,7 @@
 | 使用工具／方式 | 教師模擬回覆，未呼叫真實AI |
 | 目的與提問摘要 | 檢查樣本盒是否能拒絕超量；人工初版已用private count與boolean store |
 | 建議與本人處理 | 拒絕「直接累加就好」。在副本暫拿掉超量檢查，看到容量3仍存到4；恢復條件，最終圖補上拒絕不改值的註記 |
-| 本人實際驗證 | SampleCaseDemo第二行錯誤版overflow=true,count=4；修正後overflow=false,count=2，fill到3、unload=3、empty=0。再跑兩條主任務路線；細節見我的LAB_REPORT E3 |
+| 本人實際驗證 | SampleCaseDemo第二行錯誤版超量存放=true,count=4；修正後超量存放=false,count=2，fill到3、卸載=3、空盒卸載=0。再跑兩條主任務路線；細節見我的LAB_REPORT E3 |
 
 ## 我的反思
 

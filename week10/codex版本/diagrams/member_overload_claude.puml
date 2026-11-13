@@ -1,0 +1,35 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 會員短例：同一個名字 describe，三個方法
+
+class Member #F4F4F4 {
+  + describe() : String
+}
+class VipMember #FFFFFF {
+  <color:#1D6694><b>+ describe() : String  {@Override}</b></color>
+  <color:#B4532A><b>+ describe(points : int) : String</b></color>
+  <color:#B4532A><b>+ describe(event : String) : String</b></color>
+}
+Member <|-- VipMember
+note right of VipMember
+  <color:#1D6694><b>藍＝覆寫</b></color>：簽名與父類別相同
+  　執行時看<b>實際物件</b>選版本
+  <color:#B4532A><b>橘＝過載</b></color>：同名、參數不同
+  　編譯時看<b>引數</b>選簽名
+end note
+note bottom of Member
+  父類別只有零參數的 describe()
+  → describe(int) 不是覆寫，
+  　加 @Override 會編譯失敗（第 8 週的伏筆）
+end note
+@enduml

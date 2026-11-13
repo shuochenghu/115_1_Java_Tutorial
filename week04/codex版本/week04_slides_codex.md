@@ -203,7 +203,7 @@ System.out.println(Arrays.toString(script));
 
 ```java
 for (int i = 0; i < script.length; i++) {
-    System.out.println("step " + (i + 1)
+    System.out.println("步驟 " + (i + 1)
             + ": " + script[i]);
 }
 ```
@@ -355,7 +355,7 @@ ArrayList 每記錄一筆就 **add**，**size()** 就是已存筆數。
 ```java
 ArrayList<Integer> commands = new ArrayList<>();
 commands.add(1);             // int → Integer
-int first = commands.get(0); // Integer → int
+int 第一筆 = commands.get(0); // Integer → int
 ```
 
 ArrayList 的型態參數須為參考型態。
@@ -419,9 +419,9 @@ ArrayList<String> resultLog = new ArrayList<>();
 
 | 索引 | 指令 | 執行後能源 | 結果 |
 |---|---:|---:|---|
-| 0 | 1 | 14 | OK |
-| 1 | 1 | 8 | OK |
-| 2 | 2 | 6 | OK |
+| 0 | 1 | 14 | 成功 |
+| 1 | 1 | 8 | 成功 |
+| 2 | 2 | 6 | 成功 |
 
 三條清單的同一索引，代表同一步。
 
@@ -440,11 +440,11 @@ runMission(script, 20, 0);
 教師提供行動規則與迴圈骨架。
 
 先檢查：尚未返回、能源 > 0、樣本 < 5。
-腳本用完但任務未停止 → UNFINISHED。
+腳本用完但任務未停止 → 任務未完成。
 
 初始已耗盡或已達標，不執行第一筆。
 
-<!-- 教師提示：SUCCESS優先於EXHAUSTED，再RETURNED，最後UNFINISHED。使用一般for停止條件，不要求新增state陣列。 -->
+<!-- 教師提示：任務成功優先於能源耗盡，再已返回，最後任務未完成。使用一般for停止條件，不要求新增state陣列。 -->
 
 ---
 ## 五個 TODO 的操作順序
@@ -491,10 +491,10 @@ resultLog.add(result);
 
 ```java
 for (int i = 0; i < commandLog.size(); i++) {
-    System.out.println("step " + (i + 1)
-        + ": command=" + commandLog.get(i)
-        + ", result=" + resultLog.get(i)
-        + ", energy=" + energyLog.get(i));
+    System.out.println("步驟 " + (i + 1)
+        + ": 指令=" + commandLog.get(i)
+        + ", 結果=" + resultLog.get(i)
+        + ", 能源=" + energyLog.get(i));
 }
 ```
 
@@ -511,11 +511,11 @@ for (int i = 0; i < commandLog.size(); i++) {
 
 | 步 | 指令 | 結果 | 能源 |
 |---|---:|---|---:|
-| 1 | 3 | ALREADY_FULL | 20 |
-| 2 | 9 | UNKNOWN_COMMAND | 20 |
-| 3 | 0 | RETURN | 20 |
+| 1 | 3 | 能源已滿 | 20 |
+| 2 | 9 | 無效指令 | 20 |
+| 3 | 0 | 返回 | 20 |
 
-steps=3；actionCount=0；counts=[1,0,0,1]。
+步數=3；行動次數=0；指令次數=[1,0,0,1]。
 返回不算拒絕；無效指令不進 counts。
 
 <!-- 教師提示：E追蹤題。counts中的3雖被拒絕仍計入。 -->
@@ -528,12 +528,12 @@ steps=3；actionCount=0；counts=[1,0,0,1]。
 
 | 腳本 | 最終 energy/samples/actions | 結果 |
 |---|---|---|
-| {0} | 20/0/0 | RETURNED |
-| {1,1,2} | 6/5/3 | SUCCESS |
-| 五次2 | 10/5/5 | SUCCESS |
-| {3,9,0} | 20/0/0 | RETURNED |
-| {1,1,1,1} | 2/6/3 | SUCCESS，剩一筆未讀 |
-| {2,1} | 12/3/2 | UNFINISHED |
+| {0} | 20/0/0 | 已返回 |
+| {1,1,2} | 6/5/3 | 任務成功 |
+| 五次2 | 10/5/5 | 任務成功 |
+| {3,9,0} | 20/0/0 | 已返回 |
+| {1,1,1,1} | 2/6/3 | 任務成功，剩一筆未讀 |
+| {2,1} | 12/3/2 | 任務未完成 |
 
 改 main 的 script，每次重新編譯；繳交前恢復預設。
 
@@ -546,7 +546,7 @@ steps=3；actionCount=0；counts=[1,0,0,1]。
 
 ```java
 Collections.min(energyLog);
-Collections.frequency(resultLog, "OK");
+Collections.frequency(resultLog, "成功");
 ```
 
 min：最小值；frequency：相同值的筆數。
@@ -563,15 +563,15 @@ min：最小值；frequency：相同值的筆數。
 <p class="slide-ref" data-slide="29">對應程式：<code>starter/MissionLog.java</code></p>
 
 ```java
-int ok = Collections.frequency(resultLog, "OK");
-int returned = Collections.frequency(resultLog, "RETURN");
+int ok = Collections.frequency(resultLog, "成功");
+int returned = Collections.frequency(resultLog, "返回");
 int steps = resultLog.size();
 int rejected = steps - ok - returned;
 int ignored = scriptLength - steps;
 ```
 
-{3,9,0} → steps=3、ok=0、rejected=2、ignored=0。
-{1,1,1,1} → ignored=1，最後一筆未讀。
+{3,9,0} → 步數=3、成功=0、拒絕=2、略過=0。
+{1,1,1,1} → 略過=1，最後一筆未讀。
 
 <!-- 教師提示：摘要必須基於完整日誌；不可為了顯示簡潔先刪資料。 -->
 
@@ -583,9 +583,9 @@ int ignored = scriptLength - steps;
 
 ```java
 if (energyLog.isEmpty()) {
-    System.out.println("lowest energy=N/A");
+    System.out.println("最低能源=無紀錄");
 } else {
-    System.out.println("lowest energy="
+    System.out.println("最低能源="
         + Collections.min(energyLog));
 }
 ```
@@ -601,7 +601,7 @@ if (energyLog.isEmpty()) {
 <p class="slide-ref" data-slide="31">對應程式：<code>examples/CollectionsDemo.java</code></p>
 
 ```java
-ArrayList<Integer> sorted = new ArrayList<>();
+ArrayList<Integer> 排序後 = new ArrayList<>();
 for (int energy : energyLog) {
     sorted.add(energy);
 }
@@ -630,15 +630,15 @@ java -cp out-teacher FixedScriptMission 5 0 1 3 0
 
 | 初始能源/樣本；腳本 | 結果 | 日誌 |
 |---|---|---|
-| 5/0；{1,3,0} | 10/0/1 RETURNED | 3筆 |
-| 2/4；{2} | 0/5/1 SUCCESS | 1筆 |
-| 0/0；{3,1} | EXHAUSTED | 空 |
-| 20/5；{1} | SUCCESS | 空 |
-| 20/0；{} | UNFINISHED | 空 |
+| 5/0；{1,3,0} | 10/0/1 已返回 | 3筆 |
+| 2/4；{2} | 0/5/1 任務成功 | 1筆 |
+| 0/0；{3,1} | 能源耗盡 | 空 |
+| 20/5；{1} | 任務成功 | 空 |
+| 20/0；{} | 任務未完成 | 空 |
 
 填「教師觀察」；自行跑過才寫「本人複驗」。
 
-<!-- 教師提示：FixedScriptMission是教師工具，會呼叫同目錄MissionLog的runMission。表格每列以前兩個數字指定初始值，後接腳本；空腳本只傳20 0。編譯成功後才執行。空日誌最低能源N/A；第一例最低5。 -->
+<!-- 教師提示：FixedScriptMission是教師工具，會呼叫同目錄MissionLog的runMission。表格每列以前兩個數字指定初始值，後接腳本；空腳本只傳20 0。編譯成功後才執行。空日誌最低能源無紀錄；第一例最低5。 -->
 
 ---
 <!-- _class: small -->

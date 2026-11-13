@@ -42,3 +42,10 @@ ListBasics與投影片的資料初始化改用Arrays.asList，再以new ArrayLis
 以目前OpenJDK／javac22執行 `javac -encoding UTF-8 -Xlint:all`，範例、起始碼、教師解答在新暫存目錄分開編譯成功，MissionLogCheck仍為12/12；ListBasics替換前後於同一JDK比較完整輸出，逐字一致。未指定固定目標版本，暫存產物已清除。
 
 投影片同步重匯出35頁HTML，全頁DOM邊界／程式區塊水平溢出檢查無問題；本次改動的第19、21頁另開截圖目視，未發現截斷。不將本機CLI複核推論為所有JDK、IDE GUI或教室端皆通過。跨週摘要見[第3至5週紀錄](../../week03_week05_JDK檢視紀錄.md)。
+
+## 2026-11-13 繁體中文輸出驗證
+
+- OpenJDK 22，以 javac -encoding UTF-8 -Xlint:all 分開編譯 examples、starter、teacher。以 UTF-8 擷取範例、起始碼與教師檢查的主控台輸出。
+- MissionLogCheck 顯示 12/12 項通過。與同版本第 5 週教師解答比較五條固定路線，完整報表逐行相同。
+- Marp 重新匯出本週 35 頁 HTML，並同步第 5 週的銜接投影片。無頭 Chromium 未偵測到程式碼區塊或表格溢出。
+- 歷史驗證中的英文輸出反映當時的版本。

@@ -23,7 +23,7 @@ def compile_to(files, out):
 
 
 def java(out, name):
-    return run(["java", "-cp", out, name])
+    return run(["java", "-Dstdout.encoding=UTF-8", "-cp", out, name])
 
 
 def static_checks():
@@ -35,7 +35,8 @@ def static_checks():
             continue
         text = path.read_text(encoding="utf-8")
         assert "\ufffd" not in text, path
-        assert all(line == line.rstrip() for line in text.splitlines()), path
+        assert all(line == line.rstrip() or line == line.rstrip() + "  "
+                   for line in text.splitlines()), path
         if path.suffix == ".md":
             fences = re.findall(r"^```", text, re.M)
             assert len(fences) % 2 == 0, path
@@ -82,7 +83,7 @@ def static_checks():
     for source in (BASE / "diagrams").glob("*.puml"):
         svg = source.with_suffix(".svg")
         assert svg.is_file() and "Syntax Error" not in svg.read_text(encoding="utf-8"), source
-    print("PASS 7 class member-name/visibility mappings and 10 SVG files")
+    print("通過 7 class member-name/visibility mappings and 10 SVG files")
     print(f"PASS static, local links={links}, TODO 1-3 preserved")
 
 
@@ -97,18 +98,18 @@ def main():
         compile_to(sorted((BASE / "starter").glob("*.java")) + sorted((BASE / "examples").glob("*.java")), work / "student")
         print("PASS combined 11-file student src")
         expected = {
-            "RelationDemo": "A=true\nB=false\nC=true\nshared=2\ncharge=true\nB again=true\nshared=1\n",
-            "SampleCaseDemo": "first=true, count=2\noverflow=false, count=2\nfill=true, count=3\nunload=3\nempty=0\n",
+            "RelationDemo": "燈具 A=true\n燈具 B=false\n燈具 C=true\n共用電池能源=2\n充電=true\n燈具 B 再開啟=true\n共用電池能源=1\n",
+            "SampleCaseDemo": "第一次=true, 存量=2\n超量存放=false, 存量=2\n剛好裝滿=true, 存量=3\n卸載=3\n空盒卸載=0\n",
         }
         for name, text in expected.items():
             assert java(work / "examples", name) == text, name
             print("PASS full output", name)
-        rover_output = "OK/14/2/1\nSTOPPED/0\nSTOPPED/20\n"
+        rover_output = "成功/14/2/1\n任務已停止/0\n任務已停止/20\n"
         assert java(work / "starter", "RoverDemo") == rover_output
-        starter_expected = "=== replay ===\ncounts[0..3]=[0, 0, 0, 0]\nsteps=0, ok=0, rejected=0, ignored=3\nlowest energy=N/A\nfinal energy=20, samples=0, actionCount=0 -> UNFINISHED\nbattery=100.0\n"
+        starter_expected = "=== 任務回放 ===\n指令次數[0..3]=[0, 0, 0, 0]\n步數=0, 成功=0, 拒絕=0, 略過=3\n最低能源=無紀錄\n最終能源=20, 樣本數=0, 行動次數=0 -> 任務未完成\n電量百分比=100.0\n"
         assert java(work / "starter", "MissionLog") == starter_expected
         print("PASS starter safe return and supplied RoverDemo")
-        for name, total in [("MissionLogCheck", "15/15 passed"), ("MissionStateCheck", "16/16 passed")]:
+        for name, total in [("MissionLogCheck", "15/15 項通過"), ("MissionStateCheck", "16/16 項通過")]:
             output = java(work / "teacher", name)
             assert total in output, output
             print(output.strip())
@@ -122,9 +123,9 @@ def main():
         print("PASS completed student setup")
         mutations = [
             ("Mission.java", "if (rover.isStopped()) { break; }", "// intentionally missing stop", "MissionLogCheck"),
-            ("Mission.java", "history.add(new MissionStep(command, rover.getEnergy(), result));", 'if ("OK".equals(result)) { history.add(new MissionStep(command, rover.getEnergy(), result)); }', "MissionLogCheck"),
+            ("Mission.java", "history.add(new MissionStep(command, rover.getEnergy(), result));", 'if ("成功".equals(result)) { history.add(new MissionStep(command, rover.getEnergy(), result)); }', "MissionLogCheck"),
             ("Mission.java", "int lowest = history.get(0).getEnergy();", "int lowest = 0;", "MissionLogCheck"),
-            ("Rover.java", 'if (isStopped()) { return "STOPPED"; }', "// intentionally missing protection", "MissionStateCheck"),
+            ("Rover.java", 'if (isStopped()) { return "任務已停止"; }', "// intentionally missing protection", "MissionStateCheck"),
         ]
         for i, (filename, old, new, check) in enumerate(mutations):
             source = work / f"mutation-{i}"
@@ -135,7 +136,7 @@ def main():
             path.write_text(text.replace(old, new), encoding="utf-8")
             out = work / f"mutation-out-{i}"
             compile_to(sorted(source.glob("*.java")), out)
-            run(["java", "-cp", out, check], success=False)
+            run(["java", "-Dstdout.encoding=UTF-8", "-cp", out, check], success=False)
         print("PASS four rejected mutations")
         # E3 錯誤只放副本，重現後保留正式答案。
         ai = work / "ai"
@@ -146,15 +147,15 @@ def main():
         path.write_text(text.replace("amount <= 0 || amount > getFreeSpace()", "amount <= 0"), encoding="utf-8")
         compile_to(sorted(ai.glob("*.java")), work / "ai-out")
         wrong = java(work / "ai-out", "SampleCaseDemo")
-        assert "overflow=true, count=4" in wrong, wrong
-        assert "fill=true, count=5\nunload=5" in wrong, wrong
-        print("PASS E3 counterexample: overflow=true/count=4; restored correct output already checked")
+        assert "超量存放=true, 存量=4" in wrong, wrong
+        assert "剛好裝滿=true, 存量=5\n卸載=5" in wrong, wrong
+        print("PASS E3 counterexample: 超量存放=true/count=4; restored correct output already checked")
         # final 參考不是不可變物件：實際示範新增成功，重新指派編譯失敗。
         final_demo = work / "FinalDemo.java"
-        final_demo.write_text('import java.util.ArrayList; public class FinalDemo { public static void main(String[] a) { final ArrayList<String> x = new ArrayList<>(); x.add("OK"); System.out.println(x.size()); } }', encoding="utf-8")
+        final_demo.write_text('import java.util.ArrayList; public class FinalDemo { public static void main(String[] a) { final ArrayList<String> x = new ArrayList<>(); x.add("成功"); System.out.println(x.size()); } }', encoding="utf-8")
         compile_to([final_demo], work / "final")
         assert java(work / "final", "FinalDemo") == "1\n"
-        final_demo.write_text(final_demo.read_text(encoding="utf-8").replace('x.add("OK");', 'x = new ArrayList<>();'), encoding="utf-8")
+        final_demo.write_text(final_demo.read_text(encoding="utf-8").replace('x.add("成功");', 'x = new ArrayList<>();'), encoding="utf-8")
         run(["javac", "-encoding", "UTF-8", "-d", work / "final-bad", final_demo], success=False)
         print("PASS final reference demonstration")
     static_checks()

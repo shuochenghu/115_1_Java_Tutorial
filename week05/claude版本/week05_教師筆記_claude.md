@@ -43,11 +43,11 @@
 | `starter/RoverTry.java` | 已完成的小測試程式，不經過 `MissionLog` 直接測 `Rover` | 無（執行並比對） |
 | `teacher/` | 完整解答、`MissionLogCheck`（27 項）、延伸題 `SampleBay` 與 `SampleBayCheck` | — |
 
-`runMission` 與第四週的差異：第四週先執行再判斷是否停止；本週在**執行前**先判斷 `isSuccess()`／`isExhausted()`。從 `new Rover(20, 0)` 出發時兩種寫法輸出完全相同；本週因為建構子可以指定初始狀態，才需要處理「一出發就已停止」：不讀指令、不記錄。
+`runMission` 與第四週的差異：第四週先執行再判斷是否停止；本週在**執行前**先判斷 `isSuccess()`／`isExhausted()`。從 `new Rover(20, 0)` 出發時兩種寫法的數值、行動結果與停止時機一致；本週因為建構子可以指定初始狀態，才需要處理「一出發就已停止」：不讀指令、不記錄。
 
-`MissionLogCheck` 涵蓋狀態與紀錄筆數、能源快照、`isRejected`（含 `new String("OK")`，抓出用 `==` 比字串的寫法）、`printSummary`，以及五條必做測試的完整輸出逐行比對（含回放與最低能源）。批改時可把它與學生的 `Rover.java`、`MissionStep.java`、`MissionLog.java` 放在同一個資料夾編譯，不要再加入教師版同名類別；未完成的 TODO 只會顯示 FAIL，不會中斷。
+`MissionLogCheck` 涵蓋狀態與紀錄筆數、能源快照、`isRejected`（含 `new String("成功")`，抓出用 `==` 比字串的寫法）、`printSummary`，以及五條必做測試的完整輸出逐行比對（含回放與最低能源）。批改時可把它與學生的 `Rover.java`、`MissionStep.java`、`MissionLog.java` 放在同一個資料夾編譯，不要再加入教師版同名類別；未完成的 TODO 只會顯示「失敗」，不會中斷。
 
-起始碼可直接編譯執行。因為 `Rover` 建構子是空的，欄位維持預設值 0，`runMission` 第一次檢查就判定耗盡，所以起始碼輸出 `0／0／0 EXHAUSTED`、回放為空。這是刻意保留的現象，用來接 A 段「欄位預設值」與 D1。
+起始碼可直接編譯執行。因為 `Rover` 建構子是空的，欄位維持預設值 0，`runMission` 第一次檢查就判定耗盡，所以起始碼輸出 `0／0／0 能源耗盡`、回放為空。這是刻意保留的現象，用來接 A 段「欄位預設值」與 D1。
 
 ## 講義解答
 
@@ -59,11 +59,11 @@
 
 | 程式 | 輸出 |
 |---|---|
-| `new RawStep()` | `command=0, result=null, energy=0` |
-| `alias.energy = 99` 之後 | `a.energy=99, a == alias? true` |
+| `new RawStep()` | `指令=0, 結果=null, 能源=0` |
+| `alias.energy = 99` 之後 | `a.energy=99, a 與 alias 指向同一物件？ true` |
 | `println(a)` | `RawStep@` 加十六進位雜湊碼（每次執行可能不同） |
 | `steps.get(1).energy` | `12` |
-| `bad` | `command=1, result=null, energy=-7` |
+| `bad` | `指令=1, 結果=null, 能源=-7` |
 
 A1：類別是設計圖（有哪些欄位與方法），物件是依設計圖產生、各自擁有欄位值的實體。`new RawStep()` 產生物件；`RawStep a` 只是宣告一個可以指向物件的變數。
 A2：`a` 與 `alias` 指向同一個物件（energy 99），`b` 指向另一個物件（energy 12）。
@@ -106,16 +106,16 @@ D1：建構子是空的，三個欄位維持 `int` 的預設值 0。`runMission`
 D2（完成 TODO 1–2 後的 `RoverTry`）：
 
 ```text
-new Rover(20, 0): 20/0/0  (expect 20/0/0) OK
-new Rover(25, -3): 20/0/0  (expect 20/0/0) OK
-new Rover(4, 2): 4/2/0  (expect 4/2/0) OK
-r.charge() -> ALREADY_FULL  (expect ALREADY_FULL)
-r.scan() -> OK  (expect OK)
-r.charge() -> OK  (expect OK, 18+5 capped at 20)
-r: 20/1/2  (expect 20/1/2) OK
-low.scan() -> NOT_ENOUGH_ENERGY  (expect NOT_ENOUGH_ENERGY)
-low.explore() -> NOT_ENOUGH_ENERGY  (expect NOT_ENOUGH_ENERGY)
-low: 1/0/0  (expect 1/0/0) OK
+new Rover(20, 0): 20/0/0  （預期 20/0/0） 相符
+new Rover(25, -3): 20/0/0  （預期 20/0/0） 相符
+new Rover(4, 2): 4/2/0  （預期 4/2/0） 相符
+r.charge() -> 能源已滿  （預期 能源已滿）
+r.scan() -> 成功  （預期 成功）
+r.charge() -> 成功  （預期 成功, 18+5 封頂為 20）
+r: 20/1/2  （預期 20/1/2） 相符
+low.scan() -> 能源不足  （預期 能源不足）
+low.explore() -> 能源不足  （預期 能源不足）
+能源不足: 1/0/0  （預期 1/0/0） 相符
 ```
 
 D2-1：`execute` 是實例方法，透過 `rover.` 呼叫時，方法內的 `energy` 就是 `rover` 這個物件的欄位（隱含的 `this`）。資料與操作在同一個物件內，不必再把狀態傳來傳去。
@@ -124,17 +124,17 @@ D2-2（教師示範）：`error: non-static method explore() cannot be reference
 D3-1（選做）：`error: variable energyAfter might not have been initialized`，位置指向建構子結尾的 `}`。`final` 讓編譯器幫忙檢查「每個欄位都恰好被設定一次」。
 D3-2：一步發生後就是歷史紀錄，不應被改寫；若需要修改，代表紀錄與實際發生的事不一致。
 
-D4 必做測試：五條的完整輸出與第四週 claude 版相同（實測見驗證紀錄）。
+D4 必做測試：以第四週 Claude 版的五條路線核對數值和停止時機，完整報表以本週中文輸出為準。
 D4-1：避免三條清單長度不一致、索引對錯行；新增欄位時也只要改 `MissionStep` 一處。
-D4-2：讀 0 個指令、記錄 0 筆，結果 `EXHAUSTED`，`ignored` 等於腳本長度，`lowest energy` 不印。
+D4-2：讀 0 個指令、記錄 0 筆，結果 `能源耗盡`，`ignored` 等於腳本長度，不印最低能源。
 
 TODO 7 參考寫法見 `code/teacher/MissionLog.java`。`lowest` 的初始值用 `Rover.CAPACITY`（或第一筆的能源）都可以；只在清單非空時印出。常見錯誤：
 
 | 錯誤 | 現象 | 診斷 |
 |---|---|---|
-| `step.getResult() == "OK"` | 跑任務時多半仍會得到正確計數，因為字串常值會被共用，但這是巧合；`MissionLogCheck` 以 `new String("OK")` 測試時會 FAIL | 回到第二週：字串內容比較用 `equals` |
-| `lowest` 初始為 0 | `lowest energy=0` | 初始值必須不小於任何可能的能源 |
-| `rejected = steps.size() - ok` | `3 9 0` 得到 `rejected=3` | 返回不算被拒絕，要用 `isRejected()` |
+| `step.getResult() == "成功"` | 跑任務時多半仍會得到正確計數，因為字串常值會被共用，但這是巧合；`MissionLogCheck` 以 `new String("成功")` 測試時會顯示「失敗」 | 回到第二週：字串內容比較用 `equals` |
+| `lowest` 初始為 0 | `最低能源=0` | 初始值必須不小於任何可能的能源 |
+| `rejected = steps.size() - ok` | `3 9 0` 得到 `拒絕=3` | 返回不算被拒絕，要用 `isRejected()` |
 | 仍呼叫 `Collections.min(steps)` | 編譯錯誤（`MissionStep` 不能比大小） | 物件清單要自己決定比較哪個欄位；Comparator 第 11／13 週 |
 
 ## E 段參考答案
@@ -168,8 +168,8 @@ TODO 7 參考寫法見 `code/teacher/MissionLog.java`。`lowest` 的初始值用
 | # | 反例 | AI 版實際結果 | 最小修正 |
 |---|---|---|---|
 | 1 | `MissionLog`（無參數）或 `2 2 2 2 2` | 回放每一步能源都是 6（或都是 10）；最後一行與摘要仍正確 | `MissionStep` 改回存 `int energyAfter`，`runMission` 傳 `rover.getEnergy()`。原因：存的是同一個物件的參考，任務結束後再讀，只會讀到最後的能源 |
-| 2 | `MissionLog 3 9 0` | step 1 變成 `result=OK`，`ok=1, rejected=1`，`actionCount=1` | 加回 `if (energy >= CAPACITY) return "ALREADY_FULL";`，放在 `actionCount++` 之前 |
-| 3 | `RoverTry` | `new Rover(25, -3): 25/-3/0 ... DIFF` | 把三個 `this.欄位 = 參數` 移到修正之後（或修正時直接改欄位） |
+| 2 | `MissionLog 3 9 0` | step 1 變成 `結果=成功`，`成功=1, 拒絕=1`，`行動次數=1` | 加回 `if (energy >= CAPACITY) return "能源已滿";`，放在 `actionCount++` 之前 |
+| 3 | `RoverTry` | `new Rover(25, -3): 25/-3/0 ... 不符` | 把三個 `this.欄位 = 參數` 移到修正之後（或修正時直接改欄位） |
 
 三種都採「拒絕」：第 1 種看似省事，但違反「紀錄存的是當下的值」；第 2 種把「已滿」的規則刪掉了；第 3 種修正的是參數，欄位已經存了錯的值。第 3 種也可以和 `Battery` 的建構子對照：同樣先修正參數，但 `Battery` 是修正完才存入欄位。
 
@@ -187,7 +187,7 @@ TODO 7 參考寫法見 `code/teacher/MissionLog.java`。`lowest` 的初始值用
 | 項目 | 重點 |
 |---|---|
 | 程式 | 欄位皆為 `private`；`MissionStep` 欄位為 `final`；建構子用 `this` 且修正順序正確；`scan`／`charge` 被拒絕時狀態不變；`printSummary` 使用 `isRejected()` |
-| 測試 | 五條必做＋`RoverTry` 全部 `OK`；自訂測試有預期、實際與說明 |
+| 測試 | 五條必做＋`RoverTry` 全部 顯示「相符」；自訂測試有預期、實際與說明 |
 | 需求轉換 | 設計卡每一格能對應需求中的句子；至少四項偏差有「呼叫例子」 |
 | AI 除錯 | 四筆證據為實際執行結果；能說出「為什麼預設腳本抓不到」 |
 | 誠信 | 模擬建議與真實 AI 分開；能逐行解釋自己的類別 |

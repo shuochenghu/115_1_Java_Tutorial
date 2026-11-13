@@ -119,7 +119,7 @@ B第一次被拒絕，但C不受影響，原因：待填。這是一般電池範
 | 初始0/0，直接充電 | 待填 | 待填 |
 | 初始20/5，直接探索 | 待填 | 待填 |
 
-對照上週：energy、samples、actionCount從runMission的區域變數變成Rover欄位；探索、掃描、充電改成private，外部只透過execute。Rover在成功／耗盡後拒絕行動，回傳STOPPED。
+對照上週：energy、samples、actionCount從runMission的區域變數變成Rover欄位；探索、掃描、充電改成private，外部只透過execute。Rover在成功／耗盡後拒絕行動，回傳任務已停止。
 
 然而「指令0返回後不再讀後面腳本」「所有已讀指令都要記錄」屬於任務流程，放在Mission。MissionLog留下固定腳本與輸出。以[DESIGN範本](DESIGN_template.md)填四個類別的責任；把Java輸出介面換成另一個Java介面時，可以保留不依賴顯示的任務邏輯。WinForms只作C#經驗對照，不能直接執行Java類別。
 
@@ -132,8 +132,8 @@ B第一次被拒絕，但C不受影響，原因：待填。這是一般電池範
 | TODO | 程式位置 | 操作順序 | 完成後應看見 |
 |---|---|---|---|
 | 1 | run | 先檢查rover是否停止；再讀指令、execute、new MissionStep、加入history；0也先記，再returned=true與break | 預設三筆能源14、8、6；返回／拒絕／無效也保存 |
-| 2 | countOk | 模仿countCommands走訪history，用isSuccessful計數並回傳 | 預設ok=3；3/9/0路線ok=0 |
-| 3 | lowestEnergy | 空清單回傳-1；非空先取第一筆，再走訪求最小 | 預設6；空資料由報表印N/A |
+| 2 | countOk | 模仿countCommands走訪history，用isSuccessful計數並回傳 | 預設成功=3；3/9/0路線成功=0 |
+| 3 | lowestEnergy | 空清單回傳-1；非空先取第一筆，再走訪求最小 | 預設6；空資料由報表印無紀錄 |
 
 MissionStep的建構參數順序仍是`(command, energy, result)`，不要套用另一版本的順序。先確認一組再做下一組；starter的0、-1只是佔位，不算完成功能。
 
@@ -145,14 +145,14 @@ getOutcome、countCommands、countRejected與報表由教師提供。`countComma
 
 | script | 預期energy/samples/actionCount、結果 | 預期steps/ok/rejected/ignored | 本人實際 |
 |---|---|---|---|
-| {1,1,2} | 6/5/3 SUCCESS | 3/3/0/0 | 待貼完整輸出 |
-| {3,9,0} | 20/0/0 RETURNED | 3/0/2/0 | 待貼完整輸出 |
+| {1,1,2} | 6/5/3 任務成功 | 3/3/0/0 | 待貼完整輸出 |
+| {3,9,0} | 20/0/0 已返回 | 3/0/2/0 | 待貼完整輸出 |
 
-完整預期與另外四路線見[作業說明](assignment.md)。保留第五週空日誌N/A、counts與battery格式，不能只看最後成功字樣。
+完整預期與另外四路線見[作業說明](assignment.md)。保留第五週空日誌無紀錄、counts與battery格式，不能只看最後成功字樣。
 
 打開自己的task_template.puml，只補Mission三欄、run/countOk/lowestEnergy，以及五條關係（Mission的兩條關聯、MissionLog的三條相依）。兩條關聯標出「一個Mission能連到多少Rover／MissionStep」。這是部分成員圖，不要求重抄所有API。重新產SVG並填DESIGN.md；未完成部分課後補。
 
-教師反例觀察：在副本拿掉run的停止檢查，跑`{1,1,1,1}`，預測：待填。實際／教師示範：待填。最後狀態即使仍成功，日誌會不會多出STOPPED？為什麼Rover與Mission的檢查各有責任？待填。恢復後應回到3筆；未親自做請標明教師觀察。
+教師反例觀察：在副本拿掉run的停止檢查，跑`{1,1,1,1}`，預測：待填。實際／教師示範：待填。最後狀態即使仍成功，日誌會不會多出任務已停止？為什麼Rover與Mission的檢查各有責任？待填。恢復後應回到3筆；未親自做請標明教師觀察。
 
 ## E｜人工設計、AI審查與反例（25分鐘）
 

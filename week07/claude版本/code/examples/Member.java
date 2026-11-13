@@ -10,7 +10,7 @@ public class Member {
         this.id = id;
         this.name = name;
         this.points = 0;
-        System.out.println("  [Member constructor] " + id);
+        System.out.println("  [Member 建構子] " + id);
     }
 
     public String getId() {
@@ -43,6 +43,6 @@ public class Member {
     }
 
     public String describe() {
-        return id + " " + name + " points=" + points;
+        return id + " " + name + " 點數=" + points;
     }
 }

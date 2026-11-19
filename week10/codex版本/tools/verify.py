@@ -8,6 +8,27 @@ BASELINE = WEEK.parents[1] / "week09" / WEEK.name / "teacher"
 LEGACY = ["重型探測車 樣本數=6", "樣本盒 樣本數=4", "空盒 樣本數=0"]
 DETAIL = "重型探測車 樣本數=6 能源=8"
 COMPLETE = [DETAIL, *LEGACY, "手動清點 樣本數=7", "手動清點 樣本數=0"]
+# 第 8 週 TODO 4 沿用：重型車覆寫 execute，腳本指令 4 交給 drill；一般車仍回無效指令。
+DRILL_PROBE = """
+public class DrillProbe {
+    public static void main(String[] args) {
+        HeavyRover heavy = new HeavyRover(20, 0);
+        Mission h = new Mission(heavy);
+        h.run(new int[] {4, 1});
+        Rover standard = new StandardRover(20, 0);
+        Mission s = new Mission(standard);
+        s.run(new int[] {4, 1});
+        System.out.println(h.getStep(0).getResult() + " " + heavy.getEnergy() + "/" + heavy.getSamples()
+                + "/" + heavy.getActionCount() + "/" + heavy.getDrillCount() + " " + h.getOutcome()
+                + " " + java.util.Arrays.toString(h.countCommands()));
+        System.out.println(s.getStep(0).getResult() + " " + standard.getEnergy() + "/"
+                + standard.getSamples() + "/" + standard.getActionCount() + " " + s.getOutcome());
+        System.out.println(new HeavyRover(20, 5).execute(4) + " " + new HeavyRover(7, 0).execute(4)
+                + " " + new HeavyRover(20, 0).execute(2));
+    }
+}
+"""
+DRILL = ['成功 6/6/2/1 任務成功 [0, 1, 0, 0]', '無效指令 14/2/1 任務未完成', '任務已停止 能源不足 成功']
 
 
 def command(*args):
@@ -81,6 +102,11 @@ def verify(root):
                           ("PolymorphismCheck", "PolymorphismCheck 51 項通過")):
         expect(execute(root / "teacher", main)[-1], summary)
     print("第 9 週三個入口及任務回歸 15／16／51 項通過")
+    for part, folder in (("starter", starter), ("teacher", teacher)):
+        build(root / f"drill-{part}", variant(root, f"drill-{part}-src", folder.glob("*.java"),
+                                              {"DrillProbe.java": DRILL_PROBE}))
+        expect(execute(root / f"drill-{part}", "DrillProbe"), DRILL)
+    print("沿用第 8 週指令 4：重型車經 execute 鑽探、一般車拒絕，starter 與 teacher 相同")
 
     # 只先加入 TODO 1，重現原呼叫改選簽名。再替換三個 TODO 檔驗證完成路徑。
     detailed = report.split("    public static void print(String label, Rover rover)")[1]

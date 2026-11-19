@@ -82,7 +82,7 @@ Code Review：**審查 AI 生成的繼承程式碼**
 
 <!--
 講者備註：本份投影片依 week08/codex版本 的 README、student_lab、assignment、examples、starter、ai、teacher、teacher_notes、handoff 製作，由 Claude 撰寫；codex 原投影片 week08_slides_codex.md 保留不動，可擇一使用。
-本份分兩部分：先只用 examples/ 的會員三檔教「覆寫、@Override、父類別參考」，再用 starter/ 說明探測車主線 TODO 1–3、AI 審查與作業；teacher/ 的答案只出現在附錄。
+本份分兩部分：先只用 examples/ 的會員三檔教「覆寫、@Override、父類別參考」，再用 starter/ 說明探測車主線 TODO 1–4、AI 審查與作業；teacher/ 的答案只出現在附錄。
 -->
 
 ---
@@ -98,7 +98,7 @@ Code Review：**審查 AI 生成的繼承程式碼**
 | 標籤 | 資料夾 | 在本投影片的角色 |
 |---|---|---|
 | <span class="tag blue">examples/…</span> | `examples/` | **第一部分：範例教學**——會員覆寫、@Override、父類別參考（講義 B、C） |
-| <span class="tag green">starter/…</span> | `starter/` | **第二部分：作業說明**——探測車產量覆寫、TODO 1–3（講義 A、D–G） |
+| <span class="tag green">starter/…</span> | `starter/` | **第二部分：作業說明**——探測車產量覆寫與指令 4、TODO 1–4（講義 A、D–G） |
 | <span class="tag purple">ai/…</span> | `ai/` | E 段：教師撰寫的**模擬 AI 回覆**（子類別 private explore） |
 | <span class="tag brown">diagrams/…</span> | `diagrams/` | 類別圖；`*_claude` 為本份新繪，用來說明**與第七週的演進** |
 | <span class="tag gray">teacher/…</span> | `teacher/` | **附錄：教師用**——完整答案、檢查工具、遷移參考 |
@@ -155,7 +155,7 @@ h.execute(1);   // 只得 2 份
 | **第一部分** <span class="tag blue">examples/</span> | 會員 `describe()` 覆寫、`@Override`、`super.describe()` | B | 第 1 節 20 分 |
 | | 父類別參考 vs 實際物件、編譯判斷 vs 執行選擇 | C | 第 1 節 20 分 |
 | **第二部分** <span class="tag green">starter/</span> | A 前週診斷（放在第 1 節開頭 10 分） | A | 第 1 節 |
-| | D 探測車產量覆寫：TODO 1–3、兩車比較 | D | 第 2 節 |
+| | D 探測車產量覆寫、兩車比較、指令 4：TODO 1–4 | D | 第 2 節 |
 | | E 模擬 AI 審查 → F 補 UML → G 保存 | E、F、G | 第 3 節 |
 | 課後 | 自己寫一種探測車（`SurveyRover` 或自訂） | 作業 | 45–60 分（暫估） |
 
@@ -179,7 +179,8 @@ h.execute(1);   // 只得 2 份
 1. 用**相同簽名**覆寫實例方法，加 `@Override`
 2. 分開判斷「**能不能編譯**」與「**執行哪個版本**」
 3. 用 `Rover` 型態參考操作不同車種，`Mission` 不必知道車種
-4. 讀模擬 AI 程式：找出「能編譯但不對」的反例，最小修正後重測
+4. 用 `super.execute(...)` 沿用父類別，只在子類別加入新指令
+5. 讀模擬 AI 程式：找出「能編譯但不對」的反例，最小修正後重測
 
 </div>
 <div class="box">
@@ -189,7 +190,7 @@ h.execute(1);   // 只得 2 份
 - 抽象類別、介面 → **第九週**
 - 方法過載（overloading）完整規則 → **第十週**
 - 向下轉型、`instanceof`、泛型、JUnit → 不列本週必做
-- `super.describe()` 只做**短體驗**，不要求熟練設計
+- `super` 方法呼叫只在 B3、D6 各用一次，不要求熟練設計
 
 </div>
 </div>
@@ -258,7 +259,7 @@ java -cp out MemberDemo
 <span class="note">**先填講義 B1 預測，才執行。** 三檔已構成多檔合作：先用 VS Code 確認檔案位置，再示範 IntelliJ IDEA 開同一個 java-08（已安裝 JDK、src 為來源根、MemberDemo 入口）；不建 Maven／Gradle。</span>
 
 <!--
-講者備註：JDK 不限定版本，學生用 java -version、javac -version 記錄自己的版本。examples 三檔與 starter 七檔可以放同一個 src 一起編譯（沒有同名類別），共十檔。
+講者備註：JDK 不限定版本，學生用 java -version、javac -version 記錄自己的版本。examples 三檔與 starter 八檔可以放同一個 src 一起編譯（沒有同名類別），共十一檔。
 -->
 
 ---
@@ -621,6 +622,7 @@ java -cp out MemberDemo
 | 父類別參考仍執行子類別版本 | **TODO 3**：`Rover heavy = new HeavyRover(20, 0)` |
 | 編譯看宣告型態 | **D1／F2**：`Rover` 參考不能呼叫 `drill()` |
 | 父類別程式**呼叫**可覆寫方法 | **TODO 1**：`Rover.explore()` 改呼叫 `exploreYield()` |
+| `super.describe()` 沿用父類別版本 | **TODO 4**：`HeavyRover.execute` 用 `super.execute(command)` 交回其他指令 |
 
 範例裡是 `main` 直接呼叫 `describe()`；作業多一層——**父類別自己的流程**去呼叫被覆寫的方法。
 
@@ -637,7 +639,7 @@ java -cp out MemberDemo
 
 ## 探測車：讓重型車探索得 3 份
 
-講義 A、D–G＋課後作業｜`starter/` 7 個 Java 檔
+講義 A、D–G＋課後作業｜`starter/` 8 個 Java 檔
 
 <!--
 講者備註：從這裡開始看 starter；teacher 的完整答案不投影。
@@ -657,12 +659,13 @@ java -cp out MemberDemo
 | starter 檔案 | 狀態 |
 |---|---|
 | `Rover.java` | **TODO 1**；新增 `exploreYield()` 已提供 |
-| `HeavyRover.java` | **TODO 2** |
+| `HeavyRover.java` | **TODO 2**、**TODO 4** |
 | `CompareMissions.java` | **新**；**TODO 3** |
+| `DrillMissionTry.java` | **新**；已提供，檢查指令 4 |
 | `HeavyRoverTry.java` | 已提供；兩個期望值更新為 `6/6/2/1` |
 | `Mission`、`MissionStep`、`MissionLog` | 已提供，與第七週**逐位元組相同** |
 
-`src` = examples 三檔＋starter 七檔，共**十檔**。
+`src` = examples 三檔＋starter 八檔，共**十一檔**。
 
 </div>
 <div>
@@ -672,17 +675,15 @@ javac -encoding UTF-8 -d out src/*.java
 java -cp out MissionLog
 java -cp out HeavyRoverTry
 java -cp out CompareMissions
+java -cp out DrillMissionTry
 ```
 
 起始時（JDK 22 實測）：
 
 - `MissionLog`：一般車 **6/5/3 任務成功**（正確）
 - `HeavyRoverTry`：15 行中 **2 行 不符**
-- `CompareMissions`：
-
-```text
-尚未完成：請建立兩個獨立任務
-```
+- `DrillMissionTry`：14 行中 **4 行 不符**
+- `CompareMissions`：印「尚未完成：請建立兩個獨立任務」
 
 **能編譯 ≠ 已完成**。
 
@@ -690,7 +691,7 @@ java -cp out CompareMissions
 </div>
 
 <!--
-講者備註：不複製 teacher 和 ai 到 src。十個檔案、四個 main，可示範 IntelliJ IDEA：開 java-08、設 SDK、src 標為 Sources Root、從各 main 旁的執行鈕跑。
+講者備註：不複製 teacher 和 ai 到 src。十一個檔案、五個 main，可示範 IntelliJ IDEA：開 java-08、設 SDK、src 標為 Sources Root、從各 main 旁的執行鈕跑。
 -->
 
 ---
@@ -699,7 +700,7 @@ java -cp out CompareMissions
 
 <div class="ex"><span class="dg">diagrams/starter_todo_claude.svg</span></div>
 
-## 起點地圖：三個 TODO 在類別圖的哪裡
+## 起點地圖：四個 TODO 在類別圖的哪裡
 
 <div class="cols" style="grid-template-columns: 560px 1fr; gap: 22px;">
 <div>
@@ -713,13 +714,14 @@ java -cp out CompareMissions
 - **紅字**：要由你完成的部分。
 - **紅色虛線**：TODO 3 要由你建立的物件。
 
-**建議順序**：1 → 2 → 3，每做完一個就重新編譯、跑對應入口。
+**建議順序**：1 → 2 → 3 → 4，每做完一個就重新編譯、跑對應入口。
 
 | TODO | 跑哪個入口檢查 |
 |---|---|
 | 1 | `MissionLog`（一般車不變） |
 | 2 | `HeavyRoverTry`（15 行相符） |
 | 3 | `CompareMissions`（兩段報表） |
+| 4 | `DrillMissionTry`（14 行相符） |
 
 </div>
 </div>
@@ -739,12 +741,12 @@ java -cp out CompareMissions
 1. 第七週 `HeavyRover` 呼叫 `execute(1)` 得幾份樣本？新增的 `drill()` 為什麼**沒有**改變它？
 2. `Rover`、`Mission`、`MissionStep` 各負責什麼？「目前狀態」和「歷史快照」差在哪？
 3. 子類別能直接讀寫 `Rover` 的 `private samples` 嗎？`protected` 是「**只有**子類別能用」嗎？
-4. 記下自己的 `java -version`、`javac -version`，以及本週四個 main 入口。
+4. 記下自己的 `java -version`、`javac -version`，以及本週五個 main 入口。
 
 <span class="note">規則提醒：探索耗 6 得 2（本週重型車得 3）；掃描耗 2 得 1；充電 +5 上限 20；樣本 ≥ 5 成功、能源 0 耗盡；成功與耗盡同時成立時以**成功**為準。</span>
 
 <!--
-講者備註（答案）：1. 2 份；drill 是新增入口，execute 走的仍是 Rover 的 private explore。2. Rover 保存目前狀態與行動；Mission 讀腳本、停止與歷史；MissionStep 是行動後的快照，之後充電不會改舊快照。3. 不能，要用既有方法；protected 也允許同套件存取，本課程約定只由行動實作使用。4. MemberDemo、MissionLog、HeavyRoverTry、CompareMissions。
+講者備註（答案）：1. 2 份；drill 是新增入口，execute 走的仍是 Rover 的 private explore。2. Rover 保存目前狀態與行動；Mission 讀腳本、停止與歷史；MissionStep 是行動後的快照，之後充電不會改舊快照。3. 不能，要用既有方法；protected 也允許同套件存取，本課程約定只由行動實作使用。4. MemberDemo、MissionLog、HeavyRoverTry、CompareMissions、DrillMissionTry。
 -->
 
 ---
@@ -889,7 +891,7 @@ java -cp out MissionLog
 
 <div class="ex"><span class="st">starter/HeavyRover.java</span></div>
 
-## D3｜TODO 2：自己寫出覆寫方法（9 分鐘）
+## D3｜TODO 2：自己寫出覆寫方法（8 分鐘）
 
 <div class="cols">
 <div>
@@ -909,6 +911,8 @@ public class HeavyRover extends Rover {
     // 探索產量固定回傳3。只回傳產量，
     // 不額外扣能源、增加樣本或計次。
 
+    // TODO 4：覆寫 execute（D6 再做）
+
     public String drill() { ... }   // 沿用前週
 }
 ```
@@ -925,7 +929,7 @@ public class HeavyRover extends Rover {
 | 名稱、參數 | `exploreYield`、**無參數** |
 | 註記 | `@Override` |
 
-**不可以**：加欄位、扣能源、`countAction()`、改 `private explore`／`execute`／`drill`。
+**不可以**：加欄位、扣能源、`countAction()`、改 `private explore`／`drill`。同檔的 TODO 4 留到 D6。
 
 完成後跑 `HeavyRoverTry` → **15 行全部「相符」**。失敗時先找哪個狀態數字不同。
 
@@ -1120,9 +1124,131 @@ System.out.println("尚未完成：請建立兩個獨立任務");
 
 <!-- _class: by-claude small -->
 
+<div class="ex"><span class="st">starter/HeavyRover.java</span><span class="st">starter/DrillMissionTry.java</span></div>
+
+## D6｜TODO 4：讓任務腳本也能下指令 4（8 分鐘）
+
+<style scoped>pre { font-size: 17px; }</style>
+
+<div class="cols" style="grid-template-columns: minmax(0, 520px) minmax(0, 1fr); gap: 24px;">
+<div>
+
+**現況**：鑽探只能在 `main` 直接呼叫 `drill()`。`Mission` 只會呼叫 `rover.execute(command)`，所以腳本寫 4 時，兩種車都回「無效指令」。
+
+```java
+// TODO 4：自行寫出覆寫
+// execute(int command) 的方法：
+// 指令 4 交給 drill()，
+// 其他指令交回父類別的 execute；
+// 不重抄 switch，不改 Rover、Mission。
+```
+
+</div>
+<div>
+
+| 指令 | 交給誰 |
+|---|---|
+| `4` | 已提供的 `drill()` |
+| 其他（0～3、無效） | 父類別的 `execute`，用 **`super`** 呼叫 |
+
+- `super` 的用法同 B3 的 `super.describe()`
+- 宣告與父類別**相同**：`public`、回傳 `String`、`execute(int)`，加 `@Override`
+- **不改** `Mission`、`Rover`
+- `countCommands` 仍只統計 0～3；指令 4 記在日誌與成功／拒絕筆數
+
+完成後跑 `DrillMissionTry` → **14 行全部「相符」**。
+
+</div>
+</div>
+
+<!--
+講者備註：TODO 4（codex 講義 D6）。先讓學生寫，不立即顯示答案。巡視重點：@Override、public、其他指令有沒有交回 super.execute。把父類別 switch 整份抄進子類別也能通過 DrillMissionTry，但規則變成兩份，F2 第 5 題會回來討論。drill 自己檢查停止，所以不用在 execute 再檢查一次。
+-->
+
+---
+
+<!-- _class: by-claude -->
+
+<div class="ex"><span class="st">starter/DrillMissionTry.java</span></div>
+
+## D6｜先預測：同一份 Mission，腳本 `{4, 1}`
+
+兩台**新車**各交給一個新的 `Mission`，跑同一份腳本 `{4, 1}`：
+
+| 項目 | 一般車 `Rover(20, 0)` | 重型車 `HeavyRover(20, 0)` |
+|---|---|---|
+| 第 1 步（指令 4）的結果 | ? | ? |
+| 最終 energy / samples / actionCount | ? | ? |
+| outcome、已讀步數 | ? | ? |
+
+**想一想**
+
+1. `Mission` 一行都沒改，為什麼重型車能在任務中鑽探？
+2. 如果改成在 `Mission.run` 裡判斷「這台是不是重型車」，之後再加一種有特殊指令的車，要改哪些類別？
+
+<!--
+講者備註：給學生 2 分鐘寫在講義 D6-1～D6-3，答案在下一頁。重型車鑽探耗 8 得 3，再探索耗 6 得 3（本週產量）。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span class="tc">teacher/HeavyRover.java</span><span class="st">starter/DrillMissionTry.java</span></div>
+
+## D6｜答案：執行時選到 `HeavyRover.execute`
+
+<div class="cols">
+<div>
+
+| 項目 | 一般車 | 重型車 |
+|---|---|---|
+| 第 1 步 | **無效指令** | **成功**（鑽探） |
+| 最終狀態 | 14 / 2 / 1 | 6 / 6 / 2，鑽探 1 次 |
+| outcome | 任務未完成，2 步 | 任務成功，2 步 |
+
+```java
+@Override
+public String execute(int command) {
+    if (command == 4) { return drill(); }
+    return super.execute(command);
+}
+```
+
+</div>
+<div>
+
+```text
+Mission.run
+  rover.execute(4)   ← 宣告型態 Rover：能編譯
+    HeavyRover.execute(4)  ← 實際物件
+      drill()              → 成功
+  rover.execute(1)
+    HeavyRover.execute(1)
+      super.execute(1)     → Rover 的 switch
+```
+
+| 加一種有特殊指令的車 | 要改 |
+|---|---|
+| 在 `Mission` 判斷車種 | `Mission`＋新車；還要轉型（未教） |
+| 覆寫 `execute`（本週） | **只有新車自己** |
+
+</div>
+</div>
+
+<!--
+講者備註：答案與 DrillMissionTry 十四行已在 JDK 22 實測；未完成 TODO 4 時有四行不符。D6-2 與 D1 的 exploreYield 是同一個機制：編譯看宣告型態，執行看實際物件；這次覆寫的是公開入口。D6-3：判斷車種與向下轉型列第十週以後只讀不寫，本週不教。重型車的 counts 為 [0, 1, 0, 0]，指令 4 不另加格子。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
 <div class="ex"><span class="dg">diagrams/evolution_w08_claude.svg</span><span class="tc">teacher/</span></div>
 
-## 類別圖演進：完成 TODO 1–3 之後（第八週）
+## 類別圖演進：完成 TODO 1–4 之後（第八週）
+
+<style scoped>section { font-size: 21px; }</style>
 
 <div class="cols" style="grid-template-columns: 420px 1fr; gap: 26px;">
 <div>
@@ -1134,7 +1260,7 @@ System.out.println("尚未完成：請建立兩個獨立任務");
 
 <span class="tag green">新增</span> `CompareMissions`（兩車比較入口）
 
-<span class="tag">修改</span> `Rover`：新增 `# exploreYield()`，`explore()` 改呼叫它；`HeavyRover`：覆寫 `exploreYield()`
+<span class="tag">修改</span> `Rover`：新增 `# exploreYield()`，`explore()` 改呼叫它；`HeavyRover`：覆寫 `exploreYield()` 與 `execute()`（指令 4）
 
 <span class="tag gray">相同</span> `Mission`、`MissionStep`、`MissionLog`
 
@@ -1143,6 +1269,7 @@ System.out.println("尚未完成：請建立兩個獨立任務");
 - 子類別與父類別出現**同一個方法簽名** → 覆寫。
 - `Mission → Rover` 沒變：任務只認 `Rover`，卻能跑重型車。
 - `private explore()` 仍是 `-`：覆寫的是 `#` 的小方法。
+- `execute` 也覆寫：多接指令 4，其餘交回父類別。
 
 <span class="note">對照第 3 頁的第七週圖。</span>
 
@@ -1164,9 +1291,10 @@ System.out.println("尚未完成：請建立兩個獨立任務");
 | 類別 | 第七週 | 第八週 | 為什麼 |
 |---|---|---|---|
 | `Rover` | `explore()` 寫死 `addSamples(2)` | **新增** `protected int exploreYield()` 回 2；`explore()` 改呼叫它 | 把「會因車種不同」的一小塊開放給子類別 |
-| `HeavyRover` | 新增 `drill()`；探索沿用父類別 | **覆寫** `exploreYield()` 回 3；`drill()` 不變 | 重型車只改產量，流程與規則沿用 |
+| `HeavyRover` | 新增 `drill()`；探索沿用父類別 | **覆寫** `exploreYield()` 回 3；**覆寫** `execute()` 讓指令 4 鑽探；`drill()` 不變 | 只改產量並多接一個指令，其餘流程與規則沿用 |
 | `HeavyRoverTry` | 探索後期望 `6/5/2/1` | 期望 `6/6/2/1` | 規格改了，期望值跟著規格改 |
 | `CompareMissions` | 無 | **新增** | 用同一份 `Mission` 比較兩車 |
+| `DrillMissionTry` | 無 | **新增**（已提供） | 驗收任務腳本的指令 4 |
 | `Mission`／`MissionStep`／`MissionLog` | — | **不變**（逐位元組相同） | 父類別參考就能接收子類別物件 |
 | 會員 `examples` | 只有繼承與新增方法 | **新增** `describe()` 與覆寫 | 先在小範例看覆寫 |
 
@@ -1308,7 +1436,7 @@ a supertype
 
 1. **刪除**子類別的 `private explore()`
 2. **改成**覆寫正確的產量方法（同 TODO 2）
-3. 不重寫 `execute`、不改 `drill`、不改父類別
+3. 不為產量重寫 `execute`、不改 `drill`、不改父類別（模擬原稿沒有 D6 的覆寫，不必補）
 4. 重新編譯，跑**同一個** `HeavyRoverTry` → 15 行全「相符」
 5. 以 `[fix]` commit 保存
 
@@ -1348,7 +1476,7 @@ AI_USAGE 記錄：來源（教師模擬）、預測、實際兩行不符、診�
 <div>
 
 - `Rover` 補 `# exploreYield() : int`，**保留** `- explore() : String`
-- `HeavyRover` 補同一個方法，旁邊用註記標示**覆寫**
+- `HeavyRover` 補同一個方法與 D6 的 `+ execute(command : int) : String`，用註記標示**覆寫**
 
 </div>
 <div>
@@ -1379,12 +1507,12 @@ cmd /c "java -jar C:\ClassTools\plantuml.jar -charset UTF-8 -tsvg -pipe < diagra
 2. 兩個參考的宣告型態不同，能指向**同一個**物件嗎？舉本週例子。
 3. 為什麼 `private explore()` 可以保留，重型車仍能改變產量？
 4. 產量覆寫方法裡為什麼**不該**再 `countAction()`？
-5. 如果每種新車都被迫重寫整個 `execute`，會有什麼維護成本？
+5. D6 覆寫 `execute` 時，如果不用 `super`、把父類別的 switch 整份抄進子類別，會有什麼維護成本？
 
 **F3**：決定課後遷移要做哪一種車、探索產量多少，記在 `DESIGN.md`。
 
 <!--
-講者備註（答案）：1 不會，物件仍是 HeavyRover。2 可以，bob 與 memberView。3 父流程呼叫可覆寫的產量方法。4 父流程已計次，子方法再計會重複。5 停止、扣能源、計次與指令分派會到處重複且不同步。
+講者備註（答案）：1 不會，物件仍是 HeavyRover。2 可以，bob 與 memberView。3 父流程呼叫可覆寫的產量方法。4 父流程已計次，子方法再計會重複。5 規則變成兩份，改掃描或停止規則要改兩處，漏改一處兩種車就不一致；用 super.execute 交回才只有一份。
 -->
 
 ---
@@ -1393,7 +1521,7 @@ cmd /c "java -jar C:\ClassTools\plantuml.jar -charset UTF-8 -tsvg -pipe < diagra
 
 ## G｜保存及取回（最後 15 分鐘）
 
-- ☐ 正式 `src` 重新編譯；`MemberDemo`、`MissionLog`、`HeavyRoverTry`、`CompareMissions` 符合規格。
+- ☐ 正式 `src` 重新編譯；`MemberDemo`、`MissionLog`、`HeavyRoverTry`、`CompareMissions`、`DrillMissionTry` 符合規格。
 - ☐ `README.md` 寫 main 入口、JDK、完成度；puml 與 SVG 同步；缺項據實標示。
 - ☐ GitHub Desktop 檢查差異 → commit → push；到 GitHub 核對程式、AI 修正與 SVG。
 - ☐ 在原 repo **以外**的新位置 clone，編譯 `java-08/src`，執行 `CompareMissions`。
@@ -1404,7 +1532,7 @@ cmd /c "java -jar C:\ClassTools\plantuml.jar -charset UTF-8 -tsvg -pipe < diagra
   LAB_REPORT.md   AI_USAGE.md
   java-08/
     README.md  DESIGN.md
-    src/          # examples 三檔＋starter 七檔
+    src/          # examples 三檔＋starter 八檔
     diagrams/     # dispatch_practice.puml 與 .svg
     ai-check/     # E 活動三檔，分開編譯
 ```
@@ -1466,11 +1594,11 @@ cmd /c "java -jar C:\ClassTools\plantuml.jar -charset UTF-8 -tsvg -pipe < diagra
 
 ## 主線必做、繳交與評量
 
-**主線必做**：TODO 1–3；`HeavyRoverTry` 15 行全「相符」；`CompareMissions` 兩段完整報表；D5 兩個邊界＋一個本人反例；E 模擬 AI 審查；F 指定 UML。
+**主線必做**：TODO 1–4；`HeavyRoverTry` 15 行與 `DrillMissionTry` 14 行全「相符」；`CompareMissions` 兩段完整報表；D5 兩個邊界＋一個本人反例；E 模擬 AI 審查；F 指定 UML。
 
 | 項目 | 建議配分 | 驗收重點 |
 |---|---:|---|
-| 主線與狀態驗證 | 35 | 三組 TODO、兩車完整報表、邊界及本人反例 |
+| 主線與狀態驗證 | 35 | 四組 TODO、兩車完整報表、指令 4、邊界及本人反例 |
 | 獨立遷移 | 25 | 自行建構／覆寫／入口，規格及比較有證據 |
 | AI 審查與修正 | 20 | 先預測、解釋 private 誤用、最小修正與同案例重測 |
 | UML、解釋與可重現 | 20 | 本人圖、呼叫判讀、README 及重新取回結果 |
@@ -1504,7 +1632,7 @@ cmd /c "java -jar C:\ClassTools\plantuml.jar -charset UTF-8 -tsvg -pipe < diagra
 
 <div class="ex"><span class="tc">teacher/Rover.java</span><span class="tc">teacher/HeavyRover.java</span><span class="tc">teacher/CompareMissions.java</span></div>
 
-## 參考答案：TODO 1–3、B3
+## 參考答案：TODO 1–4、B3
 
 <div class="cols">
 <div>
@@ -1547,15 +1675,20 @@ Mission heavyMission = new Mission(heavy);
 heavyMission.run(script);
 show("重型探測車", heavy, heavyMission,
      script.length);
-```
 
-E4 修正後的 AI 版 = 刪掉 `private explore()`，加上 TODO 2 的方法。
+// TODO 4｜HeavyRover.java
+@Override
+public String execute(int command) {
+    if (command == 4) { return drill(); }
+    return super.execute(command);
+}
+```
 
 </div>
 </div>
 
 <!--
-講者備註：以上全部在 JDK 22 暫存目錄實測。
+講者備註：以上全部在 JDK 22 暫存目錄實測。E4 修正後的 AI 版 = 刪掉 private explore()，加上 TODO 2 的方法；模擬原稿沒有 TODO 4 的覆寫，ai-check 不要求補。
 -->
 
 ---
@@ -1585,7 +1718,7 @@ java -cp out-teacher MissionStateCheck
 </div>
 <div>
 
-- `PolymorphismCheck`：51 項覆寫／結構檢查（本機實測通過）
+- `PolymorphismCheck`：59 項覆寫／結構檢查，含指令 4 的 8 項（本機實測通過）
 - 批改學生主線：只編譯學生 src＋需要的 Check，**不加入**教師同名答案
 - 檢查器不驗收自訂遷移、圖的可讀性與學生解釋
 
@@ -1662,7 +1795,9 @@ java -cp out-transfer SurveyRoverTry
 | 重型車仍得 2 份 | 父 `explore` 仍寫死 2（TODO 1 漏做），或子方法未真正覆寫；逐步追蹤呼叫 |
 | `@Override` 報錯 | 比對名稱、參數、存取權、父方法是否 `private`；**不要直接刪註記** |
 | 行動次數多 1 | 產量方法額外改了狀態；只保留回傳值 |
-| `Rover` 參考不能 `drill()` | `Rover` 沒宣告 `drill`；本週用共同操作，不要求轉型 |
+| `Rover` 參考不能 `drill()` | `Rover` 沒宣告 `drill`；改用 D6 的 `execute(4)`，經覆寫進入 `drill`，不要求轉型 |
+| 指令 4 仍回無效指令 | 沒有真正覆寫 `execute`（名稱、參數或 `public` 不符），或物件是一般車 |
+| 重型車掃描等指令失效 | 覆寫 `execute` 後沒有用 `super.execute` 交回其他指令 |
 | 重型車仍讀最後的掃描 | 改了 `Mission` 停止檢查、共用任務或輸出硬寫；恢復原契約 |
 | 只看「任務成功」就判 AI 通過 | 5 和 6 都達標，要看**精確 samples** |
 | 改 Try 的期望值消除不符 | 驗收規格被改；恢復期望，修正實作 |
@@ -1680,7 +1815,7 @@ java -cp out-transfer SurveyRoverTry
 
 **第九週入口**（codex handoff）：先診斷 `Rover r = new HeavyRover(...)` 的參考型態、實際物件與呼叫路徑，再問——如果**共同類別本身不適合直接建立物件**，或**不同家族都要遵守共同操作規格**，該如何表示？由此引入 `abstract` 與 `interface`。
 
-本週的 `Rover` 仍是可建立的普通類別，`exploreYield()` 有預設 2——**新車種忘了覆寫也會默默得到 2 份**，這正是第九週要解決的問題。
+本週的 `Rover` 仍是可建立的普通類別，`exploreYield()` 有預設 2——**新車種忘了覆寫也會默默得到 2 份**，這正是第九週要解決的問題。第九週沿用的 `HeavyRover` 也要保留本週的 `execute` 覆寫，指令 4 才不會退回無效指令。
 
 **來源**
 - Deitel, *Java How to Program, Early Objects* 11e（本專案 EPUB）：§9.4、§10.2、§10.3、§10.6（父類別參考指向子類別物件）。

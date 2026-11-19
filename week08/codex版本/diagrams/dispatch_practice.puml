@@ -18,6 +18,7 @@ class Rover {
 class HeavyRover {
   + drill() : String
   ' TODO F1：補探索產量方法
+  ' TODO F1：補D6覆寫的指令入口
 }
 class Mission {
   - rover : Rover
@@ -26,7 +27,7 @@ class Mission {
 Rover <|-- HeavyRover
 Mission --> "1" Rover : rover
 note bottom of HeavyRover
-TODO F1：補正確產量方法與覆寫註記
+TODO F1：補正確產量方法、D6的指令入口與覆寫註記
 保留Rover的private explore
 end note
 note bottom of Mission

@@ -74,6 +74,21 @@ TRIAL = '''鑽探: 成功 （預期 成功） 相符
 初始已達標: 任務已停止 （預期 任務已停止） 相符
 達標後狀態維持: 20/5/0/0 （預期 20/5/0/0） 相符
 '''
+DRILL = '''重型車：指令4的結果: 成功 （預期 成功） 相符
+重型車：任務後狀態: 6/6/2/1 （預期 6/6/2/1） 相符
+重型車：任務結果與已讀步數: 任務成功/2 （預期 任務成功/2） 相符
+重型車：指令次數[0..3]: [0, 1, 0, 0] （預期 [0, 1, 0, 0]） 相符
+一般車：指令4的結果: 無效指令 （預期 無效指令） 相符
+一般車：任務後狀態: 14/2/1 （預期 14/2/1） 相符
+一般車：成功／拒絕筆數: 1/1 （預期 1/1） 相符
+能源不足時下指令4: 能源不足 （預期 能源不足） 相符
+能源不足時狀態維持: 7/0/0/0 （預期 7/0/0/0） 相符
+已達標後下指令4: 任務已停止 （預期 任務已停止） 相符
+已達標後狀態維持: 20/5/0/0 （預期 20/5/0/0） 相符
+重型車掃描仍用原規則: 成功 （預期 成功） 相符
+掃描後狀態: 18/1/1/0 （預期 18/1/1/0） 相符
+重型車的無效指令: 無效指令 （預期 無效指令） 相符
+'''
 
 
 def static_checks():
@@ -100,8 +115,11 @@ def static_checks():
             assert (BASE / group / name).read_bytes() == (OLD / 'teacher' / name).read_bytes(), name
     for name in ['MissionLogCheck.java', 'MissionStateCheck.java', 'FixedScriptMission.java']:
         assert (BASE / 'teacher' / name).read_bytes() == (OLD / 'teacher' / name).read_bytes(), name
-    for name, number in [('Rover.java', '1'), ('HeavyRover.java', '2'), ('CompareMissions.java', '3')]:
-        assert re.findall(r'TODO (\d)', (BASE / 'starter' / name).read_text(encoding='utf-8')) == [number]
+    for name, numbers in [('Rover.java', ['1']), ('HeavyRover.java', ['2', '4']),
+                          ('CompareMissions.java', ['3'])]:
+        assert re.findall(r'TODO (\d)', (BASE / 'starter' / name).read_text(encoding='utf-8')) == numbers
+    assert (BASE / 'starter/DrillMissionTry.java').read_bytes() == (BASE / 'teacher/DrillMissionTry.java').read_bytes()
+    assert (BASE / 'starter/HeavyRoverTry.java').read_bytes() == (BASE / 'teacher/HeavyRoverTry.java').read_bytes()
     for p in (BASE / 'diagrams').glob('*.puml'):
         assert p.with_suffix('.svg').is_file(), p
         assert 'Syntax Error' not in p.with_suffix('.svg').read_text(encoding='utf-8'), p
@@ -112,7 +130,7 @@ def static_checks():
     for target in re.findall(r'<img[^>]+src="([^"]+)"', html):
         assert (BASE / unquote(target)).exists(), target
     assert 'instanceof' not in (BASE / 'teacher/CompareMissions.java').read_text(encoding='utf-8')
-    print(f'PASS static links={links}, slides={pages}, preserved contracts and TODO 1-3')
+    print(f'PASS static links={links}, slides={pages}, preserved contracts and TODO 1-4')
 
 
 def main():
@@ -133,6 +151,10 @@ def main():
         starter_trial = java(work / 'starter', 'HeavyRoverTry')
         assert len([line for line in starter_trial.splitlines() if line.endswith('不符')]) == 2
         assert '探索後: 6/5/2/1' in starter_trial
+        assert java(work / 'teacher', 'DrillMissionTry') == DRILL
+        starter_drill = java(work / 'starter', 'DrillMissionTry')
+        assert len([line for line in starter_drill.splitlines() if line.endswith('不符')]) == 4, starter_drill
+        assert '重型車：指令4的結果: 無效指令' in starter_drill
         print('PASS full expected outputs and explicit unfinished starter')
         for check in ['MissionLogCheck', 'MissionStateCheck', 'PolymorphismCheck']:
             print(java(work / 'teacher', check).strip())
@@ -150,6 +172,7 @@ def main():
         compile_to(sorted(combined.glob('*.java')), work / 'student-finish')
         assert java(work / 'student-finish', 'CompareMissions') == COMPARE
         assert java(work / 'student-finish', 'HeavyRoverTry') == TRIAL
+        assert java(work / 'student-finish', 'DrillMissionTry') == DRILL
         assert java(work / 'student-finish', 'MissionLog') == java(work / 'teacher', 'MissionLog')
         print('PASS combined student start/finish configuration')
         compile_to([BASE / 'teacher/Rover.java', BASE / 'teacher/Mission.java',
@@ -191,6 +214,8 @@ def main():
              'protected int exploreYield(int amount)', 'does not override', 'heavy'),
             ('narrow-access', BASE / 'teacher/HeavyRover.java', 'protected int exploreYield()',
              'private int exploreYield()', 'weaker access', 'heavy'),
+            ('narrow-execute', BASE / 'teacher/HeavyRover.java', 'public String execute(int command)',
+             'protected String execute(int command)', 'weaker access', 'heavy'),
             ('reference-member', BASE / 'examples/MemberDemo.java', 'System.out.println(memberView.describe());',
              'memberView.claimBonus();', 'cannot find symbol', 'member'),
         ]
@@ -227,6 +252,8 @@ def main():
             ('HeavyRover.java', '        return 3;', '        countAction();\n        return 3;'),
             ('Rover.java', 'if (isStopped()) { return "任務已停止"; }', '// missing stop'),
             ('HeavyRover.java', 'private int drillCount;', 'private int drillCount;\n    private int energy;'),
+            ('HeavyRover.java', '        if (command == 4) { return drill(); }\n', ''),
+            ('HeavyRover.java', '        return super.execute(command);', '        return "無效指令";'),
         ]
         for i, (name, old, new) in enumerate(mutations):
             target = work / f'mutation-{i}'
@@ -238,7 +265,7 @@ def main():
             out = work / f'mutation-out-{i}'
             compile_to(sorted(target.glob('*.java')), out)
             run(['java', "-Dstdout.encoding=UTF-8", '-cp', out, 'PolymorphismCheck'], success=False)
-        print('PASS five detected behavior/design mutations')
+        print('PASS seven detected behavior/design mutations')
     if not args.code_only:
         static_checks()
     print('ALL CHECKS PASSED')

@@ -4,9 +4,9 @@
 
 ## 一、主線必做
 
-1. 完成TODO 1–3：Rover探索流程呼叫產量方法、HeavyRover以@Override覆寫、CompareMissions建立兩組獨立任務。不能只改預期值讓結果印成功。
-2. 一般車與重型車探索成本均6；產量分別2及3；成功才增加一次actionCount。維持private狀態與private explore，不改execute、Mission、MissionStep或MissionLog。
-3. HeavyRoverTry十五行都顯示「相符」，保留完整輸出；CompareMissions保留兩段完整報表，不只最後一行。
+1. 完成TODO 1–4：Rover探索流程呼叫產量方法、HeavyRover以@Override覆寫產量、CompareMissions建立兩組獨立任務、HeavyRover覆寫execute讓指令4鑽探。不能只改預期值讓結果印成功。
+2. 一般車與重型車探索成本均6；產量分別2及3；成功才增加一次actionCount。維持private狀態與private explore，不改Rover.execute、Mission、MissionStep或MissionLog。HeavyRover.execute只把指令4交給drill，其他指令以super.execute交回父類別，不重抄switch。
+3. HeavyRoverTry十五行與DrillMissionTry十四行都顯示「相符」，保留完整輸出；CompareMissions保留兩段完整報表，不只最後一行。
 4. 完成講義D5兩個邊界案例與一個自己的反例，先寫預期、再記實際與可抓到的錯誤。自訂測試入口可放experiments，繳交其Java來源及結果，不要求再寫報表系統。
 5. 完成一份E模擬AI審查及F指定UML；B、C預測與錯誤實驗保留於LAB_REPORT，不重複另外寫長篇報告。
 
@@ -15,10 +15,11 @@
 | 20/0，{1,1,2} | 6/5/3/任務成功，3步 | 8/6/2/任務成功，2步，忽略1筆 |
 | 6/2，{1,3} | 0/4/1/能源耗盡，1步 | 0/5/1/任務成功，1步 |
 | 5/0，{1} | 5/0/0/任務未完成，1筆拒絕 | 同左 |
+| 20/0，{4,1} | 14/2/1/任務未完成，2步，指令4為無效指令 | 6/6/2/任務成功，2步，鑽探1次 |
 
-最後一列腳本用完但未達標、未耗盡、未返回，因此outcome為任務未完成。每筆行動回傳與任務outcome是不同欄位，不可混寫。
+第三列腳本用完但未達標、未耗盡、未返回，因此outcome為任務未完成；第四列一般車同理。每筆行動回傳與任務outcome是不同欄位，不可混寫。
 
-固定int[] script，不讀args或Scanner、不新增指令4。初始energy為0..20、samples非負；腳本非null。每次新車、新Mission，只run一次；任務與讀結果期間不外部操作同一車。合法小整數，不驗收數值溢位、例外、共享車、並行或契約外建構值。
+固定int[] script，不讀args或Scanner。指令只有0..4，指令4只有重型車接受；countCommands仍只統計0..3。初始energy為0..20、samples非負；腳本非null。每次新車、新Mission，只run一次；任務與讀結果期間不外部操作同一車。合法小整數，不驗收數值溢位、例外、共享車、並行或契約外建構值。
 
 ## 二、一個小型獨立遷移題（必做，二選一）
 
@@ -64,7 +65,7 @@
   java-08/
     README.md
     DESIGN.md
-    src/          # 初始十檔＋自選遷移兩檔
+    src/          # 初始十一檔＋自選遷移兩檔
     diagrams/     # 本人dispatch_practice.puml與.svg
     experiments/  # D5本人測試入口與必要相依檔；不放刻意編譯錯誤副本
     ai-check/     # 完成Rover、修正後AI HeavyRover、HeavyRoverTry
@@ -72,11 +73,11 @@
 
 B、C編譯錯誤只留診斷於LAB_REPORT，不要求繳錯誤副本。experiments、ai-check及正式src分開編譯；同名類別不要放同一次javac。不要複製教師答案或教師檢查工具到src。
 
-README列實際JDK、操作目錄、四個主入口、遷移入口、TODO完成度、編譯指令與本人操作證據。GitHub Desktop檢查差異、commit、push、遠端核對；新位置clone後重新編譯執行。排除out、class、jar、.idea、iml及憑證。失敗與待補據實記錄，不能用作者驗證代替本人結果。
+README列實際JDK、操作目錄、五個主入口、遷移入口、TODO完成度、編譯指令與本人操作證據。GitHub Desktop檢查差異、commit、push、遠端核對；新位置clone後重新編譯執行。排除out、class、jar、.idea、iml及憑證。失敗與待補據實記錄，不能用作者驗證代替本人結果。
 
 | 項目 | 建議配分 | 驗收重點 |
 |---|---:|---|
-| 主線與狀態驗證 | 35 | 三組TODO、兩車完整報表、邊界及本人反例 |
+| 主線與狀態驗證 | 35 | 四組TODO、兩車完整報表、指令4、邊界及本人反例 |
 | 獨立遷移 | 25 | 自行建構／覆寫／入口，規格及比較有證據 |
 | AI審查與修正 | 20 | 先預測、解釋private誤用、最小修正與相同案例重測 |
 | UML、解釋與可重現 | 20 | 本人圖、呼叫判讀、README及重新取回結果 |
@@ -85,6 +86,6 @@ README列實際JDK、操作目錄、四個主入口、遷移入口、TODO完成�
 
 ## 選做
 
-- 用super.describe()討論沿用父方法與直接重寫說明的取捨；B3之外不另要求第二份紀錄。
+- 用super.describe()討論沿用父方法與直接重寫說明的取捨，可與D6的super.execute對照；B3之外不另要求第二份紀錄。
 - 閱讀Object.toString()覆寫，設計不改變物件狀態的摘要；不以記憶體位址當輸出驗收。
 - 自訂一個三檔短情境，例如通知與緊急通知，觀察相同父類別方法呼叫的不同版本；不要求完整系統。

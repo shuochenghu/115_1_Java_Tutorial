@@ -59,20 +59,21 @@ Code Review：審查 AI 生成的繼承程式碼
 - 以相同簽名覆寫實例方法，使用 @Override
 - 分開判斷能否編譯與執行哪個方法
 - 用 Rover 型態參考操作不同車種
-- 完成三組 TODO、AI 反例與一個課後遷移
+- 用 super 呼叫沿用父類別，只在子類別加入新指令
+- 完成四組 TODO、AI 反例與一個課後遷移
 
 第九週學抽象類別與介面，第十週深入過載與多型。
 
-<!-- 教師提示：不教轉型、instanceof、JUnit或泛型設計。super方法呼叫只安排B3短體驗。 -->
+<!-- 教師提示：不教轉型、instanceof、JUnit或泛型設計。super方法呼叫在B3體驗，D6的execute覆寫再用一次。 -->
 
 ---
 ## 課堂配置
 
 | 第1節50分 | 第2節50分 | 第3節50分 |
 |---|---|---|
-| A 診斷10 | D1 規格10 | E AI審查25 |
-| B 會員20 | D2–D4 實作25 | F 圖與檢核10 |
-| C 參考與實驗20 | D5 比較15 | G 保存15 |
+| A 診斷10 | D1 規格8 | E AI審查25 |
+| B 會員20 | D2–D4 實作24 | F 圖與檢核10 |
+| C 參考與實驗20 | D5 比較10、D6 鑽探8 | G 保存15 |
 
 課後延續成果，獨立完成一種小型探測車。
 
@@ -87,9 +88,10 @@ Code Review：審查 AI 生成的繼承程式碼
 | D 一般車 | src | MissionLog |
 | D 狀態檢查 | src | HeavyRoverTry |
 | D 兩車任務 | src | CompareMissions |
+| D6 指令4 | src | DrillMissionTry |
 | E 模擬AI | ai-check 三檔 | HeavyRoverTry |
 
-src 先放 examples 三檔與 starter 七檔，共十檔。
+src 先放 examples 三檔與 starter 八檔，共十一檔。
 
 <!-- 教師提示：A。日期目錄見README；VS Code確認位置後，IDEA開同一java-08、src來源根、已裝SDK。teacher與ai不混進src。 -->
 
@@ -227,7 +229,7 @@ memberView.claimBonus();
 | protected exploreYield | 回傳探索產量 |
 | Mission | 決定何時讀下一筆、保存日誌 |
 
-本週只在產量位置加入可覆寫方法。
+D2–D4 先在產量位置加入可覆寫方法，D6 再覆寫指令入口。
 
 <!-- 教師提示：D1畫呼叫追蹤。父方法private不是覆寫入口，透過新的protected產量方法引入。只回傳正固定小整數，任意惡意覆寫不在契約內。 -->
 
@@ -341,6 +343,37 @@ show 只印報表，建立任務由你完成。
 <!-- 教師提示：D5依序0/4/1 能源耗盡、0/5/1 任務成功，各1步。第二列皆拒絕且5/0/0 任務未完成；拒絕是行動回傳，任務未完成是任務結果。 -->
 
 ---
+## D6｜TODO 4：任務也能鑽探
+
+腳本寫 4 時，兩種車目前都回「無效指令」。
+
+不改 Mission 與 Rover，只在 src/HeavyRover.java 覆寫 execute：
+
+| 指令 | 交給誰 |
+|---|---|
+| 4 | 已提供的 drill() |
+| 其他 | 父類別原本的 execute（super 呼叫） |
+
+宣告與父類別相同、保留 public、加 @Override；不重抄 switch。
+
+<!-- 教師提示：TODO4。先讓學生寫，再顯示答案：if (command == 4) { return drill(); } return super.execute(command);。改protected會得到weaker access。drill自行檢查停止。countCommands仍只統計0..3，不另加格子。 -->
+
+---
+## D6｜同一份 Mission，兩種結果
+
+兩台新車各跑腳本 {4,1}，先預測再執行 DrillMissionTry。
+
+| 項目 | 一般車 20/0 | 重型車 20/0 |
+|---|---|---|
+| 第 1 步結果 | 待預測 | 待預測 |
+| energy / samples / actions | 待預測 | 待預測 |
+| outcome、已讀步數 | 待預測 | 待預測 |
+
+若改在 Mission 判斷「是不是重型車」，再加一種車要改哪裡？
+
+<!-- 教師提示：答案一般車無效指令、14/2/1、任務未完成2步；重型車成功、6/6/2（鑽探1次）、任務成功2步。DrillMissionTry十四行全相符，未完成時四行不符。Mission只認得Rover，執行時選到HeavyRover.execute。在Mission判斷車種要改Mission且需轉型，留第十週閱讀。 -->
+
+---
 ## E｜AI 審查的需求與來源
 
 教師設計的模擬回覆，非真實 AI 對話。
@@ -417,7 +450,7 @@ private String explore() { ... }
 
 ![w:1080 h:350](diagrams/dispatch_practice.svg)
 
-補兩個產量方法與覆寫註記，再產本人 SVG。
+補兩個產量方法、重型車的 execute 與覆寫註記，再產本人 SVG。
 
 <!-- 教師提示：原稿dispatch_practice.puml，保留private explore與Mission的Rover欄位。只補指定成員，不抄完整圖；立即預覽，DESIGN嵌入本人SVG。 -->
 
@@ -427,7 +460,7 @@ private String explore() { ... }
 1. 父類別參考會改變物件的實際類別嗎？
 2. private explore 保留，為何產量仍可改變？
 3. 產量方法為何不再增加行動次數？
-4. 新車都重寫 execute，維護會遇到什麼問題？
+4. 覆寫 execute 卻不用 super、整份抄 switch，會有什麼問題？
 
 用今天的實際結果支持解釋。
 
@@ -450,7 +483,7 @@ SurveyRover：精細採樣，每次探索只取 1 份，成本仍 6。
 ---
 ## G｜保存與重新取回
 
-- 編譯並執行四個主入口，缺項標待補
+- 編譯並執行五個主入口，缺項標待補
 - puml 與 SVG 同步，README 記入口與 JDK
 - GitHub Desktop 檢查差異、commit、push
 - 在 GitHub 核對，再於新位置 clone

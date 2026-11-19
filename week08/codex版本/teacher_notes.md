@@ -6,14 +6,15 @@
 
 | 分鐘 | 活動 | 教師安排與最低成果 |
 |---|---|---|
-| 0–10 | A | 取回十檔、版本與前週診斷；不要先跑會員答案 |
+| 0–10 | A | 取回十一檔、版本與前週診斷；不要先跑會員答案 |
 | 10–30 | B | B1預測7、B2註記實驗5、B3小修改8 |
 | 30–50 | C | 型態表8、隔離編譯7、單一物件圖5 |
-| 50–60 | D1 | 從需求追蹤execute到產量方法 |
-| 60–68 | D2 | 學生自行改產量來源，一般車回歸 |
-| 68–77 | D3 | 學生自行宣告覆寫；不要立即顯示完整方法 |
-| 77–85 | D4 | 自行建立兩組任務，show只提供報表 |
-| 85–100 | D5 | 比較完整輸出、兩個邊界與本人反例 |
+| 50–58 | D1 | 從需求追蹤execute到產量方法 |
+| 58–66 | D2 | 學生自行改產量來源，一般車回歸 |
+| 66–74 | D3 | 學生自行宣告覆寫；不要立即顯示完整方法 |
+| 74–82 | D4 | 自行建立兩組任務，show只提供報表 |
+| 82–92 | D5 | 比較完整輸出、兩個邊界；本人反例可課後補 |
+| 92–100 | D6 | 覆寫execute加入指令4，super交回其他指令；Mission不改 |
 | 100–125 | E | 預測5、反例6、編譯診斷4、修正重測7、Prompt3 |
 | 125–135 | F | 補圖、產圖、課末檢核與遷移選題 |
 | 135–150 | G | 保存、push、遠端核對、新clone編譯 |
@@ -24,7 +25,7 @@
 
 ## A答案
 
-A1：工作目錄是學生java-08；四個主入口MemberDemo、MissionLog、HeavyRoverTry、CompareMissions。JDK依本人實際輸出，不抄作者22。starter十檔可合併編譯，只有會員與一般任務完成；HeavyRoverTry兩行不符、CompareMissions為尚未完成。
+A1：工作目錄是學生java-08；五個主入口MemberDemo、MissionLog、HeavyRoverTry、CompareMissions、DrillMissionTry。JDK依本人實際輸出，不抄作者22。starter十一檔可合併編譯，只有會員與一般任務完成；HeavyRoverTry兩行不符、CompareMissions為尚未完成、DrillMissionTry四行不符。
 
 A2：第七週探索2份；drill是新增入口，沒有改變execute呼叫的private explore。本週從此動機引入產量擴充。
 
@@ -66,7 +67,7 @@ public String describe() {
 會員 Bob / 點數=28 / VIP
 ```
 
-super.describe()指定呼叫父類別版本，仍讀同一個物件內Member宣告的狀態，不建立另一個物件。這是小型實作體驗；更複雜的組合設計不列本週要求。此修改只在experiments，不要求正式src與原範例輸出一起變動。
+super.describe()指定呼叫父類別版本，仍讀同一個物件內Member宣告的狀態，不建立另一個物件。D6會在HeavyRover.execute再用一次super方法呼叫；更複雜的組合設計不列本週要求。此修改只在experiments，不要求正式src與原範例輸出一起變動。
 
 ## C答案與語意
 
@@ -169,6 +170,55 @@ Heavy第二次探索已得6份，Mission下一輪先查停止，不讀掃描，�
 
 本人反例不限定答案。可用HeavyRover(6,1)探索驗證只計一次、樣本4而耗盡；或HeavyRover(20,5)腳本{1}驗證不讀不記、狀態不變。要求學生說明可抓錯誤，不只重抄教師案例。
 
+## D6答案（TODO 4：任務下鑽探指令）
+
+教師答案（teacher/HeavyRover.java）：
+
+```java
+@Override
+public String execute(int command) {
+    if (command == 4) { return drill(); }
+    return super.execute(command);
+}
+```
+
+宣告須與父類別相同並保留public；改成protected會得到attempting to assign weaker access privileges。指令4交給drill，drill自行檢查停止，所以已停止的車回「任務已停止」且不鑽探。其他指令交回super.execute，探索、掃描、充電、返回與無效指令的規則仍只寫在Rover。不要讓學生把父類別switch整份抄進子類別；那樣能過DrillMissionTry，但規則變成兩份，F2第5題就是在問這個成本。
+
+D6-1：兩台新車各跑{4,1}。
+
+| 項目 | 一般車Rover(20,0) | 重型車HeavyRover(20,0) |
+|---|---|---|
+| 第1步結果 | 無效指令（能源20不變） | 成功（鑽探，12/3/1，鑽探1次） |
+| 最終energy/samples/actionCount | 14/2/1 | 6/6/2 |
+| outcome及已讀步數 | 任務未完成，2步 | 任務成功，2步 |
+
+重型車的counts為[0, 1, 0, 0]：指令4不另加計數格，但這一步記在日誌，成功筆數為2。一般車成功1、拒絕1。
+
+DrillMissionTry十四行完整輸出：
+
+```text
+重型車：指令4的結果: 成功 （預期 成功） 相符
+重型車：任務後狀態: 6/6/2/1 （預期 6/6/2/1） 相符
+重型車：任務結果與已讀步數: 任務成功/2 （預期 任務成功/2） 相符
+重型車：指令次數[0..3]: [0, 1, 0, 0] （預期 [0, 1, 0, 0]） 相符
+一般車：指令4的結果: 無效指令 （預期 無效指令） 相符
+一般車：任務後狀態: 14/2/1 （預期 14/2/1） 相符
+一般車：成功／拒絕筆數: 1/1 （預期 1/1） 相符
+能源不足時下指令4: 能源不足 （預期 能源不足） 相符
+能源不足時狀態維持: 7/0/0/0 （預期 7/0/0/0） 相符
+已達標後下指令4: 任務已停止 （預期 任務已停止） 相符
+已達標後狀態維持: 20/5/0/0 （預期 20/5/0/0） 相符
+重型車掃描仍用原規則: 成功 （預期 成功） 相符
+掃描後狀態: 18/1/1/0 （預期 18/1/1/0） 相符
+重型車的無效指令: 無效指令 （預期 無效指令） 相符
+```
+
+未完成TODO 4時，「重型車：指令4的結果」「重型車：任務後狀態」「重型車：任務結果與已讀步數」「能源不足時下指令4」四行不符。只完成TODO 1–2時重型車狀態為14/3/1/0，仍是這四行。
+
+D6-2：Mission的欄位宣告為Rover，只能呼叫Rover宣告過的execute，編譯因此通過；執行時依實際物件HeavyRover選到子類別覆寫的execute，所以收到4會鑽探。與D1的exploreYield是同一個機制，只是這次覆寫的是公開入口。
+
+D6-3：在Mission判斷車種，每加一種有特殊指令的車都要回頭改Mission，Mission也要認得每個子類別，還需要本週未教的轉型才能呼叫drill。覆寫execute時，新車只在自己的類別加入指令，Mission與Rover都不必改。判斷車種與向下轉型列第十週以後的閱讀內容，本週不要求寫。
+
 ## E答案與最小修正
 
 E1：模擬AI能編譯，drill後是12/3/1/1；execute(1)仍沿用Rover.explore與繼承的產量2，所以為6/5/2/1。沒有真正覆寫產量方法。
@@ -184,7 +234,7 @@ E2兩行不符：
 
 E3：子類別private explore加@Override會編譯失敗，診斷does not override or implement a method from a supertype。Rover的private explore不是可覆寫入口。把產量改static不符合實例方法覆寫設計，不能用static隱藏解決。限制本週static判讀為文字，不延伸完整隱藏／欄位規則。
 
-E4：移除AI private explore整段，加入D3產量方法；保留正確drill及父execute。相同HeavyRoverTry十五行全部顯示「相符」；再看正常兩車任務仍符合D5。不將teacher整份答案蓋進去冒充本人最小修正。
+E4：移除AI private explore整段，加入D3產量方法；保留正確drill及父execute。模擬原稿沒有D6的execute覆寫，ai-check只用HeavyRoverTry驗收探索產量，不要求補上。相同HeavyRoverTry十五行全部顯示「相符」；再看正常兩車任務仍符合D5。不將teacher整份答案蓋進去冒充本人最小修正。
 
 E5示範Prompt（教師示範，非真實AI對話）：
 
@@ -194,9 +244,9 @@ E5示範Prompt（教師示範，非真實AI對話）：
 
 ## F與G答案／檢查
 
-F1：補Rover的# exploreYield(): int與HeavyRover相同方法，註記override與產量；保留Rover的- explore(): String。繼承三角形指Rover，Mission關聯的欄位型態仍Rover。參考圖diagrams/dispatch_reference.puml／SVG只列指定成員，明示省略。不要把樣本多型用兩份狀態解釋。
+F1：補Rover的# exploreYield(): int與HeavyRover相同方法，以及HeavyRover的+ execute(command : int) : String，註記兩個覆寫；保留Rover的- explore(): String。繼承三角形指Rover，Mission關聯的欄位型態仍Rover。參考圖diagrams/dispatch_reference.puml／SVG只列指定成員，明示省略。不要把樣本多型用兩份狀態解釋。
 
-F2：1不會，物件仍HeavyRover；2可以，bob/memberView即例；3父流程呼叫可覆寫產量方法；4父流程已計次，子方法再計會重複；5停止、扣能源、記次與指令分派容易重複並不同步。
+F2：1不會，物件仍HeavyRover；2可以，bob/memberView即例；3父流程呼叫可覆寫產量方法；4父流程已計次，子方法再計會重複；5父類別switch變成兩份，改掃描或停止規則時要改兩處，漏改一處兩種車就不一致；用super.execute交回才只有一份規則。
 
 F3：只記自選題規格；不提前把課後子類別當全班先備。G依本人實際成果核對，不能拿作者驗證替代學生clone／GUI／遠端操作。網路失敗保留備份及錯誤，不虛填push成功。
 
@@ -220,7 +270,9 @@ SurveyRover完整教師參考在teacher/transfer，與主線教師檔分開編�
 | Heavy仍得2份 | 父explore仍寫死2，或子方法未真正覆寫；逐段追蹤呼叫 |
 | @Override報錯 | 比較名稱、參數、可見性與父方法是否private，不直接刪註記 |
 | 行動次數多1 | 產量方法額外改狀態；只保留回傳值 |
-| 父類別參考不能drill | Rover沒有此宣告；本週用共同操作，不要求轉型 |
+| 父類別參考不能drill | Rover沒有此宣告；改用D6的execute(4)，經覆寫進入drill，不要求轉型 |
+| 指令4仍回無效指令 | HeavyRover沒有真正覆寫execute（名稱、參數或public不符），或物件是一般車；先看@Override診斷 |
+| 掃描等指令在重型車失效 | 覆寫execute後沒有用super.execute交回其他指令 |
 | Heavy仍讀最後掃描 | Mission停止檢查被改、共用任務或輸出硬寫；恢復原契約 |
 | AI只看任務成功就通過 | 5與6都達標，要檢查精確樣本數 |
 | 先改Try的expect消除不符 | 驗收規格遭改動；恢復預先算好的期望，修正實作 |

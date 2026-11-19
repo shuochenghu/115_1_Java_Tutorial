@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 // 類別：PolymorphismCheck（教師驗證工具）
 // 意義：檢查第 8 週的覆寫與多型是否符合規格。
-// 作用：用固定案例檢查一般車與重型車的產量、任務結果、邊界案例，
+// 作用：用固定案例檢查一般車與重型車的產量、任務結果、邊界案例、指令 4 經由覆寫 execute 鑽探，
 //       並用反射確認產量方法的可見性、是實例方法、子類別沒有重複宣告父類別狀態。
 //       反射與 AssertionError 不列學生先備，也不放進學生 src。
 public class PolymorphismCheck {
@@ -93,6 +93,24 @@ public class PolymorphismCheck {
         HeavyRover exactDrill = new HeavyRover(8, 0);
         check("能源剛好足夠時鑽探", "成功".equals(exactDrill.drill()));
         state("能源剛好足夠並鑽探後的狀態", exactDrill, 0, 3, 1);
+
+        // 指令 4：Mission 不改，靠 HeavyRover 覆寫 execute 選到鑽探；其他指令仍交回父類別。
+        HeavyRover byCommand = new HeavyRover(20, 0);
+        Mission dm = new Mission(byCommand);
+        dm.run(new int[] {4, 1});
+        state("指令4經由任務鑽探後再探索", byCommand, 6, 6, 2);
+        check("指令4的結果、步數與任務結果", "成功".equals(dm.getStep(0).getResult())
+                && dm.getStepCount() == 2 && "任務成功".equals(dm.getOutcome()));
+        check("指令4經由execute計入鑽探次數", byCommand.getDrillCount() == 1);
+        check("指令4不列入指令次數", Arrays.equals(dm.countCommands(), new int[] {0, 1, 0, 0}));
+        Rover normalFour = new Rover(20, 0);
+        check("一般車拒絕指令4", "無效指令".equals(normalFour.execute(4)));
+        state("一般車拒絕指令4後維持狀態", normalFour, 20, 0, 0);
+        HeavyRover stoppedFour = new HeavyRover(20, 5);
+        check("已停止時指令4不鑽探", "任務已停止".equals(stoppedFour.execute(4))
+                && stoppedFour.getDrillCount() == 0);
+        check("重型車的execute覆寫維持public",
+                Modifier.isPublic(HeavyRover.class.getDeclaredMethod("execute", int.class).getModifiers()));
 
         check("父類別的私有狀態", Modifier.isPrivate(Rover.class.getDeclaredField("energy").getModifiers())
                 && Modifier.isPrivate(Rover.class.getDeclaredField("samples").getModifiers())

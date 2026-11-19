@@ -10,7 +10,7 @@ python -X utf8 tools/verify.py
 
 需要已安裝JDK與Python，不需第三方Python套件。工具在本週建立新的暫存目錄，完成自動清理；不使用舊out。
 
-分開編譯examples、starter、teacher；驗證會員完整輸出、重型車十五行、兩車完整報表、未完成starter、十檔學生合併配置及僅替換三個TODO檔的完成配置。再做15項一般車完整輸出、16項任務狀態、51項覆寫／多型與結構檢查、遷移四行、模擬AI兩行不符與最小修正十五行重測、隔離編譯失敗、B3小修改、五種錯誤變異，最後核對UTF-8、連結、圖、頁數及前週契約。
+分開編譯examples、starter、teacher；驗證會員完整輸出、重型車十五行、指令4十四行、兩車完整報表、未完成starter、十一檔學生合併配置及僅替換三個TODO檔的完成配置（TODO 2與4同在HeavyRover）。再做15項一般車完整輸出、16項任務狀態、59項覆寫／多型與結構檢查、遷移四行、模擬AI兩行不符與最小修正十五行重測、隔離編譯失敗、B3小修改、七種錯誤變異，最後核對UTF-8、連結、圖、頁數及前週契約。
 
 開發中可用--code-only暫略文件檢查；正式交付須用完整命令。反射、AssertionError、Python、子行程及錯誤變異屬教師工具，不列學生先備。
 
@@ -22,6 +22,7 @@ java -cp out-teacher MissionLogCheck
 java -cp out-teacher MissionStateCheck
 java -cp out-teacher PolymorphismCheck
 java -cp out-teacher CompareMissions
+java -cp out-teacher DrillMissionTry
 javac -encoding UTF-8 -Xlint:all -d out-transfer teacher/Rover.java teacher/Mission.java teacher/MissionStep.java teacher/transfer/*.java
 java -cp out-transfer SurveyRoverTry
 ```

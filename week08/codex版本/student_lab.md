@@ -4,9 +4,9 @@
 
 ## A｜取回與診斷（10分鐘）
 
-依README建立java-08，src先放examples三檔與starter七檔。取回兩份範本及dispatch_practice.puml／SVG；保留前週資料，不複製teacher。
+依README建立java-08，src先放examples三檔與starter八檔。取回兩份範本及dispatch_practice.puml／SVG；保留前週資料，不複製teacher。
 
-A1. 記實際java／javac版本，指出本週四個main入口及工作目錄：待填。
+A1. 記實際java／javac版本，指出本週五個main入口及工作目錄：待填。
 
 A2. 不跑程式，說明第七週HeavyRover.execute(1)會取得幾份樣本，新增drill為何沒有改變它：待填。
 
@@ -63,7 +63,7 @@ C3（5分）. 畫bob與memberView指向同一個VipMember物件。寫出編譯�
 
 ## D｜探測車主線（50分鐘）
 
-### D1 規格與追蹤（10分鐘）
+### D1 規格與追蹤（8分鐘）
 
 一般車探索得2份；重型車得3份。兩者探索成本6、成功行動+1。產量方法只回答數量，停止、能源與更新由既有流程處理。
 
@@ -77,9 +77,9 @@ D1-1. 為何不能只在HeavyRover新增同名private explore，就宣稱已改�
 
 檢查點：重編譯、執行MissionLog，預設{1,1,2}仍為6/5/3、任務成功。執行HeavyRoverTry仍有兩行不符是合理的，因為TODO 2尚未完成。記實際：待填。
 
-### D3 TODO 2：獨立完成HeavyRover覆寫（9分鐘）
+### D3 TODO 2：獨立完成HeavyRover覆寫（8分鐘）
 
-自行寫出方法宣告與@Override，名稱、參數與回傳型態對照父類別，保留protected，固定回3。不能增加欄位、扣能源或多加一次行動；不改private explore、execute及drill。
+自行寫出方法宣告與@Override，名稱、參數與回傳型態對照父類別，保留protected，固定回3。不能增加欄位、扣能源或多加一次行動；不改private explore及drill。HeavyRover同檔的TODO 4（覆寫execute）留到D6再做。
 
 完成後執行HeavyRoverTry，貼十五行完整輸出，應全成功。若失敗，先找哪個狀態不同，再看程式：待填。
 
@@ -101,7 +101,7 @@ D1-1. 為何不能只在HeavyRover新增同名private explore，就宣稱已改�
 
 不加入if車種判斷，不改Mission，不把同一台車交給兩個任務。先預測兩段結果再執行：待填。
 
-### D5 比較與本人反例（15分鐘）
+### D5 比較與本人反例（10分鐘）
 
 貼CompareMissions兩段完整輸出，解釋兩個差異：為何重型探測車少一筆掃描、為何最低能源與battery不同？待填。
 
@@ -113,7 +113,30 @@ D1-1. 為何不能只在HeavyRover新增同名private explore，就宣稱已改�
 | 5格、0份，腳本{1} | 待填 | 待填 |
 | 自己設計一個可抓錯的案例 | 待填 | 待填 |
 
-自己案例要寫「能抓到何種錯誤」，例如覆寫多計次、停止後仍讀指令或產量方法從未被呼叫；不能只有換數字與貼成功。
+自己案例要寫「能抓到何種錯誤」，例如覆寫多計次、停止後仍讀指令或產量方法從未被呼叫；不能只有換數字與貼成功。課堂時間不足時，自己案例可課後補完。
+
+### D6 TODO 4：讓任務也能下鑽探指令（8分鐘）
+
+到目前為止，鑽探只能在main直接呼叫drill()。Mission只會呼叫rover.execute(command)，所以腳本寫4時，兩種車都回「無效指令」。本題不改Mission與Rover，只在src/HeavyRover.java覆寫execute：
+
+- 指令4交給已提供的drill()，回傳它的結果。
+- 其他指令（0～3及無效指令）交回父類別原本的execute處理，用B3介紹過的super呼叫父類別方法；不把父類別的switch抄進子類別。
+- 方法宣告與父類別相同，保留public並加@Override。
+- countCommands仍只統計0～3。指令4會記在日誌與成功／拒絕筆數，不另加計數格。
+
+D6-1. 先不執行，預測兩台新車各跑腳本{4,1}：
+
+| 項目 | 一般車Rover(20,0)預測／實際 | 重型車HeavyRover(20,0)預測／實際 |
+|---|---|---|
+| 第1步結果 | 待填 | 待填 |
+| 最終energy/samples/actionCount | 待填 | 待填 |
+| outcome及已讀步數 | 待填 | 待填 |
+
+完成後執行DrillMissionTry，貼十四行完整輸出，應全部顯示「相符」。尚未完成TODO 4時有四行不符，是未完成標示：待填。
+
+D6-2. Mission一行都沒改，為什麼重型車能在任務中鑽探？用「宣告型態」與「實際物件」說明：待填。
+
+D6-3. 另一種想法是在Mission.run裡判斷「這台是不是重型車」，是就呼叫drill。若之後再加一種有特殊指令的車，兩種寫法各要改哪些類別？待填。
 
 ## E｜AI Code Review（25分鐘）
 
@@ -127,7 +150,7 @@ E2（6分）. 保存[AI]原文後執行，貼兩行不符及其上下文。它�
 
 E3（4分）. 在ai-check副本的private explore前加@Override，只編譯，記診斷，然後還原。再檢查「把父類別產量方法改static」是否符合本週實例覆寫的設計，文字判讀即可：待填。
 
-E4（7分）. 移除無效的子類別private explore，改在正確產量方法覆寫；不用重寫execute、不改父類別private狀態或drill。重編譯，用相同入口重測十五行都顯示「相符」，記最小修改並以[fix] commit保存：待填。
+E4（7分）. 移除無效的子類別private explore，改在正確產量方法覆寫；不必為了產量重寫execute，也不改父類別private狀態或drill。模擬原稿沒有D6的execute覆寫，本活動只驗收探索產量，不必補上。重編譯，用相同入口重測十五行都顯示「相符」，記最小修改並以[fix] commit保存：待填。
 
 E5（3分）. 用三至五句補強Prompt，包含可覆寫方法的精確宣告、禁止改狀態與預期案例。AI_USAGE記教師模擬來源，若另用真實AI再分開揭露：待填。
 
@@ -135,7 +158,7 @@ E5（3分）. 用三至五句補強Prompt，包含可覆寫方法的精確宣告
 
 ## F｜UML與課末檢核（10分鐘）
 
-F1. 在自己的dispatch_practice.puml補Rover與HeavyRover的產量方法，保留private explore；HeavyRover方法旁用註記標示覆寫。箭頭仍指Rover，Mission欄位仍為Rover。建立HeavyRover物件不代表Mission原始碼需新增對HeavyRover的關聯。
+F1. 在自己的dispatch_practice.puml補Rover與HeavyRover的產量方法，以及HeavyRover在D6覆寫的execute，保留private explore；HeavyRover方法旁用註記標示覆寫。箭頭仍指Rover，Mission欄位仍為Rover。建立HeavyRover物件不代表Mission原始碼需新增對HeavyRover的關聯。
 
 從puml重新產SVG，立即開啟檢視，DESIGN引用自己的SVG，記產圖方式與實際檢視結果：待填。圖為部分視角，無須抄完整API。
 
@@ -145,13 +168,13 @@ F2. 各用一句回答：
 2. 兩個參考型態不同，能否仍指向同一個物件？待填。
 3. 為何private explore可保留，重型車仍能改變產量？待填。
 4. 產量覆寫為何不該另加一次actionCount？待填。
-5. 如果新車種都被迫重寫execute，有什麼維護成本？待填。
+5. D6覆寫execute時，如果不呼叫super.execute，而把父類別的switch整份抄進HeavyRover，以後修改掃描規則會有什麼維護成本？待填。
 
 F3. 課後遷移選題與探索產量規則，記在DESIGN；不用課堂完成第二個子類別：待填。
 
 ## G｜保存與取回（15分鐘）
 
-- [ ] 正式src重編譯；MemberDemo、MissionLog、HeavyRoverTry、CompareMissions符合各自規格。
+- [ ] 正式src重編譯；MemberDemo、MissionLog、HeavyRoverTry、CompareMissions、DrillMissionTry符合各自規格。
 - [ ] README說明main入口、JDK及完成度；puml與SVG同步；缺項據實標示。
 - [ ] GitHub Desktop檢查差異、commit、push，在GitHub核對程式、AI修正與SVG。
 - [ ] 在原repo以外的新位置clone，保留原副本；編譯java-08/src，執行CompareMissions。

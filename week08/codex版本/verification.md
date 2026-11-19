@@ -69,3 +69,16 @@
 - 執行該週 tools/verify.py，中文預期輸出、教師檢查與原有回歸案例通過。
 - 歷史驗證中的英文輸出反映當時的程式，現行預期輸出以本週講義和教師筆記為準。
 - Marp CLI 4.5.1 重新匯出 1 份 HTML（32 頁）。以無頭 Chromium 檢查程式碼區塊與表格的版面邊界，未偵測到溢出。
+
+## 2026-11-19 指令4納入主線（TODO 4，Claude Code 修改）
+
+教師要求在第八週主線加入「腳本指令4由重型車鑽探」，用覆寫execute實作，不在Mission判斷車種；指令4不計入countCommands。修改者：Anthropic Claude（Claude Code），依教師在對話中的明確指示修改codex版本。
+
+- 程式：teacher/HeavyRover.java新增`public String execute(int command)`覆寫（4交給drill，其他交回super.execute）；starter/HeavyRover.java新增TODO 4說明；新增提供檔starter／teacher DrillMissionTry.java（十四行，兩份逐位元組相同）；PolymorphismCheck加8項指令4檢查，共59項。Rover、Mission、MissionStep、MissionLog、HeavyRoverTry、CompareMissions未改。
+- 文件：README、student_lab（新增D6，D1／D3／D5時間調整，A1、E4、F1、F2-5、G同步）、assignment、teacher_notes（D6答案與診斷）、handoff、tools/README；dispatch_reference、dispatch_practice、starter_todo_claude、evolution_w08_claude四份puml重產SVG。
+- 投影片：week08_slides_codex.md新增D6兩頁，共34頁；week08_slides_codex_claude.md新增D6三頁，共51頁。Marp CLI 4.5.1重新匯出兩份HTML，並轉成PNG實際檢視變動頁面，修正四頁太靠近頁尾或程式字太小的版面。
+- tools/verify.py新增：DrillMissionTry完整十四行、starter恰四行不符、完成配置十四行相符、execute縮小為protected的編譯拒絕（weaker access），以及兩種新變異（移除指令4分支、其他指令不交回super）各使PolymorphismCheck失敗。
+- OpenJDK 22執行`python -X utf8 tools/verify.py`：ALL CHECKS PASSED（34個本機連結、34頁）。只完成TODO 1–2時，DrillMissionTry仍是相同四行不符，已另行實測。
+- 第九週、第十週tools/verify.py重跑均通過；兩週沿用的三個入口不含指令4，輸出不變。
+- 同日已將execute覆寫帶入第九、十週HeavyRover，兩週verify.py加入指令4檢查並通過（見兩週verification）。
+- 限制：未在教室IDE、投影或學生試教驗證。

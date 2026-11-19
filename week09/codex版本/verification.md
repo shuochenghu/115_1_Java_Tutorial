@@ -60,3 +60,9 @@
 | `FixtureDemo` | `測試資料重量=2` 兩行 |
 
 編譯實驗在副本實測：`new Parcel(...)` → `Parcel is abstract; cannot be instantiated`；刪除 `ExpressParcel.ratePerKg()` → `ExpressParcel is not abstract and does not override abstract method ratePerKg() in Parcel`；`item.meow()` → `cannot find symbol`；把 `NormalParcel` 傳給 `weigh` → `NormalParcel cannot be converted to Weighable`；`Suitcase.getWeight()` 去掉 `public` → `attempting to assign weaker access privileges; was public`；`new Weighable()` → `Weighable is abstract; cannot be instantiated`。`tools/verify.py` 新增三個範例的輸出與前三項編譯實驗檢查，全部通過。兩份投影片重新匯出後逐頁檢視改動頁面，修正溢出後再確認。未在教室投影或 IDE GUI 中驗證。
+
+## 2026-11-19 沿用第 8 週指令 4（Claude Code 修改）
+
+教師要求把第 8 週主線新增的 TODO 4 帶入本週：`starter/HeavyRover.java` 與 `teacher/HeavyRover.java` 加上同一個 `execute` 覆寫（指令 4 交給 `drill()`，其他指令交回 `super.execute`），兩份仍逐位元組相同。`Rover`、`Mission`、TODO 檔與既有檢查程式未改。
+
+`tools/verify.py` 新增 `DrillProbe`：重型車 20/0 跑 `{4, 1}` 為 `成功 6/6/2/1 任務成功 [0, 1, 0, 0]`；一般車為 `無效指令 14/2/1 任務未完成`；已達標、能源不足與掃描分別為 `任務已停止`、`能源不足`、`成功`。OpenJDK 22 執行全部通過；既有三個入口不含指令 4，與前週比對的輸出不變，15／16／51 項數量不變。投影片與學生講義未新增指令 4 活動。

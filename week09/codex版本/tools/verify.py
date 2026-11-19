@@ -10,6 +10,27 @@ from tempfile import TemporaryDirectory
 ROOT = Path(__file__).resolve().parents[1]
 WEEK8 = ROOT.parents[1] / "week08" / "codex版本"
 REPORT = "重型探測車 樣本數=6\n樣本盒 樣本數=4\n空盒 樣本數=0\n"
+# 第 8 週 TODO 4 沿用：重型車覆寫 execute，腳本指令 4 交給 drill；一般車仍回無效指令。
+DRILL_PROBE = """
+public class DrillProbe {
+    public static void main(String[] args) {
+        HeavyRover heavy = new HeavyRover(20, 0);
+        Mission h = new Mission(heavy);
+        h.run(new int[] {4, 1});
+        Rover standard = new StandardRover(20, 0);
+        Mission s = new Mission(standard);
+        s.run(new int[] {4, 1});
+        System.out.println(h.getStep(0).getResult() + " " + heavy.getEnergy() + "/" + heavy.getSamples()
+                + "/" + heavy.getActionCount() + "/" + heavy.getDrillCount() + " " + h.getOutcome()
+                + " " + java.util.Arrays.toString(h.countCommands()));
+        System.out.println(s.getStep(0).getResult() + " " + standard.getEnergy() + "/"
+                + standard.getSamples() + "/" + standard.getActionCount() + " " + s.getOutcome());
+        System.out.println(new HeavyRover(20, 5).execute(4) + " " + new HeavyRover(7, 0).execute(4)
+                + " " + new HeavyRover(20, 0).execute(2));
+    }
+}
+"""
+DRILL = '成功 6/6/2/1 任務成功 [0, 1, 0, 0]\n無效指令 14/2/1 任務未完成\n任務已停止 能源不足 成功\n'
 TODO_FILES = (
     "Rover.java", "StandardRover.java", "SampleSource.java", "SampleTray.java",
     "SampleReport.java", "SampleReportDemo.java",
@@ -130,6 +151,13 @@ public class ReportProbe {
         + "能源不足 5/0/0 任務未完成\n" * 2
     )
     print("PASS 自選數量、重讀不改狀態、兩車能源不足")
+
+    drill = temp / "drill-probe"
+    drill.mkdir()
+    (drill / "DrillProbe.java").write_text(DRILL_PROBE, encoding="utf-8")
+    compile_java(drill, drill / "out", classpath=student_out)
+    assert execute(os.pathsep.join((str(student_out), str(drill / "out"))), "DrillProbe") == DRILL
+    print("PASS 沿用第 8 週指令 4：重型車經 execute 鑽探、一般車拒絕、停止與其他指令不變")
 
 
 def verify_experiments(student, temp):

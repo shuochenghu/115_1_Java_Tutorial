@@ -9,7 +9,7 @@
 
 ## 程式契約
 
-本週 `Rover` 為抽象類別，具體一般車為 `StandardRover`。父類別保有私有能源、樣本與成功行動數、建構子及行動流程。只有成功扣 6 格才呼叫一次 `exploreYield()`，一般車回 2、重型車回 3。掃描、充電、停止、返回與鑽探的前週規則沿用。建立一般車的地方改成 `new StandardRover(...)`，`Mission` 與 `MissionStep` 沿用第 8 週原檔。
+本週 `Rover` 為抽象類別，具體一般車為 `StandardRover`。父類別保有私有能源、樣本與成功行動數、建構子及行動流程。只有成功扣 6 格才呼叫一次 `exploreYield()`，一般車回 2、重型車回 3。掃描、充電、停止、返回與鑽探的前週規則沿用；`HeavyRover` 保留第 8 週覆寫的 `execute`，腳本指令 4 交給 `drill()`，一般車收到 4 仍為無效指令。建立一般車的地方改成 `new StandardRover(...)`，`Mission` 與 `MissionStep` 沿用第 8 週原檔。
 
 固定 `int[]` 腳本可為空陣列，參考須有效。每個新任務配新車，只執行一次。初始能源為 0 至 20，樣本為非負小整數。報表接收有效的 `SampleSource`，`getSamples()` 回傳非負樣本數且無副作用。`SampleReport.print(String, SampleSource)` 是靜態報表入口，每次呼叫一行。通知示範在任務完成後讀日誌。
 

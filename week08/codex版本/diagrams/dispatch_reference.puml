@@ -16,6 +16,7 @@ class Rover {
   # exploreYield() : int
 }
 class HeavyRover {
+  + execute(command : int) : String
   + drill() : String
   # exploreYield() : int
 }
@@ -28,6 +29,7 @@ Mission --> "1" Rover : rover
 note bottom of HeavyRover
 exploreYield覆寫父方法，回3
 只回數量，狀態仍由父流程更新
+execute覆寫：4交給drill，其他交回super.execute
 end note
 note bottom of Rover : exploreYield預設回2
 note bottom of Mission

@@ -37,6 +37,7 @@ class HeavyRover #F4F4F4 {
   - drillCount : int
   + drill() : String
   # exploreYield() : int  {回 3}
+  + execute(command : int) : String  {4 → drill}
 }
 class SampleTray #DFF3E3 {
   - samples : int  {final}

@@ -13,7 +13,7 @@
 | 學生完成路徑 | 只替換包含 TODO 的六個檔案後重編譯，主線四個入口與教師解答一致 |
 | 報表與遷移 | 6、4、0 三行，另測 9 份樣本盒、重讀及車輛狀態維持。遷移參考跑 7、0、7 |
 | 兩車能源不足 | 初始 5 格、0 份執行探索，日誌記拒絕，兩車維持 5/0/0、`UNFINISHED` |
-| 示範 | 固定來源印兩次 `fixture samples=2`。通知回放印 `LOW step=2 energy=2` |
+| 示範 | 範例一、二、三的輸出見下節「examples 拆成三個範例」。通知回放印 `能源偏低，步驟=2 能源=2` |
 | 編譯反例 | 隔離測試抽象類別建立、漏實作抽象方法、漏寫 `public`。模擬 AI 的兩個盒子呼叫無法編譯，單車對照通過，修正參數型態後原三行通過 |
 | 靜態核對 | `Mission` 與 `MissionStep` 逐位元組比對第 8 週。檢查 Markdown 本機連結、程式區塊、UTF-8 與 Java 檔名 |
 
@@ -41,3 +41,22 @@
 - 執行該週 tools/verify.py，中文預期輸出、教師檢查與原有回歸案例通過。
 - 歷史驗證中的英文輸出反映當時的程式，現行預期輸出以本週講義和教師筆記為準。
 - Marp CLI 4.5.1 重新匯出 2 份 HTML（19/50 頁）。以無頭 Chromium 檢查程式碼區塊與表格的版面邊界，未偵測到溢出。
+
+## examples 拆成三個範例（2026-11-19）
+
+教師要求把抽象類別、介面與巢狀／匿名類別分開在不同範例說明。Anthropic Claude（Claude Code）改寫 `examples/`：
+
+- 範例一 抽象類別：新增 `Parcel`（抽象）、`NormalParcel`、`ExpressParcel`、`ParcelDemo`。
+- 範例二 介面：新增 `Weighable`、`Suitcase`、`Cat`、`ScaleDemo`。
+- 範例三 巢狀與匿名類別：`FixtureDemo` 改用範例二的 `Weighable`，刪除 `examples/SampleSource.java`（原本與 starter TODO 3a 的答案同一行）。
+- 新增 `examples/README_claude.md`。同步修改 README、student_lab（B、C 開頭各加一題範例預測，D 改為 `getWeight()`）、teacher_notes、tools/README、tools/verify.py、`week09_slides_codex.md` 第 4、8、13 頁與其 HTML（Marp CLI 4.5.1），以及 claude 投影片第一部分（50→61 頁）與 `diagrams/parcel_claude`、`scale_claude`、更新後的 `fixture_claude`。starter、teacher、ai、assignment 未改。
+
+實測（OpenJDK 22，`javac -encoding UTF-8 -Xlint:all`，無警告）：
+
+| 入口 | 輸出 |
+|---|---|
+| `ParcelDemo` | `書籍 3公斤 運費=90元`、`藥品 3公斤 運費=135元` |
+| `ScaleDemo` | `行李箱 重量=13公斤`、`貓 重量=5公斤`、`咪咪：喵～`、`同一隻貓用 Weighable 變數讀取：5公斤` |
+| `FixtureDemo` | `測試資料重量=2` 兩行 |
+
+編譯實驗在副本實測：`new Parcel(...)` → `Parcel is abstract; cannot be instantiated`；刪除 `ExpressParcel.ratePerKg()` → `ExpressParcel is not abstract and does not override abstract method ratePerKg() in Parcel`；`item.meow()` → `cannot find symbol`；把 `NormalParcel` 傳給 `weigh` → `NormalParcel cannot be converted to Weighable`；`Suitcase.getWeight()` 去掉 `public` → `attempting to assign weaker access privileges; was public`；`new Weighable()` → `Weighable is abstract; cannot be instantiated`。`tools/verify.py` 新增三個範例的輸出與前三項編譯實驗檢查，全部通過。兩份投影片重新匯出後逐頁檢視改動頁面，修正溢出後再確認。未在教室投影或 IDE GUI 中驗證。

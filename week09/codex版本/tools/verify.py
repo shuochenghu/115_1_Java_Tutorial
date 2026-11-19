@@ -63,14 +63,18 @@ def verify_output(temp):
     assert execute(teacher, "SampleReportDemo") == REPORT
     assert f"```text\n{REPORT}```" in notes
     assert execute(teacher, "StepListenerDemo") == "能源偏低，步驟=2 能源=2\n"
-    assert execute(temp / "examples", "FixtureDemo") == "測試資料樣本數=2\n" * 2
+    assert execute(temp / "examples", "ParcelDemo") == "書籍 3公斤 運費=90元\n藥品 3公斤 運費=135元\n"
+    assert execute(temp / "examples", "ScaleDemo") == (
+        "行李箱 重量=13公斤\n貓 重量=5公斤\n咪咪：喵～\n同一隻貓用 Weighable 變數讀取：5公斤\n"
+    )
+    assert execute(temp / "examples", "FixtureDemo") == "測試資料重量=2\n" * 2
     for main, summary in (
         ("MissionLogCheck", "15/15 項通過"),
         ("MissionStateCheck", "16/16 項通過"),
         ("PolymorphismCheck", "PolymorphismCheck 51 項通過"),
     ):
         assert execute(teacher, main).splitlines()[-1] == summary, main
-    print("PASS 分開編譯、前週完整輸出、15/16/51 項回歸、報表及兩種示範")
+    print("PASS 分開編譯、前週完整輸出、15/16/51 項回歸、報表、三個範例及通知示範")
 
     transfer = temp / "transfer"
     compile_java(ROOT / "teacher" / "transfer", transfer, classpath=teacher)
@@ -141,6 +145,17 @@ def verify_experiments(student, temp):
         replace(experiment / name, before, after)
         compile_java(experiment, experiment / "out", error=error)
 
+    for index, (name, line, error) in enumerate((
+        ("ParcelDemo.java", 'Parcel unknown = new Parcel("未分類", 1);',
+         "Parcel is abstract; cannot be instantiated"),
+        ("ScaleDemo.java", "System.out.println(item.meow());", "cannot find symbol"),
+        ("ScaleDemo.java", 'weigh("包裹", new NormalParcel("書籍", 3));',
+         "NormalParcel cannot be converted to Weighable"),
+    ), 1):
+        example = shutil.copytree(ROOT / "examples", temp / f"example-experiment-{index}")
+        replace(example / name, "// " + line, line)
+        compile_java(example, example / "out", error=error)
+
     ai = shutil.copytree(student, temp / "ai")
     shutil.copyfile(ROOT / "ai" / "SampleReport.java", ai / "SampleReport.java")
     compile_java(ai, ai / "out-broken", error="SampleTray cannot be converted to Rover")
@@ -154,7 +169,7 @@ def verify_experiments(student, temp):
     replace(ai / "SampleReport.java", "Rover source", "SampleSource source")
     compile_java(ai, ai / "out-fixed")
     assert execute(ai / "out-fixed", "SampleReportDemo") == REPORT
-    print("PASS 三個隔離編譯診斷與模擬 AI 的失敗、單車對照、修正重測")
+    print("PASS 三個隔離編譯診斷、三個範例編譯實驗與模擬 AI 的失敗、單車對照、修正重測")
 
 
 def verify_files():

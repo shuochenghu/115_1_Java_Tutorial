@@ -155,6 +155,7 @@ AI 協作：**追蹤** AI 生成的子類別，用反例找出「兩份狀態」
 **第一部分｜範例教學** <span class="tag blue">examples/</span>
 講義 B–C，約 40 分鐘
 
+- 先看不用繼承的寫法：重複了什麼
 - `extends`、is-a、C# 的 `:` 對照
 - 建構順序與 `super(...)`
 - 繼承的方法 vs. 新增的方法
@@ -212,8 +213,10 @@ AI 協作：**追蹤** AI 生成的子類別，用反例找出「兩份狀態」
 | `examples/Member.java` | — | 一般會員：姓名、點數、`buy`、protected `addPoints` |
 | `examples/VipMember.java` | — | `extends Member`；新增 `bonusCount`、`claimBonus` |
 | `examples/MemberDemo.java` | ✓ | 建立 Amy、Bob，觀察建構順序與點數 |
+| `examples/StandaloneVipMember.java` | — | **對照用**：功能同 VipMember，但**不用繼承** |
+| `examples/CompareMemberDemo.java` | ✓ | **對照用**：兩種 VIP 並排執行（教師示範，不必放進 src） |
 
-examples 三檔與 starter 六檔一起放進 `115_1_Java/YYYY_MM_DD/java-07/src/`（共 9 檔），在 `java-07` 執行：
+examples 前三檔與 starter 六檔一起放進 `115_1_Java/YYYY_MM_DD/java-07/src/`（共 9 檔），在 `java-07` 執行：
 
 ```powershell
 javac -encoding UTF-8 -d out src/*.java
@@ -224,6 +227,113 @@ java -cp out MemberDemo
 
 <!--
 講者備註：buy 每滿 10 元得 1 點，非正數不加點；claimBonus 每次加 20 點、bonusCount 加 1，沒有次數或每日限制。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span>examples/Member.java</span><span>examples/StandaloneVipMember.java</span></div>
+
+## 先看沒有繼承的寫法：要做一個 VIP 會員
+
+<style scoped>pre { font-size: 17px; line-height: 1.28; margin: 0 0 8px; }</style>
+
+已經有一般會員 `Member`。VIP 也有名字、點數、購物得點，**另外**能領取加贈。還不會繼承時，只能這樣寫：
+
+<div class="cols">
+<div>
+
+**已有的** `Member`
+
+```java
+public class Member {
+    private String name;
+    private int points;
+    public Member(String name) { ... }
+    public String getName() { ... }
+    public int getPoints() { ... }
+    public void buy(int price) {
+        if (price > 0) { addPoints(price / 10); }
+    }
+    protected void addPoints(int amount) {
+        if (amount > 0) { points += amount; }
+    }
+}
+```
+
+</div>
+<div>
+
+**新寫的** `StandaloneVipMember`
+
+```java
+public class StandaloneVipMember {
+    private String name;      // 和 Member 一樣
+    private int points;       // 和 Member 一樣
+    private int bonusCount;   // VIP 才有
+    public StandaloneVipMember(String name) { ... }
+    public String getName() { ... }    // 一樣
+    public int getPoints() { ... }     // 一樣
+    public void buy(int price) { ... } // 一樣
+    private void addPoints(int amount) { ... } // 一樣
+    public int getBonusCount() { ... } // VIP 才有
+    public void claimBonus() {         // VIP 才有
+        addPoints(20);
+        bonusCount++;
+    }
+}
+```
+
+</div>
+</div>
+
+**請找找看**：右邊有哪幾行和左邊一模一樣？真正屬於 VIP 的只有哪幾行？
+
+<!--
+講者備註：本頁與下一頁的對照範例由 Claude 依教師要求新增（examples/StandaloneVipMember.java），先講「沒有繼承」的寫法，再進入 extends。答案：name、points 兩個欄位與 getName、getPoints、buy、addPoints 四個方法都是從 Member 複製；VIP 自己的只有 bonusCount、getBonusCount、claimBonus（建構子多設定一個 bonusCount）。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span>examples/StandaloneVipMember.java</span></div>
+
+## 沒有繼承，會遇到什麼問題？
+
+<div class="cols">
+<div class="box">
+
+**1. 同樣的程式寫了兩份**
+2 個欄位、4 個方法從 `Member` 抄一份；`StandaloneVipMember` 共 57 行，真正屬於 VIP 的只有幾行。
+
+**2. 規則改了，要改兩個地方**
+商店把「每 10 元得 1 點」改成「每 5 元得 1 點」：
+`Member.buy` 要改，`StandaloneVipMember.buy` **也要改**。
+漏改一處，一般會員和 VIP 的點數算法就不一樣。
+
+**3. 程式不知道 VIP 是一種會員**
+兩個類別方法名稱都一樣，但對 Java 來說是**毫無關係**的兩個類別。
+
+</div>
+<div class="box green">
+
+**我們真正想要的**
+
+> VIP **就是**會員，只是**多了**加贈。
+
+- 名字、點數、購物規則：**直接沿用** `Member` 已經寫好的
+- 只寫**多出來的**：`bonusCount`、`claimBonus`
+- 規則只放在**一個地方**，改一次就好
+
+→ 這就是 **繼承**：`class VipMember extends Member`
+
+</div>
+</div>
+
+<!--
+講者備註：先讓學生說出「複製貼上」的麻煩，再引出 extends。第 3 點只點到為止，結尾的對照頁會用編譯實驗證明；用父類別型態的變數操作物件是第 8 週內容。
 -->
 
 ---
@@ -272,7 +382,7 @@ public class VipMember extends Member {
 Java：`class VipMember extends Member`
 C#：`class VipMember : Member`
 
-- VipMember **沿用** Member 的 `buy`、`getPoints`，不必再抄一份。
+- VipMember **沿用** Member 的 `buy`、`getPoints`，不必像 `StandaloneVipMember` 那樣再抄一份。
 - VipMember **新增** `bonusCount`、`claimBonus`。
 - 繼承的理由要是 **is-a**：「VIP 是一種會員」成立，原有規則也適用。
 
@@ -572,6 +682,167 @@ bob.claimBonus();
 
 <!--
 講者備註：這一頁的判斷會在作業 D1 套用到 HeavyRover／Rover、Mission／Rover、Mission／MissionStep。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span>examples/StandaloneVipMember.java</span><span>examples/VipMember.java</span></div>
+
+## 回頭對照：繼承之後省去了什麼？
+
+<style scoped>pre { font-size: 16px; line-height: 1.25; margin: 0 0 6px; }</style>
+
+<div class="cols">
+<div>
+
+**之前：不用繼承** `StandaloneVipMember`（57 行）
+
+```java
+public class StandaloneVipMember {
+    private String name;   // 從 Member 複製
+    private int points;    // 從 Member 複製
+    private int bonusCount;
+    public StandaloneVipMember(String name) {
+        this.name = name;  // 全部自己設定
+        points = 0;
+        bonusCount = 0;
+        ...
+    }
+    getName、getPoints、buy、addPoints  // 從 Member 複製
+    getBonusCount、claimBonus
+}
+```
+
+</div>
+<div>
+
+**之後：使用繼承** `VipMember`（24 行）
+
+```java
+public class VipMember extends Member {
+    private int bonusCount;
+    public VipMember(String name) {
+        super(name);     // 名字、點數交給 Member
+        bonusCount = 0;
+        ...
+    }
+    public int getBonusCount() { ... }
+    public void claimBonus() {
+        addPoints(20);   // 用 Member 的方法
+        bonusCount++;
+    }
+}
+```
+
+</div>
+</div>
+
+**省去了**：2 個欄位、4 個方法，以及建構子裡設定名字和點數的部分。
+**先預測**：`CompareMemberDemo` 讓兩位 VIP 都購物 85 元、領一次加贈。建構子訊息各印幾行？點數各是多少？
+
+<!--
+講者備註：本頁與後兩頁是開頭「先看沒有繼承的寫法」的收尾：學完 extends 之後，回頭比較兩種寫法。CompareMemberDemo 由 Claude 依教師要求新增，教師示範即可，學生不必放進 src。程式為節錄，完整程式每個成員都有註解標明「從 Member 複製」或「和 VipMember 相同」。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span>examples/CompareMemberDemo.java</span></div>
+
+## 對照結果：輸出相同，程式不同
+
+<div class="cols" style="grid-template-columns: 0.9fr 1.1fr;">
+<div>
+
+```text
+--- 繼承版 VipMember ---
+Member 建構子: Bob
+VipMember 建構子: Bob
+點數=28, 獎勵次數=1
+--- 不用繼承版 StandaloneVipMember ---
+StandaloneVipMember 建構子: Bob
+點數=28, 獎勵次數=1
+```
+
+點數：85 ÷ 10 = 8（整數除法）＋ 加贈 20 ＝ **28**，兩種寫法相同。
+
+</div>
+<div>
+
+| 比較 | 繼承版 | 不用繼承版 |
+|---|---|---|
+| 名字、點數欄位 | 由 `Member` 保存 | 自己**再宣告一份** |
+| `buy`、`addPoints` 等 | 沿用 `Member` 的 | 自己**再寫一份** |
+| 建構子訊息 | 2 行：先父、再子 | 1 行：沒有自訂父類別 |
+| 是不是一種 `Member` | **是** | **不是** |
+
+</div>
+</div>
+
+> 「結果一樣」不代表設計一樣好：**重複的程式碼，就是之後要一起維護的地方。**
+
+<!--
+講者備註：輸出為 JDK 22 實測。建構子少一行的原因：StandaloneVipMember 沒有 extends Member，直接父類別是 Object，不會執行 Member 的建構子。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span>examples/Member.java</span><span>examples/CompareMemberDemo.java</span><span>（在副本操作）</span></div>
+
+## 對照實驗：只改 `Member` 一處，會發生什麼？
+
+<div class="cols">
+<div class="box blue">
+
+**實驗 1：修改購物規則**
+
+在副本把 `Member.java` 的
+
+```java
+addPoints(price / 10);   // 改成 price / 5
+```
+
+重新編譯執行 `CompareMemberDemo`，**先預測**兩位 VIP 的點數。
+
+```text
+繼承版      點數=37   ← 跟著新規則
+不用繼承版  點數=28   ← 還是舊規則
+```
+
+複製的那份**不會自動跟著改**。
+
+</div>
+<div class="box">
+
+**實驗 2：是不是一種 `Member`？**
+
+`CompareMemberDemo` 末端有兩行註解，一次取消一行：
+
+```java
+Member asMember = inherited;   // 可以編譯
+Member notMember = standalone; // 編譯錯誤
+```
+
+```text
+error: incompatible types:
+StandaloneVipMember cannot be
+converted to Member
+```
+
+方法名稱都一樣也沒用：沒有 `extends`，編譯器就不承認「是一種 Member」。
+
+</div>
+</div>
+
+<span class="note">用父類別型態的變數操作子類別物件，第 8 週會正式學；本週只用來說明 is-a。</span>
+
+<!--
+講者備註：兩個實驗都在副本操作，結束後還原。實驗 1 的 37 點：85 ÷ 5 = 17，加贈 20。兩個結果與錯誤訊息皆為 JDK 22 實測（錯誤訊息為英文語系輸出）。
 -->
 
 ---
@@ -1219,30 +1490,93 @@ java -cp out-teacher MissionStateCheck   # 16/16 項通過：狀態與停止規�
 
 <!-- _class: by-claude small -->
 
-<div class="ex"><span class="ai">ai/HeavyRover.java</span><span class="tc">teacher/HeavyRover.java</span></div>
+<div class="ex"><span class="ai">ai/HeavyRover.java</span></div>
 
-## 參考答案：E3 兩份狀態、E4 修正
+## 參考答案 E3：為什麼回傳「成功」，狀態卻沒變？
 
-<div class="cols">
+<style scoped>pre { font-size: 17px; line-height: 1.28; margin: 0 0 8px; } table { font-size: 19px; }</style>
+
+<div class="cols" style="grid-template-columns: 0.85fr 1.15fr;">
 <div>
 
-![w:540](diagrams/ai_state.svg)
+模擬 AI 在子類別**又宣告了一次**同名欄位：
 
-第一次 drill 後：getter 讀 Rover 那份 **20/0/0**；drill 改的是子類別那份 **12/3**。接著 `execute(1)` 用 Rover 那份 → 14/2/1，子類別那份停在 12/3。
+```java
+public class HeavyRover extends Rover {
+    private int energy;    // Rover 已經有一個 energy
+    private int samples;   // Rover 已經有一個 samples
+    ...
+    public String drill() {
+        if (energy < 8) { ... }
+        energy -= 8;       // 改的是子類別這一份
+        samples += 3;
+        ...
+```
 
-**一個物件、兩份同名狀態**——不是兩台車，也不是覆寫。
+結果：**一個** HeavyRover 物件裡，有**兩份** energy 和 samples——Rover 宣告的一份、子類別宣告的一份。
 
 </div>
 <div>
 
-**teacher/HeavyRover.java 的 drill**
+用 `HeavyRoverTry` 的第一台車 `new HeavyRover(20, 0)` 追蹤：
+
+| 動作 | Rover 那份<br>能源/樣本/行動 | 子類別那份<br>能源/樣本 | getter 讀到 |
+|---|---|---|---|
+| 建立 | 20 / 0 / 0 | 20 / 0 | 20 / 0 / 0 |
+| `drill()` | 20 / 0 / 0（沒動） | **12 / 3** | **20 / 0 / 0** |
+| `execute(1)` 探索 | **14 / 2 / 1** | 12 / 3（沒動） | 14 / 2 / 1 |
+
+- `getEnergy()`、`getSamples()` 寫在 Rover 裡，**只讀 Rover 那份**；`drill` 改的卻是子類別那份。
+- 所以 drill 回傳「成功」，`HeavyRoverTry` 卻印 `鑽探後: 20/0/0/1 … 不符`。
+
+> 子類別宣告同名欄位，**不會取代**父類別的欄位，而是**多出一份**。不是兩台車，也不是覆寫。
+
+</div>
+</div>
+
+<!--
+講者備註：學生 E3 完成後才揭示。表格數字為 JDK 22 實測（teacher/Rover.java＋ai/HeavyRover.java＋starter/HeavyRoverTry.java 一起編譯）。行動次數只在 Rover 那份：AI 版 drill 沒有呼叫 countAction，所以鑽探不會增加行動次數。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span class="ai">ai/HeavyRover.java</span><span class="tc">teacher/HeavyRover.java</span></div>
+
+## 參考答案 E4：最小修正，改回只用一份狀態
+
+<style scoped>pre { font-size: 17px; line-height: 1.28; margin: 0 0 8px; }</style>
+
+<div class="cols" style="grid-template-columns: 1fr 1fr;">
+<div>
+
+**AI 版另外兩個問題**（`HeavyRoverTry` 也抓到）：
+
+- **沒有檢查停止**：任務已達標或耗盡時再 drill，仍回「成功」（預期「任務已停止」）。
+- **沒有計行動次數**：drill 成功後行動次數不變。
+
+**最小修正四件事**
+
+1. 刪掉子類別重複宣告的 `energy`、`samples`
+2. 刪掉建構子裡 `this.energy = …`、`this.samples = …`
+3. drill 改用 Rover 提供的 protected 方法：`spendEnergy`、`addSamples`、`countAction`
+4. drill 最前面補上停止檢查
+
+</div>
+<div>
+
+**修正後的 drill**（即 `teacher/HeavyRover.java`）
 
 ```java
 public String drill() {
+    // 1. 已停止就拒絕，什麼都不改
     if (isStopped()) { return "任務已停止"; }
+    // 2. 扣能源；不夠就拒絕，什麼都不改
     if (!spendEnergy(DRILL_COST)) {
         return "能源不足";
     }
+    // 3. 成功才更新：樣本、行動次數、鑽探次數
     addSamples(DRILL_YIELD);
     countAction();
     drillCount++;
@@ -1250,13 +1584,15 @@ public String drill() {
 }
 ```
 
-順序：停止 → 能源 → 成功才更新；所有拒絕都不改狀態。
+這三個 protected 方法改的都是 **Rover 那一份**狀態，getter 讀的也是同一份，所以不會再「各改各的」。
+
+改完重編譯，`HeavyRoverTry` 十五行都應顯示「相符」。
 
 </div>
 </div>
 
 <!--
-講者備註：學生 E3 完成後才揭示。E5 參考 Prompt 見教師筆記 E 段。
+講者備註：修正前後的程式不要放在同一個資料夾一起編譯（同名類別）。講義 E4 要求先用 [AI] commit 保存模擬原文，修正重測後再用 [fix] commit。實測：修正前 HeavyRoverTry 有 不符 行（含「任務完成後鑽探: 成功」），修正後十五行全部「相符」。E5 參考 Prompt 見教師筆記 E 段。
 -->
 
 ---

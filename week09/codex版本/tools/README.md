@@ -12,6 +12,8 @@ python -X utf8 tools/verify.py
 
 ```powershell
 javac -encoding UTF-8 -d out-examples examples/*.java
+java -cp out-examples ParcelDemo
+java -cp out-examples ScaleDemo
 java -cp out-examples FixtureDemo
 
 javac -encoding UTF-8 -d out-teacher teacher/*.java

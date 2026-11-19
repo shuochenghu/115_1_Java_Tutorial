@@ -99,14 +99,14 @@ AI 協作：**先寫介面草案與可驗收的 Prompt**，再審查 AI 回覆
 
 | 標籤 | 資料夾 | 在本投影片的角色 |
 |---|---|---|
-| <span class="tag blue">examples/…</span> | `examples/` | **第一部分：範例教學**——介面、具名巢狀類別、匿名類別 |
+| <span class="tag blue">examples/…</span> | `examples/` | **第一部分：範例教學**——範例一抽象類別、範例二介面、範例三巢狀與匿名類別 |
 | <span class="tag green">starter/…</span> | `starter/` | **第二部分：作業說明**——抽象 Rover、SampleSource 報表、TODO 1–4 |
 | <span class="tag purple">ai/…</span> | `ai/` | E 段：教師撰寫的**模擬 AI 回覆**（參數型態錯誤） |
 | <span class="tag brown">diagrams/…</span> | `diagrams/` | 類別圖；`*_claude` 為本份新繪，用來說明**與第八週的演進** |
 | <span class="tag gray">teacher/…</span> | `teacher/` | **附錄：教師用**——完整答案、通知示範、作業參考 |
 
 <!--
-講者備註：講義的活動順序是 A→B→C→D→E→F→G；本份依教師要求先把 examples（講義 D 的 FixtureDemo）完整講完，再進 starter。D 段在第二部分只做一頁回顧。帶課以講義題號為準。
+講者備註：講義的活動順序是 A→B→C→D→E→F→G；本份依教師要求先把 examples 的三個範例（ParcelDemo、ScaleDemo、FixtureDemo）完整講完，再進 starter；也可以把範例一放在 B 前、範例二放在 C 前講。D 段在第二部分只做一頁回顧。帶課以講義題號為準。
 -->
 
 ---
@@ -144,12 +144,14 @@ AI 協作：**先寫介面草案與可驗收的 Prompt**，再審查 AI 回覆
 
 <!-- _class: by-claude small -->
 
-## 本週流程：先用範例學介面，再用到探測車作業
+## 本週流程：三個範例各學一個概念，再用到探測車作業
 
 | 部分 | 內容 | 講義 | 時間（備課估計） |
 |---|---|---|---|
-| **第一部分** <span class="tag blue">examples/</span> | 介面是什麼、介面當參數型態、具名巢狀類別、匿名類別 | D（提前） | 約 20 分 |
-| **第二部分** <span class="tag green">starter/</span> | A 跑第八週基準 → B 抽象類別（TODO 1–2） | A、B | 第 1 節 |
+| **第一部分** <span class="tag blue">examples/</span> | 範例一 抽象類別（包裹運費） | B 之前 | 約 10 分 |
+| | 範例二 介面（行李箱與貓上秤） | C 之前 | 約 10 分 |
+| | 範例三 巢狀類別、匿名類別（固定重量測試資料） | D | 約 5 分 |
+| **第二部分** <span class="tag green">starter/</span> | A 跑第八週基準 → B 抽象 Rover（TODO 1–2） | A、B | 第 1 節 |
 | | C 共用報表（TODO 3–4）、類別圖演進 | C | 第 2 節 |
 | | E Prompt 與模擬 AI 審查、F 看圖、G 保存 | E、F、G | 第 3 節 |
 | 課後 | 新增 `SampleBatch`，接上同一份報表 | 作業 | 20–30 分 |
@@ -157,7 +159,7 @@ AI 協作：**先寫介面草案與可驗收的 Prompt**，再審查 AI 回覆
 **每段都先寫預測，再編譯、執行、比對。** 編譯失敗時，先讀第一個與自己改動有關的錯誤。
 
 <!--
-講者備註：三節各 50 分鐘、休息另計，是備課估計。第一部分若在第 1 節開頭講，B 段可壓縮到 30 分鐘；時間不夠時編譯實驗只選一個（codex 教師筆記）。最後 15 分鐘一定留給 G 保存。
+講者備註：三節各 50 分鐘、休息另計，是備課估計。第一部分可以一次講完，也可以拆開：範例一放在 B 段開頭、範例二放在 C 段開頭、範例三就是講義 D。最後 15 分鐘一定留給 G 保存。
 -->
 
 ---
@@ -166,21 +168,21 @@ AI 協作：**先寫介面草案與可驗收的 Prompt**，再審查 AI 回覆
 
 ## 從 C# 對照：關鍵字幾乎一樣，寫法稍有不同
 
-| 概念 | C#（一年級學過） | Java（本週） |
+| 概念 | C#（一年級學過） | Java（本週範例） |
 |---|---|---|
-| 抽象類別 | `abstract class Rover` | `abstract class Rover` |
-| 抽象方法 | `protected abstract int ExploreYield();` | `protected abstract int exploreYield();` |
-| 覆寫抽象方法 | `protected override int ExploreYield()` | `@Override protected int exploreYield()` |
-| 介面 | `interface ISampleSource { int GetSamples(); }` | `interface SampleSource { int getSamples(); }` |
-| 繼承＋實作 | `class Rover : Base, ISampleSource` | `class Rover extends Base implements SampleSource` |
-| 匿名實作介面 | 沒有（改用 lambda／委派） | `new SampleSource() { ... }` |
+| 抽象類別 | `abstract class Parcel` | `abstract class Parcel` |
+| 抽象方法 | `protected abstract int RatePerKg();` | `protected abstract int ratePerKg();` |
+| 覆寫抽象方法 | `protected override int RatePerKg()` | `@Override protected int ratePerKg()` |
+| 介面 | `interface IWeighable { int GetWeight(); }` | `interface Weighable { int getWeight(); }` |
+| 繼承＋實作 | `class Cat : Animal, IWeighable` | `class Cat extends Animal implements Weighable` |
+| 匿名實作介面 | 沒有（改用 lambda／委派） | `new Weighable() { ... }` |
 
 - Java 用兩個不同關鍵字：**`extends` 接類別**、**`implements` 接介面**；C# 都用冒號。
-- Java 介面名稱**不加 `I` 前綴**；C# 習慣 `ISampleSource`。
+- Java 介面名稱**不加 `I` 前綴**；C# 習慣 `IWeighable`。
 - Java 的 `@Override` 是**註記**，寫錯方法名稱時會讓編譯器報錯；C# 的 `override` 是關鍵字。
 
 <!--
-講者備註：學生一年級在 WinForms 常看到 IDisposable 之類的 I 前綴介面，但多半沒有自己設計過。強調「Java 匿名類別」是 C# 沒有的語法，本週只要求讀懂。
+講者備註：學生一年級在 WinForms 常看到 IDisposable 之類的 I 前綴介面，但多半沒有自己設計過。表中 Animal 只是說明語法，範例裡的 Cat 沒有父類別。強調「Java 匿名類別」是 C# 沒有的語法，本週只要求讀懂。
 -->
 
 ---
@@ -190,117 +192,548 @@ AI 協作：**先寫介面草案與可驗收的 Prompt**，再審查 AI 回覆
 
 # 第一部分｜範例教學
 
-## 用 `examples/` 的兩個檔案學會介面
+## 三個範例，一次只學一個概念
 
-`SampleSource.java`、`FixtureDemo.java`｜講義 D
+範例一 抽象類別｜範例二 介面｜範例三 巢狀類別與匿名類別
 
 <!--
-講者備註：examples 與主任務沒有程式相依（它自帶一份同名 SampleSource），先在小範例看清楚規則，再回到探測車。
+講者備註：三個範例與探測車主線沒有程式相依，名稱與數字也不同，不是作業答案；結構可以對照。範例三沿用範例二的介面 Weighable。
 -->
 
 ---
 
 <!-- _class: by-claude small -->
 
-<div class="ex"><span>examples/SampleSource.java</span><span>examples/FixtureDemo.java</span></div>
+<div class="ex"><span>examples/</span><span>examples/README_claude.md</span></div>
 
 ## 範例檔案與執行入口
 
-| 檔案 | 有 main？ | 角色 |
-|---|---|---|
-| `examples/SampleSource.java` | — | 介面：只宣告 `int getSamples();` |
-| `examples/FixtureDemo.java` | ✓ | 用**兩種寫法**做出「固定回傳 2 份」的測試來源，交給同一個 `show` 方法 |
+| 範例 | 概念 | 檔案 | 執行入口 |
+|---|---|---|---|
+| **一** | 抽象類別、抽象方法 | `Parcel`（抽象）、`NormalParcel`、`ExpressParcel` | `ParcelDemo` |
+| **二** | 介面、`implements`、介面當參數型態 | `Weighable`（介面）、`Suitcase`、`Cat` | `ScaleDemo` |
+| **三** | 具名 `static` 巢狀類別、匿名類別 | `FixtureDemo`（沿用範例二的 `Weighable`） | `FixtureDemo` |
 
-examples 要**另外放一個資料夾、另外編譯**（它和 starter 都有 `SampleSource`，不能放進同一個 `src`）：
+10 個檔案放在自己 `java-09/examples/`，**和作業的 `src/` 分開編譯**：
 
 ```powershell
 # 在 java-09 資料夾
 javac -encoding UTF-8 -d out-examples examples/*.java
+java -cp out-examples ParcelDemo
+java -cp out-examples ScaleDemo
 java -cp out-examples FixtureDemo
 ```
 
-<span class="note">JDK 不限定版本；先用 java -version、javac -version 記下自己的版本。只有兩個檔案，用 VS Code 即可。</span>
+<span class="note">JDK 不限定版本；先用 java -version、javac -version 記下自己的版本。10 個檔案、3 個 main，可順便示範 IntelliJ IDEA 開資料夾、標來源根目錄、從 main 旁的按鈕執行。</span>
 
 <!--
-講者備註：README 的目錄配置：java-09/examples/ 只在需要本機跑示範時才複製。教師也可以直接投影執行結果。
+講者備註：範例三用到範例二的 Weighable，所以 10 個檔案要一起編譯。完整說明與預期輸出見 examples/README_claude.md（預期輸出折疊在 details 裡，先預測再展開）。
 -->
+
+---
+
+<!-- _class: lead by-claude -->
+
+# 範例一｜抽象類別
+
+## 包裹運費：流程一樣，費率不同
+
+`Parcel.java`、`NormalParcel.java`、`ExpressParcel.java`、`ParcelDemo.java`
 
 ---
 
 <!-- _class: by-claude small -->
 
-<div class="ex"><span>examples/SampleSource.java</span></div>
+<div class="ex"><span>examples/Parcel.java</span></div>
 
-## 介面（interface）：一份「能做什麼」的承諾
+## 範例一｜情境：運費公式大家一樣，只有費率不同
 
 <div class="cols">
 <div>
 
-```java
-// 獨立示範使用的介面，與課堂主線分開編譯。
-public interface SampleSource {
-    int getSamples();
-}
-```
+物流站的運費規則：
 
-| 看到的寫法 | 意思 |
+> 運費 ＝ 基本費 60 元 ＋ 重量 × **每公斤費率**
+
+| 包裹種類 | 每公斤費率 |
 |---|---|
-| `interface` | 不是類別，是**操作規格** |
-| `int getSamples();` | 只有簽名、**沒有方法本體**，以分號結束 |
-| 沒寫 `public` | 介面方法**自動是 public、abstract** |
-
-</div>
-<div class="box blue">
-
-**概念**：介面只說「實作我的類別，一定有 `int getSamples()` 可以呼叫」，不管資料怎麼存、數字怎麼算。
-
-**為何需要**：使用者（例如報表）只關心「拿得到數量」，不想知道對方是探測車還是樣本盒。
-
-**限制**：介面不能 `new`；本週的介面**沒有欄位、沒有建構子**。
-
-</div>
-</div>
-
-<!--
-講者備註：本週只教普通的抽象介面方法；Java 8 以後介面可有 default／static 方法，本週不展開，被問到再說「之後的課才用」。
--->
-
----
-
-<!-- _class: by-claude small -->
-
-<div class="ex"><span>examples/FixtureDemo.java</span></div>
-
-## 介面當作「參數型態」：show 只要求一件事
-
-```java
-private static void show(SampleSource source) {
-    System.out.println("測試資料樣本數=" + source.getSamples());
-}
-```
-
-<div class="cols">
-<div>
-
-- 參數型態寫 `SampleSource`：**任何實作了 SampleSource 的物件**都能傳進來。
-- `show` 裡只能呼叫 `SampleSource` 有宣告的方法——也就是只有 `getSamples()`。
-- 真正執行哪一份 `getSamples()`，由**傳進來的實際物件**決定（第八週的動態派送）。
+| 一般包裹 `NormalParcel` | 10 元 |
+| 快遞包裹 `ExpressParcel` | 25 元 |
+| 明天可能新增的冷凍包裹 | ？ |
 
 </div>
 <div class="box">
 
-**WinForms 對照**
+**設計選擇**
 
-想像表單上一個「顯示數量」按鈕。按鈕的處理程式只需要問一句：「**你現在有幾份樣本？**」
+- 把公式寫在父類別 `Parcel`，只寫一次。
+- 「每公斤費率」每種包裹不同，交給子類別。
 
-它不需要知道對方有沒有能源、會不會探索。這「一句話」就是介面。
+**如果父類別先給一個「預設費率」呢？**
+
+新增冷凍包裹時忘了寫費率，程式照樣能編譯、照樣用預設值算錢——**錯了也沒人提醒**。
+
+→ 讓費率變成**抽象方法**，忘了寫就編譯不過。
 
 </div>
 </div>
 
 <!--
-講者備註：連回第八週的追蹤方式：「先看宣告型態能叫什麼，再看實際物件執行什麼」。宣告型態是 SampleSource → 只能叫 getSamples；實際物件決定哪一份 getSamples 被執行。
+講者備註：這和第八週留下的問題 ① 是同一個形狀（Rover 的預設產量 2），但先在包裹上看清楚，第二部分再搬到探測車。
 -->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span>examples/Parcel.java</span></div>
+
+## 範例一｜抽象類別 `Parcel`
+
+<div class="cols">
+<div>
+
+```java
+public abstract class Parcel {
+    public static final int BASE_FEE = 60;
+    private final String name;
+    private final int weight;
+
+    public Parcel(String name, int weight) {
+        this.name = name;
+        this.weight = weight;
+    }
+    public String getName() { return name; }
+    public int getWeight() { return weight; }
+
+    public int fee() {
+        return BASE_FEE + weight * ratePerKg();
+    }
+
+    protected abstract int ratePerKg();
+}
+```
+
+</div>
+<div class="box green">
+
+**概念**：`abstract class` 是「**不完整的類別**」——有共同的欄位與流程，但留下空格給子類別填。
+
+**抽象方法**：`protected abstract int ratePerKg();` 只有簽名、以**分號**結束，沒有 `{ }`。
+
+**仍然可以有**：欄位、建構子、寫好的方法（`fee()`）。
+
+**不可以**：`new Parcel(...)`。
+
+**fee() 怎麼能呼叫沒有內容的 ratePerKg()？** 因為能被建立的物件一定是具體子類別，而具體子類別一定寫了 `ratePerKg()`。
+
+</div>
+</div>
+
+<!--
+講者備註：程式為節錄，原檔每個成員都有完整註解。抽象類別的建構子不會被 new 直接呼叫，而是子類別建構時透過 super(name, weight) 執行，讓 private 欄位得到初值。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span>examples/NormalParcel.java</span><span>examples/ExpressParcel.java</span><span>examples/ParcelDemo.java</span></div>
+
+## 範例一｜子類別只交代費率；先預測輸出
+
+<style scoped>pre { font-size: 16.5px; line-height: 1.28; }</style>
+
+<div class="cols">
+<div>
+
+```java
+public class NormalParcel extends Parcel {
+    public NormalParcel(String name, int weight) {
+        super(name, weight);
+    }
+    @Override
+    protected int ratePerKg() { return 10; }
+}
+// ExpressParcel 相同結構，ratePerKg() 回 25
+```
+
+```java
+public static void main(String[] args) {
+    Parcel books = new NormalParcel("書籍", 3);
+    Parcel medicine = new ExpressParcel("藥品", 3);
+    show(books);
+    show(medicine);
+}
+static void show(Parcel parcel) {
+    System.out.println(parcel.getName() + " "
+        + parcel.getWeight() + "公斤 運費="
+        + parcel.fee() + "元");
+}
+```
+
+</div>
+<div>
+
+**請寫下：**
+
+1. 兩行輸出各是什麼？
+2. 兩件包裹一樣重，運費一樣嗎？是**哪個方法**造成差別？
+3. `books` 的**宣告型態**與**實際類別**各是什麼？
+4. `fee()` 寫在哪個類別？`ratePerKg()` 執行的是哪個類別的版本？
+
+</div>
+</div>
+
+<!--
+講者備註：讓學生先寫 1 分鐘再執行。答案在下一頁。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span>examples/ParcelDemo.java</span></div>
+
+## 範例一｜答案：流程在父類別，費率由實際物件決定
+
+```text
+書籍 3公斤 運費=90元
+藥品 3公斤 運費=135元
+```
+
+| 呼叫 `medicine.fee()` 的步驟 | 執行的程式 | 在哪個類別 |
+|---|---|---|
+| 1 | `fee()`：`BASE_FEE + weight * ratePerKg()` | `Parcel` |
+| 2 | `ratePerKg()`：**問實際物件要費率** → 回 25 | **`ExpressParcel`**（實際物件） |
+| 3 | 60 ＋ 3 × 25 ＝ 135 | `Parcel` |
+
+- 兩個變數的宣告型態都是 `Parcel`，實際物件分別是 `NormalParcel`、`ExpressParcel`。
+- 抽象類別可以當**變數型態**和**參數型態**（`show(Parcel parcel)`），但實際物件一定是具體子類別。
+
+<!--
+講者備註：連回第八週的追蹤方式：「先看宣告型態能叫什麼，再看實際物件執行什麼」。第二部分 Rover.explore() 呼叫 exploreYield() 是同一個模式。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span class="dg">diagrams/parcel_claude.svg</span><span>examples/ParcelDemo.java</span></div>
+
+## 範例一｜UML：抽象類別怎麼畫
+
+<style scoped>table { font-size: 17px; } section { font-size: 21px; }</style>
+
+<div class="cols" style="grid-template-columns: 640px 1fr; gap: 20px;">
+<div>
+
+![w:640](diagrams/parcel_claude.svg)
+
+</div>
+<div>
+
+| 圖示 | 意思 |
+|---|---|
+| `«abstract»`＋斜體類別名 | 抽象類別 |
+| 斜體方法 `ratePerKg()` | 抽象方法 |
+| 實線＋空心三角 | 繼承（`extends`），三角形指向父類別 |
+| 虛線箭頭 | 使用（參數、建立） |
+
+`fee()` 不是斜體：它是**寫好的方法**，子類別直接沿用。
+
+</div>
+</div>
+
+<!--
+講者備註：本圖為 Claude 依 examples 原始碼新繪（diagrams/parcel_claude.puml）。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span>examples/ParcelDemo.java</span><span>examples/ExpressParcel.java</span></div>
+
+## 範例一｜編譯實驗：編譯器替你守住規則
+
+<div>
+
+在 `experiments/` 副本試，一次一個（JDK 22 實測）：
+
+| 改一處 | 第一個相關診斷 |
+|---|---|
+| 取消註解 `new Parcel("未分類", 1)` | `Parcel is abstract; cannot be instantiated` |
+| 刪掉 `ExpressParcel` 的 `ratePerKg()` | `ExpressParcel is not abstract and does not override abstract method ratePerKg() in Parcel` |
+
+第二個錯誤就是抽象方法的價值：**忘了交代費率，編譯器替你抓出來。** 換到探測車，就是「忘了交代探索產量」。
+
+**讀錯誤訊息的順序**：先看檔名與行號 → 再看「哪個類別」「少了哪個方法」→ 回到自己改的那一行。
+
+</div>
+
+<!--
+講者備註：ParcelDemo.java 裡已留有被註解的 new Parcel 那一行，學生只要在副本刪掉 // 即可。不同 JDK 版本的訊息字句可能略有差異，關鍵詞一樣。
+-->
+
+---
+
+<!-- _class: lead by-claude -->
+
+# 範例二｜介面
+
+## 行李箱和貓，放上同一個秤
+
+`Weighable.java`、`Suitcase.java`、`Cat.java`、`ScaleDemo.java`
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span>examples/ScaleDemo.java</span></div>
+
+## 範例二｜情境：兩個毫不相干的東西，都要秤重
+
+<div class="cols">
+<div>
+
+機場報到櫃台的秤，要秤：
+
+| 物件 | 重量從哪來 | 其他能力 |
+|---|---|---|
+| 行李箱 `Suitcase` | 空箱重量 ＋ 裝進的物品 | `pack(kg)` 裝東西 |
+| 貓 `Cat`（寵物託運） | 自己的體重 | `meow()` 會叫 |
+
+**能用繼承嗎？** 「貓**是一種**行李箱」？「行李箱**是一種**貓」？都不成立。
+
+</div>
+<div class="box blue">
+
+**秤只需要一件事**：「**你現在幾公斤？**」
+
+它不需要知道對方會不會裝東西、會不會叫。
+
+把這「一句話」寫成**介面**，兩個類別各自承諾做得到，秤就能接受兩者。
+
+**WinForms 對照**：按鈕的處理程式只想「讀一個數字」，不在乎資料來自哪種物件。
+
+</div>
+</div>
+
+<!--
+講者備註：抽象類別回答「是什麼」（同一家族、共用狀態與流程）；介面回答「能做什麼」（不同家族、共同操作）。這頁先讓學生自己說出繼承不合理。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span>examples/Weighable.java</span><span>examples/Suitcase.java</span><span>examples/Cat.java</span></div>
+
+## 範例二｜介面 `Weighable` 與兩個實作類別
+
+<style scoped>pre { font-size: 16.5px; line-height: 1.28; }</style>
+
+<div class="cols">
+<div>
+
+```java
+public interface Weighable {
+    int getWeight();
+}
+```
+
+| 寫法 | 意思 |
+|---|---|
+| `interface` | 不是類別，是**操作規格** |
+| `int getWeight();` | 只有簽名、**沒有方法本體** |
+| 沒寫 `public` | 介面方法**自動是 public、abstract** |
+| 沒有欄位、建構子 | 不能 `new Weighable()` |
+
+</div>
+<div>
+
+```java
+public class Suitcase implements Weighable {
+    private final int emptyWeight;
+    private int contentWeight;
+    ...
+    public void pack(int kg) { ... }
+    @Override
+    public int getWeight() {
+        return emptyWeight + contentWeight;
+    }
+}
+```
+
+```java
+public class Cat implements Weighable {
+    ...
+    public String meow() { ... }
+    @Override
+    public int getWeight() { return weight; }
+}
+```
+
+**`implements Weighable`**＝承諾提供 `getWeight()`；實作時**一定要寫 `public`**。
+
+</div>
+</div>
+
+<!--
+講者備註：程式為節錄。本週只教普通的抽象介面方法；Java 8 以後介面可有 default／static 方法，本週不展開。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span>examples/ScaleDemo.java</span></div>
+
+## 範例二｜介面當參數型態；先預測四行輸出
+
+<style scoped>pre { font-size: 16.5px; line-height: 1.28; }</style>
+
+<div class="cols">
+<div>
+
+```java
+public static void main(String[] args) {
+    Suitcase suitcase = new Suitcase(4);
+    suitcase.pack(6);
+    suitcase.pack(3);
+    Cat cat = new Cat("咪咪", 5);
+
+    weigh("行李箱", suitcase);
+    weigh("貓", cat);
+
+    System.out.println(cat.meow());
+    Weighable item = cat;
+    System.out.println("同一隻貓用 Weighable 變數讀取："
+        + item.getWeight() + "公斤");
+}
+
+static void weigh(String label, Weighable item) {
+    System.out.println(label + " 重量="
+        + item.getWeight() + "公斤");
+}
+```
+
+</div>
+<div>
+
+**請寫下：**
+
+1. 四行輸出各是什麼？
+2. `weigh` 的參數型態是什麼？為什麼行李箱和貓都能傳進去？
+3. 在 `weigh` 裡面，能不能呼叫 `item.pack(1)` 或 `item.meow()`？
+4. `cat` 和 `item` 指向**同一個物件**嗎？兩個變數能呼叫的方法一樣嗎？
+
+</div>
+</div>
+
+<!--
+講者備註：讓學生先寫 1–2 分鐘再執行。答案在下一頁。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span>examples/ScaleDemo.java</span></div>
+
+## 範例二｜答案：宣告型態決定「能叫什麼」
+
+```text
+行李箱 重量=13公斤
+貓 重量=5公斤
+咪咪：喵～
+同一隻貓用 Weighable 變數讀取：5公斤
+```
+
+| 呼叫 | 參數／變數的宣告型態 | 實際物件 | 執行的 `getWeight()` |
+|---|---|---|---|
+| `weigh("行李箱", suitcase)` | `Weighable` | `Suitcase` | 4 ＋ 6 ＋ 3 ＝ 13 |
+| `weigh("貓", cat)` | `Weighable` | `Cat` | 回傳體重 5 |
+| `item.getWeight()` | `Weighable` | 同一隻 `Cat` | 回傳體重 5 |
+
+- `weigh` 裡**只能**呼叫 `Weighable` 宣告的 `getWeight()`；`pack`、`meow` 不在介面裡。
+- `cat` 與 `item` 指向同一隻貓；用 `Cat` 型態的 `cat` 才能叫 `meow()`。
+
+<!--
+講者備註：這一頁是第二部分 SampleReport.print(String, SampleSource) 的完整預演：參數型態是介面，任何實作者都能傳入，數量由實際物件提供。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span class="dg">diagrams/scale_claude.svg</span><span>examples/ScaleDemo.java</span></div>
+
+## 範例二｜UML：介面與實作怎麼畫
+
+<style scoped>table { font-size: 17px; } section { font-size: 21px; }</style>
+
+<div class="cols" style="grid-template-columns: 580px 1fr; gap: 20px;">
+<div>
+
+![w:580](diagrams/scale_claude.svg)
+
+</div>
+<div>
+
+| 圖示 | 意思 |
+|---|---|
+| `«interface»`＋斜體名稱 | 介面 |
+| **虛線**＋空心三角 | 實作（`implements`），三角形指向介面 |
+| 虛線箭頭 | 使用（`weigh` 的參數型態） |
+
+`Suitcase` 與 `Cat` 之間**沒有任何線**：它們沒有關係，只是各自實作同一個介面。
+
+右上的 `NormalParcel` 沒有線連到 `Weighable`，所以不能上秤。
+
+</div>
+</div>
+
+<!--
+講者備註：本圖為 Claude 新繪（diagrams/scale_claude.puml）。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span>examples/ScaleDemo.java</span><span>examples/Suitcase.java</span></div>
+
+## 範例二｜編譯實驗：介面型態能叫什麼、誰能傳進來
+
+<div>
+
+在 `experiments/` 副本試，一次一個（JDK 22 實測）：
+
+| 改一處 | 第一個相關診斷 |
+|---|---|
+| 取消註解 `item.meow()` | `cannot find symbol`（`variable item of type Weighable`） |
+| 取消註解 `weigh("包裹", new NormalParcel(...))` | `NormalParcel cannot be converted to Weighable` |
+| 拿掉 `Suitcase.getWeight()` 的 `public` | `attempting to assign weaker access privileges; was public` |
+
+**第二個最重要**：包裹也有 `getWeight()`，但沒寫 `implements Weighable` 就不算。Java 看的是**有沒有宣告實作**，不是方法名稱碰巧一樣。
+
+</div>
+
+<!--
+講者備註：第二個實驗正好對應作業 TODO 3b：Rover 早就有 getSamples()，仍要寫 implements SampleSource。
+-->
+
+---
+
+<!-- _class: lead by-claude -->
+
+# 範例三｜巢狀類別與匿名類別
+
+## 同一份測試資料，兩種寫法
+
+`FixtureDemo.java`（沿用範例二的 `Weighable`）｜講義 D
 
 ---
 
@@ -315,17 +748,16 @@ private static void show(SampleSource source) {
 
 ```java
 public class FixtureDemo {
-    // 只有本示範用得到，放在示範類別內。
-    private static class FixedSampleSource
-            implements SampleSource {
+    private static class FixedWeight
+            implements Weighable {
         @Override
-        public int getSamples() {
+        public int getWeight() {
             return 2;
         }
     }
 
     public static void main(String[] args) {
-        SampleSource named = new FixedSampleSource();
+        Weighable named = new FixedWeight();
         ...
     }
 }
@@ -339,7 +771,7 @@ public class FixtureDemo {
 | `class` 寫在 `FixtureDemo` **裡面** | 巢狀類別（nested class） |
 | `private` | 只有 `FixtureDemo` 自己用得到 |
 | `static` | 建立時**不需要**先有 `FixtureDemo` 物件 |
-| `implements SampleSource` | 承諾提供 `getSamples()` |
+| `implements Weighable` | 承諾提供 `getWeight()` |
 | `@Override public` | 讓編譯器檢查簽名；**一定要 public** |
 
 **何時用**：這個類別只為某個類別服務、別處用不到，就收進去，不另開檔案。
@@ -348,7 +780,7 @@ public class FixtureDemo {
 </div>
 
 <!--
-講者備註：類別名稱 FixedSampleSource 只在 FixtureDemo 裡可見。編譯後會產生 FixtureDemo$FixedSampleSource.class，可讓學生看 out-examples 資料夾。
+講者備註：編譯後會產生 FixtureDemo$FixedWeight.class，可讓學生看 out-examples 資料夾。
 -->
 
 ---
@@ -363,9 +795,9 @@ public class FixtureDemo {
 <div>
 
 ```java
-SampleSource anonymous = new SampleSource() {
+Weighable anonymous = new Weighable() {
     @Override
-    public int getSamples() {
+    public int getWeight() {
         return 2;
     }
 };   // ← 這是一個陳述式，分號不能少
@@ -373,7 +805,7 @@ SampleSource anonymous = new SampleSource() {
 
 拆開讀：
 
-1. `new SampleSource()`：要建立「某個實作 SampleSource 的物件」
+1. `new Weighable()`：要建立「某個實作 Weighable 的物件」
 2. `{ ... }`：**當場寫出**這個類別的內容
 3. 這個類別**沒有名字**，宣告與建立同時完成
 
@@ -382,7 +814,9 @@ SampleSource anonymous = new SampleSource() {
 
 **它不是 `new` 了介面**
 
-介面不能直接建立物件。`new SampleSource() { ... }` 建立的是「一個沒名字、實作了 SampleSource 的類別」的物件。
+`new Weighable();`（沒有大括號）會得到 `Weighable is abstract; cannot be instantiated`。
+
+`new Weighable() { ... }` 建立的是「一個沒名字、實作了 Weighable 的類別」的物件。
 
 **何時用**：只用一次、內容很短的實作，例如測試資料、事件處理。
 
@@ -397,68 +831,57 @@ SampleSource anonymous = new SampleSource() {
 
 ---
 
-<!-- _class: by-claude -->
+<!-- _class: by-claude small -->
 
 <div class="ex"><span>examples/FixtureDemo.java</span></div>
 
-## D｜先預測：兩次 `show` 各印什麼？
+## D｜先預測，再看答案
+
+<style scoped>pre { font-size: 16.5px; line-height: 1.28; }</style>
 
 <div class="cols">
 <div>
 
 ```java
 public static void main(String[] args) {
-    SampleSource named = new FixedSampleSource();
-    SampleSource anonymous = new SampleSource() {
+    Weighable named = new FixedWeight();
+    Weighable anonymous = new Weighable() {
         @Override
-        public int getSamples() { return 2; }
+        public int getWeight() { return 2; }
     };
     show(named);
     show(anonymous);
 }
+private static void show(Weighable item) {
+    System.out.println("測試資料重量="
+        + item.getWeight());
+}
 ```
+
+**請寫下**：兩行輸出？兩個 `getWeight()` 在哪？兩個物件為什麼能交給同一個 `show`？
 
 </div>
 <div>
 
-**請寫下：**
-
-1. 兩行輸出各是什麼？
-2. 圈出兩個 `getSamples()` 的位置。
-3. 兩個物件的**宣告型態**是什麼？**實際類別**各是什麼？
-4. 一句話：兩個不同類別的物件，為什麼能交給**同一個** `show`？
-
-</div>
-</div>
-
-<!--
-講者備註：讓學生先寫 1 分鐘再執行。答案在下一頁。
--->
-
----
-
-<!-- _class: by-claude small -->
-
-<div class="ex"><span>examples/FixtureDemo.java</span></div>
-
-## D｜答案：同一個 show、同一種結果，兩個不同類別
+**答案**
 
 ```text
-測試資料樣本數=2
-測試資料樣本數=2
+測試資料重量=2
+測試資料重量=2
 ```
 
-| 變數 | 宣告型態 | 實際類別 | 執行的 getSamples |
-|---|---|---|---|
-| `named` | `SampleSource` | `FixtureDemo.FixedSampleSource` | 巢狀類別裡的那一份 |
-| `anonymous` | `SampleSource` | 匿名類別（編譯後叫 `FixtureDemo$1`） | `new SampleSource() { ... }` 裡的那一份 |
+| 變數 | 宣告型態 | 實際類別 |
+|---|---|---|
+| `named` | `Weighable` | `FixtureDemo.FixedWeight` |
+| `anonymous` | `Weighable` | 匿名類別（`FixtureDemo$1`） |
 
-**為什麼能交給同一個 show？** 兩個類別都 `implements SampleSource`，而 `show` 的參數型態就是 `SampleSource`——它只要求「有 `getSamples()`」。
+兩個類別都 `implements Weighable`，`show` 的參數型態就是 `Weighable`——和範例二的 `weigh` 同一個道理。
 
-<span class="note">兩個實作都回傳 2，所以輸出相同；如果把匿名類別改成回傳 5，第二行就會變成 5——輸出由實際物件決定。</span>
+</div>
+</div>
 
 <!--
-講者備註：可以現場改成 return 5 示範，強調「同一個呼叫，不同物件，不同結果」，這就是下一部分報表要用的能力。
+講者備註：先遮住右半邊讓學生寫 1 分鐘。可以現場把匿名類別改成 return 5 示範：同一個呼叫，不同物件，不同結果。
 -->
 
 ---
@@ -467,7 +890,7 @@ public static void main(String[] args) {
 
 <div class="ex"><span class="dg">diagrams/fixture_claude.svg</span></div>
 
-## UML：怎麼畫巢狀類別與「實作介面」
+## 範例三｜UML：怎麼畫巢狀類別
 
 <style scoped>table { font-size: 18px; }</style>
 
@@ -483,7 +906,7 @@ public static void main(String[] args) {
 |---|---|
 | `«interface»` 斜體名稱 | 介面 |
 | **虛線＋空心三角** ⇢▷ | 實作（`implements`），三角形指向介面 |
-| 實線＋空心三角 →▷ | 繼承（`extends`），上週學過 |
+| 實線＋空心三角 →▷ | 繼承（`extends`），範例一 |
 | 圓圈加號 ⊕ | 巢狀類別，⊕ 在外層類別那一端 |
 | 虛線箭頭 ⇢ | 使用（參數、區域變數、建立） |
 
@@ -493,29 +916,7 @@ public static void main(String[] args) {
 </div>
 
 <!--
-講者備註：本圖為 Claude 新繪（diagrams/fixture_claude.puml）。匿名類別在 UML 沒有正式名稱，這裡用「（匿名類別）」標示，只為了讓學生看到它也實作 SampleSource。
--->
-
----
-
-<!-- _class: by-claude small -->
-
-<div class="ex"><span>examples/FixtureDemo.java</span><span>examples/SampleSource.java</span></div>
-
-## 編譯器會幫你擋什麼？（在副本試，教師示範即可）
-
-| 在副本改一處 | 第一個相關診斷（JDK 22 實測） | 學到什麼 |
-|---|---|---|
-| `new SampleSource();` | `SampleSource is abstract; cannot be instantiated` | 介面不能直接建立物件 |
-| 巢狀類別方法名打成 `getSample()` | `FixedSampleSource is not abstract and does not override abstract method getSamples() in SampleSource`<br>`method does not override or implement a method from a supertype` | 承諾沒做到；`@Override` 也抓到名字寫錯 |
-| 拿掉實作方法的 `public` | `attempting to assign weaker access privileges; was public` | 介面方法是 public，實作**不能更嚴** |
-
-**讀錯誤訊息的順序**：先看檔名與行號 → 再看「哪個類別」「少了哪個方法」→ 回到自己改的那一行。
-
-<span class="note">這三個診斷在第二部分會原樣再出現（Rover、StandardRover、SampleTray），先在小範例看過，作業時就認得。</span>
-
-<!--
-講者備註：三個錯誤都在暫存副本實測過（OpenJDK 22，javac -encoding UTF-8）。不同 JDK 版本的訊息字句可能略有差異，重點詞一樣。
+講者備註：本圖為 Claude 新繪（diagrams/fixture_claude.puml）。匿名類別在 UML 沒有正式名稱，這裡用「（匿名類別）」標示，只為了讓學生看到它也實作 Weighable。
 -->
 
 ---
@@ -530,7 +931,7 @@ public static void main(String[] args) {
 | 有名字？ | 有 | 有（`外層.內層`） | 沒有 |
 | 可在別處重複 `new`？ | 可以 | 在外層類別內可以 | 不行（只在那一處） |
 | 適合 | 多處會用、內容較多 | 只為某個類別服務 | 只用一次、內容很短 |
-| 本週例子 | `SampleTray`（第二部分） | `FixedSampleSource` | `new SampleSource() { ... }` |
+| 本週例子 | `Suitcase`、`Cat`（範例二） | `FixedWeight`（範例三） | `new Weighable() { ... }`（範例三） |
 
 <span class="note">補充：巢狀類別不加 static 時叫「內部類別」（inner class），建立它需要先有外層物件；本週不要求寫，看懂差別即可。</span>
 
@@ -544,18 +945,18 @@ public static void main(String[] args) {
 
 ## 第一部分小結：範例學到的，作業要用在哪裡
 
-| examples 學到的 | starter 作業中的位置 |
+| 範例學到的 | starter 作業中的位置 |
 |---|---|
-| 介面只宣告 `int getSamples();` | **TODO 3a**：在 `starter/SampleSource.java` 寫同一行 |
-| `implements` ＋ `@Override public` | **TODO 3b、3c**：`Rover`、`SampleTray` 實作介面 |
-| 參數型態用介面，什麼實作都能傳 | **TODO 4**：`SampleReport.print(String, SampleSource)` |
-| 介面不能 `new`，`@Override` 抓錯 | **B 段編譯實驗**：抽象類別同樣不能 `new` |
-| 匿名類別 | **課後選做**：用匿名物件提供另一組固定樣本數 |
-
-範例只有「介面」；作業還多了一個新概念——**抽象類別**，下一部分從探測車的問題開始講。
+| 範例一：流程寫在抽象父類別，`ratePerKg()` 留給子類別 | **TODO 1–2**：`StandardRover` 覆寫 `exploreYield()`；`Rover` 改 `abstract` |
+| 範例一：`new Parcel(...)`、漏覆寫都會編譯錯誤 | **B4 編譯實驗**：`new Rover(...)`、刪除 `StandardRover` 的覆寫 |
+| 範例二：介面只宣告 `int getWeight();` | **TODO 3a**：自己為 `SampleSource` 寫出報表需要的方法 |
+| 範例二：`implements` ＋ `@Override public` | **TODO 3b、3c**：`Rover`、`SampleTray` 實作介面 |
+| 範例二：有同名方法但沒 `implements` 就不算 | **TODO 3b**：`Rover` 已有 `getSamples()`，仍要宣告實作 |
+| 範例二：參數型態用介面，什麼實作都能傳 | **TODO 4**：`SampleReport.print(String, SampleSource)` |
+| 範例三：匿名類別 | **課後選做**：用匿名物件提供另一組固定樣本數 |
 
 <!--
-講者備註：提醒學生 examples 的 SampleSource 與 starter 的 SampleSource 同名，所以要分開編譯；作業中的那一份要自己寫（TODO 3a）。
+講者備註：範例的名稱與數字都和作業不同，結構相同。學生可以對照範例，但必須自己寫 starter 的 TODO。
 -->
 
 ---
@@ -775,7 +1176,7 @@ public class Rover {
 
 <!-- _class: by-claude small -->
 
-## B｜抽象類別（abstract class）
+## B｜把範例一搬到探測車：抽象 `Rover`
 
 <div class="cols">
 <div>
@@ -800,6 +1201,8 @@ public abstract class Rover {
 
 </div>
 <div class="box green">
+
+**對照範例一**：`Parcel`→`Rover`、`fee()`→`explore()`、`ratePerKg()`→`exploreYield()`、`NormalParcel`→`StandardRover`。
 
 **概念**：抽象類別是「**不完整的類別**」——有共同的狀態與流程，但留一個（或多個）空格給子類別填。
 
@@ -1040,7 +1443,7 @@ javac -encoding UTF-8 -d out *.java
 **介面（can-do）**：「樣本盒**能提供**樣本數」？
 
 - 成立！探測車也能提供樣本數。
-- 兩者沒有共同祖先也沒關係。
+- 兩者沒有共同祖先也沒關係——就像範例二的行李箱和貓。
 - 報表只依賴這**一個能力**。
 
 </div>
@@ -1066,7 +1469,7 @@ javac -encoding UTF-8 -d out *.java
 
 | TODO | 檔案 | 要做的事 |
 |---|---|---|
-| **3a** | `SampleSource.java` | 宣告 `int getSamples();`（和 examples 同一行）；契約：回傳非負數、讀取不改狀態 |
+| **3a** | `SampleSource.java` | 宣告 `int getSamples();`（寫法同範例二的 `Weighable`）；契約：回傳非負數、讀取不改狀態 |
 | **3b** | `Rover.java` | 類別宣告加上 `implements SampleSource`；在**既有的** `public int getSamples()` 上加 `@Override` |
 | **3c** | `SampleTray.java` | 實作同一介面；`@Override public int getSamples()` 回傳**自己的欄位** |
 
@@ -1178,7 +1581,7 @@ public static void print(String label, SampleSource source)
 - 讀兩次結果相同，車的狀態仍是 **8/6/2**——讀取**沒有副作用**。
 
 <!--
-講者備註：這一頁把第八週的「宣告型態 vs 實際物件」用到介面上。對照第一部分 FixtureDemo：同一個 show、不同物件。
+講者備註：這一頁把第八週的「宣告型態 vs 實際物件」用到介面上。對照第一部分範例二 ScaleDemo：同一個 weigh、不同物件。
 -->
 
 ---
@@ -1189,15 +1592,15 @@ public static void print(String label, SampleSource source)
 
 ## D｜回顧：第一部分的 FixtureDemo 在講義的位置
 
-講義 D（5 分鐘）就是第一部分看過的 `FixtureDemo`：
+講義 D（5 分鐘）就是第一部分的範例三 `FixtureDemo`：
 
 | 講義 D 要寫的 | 第一部分的答案 |
 |---|---|
-| 具名巢狀類別、匿名類別各印什麼？ | 兩行都是 `測試資料樣本數=2` |
-| 圈出兩個 `getSamples()` 的位置 | `FixedSampleSource` 裡、`new SampleSource() { ... }` 裡 |
-| 兩個物件如何交給同一個 `show`？ | 都實作 `SampleSource`，`show` 的參數型態就是它 |
+| 具名巢狀類別、匿名類別各印什麼？ | 兩行都是 `測試資料重量=2` |
+| 圈出兩個 `getWeight()` 的位置 | `FixedWeight` 裡、`new Weighable() { ... }` 裡 |
+| 兩個物件如何交給同一個 `show`？ | 都實作 `Weighable`，`show` 的參數型態就是它 |
 
-**和 C 段的關係**：`show(SampleSource)` 與 `SampleReport.print(String, SampleSource)` 是**同一個設計**——用介面當參數，讓不同類別共用同一段程式。
+**和 C 段的關係**：範例的 `show(Weighable)`、`weigh(String, Weighable)` 與作業的 `SampleReport.print(String, SampleSource)` 是**同一個設計**——用介面當參數，讓不同類別共用同一段程式。
 
 <!--
 講者備註：教師可在這裡（或 F 前）用 2–3 分鐘示範 teacher/StepListenerDemo.java（見附錄），對照「報表主動問」與「回放程式逐步通知」。
@@ -1682,7 +2085,7 @@ java -cp 'out-teacher;out-transfer' SampleBatchDemo
 - [JLS §8.1.1.1 abstract Classes](https://docs.oracle.com/javase/specs/jls/se25/html/jls-8.html#jls-8.1.1.1)；[JLS §9 Interfaces](https://docs.oracle.com/javase/specs/jls/se25/html/jls-9.html)；[JLS §15.9.5 Anonymous Class Declarations](https://docs.oracle.com/javase/specs/jls/se25/html/jls-15.html#jls-15.9.5)。
 - 本週 README、student_lab、assignment、AI_USAGE_template、teacher_notes、handoff、verification。
 
-<span class="note">情境、程式與 responsibilities 圖為 codex 教材；本投影片與 `*_claude` 類別圖由 Claude 依該教材編排與繪製。編譯診斷以 OpenJDK 22 在暫存副本實測，其他 JDK 字句可能略有不同。</span>
+<span class="note">情境、starter／teacher 程式與 responsibilities 圖為 codex 教材；examples 三個範例依教師要求由 Claude 拆分改寫；本投影片與 `*_claude` 類別圖由 Claude 依該教材編排與繪製。編譯診斷以 OpenJDK 22 在暫存副本實測，其他 JDK 字句可能略有不同。</span>
 
 <!--
 講者備註：類別圖原始碼：diagrams/evolution_w08_claude.puml、evolution_w09_claude.puml、starter_todo_claude.puml、fixture_claude.puml、ai_param_claude.puml。

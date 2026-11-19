@@ -1,0 +1,47 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 範例一：抽象類別 Parcel（流程在父類別，費率在子類別）
+
+abstract class Parcel <<abstract>> #FFE8D6 {
+  + {static} BASE_FEE : int = 60
+  - name : String
+  - weight : int
+  + Parcel(name : String, weight : int)
+  + getName() : String
+  + getWeight() : int
+  + fee() : int
+  # {abstract} ratePerKg() : int
+}
+class NormalParcel #DFF3E3 {
+  + NormalParcel(name : String, weight : int)
+  # ratePerKg() : int  {回 10}
+}
+class ExpressParcel #DFF3E3 {
+  + ExpressParcel(name : String, weight : int)
+  # ratePerKg() : int  {回 25}
+}
+class ParcelDemo {
+  + {static} main(args : String[]) : void
+  ~ {static} show(parcel : Parcel) : void
+}
+Parcel <|-- NormalParcel
+Parcel <|-- ExpressParcel
+ParcelDemo ..> Parcel : show 參數
+ParcelDemo ..> NormalParcel : new
+ParcelDemo ..> ExpressParcel : new
+note right of Parcel
+  fee() = BASE_FEE + weight × ratePerKg()
+  斜體 ratePerKg()＝抽象方法：
+  只有簽名，子類別一定要覆寫
+end note
+@enduml

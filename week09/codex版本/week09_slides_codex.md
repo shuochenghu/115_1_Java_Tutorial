@@ -77,6 +77,8 @@ rover.execute(1);
 
 讓編譯器檢查每種具體車是否交代產量。
 
+先看範例一 `examples/ParcelDemo.java`：運費流程寫在抽象的 `Parcel`，費率由子類別提供。
+
 <!-- 開 Rover.java。指出 private explore 保留了整段行動規則。 -->
 
 ---
@@ -126,6 +128,8 @@ protected abstract int exploreYield();
 車的數量由探索或掃描累積，樣本盒由建構時填入。
 
 **報表需要向這些物件問哪一件事？**
+
+先看範例二 `examples/ScaleDemo.java`：行李箱和貓沒有共同父類別，都能放上同一個秤。
 
 先寫自己的方法草案，再看下一頁。
 
@@ -190,16 +194,16 @@ public static void print(String label, SampleSource source)
 ---
 ## D｜同一份資料，兩種物件寫法
 
-開 `examples/FixtureDemo.java`。兩個物件都用 `SampleSource` 參考。
+開 `examples/FixtureDemo.java`（範例三）。兩個物件都用範例二的 `Weighable` 參考。
 
 | 寫法 | 觀察位置 |
 |---|---|
-| 具名靜態巢狀類別 | `FixedSampleSource` 宣告在示範類別裡 |
-| 匿名類別 | 在 `new SampleSource() { ... }` 當場寫實作 |
+| 具名靜態巢狀類別 | `FixedWeight` 宣告在示範類別裡 |
+| 匿名類別 | 在 `new Weighable() { ... }` 當場寫實作 |
 
 先預測兩次 `show` 的輸出，再看執行。
 
-<!-- 兩行 測試資料樣本數=2。靜態巢狀類別建立時無須外層物件。進度許可可示範 StepListenerDemo 回放，見教師筆記。 -->
+<!-- 兩行 測試資料重量=2。靜態巢狀類別建立時無須外層物件。進度許可可示範 StepListenerDemo 回放，見教師筆記。 -->
 
 ---
 ## E｜先改寫需求，再看回覆

@@ -76,7 +76,6 @@ public class Rover {
     // 加幾份樣本由 exploreYield() 決定，所以會依實際車種而不同。
     private String explore() {
         if (!spendEnergy(6)) { return "能源不足"; }
-        // TODO 1 教師答案：成功扣能源後才依實際車種取得產量。
         addSamples(exploreYield());
         countAction();
         return "成功";

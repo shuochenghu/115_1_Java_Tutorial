@@ -1,0 +1,47 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 範例二：介面 Weighable（沒有共同父類別，也能上同一個秤）
+
+interface Weighable <<interface>> #DFF3E3 {
+  + getWeight() : int
+}
+class Suitcase {
+  - emptyWeight : int
+  - contentWeight : int
+  + Suitcase(emptyWeight : int)
+  + pack(kg : int) : void
+  + getWeight() : int
+}
+class Cat {
+  - name : String
+  - weight : int
+  + Cat(name : String, weight : int)
+  + meow() : String
+  + getWeight() : int
+}
+class ScaleDemo {
+  + {static} main(args : String[]) : void
+  ~ {static} weigh(label : String, item : Weighable) : void
+}
+class NormalParcel #F4F4F4 {
+  + getWeight() : int
+}
+Weighable <|.. Suitcase
+Weighable <|.. Cat
+ScaleDemo ..> Weighable : weigh 參數
+note bottom of NormalParcel
+  範例一的包裹也有 getWeight()，
+  但沒有 implements Weighable
+  → 不能傳給 weigh（編譯錯誤）
+end note
+@enduml

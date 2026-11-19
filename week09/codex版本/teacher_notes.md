@@ -12,6 +12,8 @@
 
 ## A–B｜前週基準與抽象化
 
+B 開始前用 2–3 分鐘執行範例一 [ParcelDemo.java](examples/ParcelDemo.java)，印 `書籍 3公斤 運費=90元`、`藥品 3公斤 運費=135元`。重點是運費流程 `fee()` 只寫在抽象類別 `Parcel`，每公斤費率 `ratePerKg()` 由 `NormalParcel`（10）與 `ExpressParcel`（25）提供。程式中被註解的 `new Parcel(...)` 在副本取消註解後，診斷為 `Parcel is abstract; cannot be instantiated`。這組範例和探測車結構相同但數字與名稱不同，學生可對照，不能照抄成 TODO 答案。
+
 A1 的宣告型態為 `Rover`，實際物件是 `HeavyRover`。`Rover.execute(1)` 進入共用的私有 `explore()`，取得產量時依物件選擇 `HeavyRover.exploreYield()`。第一步耗 6 格並取得 3 份。A2 一般車讀到第 3 步，因兩次探索只累積 4 份。重型車第二次探索後已有 6 份，掃描尚未讀取就停止。
 
 - TODO 1 先完成 [StandardRover.java](teacher/StandardRover.java) 的覆寫。只回 2，建構資料由父類別持有。
@@ -52,6 +54,8 @@ A1 的宣告型態為 `Rover`，實際物件是 `HeavyRover`。`Rover.execute(1)
 
 ## C–D｜共用報表與兩種測試來源
 
+C 開始前執行範例二 [ScaleDemo.java](examples/ScaleDemo.java)，印 `行李箱 重量=13公斤`、`貓 重量=5公斤`、`咪咪：喵～`、`同一隻貓用 Weighable 變數讀取：5公斤`。行李箱與貓沒有共同父類別，只因都 `implements Weighable` 而能交給同一個 `weigh`。兩個註解中的編譯實驗：`item.meow()` 的診斷為 `cannot find symbol`（宣告型態 `Weighable` 沒有這個方法）；把範例一的 `NormalParcel` 放上秤，診斷為 `NormalParcel cannot be converted to Weighable`，雖然它也有 `getWeight()`，但沒有宣告實作介面。第二個實驗正好對應 TODO 3b：`Rover` 早有 `getSamples()`，仍要寫 `implements SampleSource`。
+
 先收學生的草案。合理的契約是無參數、回傳整數、讀取不改狀態。回到統一簽名 `int getSamples()` 後，TODO 3a 寫介面，3b 用 `Rover` 已有的公開方法，3c 由 `SampleTray` 讀自己的欄位。TODO 4 用 [SampleReport.java](teacher/SampleReport.java) 的 `SampleSource` 參數，三個呼叫見 [SampleReportDemo.java](teacher/SampleReportDemo.java)。
 
 ```text
@@ -62,7 +66,7 @@ A1 的宣告型態為 `Rover`，實際物件是 `HeavyRover`。`Rover.execute(1)
 
 若樣本數寫死，請讓學生換成 9 份的盒子或再讀空盒，並說明這個輸入能抓什麼錯。若學生把樣本盒設成 `extends Rover`，問它是否真的有能源、移動與停止規則。報表接的是「會提供樣本數」的能力，任務接的是整套探測車行為。
 
-D 的 [FixtureDemo.java](examples/FixtureDemo.java) 有兩個 `getSamples()`，各回 2。具名 `static` 巢狀類別宣告在 `FixtureDemo` 內，建立時不用先建立外層的 `FixtureDemo` 物件。匿名類別的宣告與建立寫在同一個運算式。兩個物件都能當作 `SampleSource` 交給 `show`，所以印兩行 `測試資料樣本數=2`。課堂先看這一對，非靜態內部類別只補充它需要外層物件。
+D 的範例三 [FixtureDemo.java](examples/FixtureDemo.java) 沿用範例二的 `Weighable`，有兩個 `getWeight()`，各回 2。具名 `static` 巢狀類別 `FixedWeight` 宣告在 `FixtureDemo` 內，建立時不用先建立外層的 `FixtureDemo` 物件。匿名類別的宣告與建立寫在同一個運算式。兩個物件都能當作 `Weighable` 交給 `show`，所以印兩行 `測試資料重量=2`。課堂先看這一對，非靜態內部類別只補充它需要外層物件。
 
 ## E–F｜AI 審查及類別圖
 

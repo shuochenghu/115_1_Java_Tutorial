@@ -1,0 +1,61 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 第十週 → 第十一週（codex teacher）：新增一個泛型群組，其餘全部沿用
+
+legend top right
+  <back:#DFF3E3>　新增　</back>  <back:#F4F4F4>　與第十週相同　</back>
+endlegend
+
+interface SampleSource <<interface>> #F4F4F4 {
+  + getSamples() : int
+}
+abstract class Rover <<abstract>> #F4F4F4
+class StandardRover #F4F4F4
+class HeavyRover #F4F4F4
+class SampleTray #F4F4F4
+class SampleReport #F4F4F4 {
+  三個 print 過載（第十週完成版）
+}
+class Mission #F4F4F4 {
+  - history : ArrayList<MissionStep>
+}
+class "SampleGroup<T extends SampleSource>" as G #DFF3E3 {
+  - sources : ArrayList<T>
+  + add(source : T) : void
+  + get(index : int) : T
+  + size() : int
+  + totalSamples() : int
+}
+class SampleGroupDemo #DFF3E3 {
+  三個群組、九行展示
+}
+class GenericMethodDemo #DFF3E3 {
+  教師示範：方法自己的 <T>
+}
+SampleSource <|.. Rover
+SampleSource <|.. SampleTray
+Rover <|-- StandardRover
+Rover <|-- HeavyRover
+Mission --> Rover
+SampleReport ..> SampleSource
+SampleReport ..> Rover
+G ..> SampleSource : T 的上限
+SampleGroupDemo ..> G
+SampleGroupDemo ..> SampleReport : 沿用兩種 print
+GenericMethodDemo ..> SampleSource
+note bottom of G
+  第十週：「<b>呼叫哪個方法</b>」由引數宣告型態決定（過載）
+  第十一週：「<b>容器裡放什麼型態</b>」由型態引數決定（泛型）
+  兩者都在<b>編譯時</b>檢查
+end note
+@enduml

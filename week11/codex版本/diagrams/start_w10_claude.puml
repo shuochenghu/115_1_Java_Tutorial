@@ -1,0 +1,54 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 第十週結束時：其實已經在「用」泛型，只是還沒「寫」過
+
+class Mission #F4F4F4 {
+  - history : <b>ArrayList<MissionStep></b>
+  + getStep(index : int) : <b>MissionStep</b>
+}
+class MissionStep #F4F4F4 {
+  + getCommand() : int
+  + getEnergy() : int
+  + getResult() : String
+}
+interface SampleSource <<interface>> #F4F4F4 {
+  + getSamples() : int
+}
+abstract class Rover <<abstract>> #F4F4F4
+class HeavyRover #F4F4F4 {
+  + getDrillCount() : int
+}
+class SampleTray #F4F4F4
+class SampleReport #F4F4F4 {
+  + {static} print(String, SampleSource)
+  + {static} print(String, Rover)
+  + {static} print(String, int)
+}
+Mission o--> "0..*" MissionStep : 日誌
+SampleSource <|.. Rover
+SampleSource <|.. SampleTray
+Rover <|-- HeavyRover
+SampleReport ..> SampleSource
+SampleReport ..> Rover
+note right of Mission
+  get 取出時，編譯器<b>已知道</b>是 MissionStep；
+  add 一個 String 會在<b>編譯時</b>被拒絕。
+  → 本週問題：我們自己寫的類別，
+     能不能也做到這件事？
+end note
+note bottom of SampleTray
+  地面站新需求：把<b>樣本盒</b>、<b>重型車</b>、
+  <b>混合來源</b>分別成組，統計總樣本數，
+  取回時還要保留具體型態
+end note
+@enduml

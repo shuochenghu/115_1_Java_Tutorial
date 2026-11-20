@@ -52,6 +52,7 @@
 2. 複製完成的 `src` Java 檔到 `java-10/ai-check/`，用 [模擬版本](ai/SampleReport.java) 覆蓋副本中的同名檔。教師提供的 `instanceof` 表示「來源是一台 Rover」；`(Rover) source` 讓後續呼叫以 `Rover` 型態傳入。本活動只要求讀懂這兩行。
 3. 在 `ai-check` 執行 `javac -encoding UTF-8 -d out *.java`，編譯成功後執行 `java -cp out SampleOverloadDemo`。圈出違反規格的欄位。寫下呼叫端先選到哪個簽名、方法本體又轉交給哪個簽名。
 4. 只改造成違規的轉交。重編譯並從同一入口比較六行。補上錯誤前後結果及採納或拒絕理由。
+5. 討論（不寫程式，可課後補）：AI 版的 Java 語法沒有錯，錯在和本週「由呼叫端選格式」的規格不同。如果需求改成「只要實際是一台車，就一律印能源」，AI 的輸出就符合需求。這時你會沿用 `instanceof` 轉交，還是讓物件自己決定（例如由 `Rover` 覆寫一個報表方法，就像 `HeavyRover` 覆寫 `exploreYield()` 決定自己的產量）？各寫一個理由：待填。
 
 ## E｜同儕檢查與保存（第 3 節後 25 分鐘）
 

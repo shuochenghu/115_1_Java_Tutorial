@@ -1,0 +1,45 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+title SampleGroupDemo：三個群組各有自己的清單，但物件只有一份
+
+object "trays : SampleGroup<SampleTray>" as trays #E8F0F8 {
+  [0] → tray
+  [1] → emptyTray
+}
+object "vehicles : SampleGroup<HeavyRover>" as vehicles #DFF3E3 {
+  [0] → heavy
+}
+object "mixed : SampleGroup<SampleSource>" as mixed #FFE8D6 {
+  [0] → heavy
+  [1] → tray
+  [2] → emptyTray
+}
+object "heavy : HeavyRover" as heavy {
+  energy = 8
+  samples = 6
+  actionCount = 2
+}
+object "tray : SampleTray" as tray {
+  samples = 4
+}
+object "emptyTray : SampleTray" as empty {
+  samples = 0
+}
+trays --> tray
+trays --> empty
+vehicles --> heavy : get(0) 型態 <b>HeavyRover</b>
+mixed --> heavy : get(0) 型態 <b>SampleSource</b>
+mixed --> tray
+mixed --> empty
+note bottom of heavy
+  vehicles.get(0) == mixed.get(0) → <b>true</b>
+  群組只存參考：不複製車、不重跑任務，
+  所以能源只有一份（8）
+end note
+@enduml

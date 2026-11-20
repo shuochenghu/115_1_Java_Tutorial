@@ -1,0 +1,31 @@
+@startuml
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam sequenceParticipantBackgroundColor #F4F4F4
+skinparam sequenceParticipantBorderColor #555555
+skinparam sequenceGroupBorderColor #888888
+hide footbox
+title 剩 2 頁、申請 4 頁：模擬 AI 版 vs 正確版
+participant "main 的 catch" as M
+participant "quota.remaining" as R
+group 模擬 AI 版（ai/PrintQuota.java）：先扣，再檢查
+  R -> R : 1～5 檢查通過
+  R -> R : remaining -= 4　→　<b><color:#C0392B>-2</color></b>
+  R -> R : remaining < 0 → throw
+  R -->x M : IllegalArgumentException("剩餘額度不足")
+  note right of M : 印「拒絕」，但額度已是 <b>-2</b>\n下一筆 2 再扣 → <b>-4</b>
+end
+group 正確版（你的 A2）：先檢查，通過才扣
+  R -> R : 1～5 檢查通過
+  R -> R : 4 > remaining(2) → throw
+  R -->x M : IllegalArgumentException("剩餘額度不足")
+  note right of M : 印「拒絕」，額度仍是 <b>2</b>\n下一筆 2 受理 → 0
+end
+note over M, R
+  <b>例外不會自動還原已經改過的欄位</b>；catch 只負責「接下來怎麼辦」
+end note
+@enduml

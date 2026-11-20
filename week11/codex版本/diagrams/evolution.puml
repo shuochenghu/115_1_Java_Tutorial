@@ -1,0 +1,33 @@
+@startuml
+!pragma layout smetana
+left to right direction
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 20
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam backgroundColor #FBFCFE
+package "第 10 週沿用" #EEF2F6 {
+  interface SampleSource {
+    +getSamples(): int
+  }
+  abstract class Rover
+  class HeavyRover {
+    +execute(command: int): String
+  }
+  class Mission
+  class MissionStep
+  class SampleReport
+  Rover ..|> SampleSource
+  HeavyRover --|> Rover
+  Mission --> Rover : 車輛
+  Mission --> MissionStep : 日誌
+  SampleReport ..> SampleSource : 共用報表
+}
+class "SampleGroup<T>" as Group #DDF2EE {
+  +get(index: int): T
+  +totalSamples(): int
+}
+class SampleGroupDemo #DDF2EE
+Group ..> SampleSource : T 的上限
+SampleGroupDemo ..> Group : 建立與查詢
+@enduml

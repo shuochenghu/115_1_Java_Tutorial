@@ -1,0 +1,38 @@
+@startuml
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam sequenceParticipantBackgroundColor #F4F4F4
+skinparam sequenceParticipantBorderColor #555555
+skinparam sequenceGroupBorderColor #888888
+hide footbox
+title start() 與直接呼叫 run() 的差別（B2 對照實驗）
+participant "main 執行緒" as M
+participant "工作A 執行緒" as A
+participant "工作B 執行緒" as B
+== 正式版：a.start(); b.start(); a.join(); b.join(); ==
+M -> M : 印「開始模擬列印」
+M ->> A : a.start()　建立並啟動
+M ->> B : b.start()　建立並啟動
+activate A
+activate B
+note over A, B
+  各自印 步驟 1→2→3，執行緒= 工作A／工作B
+  A、B 之間的先後<b>不固定</b>
+end note
+M -> M : a.join()　等 A 終止
+deactivate A
+M -> M : b.join()　等 B 終止
+deactivate B
+M -> M : 印「兩項工作皆已結束」
+== 對照版：a.run(); b.run();（experiments/direct-run） ==
+M -> M : 印「開始模擬列印」
+M -> M : a.run()　<b>只是普通方法呼叫</b>，印 3 行，執行緒=<b>main</b>
+M -> M : b.run()　再印 3 行，執行緒=<b>main</b>
+M -> M : join() 對沒啟動的執行緒立即返回
+M -> M : 印「兩項工作皆已結束」
+note over A, B : 對照版<b>沒有</b>建立任何新執行緒
+@enduml

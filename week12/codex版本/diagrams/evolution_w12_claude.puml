@@ -1,0 +1,57 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 第十一週 → 第十二週：換一個獨立情境，帶走的是「觀念」
+
+legend top right
+  <back:#DFF3E3>　本週新寫　</back>  <back:#E3ECF8>　JDK 提供，本週新用　</back>  <back:#F4F4F4>　前幾週已會　</back>
+endlegend
+
+package "第 11 週（探測車主線，本週不再使用）" #FAFAFA {
+  class "SampleGroup<T extends SampleSource>" as G #F4F4F4
+  interface SampleSource #F4F4F4
+  class Rover <<abstract>> #F4F4F4 {
+    - energy : int
+    # spendEnergy(int) : boolean
+  }
+  Rover ..|> SampleSource
+  G ..> SampleSource
+}
+package "第 12 週（校園列印，全新 java-12）" #FAFAFA {
+  class PrintQuota #DFF3E3 {
+    - remaining : int
+    + reserve(int) : void　<b>throw</b>
+  }
+  class PrintQuotaDemo #DFF3E3 {
+    <b>try / catch</b> 放在迴圈內
+  }
+  class PrintTask #DFF3E3 {
+    + run() : void
+  }
+  class ThreadStartDemo #DFF3E3 {
+    <b>start / join</b>
+  }
+  interface Runnable #E3ECF8
+  class Thread #E3ECF8
+  class IllegalArgumentException #E3ECF8
+  class NumberFormatException #E3ECF8
+  PrintQuotaDemo ..> PrintQuota
+  PrintQuota ..> IllegalArgumentException : throw
+  PrintQuotaDemo ..> NumberFormatException : catch
+  PrintQuotaDemo ..> IllegalArgumentException : catch
+  PrintTask ..|> Runnable
+  ThreadStartDemo ..> Thread
+  Thread o--> Runnable
+}
+Rover .[#999999].> PrintQuota : <color:#666666>private 欄位＋先檢查再改</color>
+SampleSource .[#999999].> Runnable : <color:#666666>實作介面</color>
+@enduml

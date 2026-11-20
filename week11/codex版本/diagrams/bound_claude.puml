@@ -1,0 +1,42 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title A3：兩種做法，取出時編譯器各知道什麼？
+
+class "ArrayList<SampleSource>" as L #F4F4F4 {
+  + get(index : int) : <b>SampleSource</b>
+}
+class "SampleGroup<T extends SampleSource>" as G #DFF3E3 {
+  + get(index : int) : <b>T</b>
+  + totalSamples() : int
+}
+interface SampleSource <<interface>> #F4F4F4 {
+  + getSamples() : int
+}
+class HeavyRover #F4F4F4 {
+  + getEnergy() : int
+  + getDrillCount() : int
+}
+L ..> SampleSource : 元素型態
+G ..> SampleSource : <b>T 的上限</b>\n（不是繼承）
+SampleSource <|.. HeavyRover
+note bottom of L
+  可以混放、可以加總，
+  但 get 回來只保證是 SampleSource：
+  <color:#C0392B>getEnergy() 呼叫不到</color>
+end note
+note bottom of G
+  SampleGroup<HeavyRover> 的 get → <b>HeavyRover</b>：能查能源
+  上限保證每個 T 都有 getSamples()，
+  所以 totalSamples() 能加總
+end note
+@enduml

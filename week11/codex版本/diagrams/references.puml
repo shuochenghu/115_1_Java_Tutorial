@@ -1,0 +1,34 @@
+@startuml
+!pragma layout smetana
+left to right direction
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 22
+skinparam shadowing false
+skinparam backgroundColor #FBFCFE
+object "vehicles : SampleGroup<HeavyRover>" as vehicles #DDF2EE {
+  第一筆參考 = heavy
+}
+object "mixed : SampleGroup<SampleSource>" as mixed #E7EFF5 {
+  第一筆參考 = heavy
+}
+object "同一台 heavy : HeavyRover" as heavy {
+  energy = 8
+  samples = 6
+  actionCount = 2
+}
+object "第一步 : MissionStep" as step #FBEED7 {
+  command = 1
+  energy = 14
+  result = 成功
+}
+vehicles --> heavy : get(0) 為 HeavyRover
+mixed --> heavy : get(0) 為 SampleSource
+step -[hidden]-> heavy
+note bottom of step
+日誌保存當時數值，
+不是目前能源的參考。
+end note
+note bottom of heavy
+群組不複製車輛，也不執行新行動。
+end note
+@enduml

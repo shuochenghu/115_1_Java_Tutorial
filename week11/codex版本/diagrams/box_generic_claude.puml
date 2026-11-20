@@ -1,0 +1,51 @@
+@startuml
+!pragma layout smetana
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title examples/：重複的盒子 → Object 盒 → Box<T>
+
+package "① 重複的寫法（只投影）" #F7F1F1 {
+  class StringBox {
+    - value : String
+    + get() : String
+  }
+  class IntegerBox {
+    - value : Integer
+    + get() : Integer
+  }
+}
+package "② Object 盒（ObjectBox）" #FFF4E6 {
+  class ObjectBox #FFE8D6 {
+    - value : <b>Object</b>
+    + get() : <b>Object</b>
+  }
+}
+package "③ 泛型盒（Box、TypedBoxDemo）" #EAF6EC {
+  class "Box<T>" as Box #DFF3E3 {
+    - value : <b>T</b>
+    + get() : <b>T</b>
+  }
+}
+StringBox --> ObjectBox : 只寫一次，\n型態改成 Object
+IntegerBox --> ObjectBox
+ObjectBox --> Box : 只寫一次，\n型態留成空位 T
+note bottom of ObjectBox
+  什麼都放得進去，但取出要<b>自己轉型</b>：
+  (String) message.get()
+  轉錯型態 → <color:#C0392B><b>執行時</b>才 ClassCastException</color>
+end note
+note bottom of Box
+  Box<String>、Box<Integer>：編譯器記得型態，
+  取出<b>不必轉型</b>
+  型態不符 → <color:#2E7D32><b>編譯時</b>就被拒絕</color>
+end note
+@enduml

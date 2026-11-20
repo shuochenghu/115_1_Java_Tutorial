@@ -1,0 +1,26 @@
+@startuml
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 22
+skinparam backgroundColor #FBFCFE
+skinparam ArrowColor #123D65
+skinparam activityBackgroundColor #E7EFF5
+skinparam activityBorderColor #123D65
+title 一筆申請的流程（catch 在迴圈內）
+start
+:取出本筆 raw;
+if (trim 後能轉成 int？) then (能)
+  :呼叫 reserve(copies);
+  if (單筆 1～5 且額度足夠？) then (是)
+    :扣除 copies;
+    :顯示受理與剩餘額度;
+  else (否)
+    :throw IllegalArgumentException;
+    :規則 catch 顯示拒絕\n額度不變;
+  endif
+else (不能)
+  :parseInt 拋出 NumberFormatException;
+  :格式 catch 顯示拒絕\n不呼叫 reserve，額度不變;
+endif
+:若還有資料，處理下一筆\n否則顯示批次結束;
+stop
+@enduml

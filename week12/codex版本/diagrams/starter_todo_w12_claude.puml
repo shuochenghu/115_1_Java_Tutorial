@@ -1,0 +1,59 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 第十二週 starter：兩組各兩檔、各自有 main（紅字＝要由你完成）
+
+legend top right
+  <back:#FFE8D6>　有 TODO 的地方　</back>  <back:#F4F4F4>　已提供　</back>
+endlegend
+
+package "starter/quota → 你的 java-12/src" #FAFAFA {
+  class PrintQuota #FFE8D6 {
+    - remaining : int
+    + PrintQuota()　已提供：設成 10
+    + getRemaining() : int　已提供
+    + reserve(copies : int) : void　<color:#C0392B><b>TODO A2</b>：檢查、throw、扣除</color>
+  }
+  class PrintQuotaDemo #FFE8D6 {
+    + {static} main(args : String[]) : void
+    --
+    已提供：quota 物件、六筆 inputs
+    <color:#C0392B><b>TODO A3</b>：迴圈＋try＋兩個 catch</color>
+  }
+  PrintQuotaDemo ..> PrintQuota : 呼叫 reserve
+}
+package "starter/threads → 你的 java-12/threads" #FAFAFA {
+  interface Runnable <<JDK>> #F4F4F4 {
+    + run() : void
+  }
+  class PrintTask #FFE8D6 {
+    - label : String　已提供（final）
+    + PrintTask(label : String)　已提供
+    + run() : void　<color:#C0392B><b>TODO B1</b>：三步迴圈</color>
+  }
+  class ThreadStartDemo #FFE8D6 {
+    + {static} main(args : String[]) : void
+    --
+    <color:#C0392B><b>TODO B2</b>：兩個 Thread、start、join</color>
+  }
+  PrintTask ..|> Runnable
+  ThreadStartDemo ..> PrintTask : 建立兩個
+}
+note bottom of PrintQuota
+  起始只印「尚未完成：請先完成 A2，再接上 A3…」
+  A2 做完<b>仍會</b>印這行：A3 也要自己寫
+end note
+note bottom of Runnable
+  起始只印「尚未完成：請完成 B1、B2…」
+  兩組<b>互不相依</b>，分開編譯
+end note
+@enduml

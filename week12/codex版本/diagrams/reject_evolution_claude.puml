@@ -1,0 +1,43 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 「這次不能做」怎麼告訴呼叫端？第 4～11 週 → 第 12 週
+
+package "第 4～11 週：用回傳值" #FAFAFA {
+  class Rover <<abstract>> #F4F4F4 {
+    - energy : int
+    # spendEnergy(amount : int) : boolean
+  }
+  class "呼叫端（explore）" as C1 #F4F4F4
+  C1 ..> Rover : if (!spendEnergy(6))\n  return "能源不足";
+}
+package "第 12 週：用例外" #FAFAFA {
+  class PrintQuota #DFF3E3 {
+    - remaining : int = 10
+    + reserve(copies : int) : void
+    + getRemaining() : int
+  }
+  class "呼叫端（PrintQuotaDemo.main）" as C2 #DFF3E3
+  C2 ..> PrintQuota : try { reserve(copies); }\ncatch (IllegalArgumentException e)
+}
+note bottom of Rover
+  相同：<b>先檢查，通過才改 private 欄位</b>
+  回 false 時，能源不變
+  呼叫端<b>不檢查</b>回傳值也能編譯、繼續跑
+end note
+note bottom of PrintQuota
+  相同：<b>先檢查，通過才改 private 欄位</b>
+  不行時 <b>throw</b>：方法不會正常返回，
+  呼叫端不接住，main 就會終止
+  例外物件還帶著<b>原因</b>（getMessage）
+end note
+@enduml

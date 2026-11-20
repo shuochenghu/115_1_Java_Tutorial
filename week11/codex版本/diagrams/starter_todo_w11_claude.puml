@@ -1,0 +1,43 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 第十一週 starter：四個 TODO 都在 SampleGroup.java（紅字＝要由你完成）
+
+legend top right
+  <back:#FFE8D6>　有 TODO 的檔案　</back>  <back:#F4F4F4>　已提供、不用改　</back>
+endlegend
+
+class "SampleGroup<T>" as G #FFE8D6 {
+  <color:#C0392B><b>TODO 1</b>：private ArrayList<T> 欄位＋建構子建立空清單</color>
+  --
+  + add(source : T) : void　<color:#C0392B><b>TODO 2</b>：存原參考</color>
+  + get(index : int) : T　<color:#C0392B><b>TODO 3</b>：取回原物件</color>
+  + size() : int　<color:#C0392B><b>TODO 3</b>：目前筆數</color>
+  + totalSamples() : int　<color:#C0392B><b>TODO 4</b>：加上限再加總</color>
+}
+class SampleGroupDemo #F4F4F4 {
+  + {static} main(args : String[]) : void
+  --
+  已提供：建三個群組、印九行
+}
+class "Rover / StandardRover / HeavyRover\nSampleSource / SampleTray / SampleReport\nMission / MissionLog / MissionStep\nCompareMissions / HeavyRoverTry\nSampleReportDemo / SampleOverloadDemo" as Given #F4F4F4
+
+SampleGroupDemo ..> G : 建立與查詢
+SampleGroupDemo ..> Given : 執行任務、印報表
+G ..> Given : TODO 4 之後\nT extends SampleSource
+note bottom of G
+  起始碼故意<b>沒有</b>上限。TODO 4 分兩步，都在這個檔案：
+  ① 保持 SampleGroup<T>，先寫加總迴圈 → 編譯 → cannot find symbol
+  ② 類別宣告改成 SampleGroup<T extends SampleSource> → 編譯通過
+  不要用 (SampleSource) 轉型代替上限
+end note
+@enduml

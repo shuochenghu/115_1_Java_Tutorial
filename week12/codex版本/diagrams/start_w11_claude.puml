@@ -1,0 +1,43 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 第十一週結束時：「失敗」有兩種下場
+
+class Rover <<abstract>> #F4F4F4 {
+  # spendEnergy(amount : int) : <b>boolean</b>
+  + execute(command : int) : <b>String</b>
+}
+class "SampleGroup<T extends SampleSource>" as G #F4F4F4 {
+  + add(source : T) : void
+  + get(index : int) : T
+}
+class UnsafeGroupTry #F4F4F4 {
+  ai-check 反例入口
+}
+UnsafeGroupTry ..> G : 模擬 AI 版\n(T) 轉型
+note bottom of Rover
+  <b>下場一：用回傳值說「不行」</b>
+  spendEnergy 能源不足 → 回 false
+  execute 被拒絕 → 回 "能源不足"、"無效指令"
+  呼叫端<b>可以忘了檢查</b>，程式照樣往下走
+end note
+note bottom of UnsafeGroupTry
+  <b>下場二：執行時拋出例外，程式直接終止</b>
+  vehicles.get(0) → ClassCastException
+  上週只要求<b>辨識「何時失敗」</b>，沒有處理
+end note
+note as Q
+  <b>本週問題</b>：方法發現「這次不能做」時，
+  能不能<b>一定讓呼叫端知道</b>，
+  呼叫端又能<b>接住、說明原因、繼續下一筆</b>？
+end note
+@enduml

@@ -1,0 +1,35 @@
+@startuml
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam sequenceParticipantBackgroundColor #F4F4F4
+skinparam sequenceParticipantBorderColor #555555
+skinparam sequenceGroupBorderColor #888888
+hide footbox
+title 一筆 "4"（剩 2 頁）：例外怎麼從 reserve 回到 main 的 catch
+participant "PrintQuotaDemo.main\n（for 迴圈內的 try）" as M
+participant "Integer" as I
+participant "quota : PrintQuota\nremaining = 2" as Q
+M -> I : parseInt("4".trim())
+I --> M : 4
+M -> Q : reserve(4)
+activate Q
+Q -> Q : 4 < 1 或 4 > 5？ 否
+Q -> Q : 4 > remaining(2)？ <b>是</b>
+Q -->x M : <b>throw</b> new IllegalArgumentException("剩餘額度不足")
+deactivate Q
+note right of Q
+  remaining -= copies <b>沒有執行</b>
+  → 額度仍是 2
+end note
+note over M
+  try 裡「印受理」那一行<b>被跳過</b>
+  跳到 catch (IllegalArgumentException e)
+  印「拒絕：剩餘額度不足」
+  （原因文字由 e.getMessage() 取得）
+end note
+M -> M : 這次迴圈結束，取下一筆 "2"
+@enduml

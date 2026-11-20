@@ -1,0 +1,41 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 22
+skinparam backgroundColor #FBFCFE
+skinparam classBackgroundColor #E7EFF5
+skinparam classBorderColor #123D65
+skinparam ArrowColor #006D77
+skinparam classAttributeIconSize 0
+left to right direction
+class PrintQuotaDemo {
+  main(String[] args)
+  逐筆轉換、catch、顯示
+}
+class PrintQuota {
+  - remaining : int = 10
+  + reserve(copies : int) : void
+  + getRemaining() : int
+}
+PrintQuotaDemo --> PrintQuota : 呼叫申請、讀取額度
+note bottom of PrintQuota
+  先驗證，全部通過才扣除
+  失敗 throw；不顯示訊息
+end note
+class ThreadStartDemo {
+  建立、start、join
+}
+class PrintTask {
+  - label : String
+  + run() : void
+}
+interface Runnable {
+  + run() : void
+}
+ThreadStartDemo --> PrintTask : 建立兩個不同工作
+PrintTask ..|> Runnable : 實作約定
+note bottom of ThreadStartDemo
+  另一個獨立入口
+  不使用 PrintQuota
+end note
+@enduml

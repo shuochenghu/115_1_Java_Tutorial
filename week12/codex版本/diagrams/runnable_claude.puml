@@ -1,0 +1,50 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 實作介面：第 9～11 週（自己寫的介面）→ 第 12 週（JDK 提供的介面）
+
+package "第 9～11 週" #FAFAFA {
+  interface SampleSource <<我們寫的>> #F4F4F4 {
+    + getSamples() : int
+  }
+  class Rover <<abstract>> #F4F4F4
+  class SampleReport #F4F4F4 {
+    + {static} print(String, SampleSource)
+  }
+  Rover ..|> SampleSource
+  SampleReport ..> SampleSource : 只認介面
+}
+package "第 12 週" #FAFAFA {
+  interface Runnable <<JDK：java.lang>> #E3ECF8 {
+    + run() : void
+  }
+  class PrintTask #DFF3E3 {
+    - label : String
+    + run() : void
+  }
+  class Thread <<JDK：java.lang>> #E3ECF8 {
+    + Thread(task : Runnable, name : String)
+    + start() : void
+    + join() : void
+    + {static} currentThread() : Thread
+    + getName() : String
+  }
+  PrintTask ..|> Runnable
+  Thread o--> "1" Runnable : 要執行的工作
+}
+note bottom of Runnable
+  Thread 也只認 Runnable：
+  start() 開一條<b>新執行緒</b>，在那裡呼叫 task.run()
+  <b>Runnable＝做什麼</b>；<b>Thread＝由誰（哪條執行緒）去做</b>
+  （第 9～11 週的 SampleReport 也是只認介面 SampleSource）
+end note
+@enduml

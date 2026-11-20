@@ -1,0 +1,30 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title C2 第 3 題：元素有 is-a，不代表群組有 is-a
+
+interface SampleSource <<interface>> #F4F4F4
+class HeavyRover #F4F4F4
+class SampleTray #F4F4F4
+class "SampleGroup<SampleSource>" as GS #FFE8D6
+class "SampleGroup<HeavyRover>" as GH #DFF3E3
+SampleSource <|.. HeavyRover : is-a（成立）
+SampleSource <|.. SampleTray
+GS -[#C0392B,dashed]- GH : <color:#C0392B>沒有 is-a（不成立）</color>
+note bottom of GS
+  假設允許 sources = cars：
+  sources.add(new SampleTray(4)) 看起來合法，
+  其實是塞進 cars（重型車群組）
+  → 破壞 cars「只放重型車」的承諾，
+  所以編譯器拒絕：incompatible types
+end note
+@enduml

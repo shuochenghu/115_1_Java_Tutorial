@@ -20,5 +20,5 @@ P3 --> D : 重型探測車 樣本數=6
 D -> P2 : 同一個呼叫，同一個簽名
 P2 -[#C0392B]> P1 : if (source instanceof Rover)\nprint(label, (Rover) source)
 P1 --> D : <color:#C0392B>重型探測車 樣本數=6 能源=8  ← 違反共用格式</color>
-note over P2 : 錯不在呼叫端選錯簽名，\n而是方法本體<b>多轉交了一次</b>。\n最小修正：刪掉這個 if（含 return）
+note over P2 : Java 語法沒有錯，錯在<b>不合本週規格</b>：\n呼叫端已選共用格式（SampleSource 參考），\n方法本體卻依實際物件<b>改轉交詳報</b>，\n呼叫端再也拿不到車的共用一行。\n最小修正：刪掉這個 if（含 return）
 @enduml

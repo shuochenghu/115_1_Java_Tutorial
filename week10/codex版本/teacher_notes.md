@@ -29,6 +29,8 @@
 
 模擬程式第二行錯誤地成為「重型探測車 樣本數=6 能源=8」，第一行及後四行仍正確。呼叫端先以 `SampleSource` 選定共用簽名。該方法的分支再以 `(Rover) source` 傳入另一個簽名。最小修正是刪除這段 `if`（含 `return`），保留用數量轉交的那一行。班上只讀教師提供的傳統 `instanceof` 與顯式轉型片段。若時間不足，保留同入口重測及保存成果。
 
+D5 討論：不要讓學生把錯誤歸因成「過載在編譯時選，AI 卻在執行時再選」。`instanceof` 加轉型合法，依實際物件決定行為也是合理設計；判斷對錯要回到需求。本週需求是同一台車可經兩個入口呈現兩種格式：呼叫端傳 `SampleSource` 參考時要得到共用一行，舊入口 `SampleReportDemo` 與作業的快速查詢都依賴這點。AI 版讓呼叫端拿不到車的共用一行，所以拒絕。若需求改為「是車就印能源」，AI 的輸出就正確；但較好的設計是讓物件提供報表內容（例如在 `SampleSource` 加報表方法，由 `Rover` 覆寫多印能源），共用報表不必認得 `Rover`、也不需轉型，新增來源時只改新類別。這是延伸討論，本週不要求實作。
+
 ## 課後作業
 
 教師參考在 [homework/SampleReport.java](teacher/homework/SampleReport.java) 與 [QuickSampleDemo.java](teacher/homework/QuickSampleDemo.java)。預設標籤範例為「快速查詢」。重型車印 6 份，空盒印 0 份。當 `print(rover)` 只有一個引數時，選單參數簽名。方法本體中的 `source` 宣告為 `SampleSource`，以兩個引數轉交時選共用格式。自行選的有效標籤也可通過驗收。

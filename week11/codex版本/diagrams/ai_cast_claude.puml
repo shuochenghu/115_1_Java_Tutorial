@@ -1,0 +1,22 @@
+@startuml
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+skinparam sequenceMessageAlign left
+hide footbox
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+title UnsafeGroupTry：錯誤在哪裡被發現？（模擬 AI 版 vs 修正版）
+participant "UnsafeGroupTry\n（呼叫端）" as U
+participant "vehicles :\nSampleGroup<HeavyRover>" as G
+== 模擬 AI 版：add(SampleSource source) ＋ (T) 轉型 ==
+U -> G : add(new SampleTray(4))\n參數型態是 SampleSource → <b>編譯通過</b>
+note right of G : (T) source 只得到 unchecked 警告；\n執行時<b>不檢查</b>，樣本盒直接被存進去
+U -> G : get(0)
+G --> U : 交回的其實是 SampleTray
+U -[#C0392B]> U : <color:#C0392B>HeavyRover rover = vehicles.get(0);</color>\n<color:#C0392B>ClassCastException（第 12 行：取出時才失敗）</color>
+== 修正版：add(T source)，不轉型 ==
+U -[#2E7D32]x G : add(new SampleTray(4))\n<color:#2E7D32>編譯錯誤（第 10 行）：</color>\n<color:#2E7D32>SampleTray cannot be converted to HeavyRover</color>
+note over U, G : 錯誤從「執行時、取出那一行」提前到「編譯時、放入那一行」\n——這就是泛型提供的型態安全
+@enduml

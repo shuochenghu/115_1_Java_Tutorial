@@ -1,0 +1,46 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "Microsoft JhengHei"
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classBorderColor #555555
+skinparam noteBackgroundColor #FFFBEA
+skinparam noteBorderColor #B39B4D
+skinparam backgroundColor #FFFFFF
+hide circle
+hide empty members
+title 本週會遇到的例外類別（都是 JDK 內建，java.lang 套件）
+
+legend top right
+  <back:#FDE2E0>　非受檢：編譯器不強制處理　</back>
+  <back:#E3ECF8>　受檢：編譯器要求 catch 或宣告 throws　</back>
+endlegend
+
+class Throwable #F4F4F4
+class Exception #F4F4F4
+class RuntimeException #FDE2E0
+class IllegalArgumentException #FDE2E0 {
+  reserve 自己 throw（A2）
+}
+class NumberFormatException #FDE2E0 {
+  Integer.parseInt 失敗時拋出
+}
+class ClassCastException #FDE2E0 {
+  上週 ai-check 看過
+}
+class InterruptedException #E3ECF8 {
+  Thread.join() 宣告可能拋出（B2）
+}
+Throwable <|-- Exception
+Exception <|-- RuntimeException
+Exception <|-- InterruptedException
+RuntimeException <|-- IllegalArgumentException
+RuntimeException <|-- ClassCastException
+IllegalArgumentException <|-- NumberFormatException
+note right of NumberFormatException
+  NumberFormatException <b>is-a</b> IllegalArgumentException
+  → catch 父類別也會接住子類別
+  → 兩個 catch 時，<b>子類別要放前面</b>（A3）
+end note
+@enduml

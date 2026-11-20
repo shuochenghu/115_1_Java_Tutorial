@@ -474,7 +474,7 @@ defined in class VipMember
 | 簽名＝名稱＋參數型態 | **TODO 1、3**：新增 `print(String, Rover)`、`print(String, int)` |
 | 依引數**宣告型態**選簽名 | **A4、TODO 2**：同一台車用 `Rover` 或 `SampleSource` 參考傳入 |
 | 兩個都能用 → 選**最具體** | **TODO 2**：加了 `Rover` 版後，舊呼叫改選它 |
-| 過載編譯時選、覆寫執行時選 | **D 段**：AI 想在執行時「再選一次」造成錯誤 |
+| 過載編譯時選、覆寫執行時選 | **D 段**：AI 在方法裡依實際物件改轉交，蓋掉呼叫端選的共用格式 |
 | 只差回傳型態不能過載 | 設計報表時，用**參數**區分，不用回傳值 |
 
 <!--
@@ -999,7 +999,7 @@ java -cp out SampleOverloadDemo
 ![h:530](diagrams/ai_forward_claude.svg)
 
 <!--
-講者備註：codex 教師筆記第 3 節：呼叫端先以 SampleSource 選定共用簽名，該方法的分支再以 (Rover) source 傳入另一個簽名。AI 等於想在執行時「再選一次」——但過載的選擇本來就是編譯時的事，規格要求的也是依參考型態決定格式。
+講者備註：codex 教師筆記第 3 節：呼叫端先以 SampleSource 選定共用簽名，該方法的分支再以 (Rover) source 傳入另一個簽名。instanceof 加轉型在 Java 裡完全合法，問題是它和本週規格衝突：規格讓呼叫端依參考型態選格式，AI 版卻讓實際物件決定，呼叫端就算刻意傳 SampleSource 參考也拿不到共用一行。下一頁的討論再談「需求改了會怎樣」。
 -->
 
 ---
@@ -1026,6 +1026,41 @@ public static void print(String label, SampleSource source) {
 
 <!--
 講者備註：舊入口那一點是 Claude 實測補充（AI 版本的 SampleReportDemo 第一行也是「樣本數=6 能源=8」），codex 講義只要求比對 SampleOverloadDemo；可作為「回歸測試抓到同一個錯」的例子口頭提出。
+-->
+
+---
+
+<!-- _class: by-claude small -->
+
+<div class="ex"><span class="ai">ai/SampleReport.java</span><span class="st">student_lab.md D5</span></div>
+
+## D｜討論：AI 的寫法「錯」在哪裡？
+
+<div class="cols">
+<div class="box green">
+
+**Java 語法沒有錯**
+
+- `instanceof`＋轉型能編譯、能執行
+- 「依實際物件決定行為」本身是合理的設計
+- 所以不能只說「過載在編譯時選，AI 卻在執行時再選」就判它錯
+
+</div>
+<div class="box red">
+
+**錯在不合本週規格**
+
+- 規格：**呼叫端**選格式——`Rover` 參考印詳報，`SampleSource` 參考印共用一行
+- AI 版：傳 `SampleSource` 也印能源，呼叫端**拿不到**車的共用一行
+- 舊入口 `SampleReportDemo` 第一行、作業的快速查詢也都會跟著多出能源
+
+</div>
+</div>
+
+**如果需求改成「只要是車，就一律印能源」**：AI 的輸出就對了。但較好的寫法是讓物件自己提供報表內容，由 `Rover` 覆寫（就像 `HeavyRover` 覆寫 `exploreYield()`）；共用報表不必認得 `Rover`，也不用轉型。
+
+<!--
+講者備註：對應講義 D5 討論題（可課後補）。判斷對錯要回到需求：本週需求是同一台車可經兩個入口呈現兩種格式，所以拒絕 AI 的轉交。若需求改為依實際物件決定，instanceof 也能做到，但每加一種有詳報的來源都要回頭改 SampleReport；用覆寫則只改新類別。這是延伸討論，本週不要求實作。
 -->
 
 ---

@@ -1,0 +1,22 @@
+@startuml
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 24
+skinparam backgroundColor #FBFCFE
+skinparam sequenceParticipantBackgroundColor #E7EFF5
+skinparam sequenceParticipantBorderColor #123D65
+skinparam ArrowColor #123D65
+hide footbox
+participant main
+participant "工作A" as A
+participant "工作B" as B
+main -> main : 印「開始模擬列印」
+main ->> A : a.start()
+main ->> B : b.start()
+note over A, B
+  各自 1 → 2 → 3 後結束
+  跨工作不要求交替
+end note
+main -> main : a.join() 等 A 終止
+main -> main : b.join() 等 B 終止
+main -> main : 正常等完才印「兩項工作皆已結束」
+@enduml

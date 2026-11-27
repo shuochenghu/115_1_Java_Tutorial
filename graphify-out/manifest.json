@@ -1,0 +1,1958 @@
+{
+  "week01/claude\u7248\u672c/code/Student.java": {
+    "mtime": 1789701403.1909237,
+    "seen": 1795673213.9231682,
+    "ast_hash": "fb6361aa14445870a3ad4acb1d501233",
+    "semantic_hash": "fb6361aa14445870a3ad4acb1d501233"
+  },
+  "week01/claude\u7248\u672c/code/Welcome1.java": {
+    "mtime": 1789699945.1761258,
+    "seen": 1795673213.923175,
+    "ast_hash": "a85c438175233a7e1a8b02be1bc69bb2",
+    "semantic_hash": "a85c438175233a7e1a8b02be1bc69bb2"
+  },
+  "week01/claude\u7248\u672c/code/Welcome2.java": {
+    "mtime": 1789701403.1518228,
+    "seen": 1795673213.9231782,
+    "ast_hash": "baaf18d994741876b08658e8aefd2de8",
+    "semantic_hash": "baaf18d994741876b08658e8aefd2de8"
+  },
+  "week01/codex\u7248\u672c/examples/HelloCourse.java": {
+    "mtime": 1789699175.1051352,
+    "seen": 1795673213.9231808,
+    "ast_hash": "6abd5dd47fa78c449ecace063dea1991",
+    "semantic_hash": "6abd5dd47fa78c449ecace063dea1991"
+  },
+  "week01/codex\u7248\u672c/starter/GreetingApp.java": {
+    "mtime": 1789700874.3441713,
+    "seen": 1795673213.923183,
+    "ast_hash": "ca93269f587cea220bad9c499bd8f615",
+    "semantic_hash": "ca93269f587cea220bad9c499bd8f615"
+  },
+  "week01/codex\u7248\u672c/teacher/GreetingApp.java": {
+    "mtime": 1789701254.169425,
+    "seen": 1795673213.9231849,
+    "ast_hash": "48cf97eb18ca6560afff6fd897aa53f4",
+    "semantic_hash": "48cf97eb18ca6560afff6fd897aa53f4"
+  },
+  "week02/codex\u7248\u672c/examples/OperatorDemo.java": {
+    "mtime": 1790659389.4308126,
+    "seen": 1795673213.923187,
+    "ast_hash": "24f1c1db6954c939cb9cf4027b99ec5d",
+    "semantic_hash": "24f1c1db6954c939cb9cf4027b99ec5d"
+  },
+  "week02/codex\u7248\u672c/examples/TypeReferenceDemo.java": {
+    "mtime": 1790658893.6147456,
+    "seen": 1795673213.9231887,
+    "ast_hash": "99d31d940179419fff6e6469b1bb0a46",
+    "semantic_hash": "99d31d940179419fff6e6469b1bb0a46"
+  },
+  "week02/codex\u7248\u672c/starter/RoverDashboard.java": {
+    "mtime": 1790658889.412837,
+    "seen": 1795673213.9231906,
+    "ast_hash": "dd8478505478660152872ce93accf848",
+    "semantic_hash": "dd8478505478660152872ce93accf848"
+  },
+  "week02/codex\u7248\u672c/teacher/RoverDashboard.java": {
+    "mtime": 1790658884.9026115,
+    "seen": 1795673213.9231923,
+    "ast_hash": "f99332a4832e24454e8aa16c721a77bf",
+    "semantic_hash": "f99332a4832e24454e8aa16c721a77bf"
+  },
+  "week03/codex\u7248\u672c/examples/ChargeForecast.java": {
+    "mtime": 1790682614.363729,
+    "seen": 1795673213.9231942,
+    "ast_hash": "ba3e7dfa4b3034ffbf65cf3af4912a4b",
+    "semantic_hash": "ba3e7dfa4b3034ffbf65cf3af4912a4b"
+  },
+  "week03/codex\u7248\u672c/examples/EnergyStatus.java": {
+    "mtime": 1790658874.1457858,
+    "seen": 1795673213.9231963,
+    "ast_hash": "496215c3ca81b74b1ab97d1b8ea688c4",
+    "semantic_hash": "496215c3ca81b74b1ab97d1b8ea688c4"
+  },
+  "week03/codex\u7248\u672c/examples/LoopComparison.java": {
+    "mtime": 1790658882.3328626,
+    "seen": 1795673213.9231982,
+    "ast_hash": "4f6ca5143180a37d56767e8cf83db313",
+    "semantic_hash": "4f6ca5143180a37d56767e8cf83db313"
+  },
+  "week03/codex\u7248\u672c/examples/SingleAction.java": {
+    "mtime": 1790658876.73838,
+    "seen": 1795673213.9231997,
+    "ast_hash": "179e77ccad13f6f687d3a75e30d88e0c",
+    "semantic_hash": "179e77ccad13f6f687d3a75e30d88e0c"
+  },
+  "week03/codex\u7248\u672c/starter/RoverMission.java": {
+    "mtime": 1790658934.3695421,
+    "seen": 1795673213.9232016,
+    "ast_hash": "1d936efe9c6188eb2bce2066800fc116",
+    "semantic_hash": "1d936efe9c6188eb2bce2066800fc116"
+  },
+  "week03/codex\u7248\u672c/teacher/FixedStateMission.java": {
+    "mtime": 1790658934.3695421,
+    "seen": 1795673213.9232032,
+    "ast_hash": "daa53c1726802d1195cfe89be8e32e31",
+    "semantic_hash": "daa53c1726802d1195cfe89be8e32e31"
+  },
+  "week03/codex\u7248\u672c/teacher/RoverMission.java": {
+    "mtime": 1790658884.989199,
+    "seen": 1795673213.923205,
+    "ast_hash": "ea89c1389e0a77a70e0fe217b1901ec5",
+    "semantic_hash": "ea89c1389e0a77a70e0fe217b1901ec5"
+  },
+  "week04/claude\u7248\u672c/code/examples/ArrayBasics.java": {
+    "mtime": 1794542844.119152,
+    "seen": 1795673213.9232066,
+    "ast_hash": "1c324e077e9d381ed4adb959eef875eb",
+    "semantic_hash": "1c324e077e9d381ed4adb959eef875eb"
+  },
+  "week04/claude\u7248\u672c/code/examples/ArrayReference.java": {
+    "mtime": 1794542844.1273496,
+    "seen": 1795673213.9232082,
+    "ast_hash": "33580bdd8641c1ec6ceda6c297eefb06",
+    "semantic_hash": "33580bdd8641c1ec6ceda6c297eefb06"
+  },
+  "week04/claude\u7248\u672c/code/examples/ListBasics.java": {
+    "mtime": 1794542879.241202,
+    "seen": 1795673213.92321,
+    "ast_hash": "52f29f925692dc938eadf17b4ac4b58a",
+    "semantic_hash": "52f29f925692dc938eadf17b4ac4b58a"
+  },
+  "week04/claude\u7248\u672c/code/examples/ScriptArgs.java": {
+    "mtime": 1794542879.2482839,
+    "seen": 1795673213.9232118,
+    "ast_hash": "394743ae71407e1f35a9eebad11d59df",
+    "semantic_hash": "394743ae71407e1f35a9eebad11d59df"
+  },
+  "week04/claude\u7248\u672c/code/starter/MissionLog.java": {
+    "mtime": 1794542844.1463823,
+    "seen": 1795673213.9232132,
+    "ast_hash": "18872e16a2cbad7e31f8cb6a2e204f3e",
+    "semantic_hash": "18872e16a2cbad7e31f8cb6a2e204f3e"
+  },
+  "week04/claude\u7248\u672c/code/teacher/MissionLog.java": {
+    "mtime": 1794542844.1559625,
+    "seen": 1795673213.9232154,
+    "ast_hash": "59eb2ee22be64675b0fb4051f78e030b",
+    "semantic_hash": "59eb2ee22be64675b0fb4051f78e030b"
+  },
+  "week04/claude\u7248\u672c/code/teacher/MissionLogCheck.java": {
+    "mtime": 1794542844.1579924,
+    "seen": 1795673213.9232168,
+    "ast_hash": "8f77678d3ec20ab44ff6270bb8747601",
+    "semantic_hash": "8f77678d3ec20ab44ff6270bb8747601"
+  },
+  "week04/claude\u7248\u672c/code/tests/MissionLogProbe.java": {
+    "mtime": 1794545547.2752905,
+    "seen": 1795673213.9232187,
+    "ast_hash": "fcc2a032f6e4e335c976a6633e668846",
+    "semantic_hash": "fcc2a032f6e4e335c976a6633e668846"
+  },
+  "week04/claude\u7248\u672c/code/tests/run_tests_claude.ps1": {
+    "mtime": 1794545666.6120508,
+    "seen": 1795673213.9232202,
+    "ast_hash": "b2914d856e149c1c5a00682718e8ebbf",
+    "semantic_hash": "b2914d856e149c1c5a00682718e8ebbf"
+  },
+  "week04/claude\u7248\u672c/code/tests/run_tests_claude.sh": {
+    "mtime": 1794545660.2853644,
+    "seen": 1795673213.923222,
+    "ast_hash": "f69141da41a82d2645d62f034e82e205",
+    "semantic_hash": "f69141da41a82d2645d62f034e82e205"
+  },
+  "week04/codex\u7248\u672c/examples/ArrayBasics.java": {
+    "mtime": 1794542844.0941443,
+    "seen": 1795673213.9232233,
+    "ast_hash": "29abcdf8a8786b8d4c2575636b3955c7",
+    "semantic_hash": "29abcdf8a8786b8d4c2575636b3955c7"
+  },
+  "week04/codex\u7248\u672c/examples/ArrayReference.java": {
+    "mtime": 1794542844.095114,
+    "seen": 1795673213.923225,
+    "ast_hash": "86fc5221f562a21da8a4557d8ee3e630",
+    "semantic_hash": "86fc5221f562a21da8a4557d8ee3e630"
+  },
+  "week04/codex\u7248\u672c/examples/CollectionsDemo.java": {
+    "mtime": 1794542844.0971446,
+    "seen": 1795673213.9232264,
+    "ast_hash": "631c668eeedfeb5cfada0122b2b857e3",
+    "semantic_hash": "631c668eeedfeb5cfada0122b2b857e3"
+  },
+  "week04/codex\u7248\u672c/examples/CommandCounter.java": {
+    "mtime": 1794542844.0971446,
+    "seen": 1795673213.9232278,
+    "ast_hash": "33d600217eb2ad45313398ff553ffc30",
+    "semantic_hash": "33d600217eb2ad45313398ff553ffc30"
+  },
+  "week04/codex\u7248\u672c/examples/ListBasics.java": {
+    "mtime": 1794542844.0991127,
+    "seen": 1795673213.9232295,
+    "ast_hash": "866139cad2f531b75547d3d35af86f3a",
+    "semantic_hash": "866139cad2f531b75547d3d35af86f3a"
+  },
+  "week04/codex\u7248\u672c/examples/ScriptArgs.java": {
+    "mtime": 1794542844.1011143,
+    "seen": 1795673213.923231,
+    "ast_hash": "29b25c452e3d43b37595307a3f9ad953",
+    "semantic_hash": "29b25c452e3d43b37595307a3f9ad953"
+  },
+  "week04/codex\u7248\u672c/starter/MissionLog.java": {
+    "mtime": 1794542879.2106786,
+    "seen": 1795673213.9232328,
+    "ast_hash": "6bc52b3cf33ea1e7421d94f01458d534",
+    "semantic_hash": "6bc52b3cf33ea1e7421d94f01458d534"
+  },
+  "week04/codex\u7248\u672c/teacher/FixedScriptMission.java": {
+    "mtime": 1794542844.1041455,
+    "seen": 1795673213.9232342,
+    "ast_hash": "812edf16bb42aeb22c375a44471a81a9",
+    "semantic_hash": "812edf16bb42aeb22c375a44471a81a9"
+  },
+  "week04/codex\u7248\u672c/teacher/MissionLog.java": {
+    "mtime": 1794542879.2122943,
+    "seen": 1795673213.9232361,
+    "ast_hash": "c3e27656d1a9693f93b39bdc5fcf1891",
+    "semantic_hash": "c3e27656d1a9693f93b39bdc5fcf1891"
+  },
+  "week04/codex\u7248\u672c/teacher/MissionLogCheck.java": {
+    "mtime": 1794545629.2762635,
+    "seen": 1795673213.9232376,
+    "ast_hash": "e652aa906a5ffc09574097aed7e9ccea",
+    "semantic_hash": "e652aa906a5ffc09574097aed7e9ccea"
+  },
+  "week04/codex\u7248\u672c/tools/check_slides.cjs": {
+    "mtime": 1791271062.9617858,
+    "seen": 1795673213.9232392,
+    "ast_hash": "5a1298e9e06a873c0e623d72fac6feef",
+    "semantic_hash": "5a1298e9e06a873c0e623d72fac6feef"
+  },
+  "week05/claude\u7248\u672c/code/examples/Battery.java": {
+    "mtime": 1792042701.1678247,
+    "seen": 1795673213.9232407,
+    "ast_hash": "07f7e33f317bab424539ed25b6e7ff8c",
+    "semantic_hash": "07f7e33f317bab424539ed25b6e7ff8c"
+  },
+  "week05/claude\u7248\u672c/code/examples/BatteryDemo.java": {
+    "mtime": 1794394395.3120558,
+    "seen": 1795673213.9232426,
+    "ast_hash": "7160fcacae2556d0505c7ad29e627a02",
+    "semantic_hash": "7160fcacae2556d0505c7ad29e627a02"
+  },
+  "week05/claude\u7248\u672c/code/examples/RawStep.java": {
+    "mtime": 1792042686.147547,
+    "seen": 1795673213.923244,
+    "ast_hash": "4863d4d2d5171328e6e6dfd7372ff75a",
+    "semantic_hash": "4863d4d2d5171328e6e6dfd7372ff75a"
+  },
+  "week05/claude\u7248\u672c/code/examples/RawStepDemo.java": {
+    "mtime": 1794394628.0287263,
+    "seen": 1795673213.923246,
+    "ast_hash": "c6c5d32808c406c93c3ff73e92ba4d7b",
+    "semantic_hash": "c6c5d32808c406c93c3ff73e92ba4d7b"
+  },
+  "week05/claude\u7248\u672c/code/starter/MissionLog.java": {
+    "mtime": 1794394395.3160608,
+    "seen": 1795673213.9232473,
+    "ast_hash": "435afac73a3abdb40672654b716be6ad",
+    "semantic_hash": "435afac73a3abdb40672654b716be6ad"
+  },
+  "week05/claude\u7248\u672c/code/starter/MissionStep.java": {
+    "mtime": 1794394395.3180273,
+    "seen": 1795673213.9232495,
+    "ast_hash": "c10c3ef96ff32a0079c3b435c631fdc8",
+    "semantic_hash": "c10c3ef96ff32a0079c3b435c631fdc8"
+  },
+  "week05/claude\u7248\u672c/code/starter/Rover.java": {
+    "mtime": 1794394395.3200324,
+    "seen": 1795673213.9232512,
+    "ast_hash": "21c793c15bbdf49f1196a95039faf170",
+    "semantic_hash": "21c793c15bbdf49f1196a95039faf170"
+  },
+  "week05/claude\u7248\u672c/code/starter/RoverTry.java": {
+    "mtime": 1794394628.0629742,
+    "seen": 1795673213.9232528,
+    "ast_hash": "daa3ff5b66aa1ba6a808dd05296778c4",
+    "semantic_hash": "daa3ff5b66aa1ba6a808dd05296778c4"
+  },
+  "week05/claude\u7248\u672c/code/teacher/MissionLog.java": {
+    "mtime": 1794394628.0713298,
+    "seen": 1795673213.9232543,
+    "ast_hash": "80dc5dd63f8510bbcd3f7c067943fb70",
+    "semantic_hash": "80dc5dd63f8510bbcd3f7c067943fb70"
+  },
+  "week05/claude\u7248\u672c/code/teacher/MissionLogCheck.java": {
+    "mtime": 1794394628.0783339,
+    "seen": 1795673213.923256,
+    "ast_hash": "e8093ff09ce8d981a196811e0efc4f7b",
+    "semantic_hash": "e8093ff09ce8d981a196811e0efc4f7b"
+  },
+  "week05/claude\u7248\u672c/code/teacher/MissionStep.java": {
+    "mtime": 1794394395.3297963,
+    "seen": 1795673213.9232576,
+    "ast_hash": "f3bb0e82a12863386bdaf84b8a91fc93",
+    "semantic_hash": "f3bb0e82a12863386bdaf84b8a91fc93"
+  },
+  "week05/claude\u7248\u672c/code/teacher/Rover.java": {
+    "mtime": 1794394395.3307986,
+    "seen": 1795673213.9232588,
+    "ast_hash": "f258fa7e1885fd46fbf25127b6c79bfe",
+    "semantic_hash": "f258fa7e1885fd46fbf25127b6c79bfe"
+  },
+  "week05/claude\u7248\u672c/code/teacher/SampleBay.java": {
+    "mtime": 1792042946.7673903,
+    "seen": 1795673213.9232605,
+    "ast_hash": "30a8c84c0b5e761007dfe18c499afdc4",
+    "semantic_hash": "30a8c84c0b5e761007dfe18c499afdc4"
+  },
+  "week05/claude\u7248\u672c/code/teacher/SampleBayCheck.java": {
+    "mtime": 1794394628.104934,
+    "seen": 1795673213.923262,
+    "ast_hash": "e436598bcf2952787bfd879069d64c67",
+    "semantic_hash": "e436598bcf2952787bfd879069d64c67"
+  },
+  "week05/codex\u7248\u672c/examples/BatteryDemo.java": {
+    "mtime": 1794457025.1592188,
+    "seen": 1795673213.9232635,
+    "ast_hash": "e78e65770afb1f29013edf5d746b64a2",
+    "semantic_hash": "e78e65770afb1f29013edf5d746b64a2"
+  },
+  "week05/codex\u7248\u672c/examples/CreateStepDemo.java": {
+    "mtime": 1794457025.1592188,
+    "seen": 1795673213.923265,
+    "ast_hash": "07379d3066a1eeea9723e2f47e3e3e1b",
+    "semantic_hash": "07379d3066a1eeea9723e2f47e3e3e1b"
+  },
+  "week05/codex\u7248\u672c/examples/ReferenceDemo.java": {
+    "mtime": 1794457025.1602204,
+    "seen": 1795673213.9232666,
+    "ast_hash": "d7fe6c3b832654b3df6272bb6b1a0c4e",
+    "semantic_hash": "d7fe6c3b832654b3df6272bb6b1a0c4e"
+  },
+  "week05/codex\u7248\u672c/examples/RoverBattery.java": {
+    "mtime": 1794457025.1602204,
+    "seen": 1795673213.923268,
+    "ast_hash": "b024f368c5df4c7ae99a1c8323ae9a4e",
+    "semantic_hash": "b024f368c5df4c7ae99a1c8323ae9a4e"
+  },
+  "week05/codex\u7248\u672c/examples/SnapshotDemo.java": {
+    "mtime": 1794457025.1612234,
+    "seen": 1795673213.92327,
+    "ast_hash": "fae7de712395b8086ae34f2e972b6733",
+    "semantic_hash": "fae7de712395b8086ae34f2e972b6733"
+  },
+  "week05/codex\u7248\u672c/examples/StepCard.java": {
+    "mtime": 1794457025.1612234,
+    "seen": 1795673213.9232714,
+    "ast_hash": "971ce94b0fc232921ac9dad16995e528",
+    "semantic_hash": "971ce94b0fc232921ac9dad16995e528"
+  },
+  "week05/codex\u7248\u672c/starter/MissionLog.java": {
+    "mtime": 1794457025.1622202,
+    "seen": 1795673213.9232728,
+    "ast_hash": "82e9a802fc5cacb50291d1de85dce623",
+    "semantic_hash": "82e9a802fc5cacb50291d1de85dce623"
+  },
+  "week05/codex\u7248\u672c/starter/MissionStep.java": {
+    "mtime": 1794457108.7440777,
+    "seen": 1795673213.9232745,
+    "ast_hash": "6459cd5ecaf31794ca8d39f75bf3da00",
+    "semantic_hash": "6459cd5ecaf31794ca8d39f75bf3da00"
+  },
+  "week05/codex\u7248\u672c/teacher/FixedScriptMission.java": {
+    "mtime": 1794457025.166643,
+    "seen": 1795673213.923276,
+    "ast_hash": "812edf16bb42aeb22c375a44471a81a9",
+    "semantic_hash": "812edf16bb42aeb22c375a44471a81a9"
+  },
+  "week05/codex\u7248\u672c/teacher/MissionLog.java": {
+    "mtime": 1794457025.1622202,
+    "seen": 1795673213.9232776,
+    "ast_hash": "aeed2a64b056b36b074b38611a68c4d6",
+    "semantic_hash": "aeed2a64b056b36b074b38611a68c4d6"
+  },
+  "week05/codex\u7248\u672c/teacher/MissionLogCheck.java": {
+    "mtime": 1794457025.1686437,
+    "seen": 1795673213.923279,
+    "ast_hash": "baf39a172324611201147eb35938b477",
+    "semantic_hash": "baf39a172324611201147eb35938b477"
+  },
+  "week05/codex\u7248\u672c/teacher/MissionStep.java": {
+    "mtime": 1794457025.1636362,
+    "seen": 1795673213.9232807,
+    "ast_hash": "3e3d07a800a595e7cf1e2db0b681ea38",
+    "semantic_hash": "3e3d07a800a595e7cf1e2db0b681ea38"
+  },
+  "week05/codex\u7248\u672c/teacher/MissionStepCheck.java": {
+    "mtime": 1794457025.170643,
+    "seen": 1795673213.9232821,
+    "ast_hash": "4dc055aafe3033646daf05581485860b",
+    "semantic_hash": "4dc055aafe3033646daf05581485860b"
+  },
+  "week05/codex\u7248\u672c/teacher/SampleCase.java": {
+    "mtime": 1794457025.1716423,
+    "seen": 1795673213.9232838,
+    "ast_hash": "01b1326d8e6531b81be266a74c7f6bb2",
+    "semantic_hash": "01b1326d8e6531b81be266a74c7f6bb2"
+  },
+  "week05/codex\u7248\u672c/teacher/SampleCaseCheck.java": {
+    "mtime": 1794457025.1716423,
+    "seen": 1795673213.9232855,
+    "ast_hash": "2509a3bb8e00b560ea8d0d58585ce4ef",
+    "semantic_hash": "2509a3bb8e00b560ea8d0d58585ce4ef"
+  },
+  "week05/codex\u7248\u672c/tools/verify.py": {
+    "mtime": 1794394687.57946,
+    "seen": 1795673213.9232867,
+    "ast_hash": "1933f47ac19acf3916c108d9af8611cc",
+    "semantic_hash": "1933f47ac19acf3916c108d9af8611cc"
+  },
+  "week06/claude\u7248\u672c/code/examples/Battery.java": {
+    "mtime": 1792649914.6953561,
+    "seen": 1795673213.9232886,
+    "ast_hash": "cdba62ae6dc234c44d9ec69dc9723951",
+    "semantic_hash": "cdba62ae6dc234c44d9ec69dc9723951"
+  },
+  "week06/claude\u7248\u672c/code/examples/Charger.java": {
+    "mtime": 1792649925.3600197,
+    "seen": 1795673213.92329,
+    "ast_hash": "40aa10b35c0ee9c2bb416dfe5835a0d5",
+    "semantic_hash": "40aa10b35c0ee9c2bb416dfe5835a0d5"
+  },
+  "week06/claude\u7248\u672c/code/examples/Flashlight.java": {
+    "mtime": 1792649925.2994838,
+    "seen": 1795673213.9232917,
+    "ast_hash": "02646c944a63bdf88c1dd7463912f41d",
+    "semantic_hash": "02646c944a63bdf88c1dd7463912f41d"
+  },
+  "week06/claude\u7248\u672c/code/examples/RelationDemo.java": {
+    "mtime": 1794394395.5533216,
+    "seen": 1795673213.923293,
+    "ast_hash": "b5a46e795efd69173b55083733888176",
+    "semantic_hash": "b5a46e795efd69173b55083733888176"
+  },
+  "week06/claude\u7248\u672c/code/starter/Mission.java": {
+    "mtime": 1794394395.5553224,
+    "seen": 1795673213.9232948,
+    "ast_hash": "aac5b02dbd3dd304b8610492ea091a96",
+    "semantic_hash": "aac5b02dbd3dd304b8610492ea091a96"
+  },
+  "week06/claude\u7248\u672c/code/starter/MissionLog.java": {
+    "mtime": 1794394628.2448833,
+    "seen": 1795673213.9232962,
+    "ast_hash": "60d29600328bb3fbe388523af4887c81",
+    "semantic_hash": "60d29600328bb3fbe388523af4887c81"
+  },
+  "week06/claude\u7248\u672c/code/starter/MissionStep.java": {
+    "mtime": 1794394395.5603287,
+    "seen": 1795673213.9232981,
+    "ast_hash": "9a568607a55f082d0f54e1324cfdcdf7",
+    "semantic_hash": "9a568607a55f082d0f54e1324cfdcdf7"
+  },
+  "week06/claude\u7248\u672c/code/starter/Rover.java": {
+    "mtime": 1794394395.5613291,
+    "seen": 1795673213.9232996,
+    "ast_hash": "cc1c5b71a4def1acbd3100bfa36bbb20",
+    "semantic_hash": "cc1c5b71a4def1acbd3100bfa36bbb20"
+  },
+  "week06/claude\u7248\u672c/code/starter/RoverTry.java": {
+    "mtime": 1794394395.5633287,
+    "seen": 1795673213.9233012,
+    "ast_hash": "bc67877a80a448b64982121c4e2ace1c",
+    "semantic_hash": "bc67877a80a448b64982121c4e2ace1c"
+  },
+  "week06/claude\u7248\u672c/code/teacher/Mission.java": {
+    "mtime": 1794394395.5653284,
+    "seen": 1795673213.923303,
+    "ast_hash": "4ee853460e76545431c2f802659d8811",
+    "semantic_hash": "4ee853460e76545431c2f802659d8811"
+  },
+  "week06/claude\u7248\u672c/code/teacher/MissionCheck.java": {
+    "mtime": 1794394628.2910266,
+    "seen": 1795673213.9233046,
+    "ast_hash": "b9ce2ba52641bbb30d0da6b4cbd0e4ce",
+    "semantic_hash": "b9ce2ba52641bbb30d0da6b4cbd0e4ce"
+  },
+  "week06/claude\u7248\u672c/code/teacher/MissionLog.java": {
+    "mtime": 1794394628.2920258,
+    "seen": 1795673213.923306,
+    "ast_hash": "60d29600328bb3fbe388523af4887c81",
+    "semantic_hash": "60d29600328bb3fbe388523af4887c81"
+  },
+  "week06/claude\u7248\u672c/code/teacher/MissionStep.java": {
+    "mtime": 1794394395.5731504,
+    "seen": 1795673213.9233074,
+    "ast_hash": "9a568607a55f082d0f54e1324cfdcdf7",
+    "semantic_hash": "9a568607a55f082d0f54e1324cfdcdf7"
+  },
+  "week06/claude\u7248\u672c/code/teacher/Rover.java": {
+    "mtime": 1794394395.5751565,
+    "seen": 1795673213.923309,
+    "ast_hash": "efd764546acc8513d8cc02def1a8101c",
+    "semantic_hash": "efd764546acc8513d8cc02def1a8101c"
+  },
+  "week06/claude\u7248\u672c/code/teacher/club/Club.java": {
+    "mtime": 1794394395.5771565,
+    "seen": 1795673213.9233105,
+    "ast_hash": "3f2718843c7c3e47c199a1ea8852928a",
+    "semantic_hash": "3f2718843c7c3e47c199a1ea8852928a"
+  },
+  "week06/claude\u7248\u672c/code/teacher/club/ClubCheck.java": {
+    "mtime": 1794394628.3189392,
+    "seen": 1795673213.9233122,
+    "ast_hash": "768171654dd905ab9394dd8c0fe185e6",
+    "semantic_hash": "768171654dd905ab9394dd8c0fe185e6"
+  },
+  "week06/claude\u7248\u672c/code/teacher/club/Equipment.java": {
+    "mtime": 1792650058.5615625,
+    "seen": 1795673213.9233139,
+    "ast_hash": "1f9328e1413dc130ca5241984264aeba",
+    "semantic_hash": "1f9328e1413dc130ca5241984264aeba"
+  },
+  "week06/claude\u7248\u672c/code/teacher/club/Loan.java": {
+    "mtime": 1794394395.5811572,
+    "seen": 1795673213.9233155,
+    "ast_hash": "5fa3440739c46fc772505ec0355c74b4",
+    "semantic_hash": "5fa3440739c46fc772505ec0355c74b4"
+  },
+  "week06/claude\u7248\u672c/code/teacher/club/Member.java": {
+    "mtime": 1792650058.519493,
+    "seen": 1795673213.923318,
+    "ast_hash": "22a69790278f576176afa9122321f61a",
+    "semantic_hash": "22a69790278f576176afa9122321f61a"
+  },
+  "week06/codex\u7248\u672c/examples/Battery.java": {
+    "mtime": 1794457108.7450788,
+    "seen": 1795673213.9233198,
+    "ast_hash": "bd8896874589c6e0f44d0eb5a0d6069d",
+    "semantic_hash": "bd8896874589c6e0f44d0eb5a0d6069d"
+  },
+  "week06/codex\u7248\u672c/examples/Charger.java": {
+    "mtime": 1794457108.7450788,
+    "seen": 1795673213.923321,
+    "ast_hash": "99bc75fb537aa2fec2b6bbd0a435d144",
+    "semantic_hash": "99bc75fb537aa2fec2b6bbd0a435d144"
+  },
+  "week06/codex\u7248\u672c/examples/Lamp.java": {
+    "mtime": 1794457108.7460804,
+    "seen": 1795673213.9233227,
+    "ast_hash": "30f27600d322b2f7c31a92d041c82716",
+    "semantic_hash": "30f27600d322b2f7c31a92d041c82716"
+  },
+  "week06/codex\u7248\u672c/examples/RelationDemo.java": {
+    "mtime": 1794457108.7460804,
+    "seen": 1795673213.923324,
+    "ast_hash": "37a8d15803518e86587667f77f700d9a",
+    "semantic_hash": "37a8d15803518e86587667f77f700d9a"
+  },
+  "week06/codex\u7248\u672c/examples/SampleCase.java": {
+    "mtime": 1794457108.7470787,
+    "seen": 1795673213.9233258,
+    "ast_hash": "1446bd912de254d78648b0c9beff77b6",
+    "semantic_hash": "1446bd912de254d78648b0c9beff77b6"
+  },
+  "week06/codex\u7248\u672c/examples/SampleCaseDemo.java": {
+    "mtime": 1794457108.7470787,
+    "seen": 1795673213.9233274,
+    "ast_hash": "8b6441a998c7e998a5cbbbed556931c1",
+    "semantic_hash": "8b6441a998c7e998a5cbbbed556931c1"
+  },
+  "week06/codex\u7248\u672c/starter/Mission.java": {
+    "mtime": 1794457108.7480843,
+    "seen": 1795673213.923329,
+    "ast_hash": "a3bc005f002f49fead6dbedda19324c4",
+    "semantic_hash": "a3bc005f002f49fead6dbedda19324c4"
+  },
+  "week06/codex\u7248\u672c/starter/MissionLog.java": {
+    "mtime": 1794457108.7530904,
+    "seen": 1795673213.9233308,
+    "ast_hash": "33ea742a6042f3907d2fb2af976c84e8",
+    "semantic_hash": "33ea742a6042f3907d2fb2af976c84e8"
+  },
+  "week06/codex\u7248\u672c/starter/MissionStep.java": {
+    "mtime": 1794457025.1636362,
+    "seen": 1795673213.9233325,
+    "ast_hash": "3e3d07a800a595e7cf1e2db0b681ea38",
+    "semantic_hash": "3e3d07a800a595e7cf1e2db0b681ea38"
+  },
+  "week06/codex\u7248\u672c/starter/Rover.java": {
+    "mtime": 1794457108.7510905,
+    "seen": 1795673213.923334,
+    "ast_hash": "df8855eda975c5af1cfcee80e83cb4ef",
+    "semantic_hash": "df8855eda975c5af1cfcee80e83cb4ef"
+  },
+  "week06/codex\u7248\u672c/starter/RoverDemo.java": {
+    "mtime": 1794457108.7520905,
+    "seen": 1795673213.9233353,
+    "ast_hash": "adbb40f5cb1ce9fcbf312341d5fd6ff6",
+    "semantic_hash": "adbb40f5cb1ce9fcbf312341d5fd6ff6"
+  },
+  "week06/codex\u7248\u672c/teacher/FixedScriptMission.java": {
+    "mtime": 1794457025.1676419,
+    "seen": 1795673213.9233372,
+    "ast_hash": "812edf16bb42aeb22c375a44471a81a9",
+    "semantic_hash": "812edf16bb42aeb22c375a44471a81a9"
+  },
+  "week06/codex\u7248\u672c/teacher/Mission.java": {
+    "mtime": 1794457108.7490952,
+    "seen": 1795673213.923339,
+    "ast_hash": "e0129afe1f3719a1d3f16375f7f2382c",
+    "semantic_hash": "e0129afe1f3719a1d3f16375f7f2382c"
+  },
+  "week06/codex\u7248\u672c/teacher/MissionLog.java": {
+    "mtime": 1794457108.7530904,
+    "seen": 1795673213.9233403,
+    "ast_hash": "33ea742a6042f3907d2fb2af976c84e8",
+    "semantic_hash": "33ea742a6042f3907d2fb2af976c84e8"
+  },
+  "week06/codex\u7248\u672c/teacher/MissionLogCheck.java": {
+    "mtime": 1794457025.1696432,
+    "seen": 1795673213.923342,
+    "ast_hash": "baf39a172324611201147eb35938b477",
+    "semantic_hash": "baf39a172324611201147eb35938b477"
+  },
+  "week06/codex\u7248\u672c/teacher/MissionStateCheck.java": {
+    "mtime": 1794457108.7550893,
+    "seen": 1795673213.9233437,
+    "ast_hash": "82029b12cc38407c4f5b10082590f77c",
+    "semantic_hash": "82029b12cc38407c4f5b10082590f77c"
+  },
+  "week06/codex\u7248\u672c/teacher/MissionStep.java": {
+    "mtime": 1794457025.1646416,
+    "seen": 1795673213.923345,
+    "ast_hash": "3e3d07a800a595e7cf1e2db0b681ea38",
+    "semantic_hash": "3e3d07a800a595e7cf1e2db0b681ea38"
+  },
+  "week06/codex\u7248\u672c/teacher/Rover.java": {
+    "mtime": 1794457108.7520905,
+    "seen": 1795673213.9233468,
+    "ast_hash": "df8855eda975c5af1cfcee80e83cb4ef",
+    "semantic_hash": "df8855eda975c5af1cfcee80e83cb4ef"
+  },
+  "week06/codex\u7248\u672c/teacher/RoverDemo.java": {
+    "mtime": 1794457108.7520905,
+    "seen": 1795673213.9233482,
+    "ast_hash": "adbb40f5cb1ce9fcbf312341d5fd6ff6",
+    "semantic_hash": "adbb40f5cb1ce9fcbf312341d5fd6ff6"
+  },
+  "week06/codex\u7248\u672c/tools/check_slides.cjs": {
+    "mtime": 1792654330.93969,
+    "seen": 1795673213.92335,
+    "ast_hash": "300b639d6ce810ba2dab545d08050c1f",
+    "semantic_hash": "300b639d6ce810ba2dab545d08050c1f"
+  },
+  "week06/codex\u7248\u672c/tools/render_diagrams.py": {
+    "mtime": 1792654937.8822188,
+    "seen": 1795673213.9233515,
+    "ast_hash": "8dc5cf47dcb30ff37d6b01a4532c647a",
+    "semantic_hash": "8dc5cf47dcb30ff37d6b01a4532c647a"
+  },
+  "week06/codex\u7248\u672c/tools/verify.py": {
+    "mtime": 1794394797.1729038,
+    "seen": 1795673213.9233532,
+    "ast_hash": "1b7eeb7c24384c1b7273ba0138a68767",
+    "semantic_hash": "1b7eeb7c24384c1b7273ba0138a68767"
+  },
+  "week07/claude\u7248\u672c/code/ai/Camera.java": {
+    "mtime": 1794394395.888129,
+    "seen": 1795673213.9233546,
+    "ast_hash": "ed3f75f698db221531015e97f095b264",
+    "semantic_hash": "ed3f75f698db221531015e97f095b264"
+  },
+  "week07/claude\u7248\u672c/code/ai/HeavyRover.java": {
+    "mtime": 1794394395.8971264,
+    "seen": 1795673213.9233565,
+    "ast_hash": "4699bfc53732571fbde3cd1fbb65a9ce",
+    "semantic_hash": "4699bfc53732571fbde3cd1fbb65a9ce"
+  },
+  "week07/claude\u7248\u672c/code/examples/InheritDemo.java": {
+    "mtime": 1794394395.8991344,
+    "seen": 1795673213.923358,
+    "ast_hash": "82a344f958b776c82e5909568ad69d56",
+    "semantic_hash": "82a344f958b776c82e5909568ad69d56"
+  },
+  "week07/claude\u7248\u672c/code/examples/Member.java": {
+    "mtime": 1794394395.901133,
+    "seen": 1795673213.9233594,
+    "ast_hash": "704fdcb2e63898cb79f59c9bd7f27722",
+    "semantic_hash": "704fdcb2e63898cb79f59c9bd7f27722"
+  },
+  "week07/claude\u7248\u672c/code/examples/VipMember.java": {
+    "mtime": 1794394395.9031715,
+    "seen": 1795673213.923361,
+    "ast_hash": "777f9506e09f63a71a8c7b004c584681",
+    "semantic_hash": "777f9506e09f63a71a8c7b004c584681"
+  },
+  "week07/claude\u7248\u672c/code/starter/HeavyRover.java": {
+    "mtime": 1794394395.945609,
+    "seen": 1795673213.9233625,
+    "ast_hash": "aee11f630a14468977048aa4f0f01cdf",
+    "semantic_hash": "aee11f630a14468977048aa4f0f01cdf"
+  },
+  "week07/claude\u7248\u672c/code/starter/HeavyRoverTry.java": {
+    "mtime": 1794394892.1713276,
+    "seen": 1795673213.9233642,
+    "ast_hash": "69f76b51667c99e09266e4541839de8a",
+    "semantic_hash": "69f76b51667c99e09266e4541839de8a"
+  },
+  "week07/claude\u7248\u672c/code/starter/Mission.java": {
+    "mtime": 1794394395.9576087,
+    "seen": 1795673213.9233658,
+    "ast_hash": "daa31b93f4835b2617a872f6eac18e3a",
+    "semantic_hash": "daa31b93f4835b2617a872f6eac18e3a"
+  },
+  "week07/claude\u7248\u672c/code/starter/MissionLog.java": {
+    "mtime": 1794394628.5590408,
+    "seen": 1795673213.9233675,
+    "ast_hash": "6df494def4e519f1296860f44787bc56",
+    "semantic_hash": "6df494def4e519f1296860f44787bc56"
+  },
+  "week07/claude\u7248\u672c/code/starter/MissionStep.java": {
+    "mtime": 1794394395.9656143,
+    "seen": 1795673213.923369,
+    "ast_hash": "1df8f320790913a0b04d68a1b9db7a23",
+    "semantic_hash": "1df8f320790913a0b04d68a1b9db7a23"
+  },
+  "week07/claude\u7248\u672c/code/starter/Rover.java": {
+    "mtime": 1794394395.9686399,
+    "seen": 1795673213.9233706,
+    "ast_hash": "b609f6722d35f12e5d0352d80b7158ea",
+    "semantic_hash": "b609f6722d35f12e5d0352d80b7158ea"
+  },
+  "week07/claude\u7248\u672c/code/starter/RoverTry.java": {
+    "mtime": 1794394395.97162,
+    "seen": 1795673213.9233723,
+    "ast_hash": "bd3aedd03edb3c38c4ea3ff527a19572",
+    "semantic_hash": "bd3aedd03edb3c38c4ea3ff527a19572"
+  },
+  "week07/claude\u7248\u672c/code/starter/club/Equipment.java": {
+    "mtime": 1793084122.5781703,
+    "seen": 1795673213.923374,
+    "ast_hash": "acafaccc78f1f036f13474164c21330f",
+    "semantic_hash": "acafaccc78f1f036f13474164c21330f"
+  },
+  "week07/claude\u7248\u672c/code/starter/club/ShelfTry.java": {
+    "mtime": 1794394396.002413,
+    "seen": 1795673213.9233754,
+    "ast_hash": "736ee5afaa707275d1a0cd54a51dedf6",
+    "semantic_hash": "736ee5afaa707275d1a0cd54a51dedf6"
+  },
+  "week07/claude\u7248\u672c/code/teacher/HeavyRover.java": {
+    "mtime": 1794394395.9736106,
+    "seen": 1795673213.9233816,
+    "ast_hash": "2ad70bb1f135f8b33616a4d2d110a7e9",
+    "semantic_hash": "2ad70bb1f135f8b33616a4d2d110a7e9"
+  },
+  "week07/claude\u7248\u672c/code/teacher/HeavyRoverCheck.java": {
+    "mtime": 1794394628.6020648,
+    "seen": 1795673213.923383,
+    "ast_hash": "6b5804bc055049e12e557829605e5a0e",
+    "semantic_hash": "6b5804bc055049e12e557829605e5a0e"
+  },
+  "week07/claude\u7248\u672c/code/teacher/HeavyRoverTry.java": {
+    "mtime": 1794394892.1723244,
+    "seen": 1795673213.9233847,
+    "ast_hash": "69f76b51667c99e09266e4541839de8a",
+    "semantic_hash": "69f76b51667c99e09266e4541839de8a"
+  },
+  "week07/claude\u7248\u672c/code/teacher/Mission.java": {
+    "mtime": 1794394395.9845884,
+    "seen": 1795673213.923386,
+    "ast_hash": "daa31b93f4835b2617a872f6eac18e3a",
+    "semantic_hash": "daa31b93f4835b2617a872f6eac18e3a"
+  },
+  "week07/claude\u7248\u672c/code/teacher/MissionLog.java": {
+    "mtime": 1794394628.6050653,
+    "seen": 1795673213.9233878,
+    "ast_hash": "6df494def4e519f1296860f44787bc56",
+    "semantic_hash": "6df494def4e519f1296860f44787bc56"
+  },
+  "week07/claude\u7248\u672c/code/teacher/MissionStep.java": {
+    "mtime": 1794394395.9884093,
+    "seen": 1795673213.9233892,
+    "ast_hash": "1df8f320790913a0b04d68a1b9db7a23",
+    "semantic_hash": "1df8f320790913a0b04d68a1b9db7a23"
+  },
+  "week07/claude\u7248\u672c/code/teacher/Rover.java": {
+    "mtime": 1794394395.989436,
+    "seen": 1795673213.9233906,
+    "ast_hash": "035c13a618b76d9cf55a144306cd2bc4",
+    "semantic_hash": "035c13a618b76d9cf55a144306cd2bc4"
+  },
+  "week07/claude\u7248\u672c/code/teacher/RoverTry.java": {
+    "mtime": 1794394395.990974,
+    "seen": 1795673213.923392,
+    "ast_hash": "bd3aedd03edb3c38c4ea3ff527a19572",
+    "semantic_hash": "bd3aedd03edb3c38c4ea3ff527a19572"
+  },
+  "week07/claude\u7248\u672c/code/teacher/club/Camera.java": {
+    "mtime": 1794394395.9934003,
+    "seen": 1795673213.9233935,
+    "ast_hash": "34fb9c5dc598e35783db142670c7558c",
+    "semantic_hash": "34fb9c5dc598e35783db142670c7558c"
+  },
+  "week07/claude\u7248\u672c/code/teacher/club/Equipment.java": {
+    "mtime": 1793084122.4381459,
+    "seen": 1795673213.9233952,
+    "ast_hash": "acafaccc78f1f036f13474164c21330f",
+    "semantic_hash": "acafaccc78f1f036f13474164c21330f"
+  },
+  "week07/claude\u7248\u672c/code/teacher/club/Projector.java": {
+    "mtime": 1794394395.9954107,
+    "seen": 1795673213.9233966,
+    "ast_hash": "2de4afbdee80d1ae4cb8179cb91ee595",
+    "semantic_hash": "2de4afbdee80d1ae4cb8179cb91ee595"
+  },
+  "week07/claude\u7248\u672c/code/teacher/club/ShelfCheck.java": {
+    "mtime": 1794394628.6388545,
+    "seen": 1795673213.9233983,
+    "ast_hash": "c427371e803898af339f0cd6b6fe7e05",
+    "semantic_hash": "c427371e803898af339f0cd6b6fe7e05"
+  },
+  "week07/claude\u7248\u672c/code/teacher/club/ShelfTry.java": {
+    "mtime": 1794394395.9994109,
+    "seen": 1795673213.9233997,
+    "ast_hash": "736ee5afaa707275d1a0cd54a51dedf6",
+    "semantic_hash": "736ee5afaa707275d1a0cd54a51dedf6"
+  },
+  "week07/codex\u7248\u672c/ai/HeavyRover.java": {
+    "mtime": 1794394395.7835865,
+    "seen": 1795673213.923401,
+    "ast_hash": "3cc911a4dd0bbf0af6ebefff943872f4",
+    "semantic_hash": "3cc911a4dd0bbf0af6ebefff943872f4"
+  },
+  "week07/codex\u7248\u672c/examples/CompareMemberDemo.java": {
+    "mtime": 1795045231.9874551,
+    "seen": 1795673213.9234028,
+    "ast_hash": "ee19f2024da5f62ce2cb33752ee6ab2a",
+    "semantic_hash": "ee19f2024da5f62ce2cb33752ee6ab2a"
+  },
+  "week07/codex\u7248\u672c/examples/Member.java": {
+    "mtime": 1794457247.673489,
+    "seen": 1795673213.9234042,
+    "ast_hash": "4e3025bf5027f59d8f165a96c3466819",
+    "semantic_hash": "4e3025bf5027f59d8f165a96c3466819"
+  },
+  "week07/codex\u7248\u672c/examples/MemberDemo.java": {
+    "mtime": 1794457247.673489,
+    "seen": 1795673213.923406,
+    "ast_hash": "e2c7de51466ebcac09955b981d1ea357",
+    "semantic_hash": "e2c7de51466ebcac09955b981d1ea357"
+  },
+  "week07/codex\u7248\u672c/examples/StandaloneVipMember.java": {
+    "mtime": 1795045231.9864552,
+    "seen": 1795673213.923407,
+    "ast_hash": "09456b5cbf0d94a56dc6c816e53a215a",
+    "semantic_hash": "09456b5cbf0d94a56dc6c816e53a215a"
+  },
+  "week07/codex\u7248\u672c/examples/VipMember.java": {
+    "mtime": 1794457247.673489,
+    "seen": 1795673213.9234087,
+    "ast_hash": "b5b951bb93f6eaf131bcf471b96b93b4",
+    "semantic_hash": "b5b951bb93f6eaf131bcf471b96b93b4"
+  },
+  "week07/codex\u7248\u672c/starter/HeavyRover.java": {
+    "mtime": 1794457247.675485,
+    "seen": 1795673213.9234102,
+    "ast_hash": "72f2078e1e43e2a69beecded72945238",
+    "semantic_hash": "72f2078e1e43e2a69beecded72945238"
+  },
+  "week07/codex\u7248\u672c/starter/HeavyRoverTry.java": {
+    "mtime": 1794457247.676485,
+    "seen": 1795673213.9234116,
+    "ast_hash": "08f24162bede352ca8ecab3867dc1701",
+    "semantic_hash": "08f24162bede352ca8ecab3867dc1701"
+  },
+  "week07/codex\u7248\u672c/starter/Mission.java": {
+    "mtime": 1794457108.7490952,
+    "seen": 1795673213.9234133,
+    "ast_hash": "e0129afe1f3719a1d3f16375f7f2382c",
+    "semantic_hash": "e0129afe1f3719a1d3f16375f7f2382c"
+  },
+  "week07/codex\u7248\u672c/starter/MissionLog.java": {
+    "mtime": 1794457108.7530904,
+    "seen": 1795673213.9234147,
+    "ast_hash": "33ea742a6042f3907d2fb2af976c84e8",
+    "semantic_hash": "33ea742a6042f3907d2fb2af976c84e8"
+  },
+  "week07/codex\u7248\u672c/starter/MissionStep.java": {
+    "mtime": 1794457025.1646416,
+    "seen": 1795673213.9234161,
+    "ast_hash": "3e3d07a800a595e7cf1e2db0b681ea38",
+    "semantic_hash": "3e3d07a800a595e7cf1e2db0b681ea38"
+  },
+  "week07/codex\u7248\u672c/starter/Rover.java": {
+    "mtime": 1794457247.6744852,
+    "seen": 1795673213.9234176,
+    "ast_hash": "34f2dee733eed29e3deddf8dfb4ce244",
+    "semantic_hash": "34f2dee733eed29e3deddf8dfb4ce244"
+  },
+  "week07/codex\u7248\u672c/teacher/FixedScriptMission.java": {
+    "mtime": 1794457025.1676419,
+    "seen": 1795673213.923419,
+    "ast_hash": "812edf16bb42aeb22c375a44471a81a9",
+    "semantic_hash": "812edf16bb42aeb22c375a44471a81a9"
+  },
+  "week07/codex\u7248\u672c/teacher/HeavyRover.java": {
+    "mtime": 1794457247.676485,
+    "seen": 1795673213.9234204,
+    "ast_hash": "5e9ed82fff5ed47e6d61cd806da56441",
+    "semantic_hash": "5e9ed82fff5ed47e6d61cd806da56441"
+  },
+  "week07/codex\u7248\u672c/teacher/HeavyRoverTry.java": {
+    "mtime": 1794457247.677485,
+    "seen": 1795673213.9234219,
+    "ast_hash": "08f24162bede352ca8ecab3867dc1701",
+    "semantic_hash": "08f24162bede352ca8ecab3867dc1701"
+  },
+  "week07/codex\u7248\u672c/teacher/InheritanceCheck.java": {
+    "mtime": 1794457247.677485,
+    "seen": 1795673213.9234235,
+    "ast_hash": "919827dc3eac37c044bb275d1db0bb8f",
+    "semantic_hash": "919827dc3eac37c044bb275d1db0bb8f"
+  },
+  "week07/codex\u7248\u672c/teacher/Mission.java": {
+    "mtime": 1794457108.7490952,
+    "seen": 1795673213.923425,
+    "ast_hash": "e0129afe1f3719a1d3f16375f7f2382c",
+    "semantic_hash": "e0129afe1f3719a1d3f16375f7f2382c"
+  },
+  "week07/codex\u7248\u672c/teacher/MissionLog.java": {
+    "mtime": 1794457108.75409,
+    "seen": 1795673213.9234264,
+    "ast_hash": "33ea742a6042f3907d2fb2af976c84e8",
+    "semantic_hash": "33ea742a6042f3907d2fb2af976c84e8"
+  },
+  "week07/codex\u7248\u672c/teacher/MissionLogCheck.java": {
+    "mtime": 1794457025.1696432,
+    "seen": 1795673213.9234278,
+    "ast_hash": "baf39a172324611201147eb35938b477",
+    "semantic_hash": "baf39a172324611201147eb35938b477"
+  },
+  "week07/codex\u7248\u672c/teacher/MissionStateCheck.java": {
+    "mtime": 1794457108.7550893,
+    "seen": 1795673213.923431,
+    "ast_hash": "82029b12cc38407c4f5b10082590f77c",
+    "semantic_hash": "82029b12cc38407c4f5b10082590f77c"
+  },
+  "week07/codex\u7248\u672c/teacher/MissionStep.java": {
+    "mtime": 1794457025.1646416,
+    "seen": 1795673213.923432,
+    "ast_hash": "3e3d07a800a595e7cf1e2db0b681ea38",
+    "semantic_hash": "3e3d07a800a595e7cf1e2db0b681ea38"
+  },
+  "week07/codex\u7248\u672c/teacher/Rover.java": {
+    "mtime": 1794457247.675485,
+    "seen": 1795673213.9234338,
+    "ast_hash": "179a2f2df6be5e737e95c6dac061e6ac",
+    "semantic_hash": "179a2f2df6be5e737e95c6dac061e6ac"
+  },
+  "week07/codex\u7248\u672c/teacher/transfer/CargoRover.java": {
+    "mtime": 1794457247.6784909,
+    "seen": 1795673213.9234352,
+    "ast_hash": "51ba39f433010c298c1a9de3cf837e86",
+    "semantic_hash": "51ba39f433010c298c1a9de3cf837e86"
+  },
+  "week07/codex\u7248\u672c/teacher/transfer/CargoRoverTry.java": {
+    "mtime": 1794457247.6784909,
+    "seen": 1795673213.9234369,
+    "ast_hash": "fe8d80af22af27ff88e9b598d3802420",
+    "semantic_hash": "fe8d80af22af27ff88e9b598d3802420"
+  },
+  "week07/codex\u7248\u672c/tools/check_slides.cjs": {
+    "mtime": 1793160111.8691523,
+    "seen": 1795673213.9234383,
+    "ast_hash": "300b639d6ce810ba2dab545d08050c1f",
+    "semantic_hash": "300b639d6ce810ba2dab545d08050c1f"
+  },
+  "week07/codex\u7248\u672c/tools/render_diagrams.py": {
+    "mtime": 1793160111.8681526,
+    "seen": 1795673213.92344,
+    "ast_hash": "8dc5cf47dcb30ff37d6b01a4532c647a",
+    "semantic_hash": "8dc5cf47dcb30ff37d6b01a4532c647a"
+  },
+  "week07/codex\u7248\u672c/tools/verify.py": {
+    "mtime": 1794394687.7421682,
+    "seen": 1795673213.9234412,
+    "ast_hash": "80b706aafa29c5c2720ccd5bed415589",
+    "semantic_hash": "80b706aafa29c5c2720ccd5bed415589"
+  },
+  "week08/codex\u7248\u672c/ai/HeavyRover.java": {
+    "mtime": 1794394396.095191,
+    "seen": 1795673213.9234426,
+    "ast_hash": "0c3388ce819602fca36234731ed935c9",
+    "semantic_hash": "0c3388ce819602fca36234731ed935c9"
+  },
+  "week08/codex\u7248\u672c/examples/Member.java": {
+    "mtime": 1794457305.9355967,
+    "seen": 1795673213.9234443,
+    "ast_hash": "0d714967528f5b8cb441a4647e60d0af",
+    "semantic_hash": "0d714967528f5b8cb441a4647e60d0af"
+  },
+  "week08/codex\u7248\u672c/examples/MemberDemo.java": {
+    "mtime": 1794457305.9366038,
+    "seen": 1795673213.9234455,
+    "ast_hash": "b3390a5c1349ee1a4ef992fd87bac3c5",
+    "semantic_hash": "b3390a5c1349ee1a4ef992fd87bac3c5"
+  },
+  "week08/codex\u7248\u672c/examples/VipMember.java": {
+    "mtime": 1794457305.9366038,
+    "seen": 1795673213.9234471,
+    "ast_hash": "a2bd4bc3ee9c76e6b88b14808409254d",
+    "semantic_hash": "a2bd4bc3ee9c76e6b88b14808409254d"
+  },
+  "week08/codex\u7248\u672c/starter/CompareMissions.java": {
+    "mtime": 1794457305.9405973,
+    "seen": 1795673213.9234486,
+    "ast_hash": "408cfbd8ec2177a41aef3be3d84fb3a3",
+    "semantic_hash": "408cfbd8ec2177a41aef3be3d84fb3a3"
+  },
+  "week08/codex\u7248\u672c/starter/DrillMissionTry.java": {
+    "mtime": 1795062751.720689,
+    "seen": 1795673213.92345,
+    "ast_hash": "a3e93644ed5430428b7daa80a537ef3c",
+    "semantic_hash": "a3e93644ed5430428b7daa80a537ef3c"
+  },
+  "week08/codex\u7248\u672c/starter/HeavyRover.java": {
+    "mtime": 1795063345.571757,
+    "seen": 1795673213.9234514,
+    "ast_hash": "ef6ee6094cda723bdad2ff07c641bb35",
+    "semantic_hash": "ef6ee6094cda723bdad2ff07c641bb35"
+  },
+  "week08/codex\u7248\u672c/starter/HeavyRoverTry.java": {
+    "mtime": 1794457305.941597,
+    "seen": 1795673213.9234529,
+    "ast_hash": "21529a0a3ac5673368449876c4e41768",
+    "semantic_hash": "21529a0a3ac5673368449876c4e41768"
+  },
+  "week08/codex\u7248\u672c/starter/Mission.java": {
+    "mtime": 1794457108.7490952,
+    "seen": 1795673213.9234562,
+    "ast_hash": "e0129afe1f3719a1d3f16375f7f2382c",
+    "semantic_hash": "e0129afe1f3719a1d3f16375f7f2382c"
+  },
+  "week08/codex\u7248\u672c/starter/MissionLog.java": {
+    "mtime": 1794457108.75409,
+    "seen": 1795673213.9234579,
+    "ast_hash": "33ea742a6042f3907d2fb2af976c84e8",
+    "semantic_hash": "33ea742a6042f3907d2fb2af976c84e8"
+  },
+  "week08/codex\u7248\u672c/starter/MissionStep.java": {
+    "mtime": 1794457025.165645,
+    "seen": 1795673213.9234593,
+    "ast_hash": "3e3d07a800a595e7cf1e2db0b681ea38",
+    "semantic_hash": "3e3d07a800a595e7cf1e2db0b681ea38"
+  },
+  "week08/codex\u7248\u672c/starter/Rover.java": {
+    "mtime": 1794457305.937599,
+    "seen": 1795673213.9234607,
+    "ast_hash": "bf101ccb2e7df4ba4e252012d9a235c2",
+    "semantic_hash": "bf101ccb2e7df4ba4e252012d9a235c2"
+  },
+  "week08/codex\u7248\u672c/teacher/CompareMissions.java": {
+    "mtime": 1794457305.9405973,
+    "seen": 1795673213.9234622,
+    "ast_hash": "3204af715e0fa14ca693f550f4b4489c",
+    "semantic_hash": "3204af715e0fa14ca693f550f4b4489c"
+  },
+  "week08/codex\u7248\u672c/teacher/DrillMissionTry.java": {
+    "mtime": 1795062752.1447644,
+    "seen": 1795673213.9234636,
+    "ast_hash": "a3e93644ed5430428b7daa80a537ef3c",
+    "semantic_hash": "a3e93644ed5430428b7daa80a537ef3c"
+  },
+  "week08/codex\u7248\u672c/teacher/FixedScriptMission.java": {
+    "mtime": 1794457025.1676419,
+    "seen": 1795673213.9234653,
+    "ast_hash": "812edf16bb42aeb22c375a44471a81a9",
+    "semantic_hash": "812edf16bb42aeb22c375a44471a81a9"
+  },
+  "week08/codex\u7248\u672c/teacher/HeavyRover.java": {
+    "mtime": 1795062734.4712472,
+    "seen": 1795673213.9234664,
+    "ast_hash": "8aae94dbd06db9ad409fa626658c5252",
+    "semantic_hash": "8aae94dbd06db9ad409fa626658c5252"
+  },
+  "week08/codex\u7248\u672c/teacher/HeavyRoverTry.java": {
+    "mtime": 1794457305.941597,
+    "seen": 1795673213.923468,
+    "ast_hash": "21529a0a3ac5673368449876c4e41768",
+    "semantic_hash": "21529a0a3ac5673368449876c4e41768"
+  },
+  "week08/codex\u7248\u672c/teacher/Mission.java": {
+    "mtime": 1794457108.7500918,
+    "seen": 1795673213.9234695,
+    "ast_hash": "e0129afe1f3719a1d3f16375f7f2382c",
+    "semantic_hash": "e0129afe1f3719a1d3f16375f7f2382c"
+  },
+  "week08/codex\u7248\u672c/teacher/MissionLog.java": {
+    "mtime": 1794457108.75409,
+    "seen": 1795673213.9234712,
+    "ast_hash": "33ea742a6042f3907d2fb2af976c84e8",
+    "semantic_hash": "33ea742a6042f3907d2fb2af976c84e8"
+  },
+  "week08/codex\u7248\u672c/teacher/MissionLogCheck.java": {
+    "mtime": 1794457025.1696432,
+    "seen": 1795673213.9234726,
+    "ast_hash": "baf39a172324611201147eb35938b477",
+    "semantic_hash": "baf39a172324611201147eb35938b477"
+  },
+  "week08/codex\u7248\u672c/teacher/MissionStateCheck.java": {
+    "mtime": 1794457108.7550893,
+    "seen": 1795673213.923474,
+    "ast_hash": "82029b12cc38407c4f5b10082590f77c",
+    "semantic_hash": "82029b12cc38407c4f5b10082590f77c"
+  },
+  "week08/codex\u7248\u672c/teacher/MissionStep.java": {
+    "mtime": 1794457025.165645,
+    "seen": 1795673213.9234757,
+    "ast_hash": "3e3d07a800a595e7cf1e2db0b681ea38",
+    "semantic_hash": "3e3d07a800a595e7cf1e2db0b681ea38"
+  },
+  "week08/codex\u7248\u672c/teacher/PolymorphismCheck.java": {
+    "mtime": 1795062788.01047,
+    "seen": 1795673213.923477,
+    "ast_hash": "a2fd3430e2190ae565a695e0a54fc58d",
+    "semantic_hash": "a2fd3430e2190ae565a695e0a54fc58d"
+  },
+  "week08/codex\u7248\u672c/teacher/Rover.java": {
+    "mtime": 1795055035.0293977,
+    "seen": 1795673213.9234786,
+    "ast_hash": "8a8a2f0fc7b5019d21265b8f8ae31d85",
+    "semantic_hash": "8a8a2f0fc7b5019d21265b8f8ae31d85"
+  },
+  "week08/codex\u7248\u672c/teacher/transfer/SurveyRover.java": {
+    "mtime": 1794457305.9445963,
+    "seen": 1795673213.9234803,
+    "ast_hash": "06d2f11e6720da408f3bfb51a072ba78",
+    "semantic_hash": "06d2f11e6720da408f3bfb51a072ba78"
+  },
+  "week08/codex\u7248\u672c/teacher/transfer/SurveyRoverTry.java": {
+    "mtime": 1794457305.9445963,
+    "seen": 1795673213.9234817,
+    "ast_hash": "3d0b4dbcfa19646c6d023757f4e9d83a",
+    "semantic_hash": "3d0b4dbcfa19646c6d023757f4e9d83a"
+  },
+  "week08/codex\u7248\u672c/tools/check_slides.cjs": {
+    "mtime": 1793362726.099452,
+    "seen": 1795673213.9234834,
+    "ast_hash": "300b639d6ce810ba2dab545d08050c1f",
+    "semantic_hash": "300b639d6ce810ba2dab545d08050c1f"
+  },
+  "week08/codex\u7248\u672c/tools/render_diagrams.py": {
+    "mtime": 1793362726.0954463,
+    "seen": 1795673213.9234846,
+    "ast_hash": "8dc5cf47dcb30ff37d6b01a4532c647a",
+    "semantic_hash": "8dc5cf47dcb30ff37d6b01a4532c647a"
+  },
+  "week08/codex\u7248\u672c/tools/verify.py": {
+    "mtime": 1795062928.5559049,
+    "seen": 1795673213.9234862,
+    "ast_hash": "e6caf8abf25c6220411e0a79268efc1c",
+    "semantic_hash": "e6caf8abf25c6220411e0a79268efc1c"
+  },
+  "week09/codex\u7248\u672c/ai/SampleReport.java": {
+    "mtime": 1794394396.2871234,
+    "seen": 1795673213.9234874,
+    "ast_hash": "34a63cceb10ebe5b6b89698915da0ce8",
+    "semantic_hash": "34a63cceb10ebe5b6b89698915da0ce8"
+  },
+  "week09/codex\u7248\u672c/examples/Cat.java": {
+    "mtime": 1795058002.8472483,
+    "seen": 1795673213.923489,
+    "ast_hash": "a2ecb15d410790902ca5c6e5bc1a7a74",
+    "semantic_hash": "a2ecb15d410790902ca5c6e5bc1a7a74"
+  },
+  "week09/codex\u7248\u672c/examples/ExpressParcel.java": {
+    "mtime": 1795058002.5662892,
+    "seen": 1795673213.9234905,
+    "ast_hash": "505a5ae6fe11b5a33c246e9038fc60dc",
+    "semantic_hash": "505a5ae6fe11b5a33c246e9038fc60dc"
+  },
+  "week09/codex\u7248\u672c/examples/FixtureDemo.java": {
+    "mtime": 1795058003.0354648,
+    "seen": 1795673213.9234922,
+    "ast_hash": "50852e8216d49832752dcc669d399410",
+    "semantic_hash": "50852e8216d49832752dcc669d399410"
+  },
+  "week09/codex\u7248\u672c/examples/NormalParcel.java": {
+    "mtime": 1795058002.4438872,
+    "seen": 1795673213.9234934,
+    "ast_hash": "181538824e52fb76bc43e5e0207bf622",
+    "semantic_hash": "181538824e52fb76bc43e5e0207bf622"
+  },
+  "week09/codex\u7248\u672c/examples/Parcel.java": {
+    "mtime": 1795058002.3118966,
+    "seen": 1795673213.9234948,
+    "ast_hash": "03823e1b0adebb33f1457b1367b566ca",
+    "semantic_hash": "03823e1b0adebb33f1457b1367b566ca"
+  },
+  "week09/codex\u7248\u672c/examples/ParcelDemo.java": {
+    "mtime": 1795058002.6603763,
+    "seen": 1795673213.9234965,
+    "ast_hash": "9963e1bbc5fd30fafa374628952a21ab",
+    "semantic_hash": "9963e1bbc5fd30fafa374628952a21ab"
+  },
+  "week09/codex\u7248\u672c/examples/ScaleDemo.java": {
+    "mtime": 1795058002.9186137,
+    "seen": 1795673213.923498,
+    "ast_hash": "bceb7443e1fab4b8fe4c8640cdd3d1dd",
+    "semantic_hash": "bceb7443e1fab4b8fe4c8640cdd3d1dd"
+  },
+  "week09/codex\u7248\u672c/examples/Suitcase.java": {
+    "mtime": 1795058002.7890413,
+    "seen": 1795673213.9234993,
+    "ast_hash": "a8d31ceea26988bfb678654fee0f7c8d",
+    "semantic_hash": "a8d31ceea26988bfb678654fee0f7c8d"
+  },
+  "week09/codex\u7248\u672c/examples/Weighable.java": {
+    "mtime": 1795058002.7279646,
+    "seen": 1795673213.9235008,
+    "ast_hash": "fbb301a8a5124e75551af3091dd78b8f",
+    "semantic_hash": "fbb301a8a5124e75551af3091dd78b8f"
+  },
+  "week09/codex\u7248\u672c/starter/CompareMissions.java": {
+    "mtime": 1794457400.4019997,
+    "seen": 1795673213.923502,
+    "ast_hash": "d9a0527a31df74d1df4e7bf259dad75a",
+    "semantic_hash": "d9a0527a31df74d1df4e7bf259dad75a"
+  },
+  "week09/codex\u7248\u672c/starter/HeavyRover.java": {
+    "mtime": 1795063536.5822828,
+    "seen": 1795673213.9235036,
+    "ast_hash": "b1140ae19962244771a65687a7e94964",
+    "semantic_hash": "b1140ae19962244771a65687a7e94964"
+  },
+  "week09/codex\u7248\u672c/starter/HeavyRoverTry.java": {
+    "mtime": 1794457305.941597,
+    "seen": 1795673213.923505,
+    "ast_hash": "21529a0a3ac5673368449876c4e41768",
+    "semantic_hash": "21529a0a3ac5673368449876c4e41768"
+  },
+  "week09/codex\u7248\u672c/starter/Mission.java": {
+    "mtime": 1794457108.7500918,
+    "seen": 1795673213.9235065,
+    "ast_hash": "e0129afe1f3719a1d3f16375f7f2382c",
+    "semantic_hash": "e0129afe1f3719a1d3f16375f7f2382c"
+  },
+  "week09/codex\u7248\u672c/starter/MissionLog.java": {
+    "mtime": 1794457400.4030008,
+    "seen": 1795673213.923508,
+    "ast_hash": "ea52b60d19e9a52ddf18a76b13e77fda",
+    "semantic_hash": "ea52b60d19e9a52ddf18a76b13e77fda"
+  },
+  "week09/codex\u7248\u672c/starter/MissionStep.java": {
+    "mtime": 1794457025.165645,
+    "seen": 1795673213.9235096,
+    "ast_hash": "3e3d07a800a595e7cf1e2db0b681ea38",
+    "semantic_hash": "3e3d07a800a595e7cf1e2db0b681ea38"
+  },
+  "week09/codex\u7248\u672c/starter/Rover.java": {
+    "mtime": 1794457400.3979993,
+    "seen": 1795673213.9235108,
+    "ast_hash": "d6d0275db27d65312a89a88849b40092",
+    "semantic_hash": "d6d0275db27d65312a89a88849b40092"
+  },
+  "week09/codex\u7248\u672c/starter/SampleReport.java": {
+    "mtime": 1794457400.4049985,
+    "seen": 1795673213.9235122,
+    "ast_hash": "333b8e605b242dfb09bd05ae148964de",
+    "semantic_hash": "333b8e605b242dfb09bd05ae148964de"
+  },
+  "week09/codex\u7248\u672c/starter/SampleReportDemo.java": {
+    "mtime": 1794457400.4059997,
+    "seen": 1795673213.923514,
+    "ast_hash": "e480db1f43c15b567c2a3c21a4a4cdaf",
+    "semantic_hash": "e480db1f43c15b567c2a3c21a4a4cdaf"
+  },
+  "week09/codex\u7248\u672c/starter/SampleSource.java": {
+    "mtime": 1794457400.4080005,
+    "seen": 1795673213.9235153,
+    "ast_hash": "d6e12822cb0ae80a94e2fd1d831d034b",
+    "semantic_hash": "d6e12822cb0ae80a94e2fd1d831d034b"
+  },
+  "week09/codex\u7248\u672c/starter/SampleTray.java": {
+    "mtime": 1794457400.408998,
+    "seen": 1795673213.923517,
+    "ast_hash": "ae0558afe51d4534873963b8ccd71aa8",
+    "semantic_hash": "ae0558afe51d4534873963b8ccd71aa8"
+  },
+  "week09/codex\u7248\u672c/starter/StandardRover.java": {
+    "mtime": 1794457400.411001,
+    "seen": 1795673213.9235182,
+    "ast_hash": "79a93823fab5aa35b6c8eda9173a6f3d",
+    "semantic_hash": "79a93823fab5aa35b6c8eda9173a6f3d"
+  },
+  "week09/codex\u7248\u672c/teacher/CompareMissions.java": {
+    "mtime": 1794457400.4019997,
+    "seen": 1795673213.9235198,
+    "ast_hash": "d9a0527a31df74d1df4e7bf259dad75a",
+    "semantic_hash": "d9a0527a31df74d1df4e7bf259dad75a"
+  },
+  "week09/codex\u7248\u672c/teacher/FixedScriptMission.java": {
+    "mtime": 1794457025.1686437,
+    "seen": 1795673213.9235213,
+    "ast_hash": "812edf16bb42aeb22c375a44471a81a9",
+    "semantic_hash": "812edf16bb42aeb22c375a44471a81a9"
+  },
+  "week09/codex\u7248\u672c/teacher/HeavyRover.java": {
+    "mtime": 1795063536.5822828,
+    "seen": 1795673213.9235225,
+    "ast_hash": "b1140ae19962244771a65687a7e94964",
+    "semantic_hash": "b1140ae19962244771a65687a7e94964"
+  },
+  "week09/codex\u7248\u672c/teacher/HeavyRoverTry.java": {
+    "mtime": 1794457305.942597,
+    "seen": 1795673213.9235241,
+    "ast_hash": "21529a0a3ac5673368449876c4e41768",
+    "semantic_hash": "21529a0a3ac5673368449876c4e41768"
+  },
+  "week09/codex\u7248\u672c/teacher/Mission.java": {
+    "mtime": 1794457108.7500918,
+    "seen": 1795673213.9235256,
+    "ast_hash": "e0129afe1f3719a1d3f16375f7f2382c",
+    "semantic_hash": "e0129afe1f3719a1d3f16375f7f2382c"
+  },
+  "week09/codex\u7248\u672c/teacher/MissionLog.java": {
+    "mtime": 1794457400.403999,
+    "seen": 1795673213.9235272,
+    "ast_hash": "ea52b60d19e9a52ddf18a76b13e77fda",
+    "semantic_hash": "ea52b60d19e9a52ddf18a76b13e77fda"
+  },
+  "week09/codex\u7248\u672c/teacher/MissionLogCheck.java": {
+    "mtime": 1794457025.1696432,
+    "seen": 1795673213.9235287,
+    "ast_hash": "baf39a172324611201147eb35938b477",
+    "semantic_hash": "baf39a172324611201147eb35938b477"
+  },
+  "week09/codex\u7248\u672c/teacher/MissionStateCheck.java": {
+    "mtime": 1794457400.4119992,
+    "seen": 1795673213.92353,
+    "ast_hash": "1263e52f40def9b5c591041de32e41cc",
+    "semantic_hash": "1263e52f40def9b5c591041de32e41cc"
+  },
+  "week09/codex\u7248\u672c/teacher/MissionStep.java": {
+    "mtime": 1794457025.166643,
+    "seen": 1795673213.9235315,
+    "ast_hash": "3e3d07a800a595e7cf1e2db0b681ea38",
+    "semantic_hash": "3e3d07a800a595e7cf1e2db0b681ea38"
+  },
+  "week09/codex\u7248\u672c/teacher/PolymorphismCheck.java": {
+    "mtime": 1794457400.412999,
+    "seen": 1795673213.923533,
+    "ast_hash": "43b8c8758e7028f7107a9febe974d39e",
+    "semantic_hash": "43b8c8758e7028f7107a9febe974d39e"
+  },
+  "week09/codex\u7248\u672c/teacher/Rover.java": {
+    "mtime": 1794457400.3999982,
+    "seen": 1795673213.9235346,
+    "ast_hash": "f19c56c175ff82a00984b64c2edc16c9",
+    "semantic_hash": "f19c56c175ff82a00984b64c2edc16c9"
+  },
+  "week09/codex\u7248\u672c/teacher/SampleReport.java": {
+    "mtime": 1794457400.4059997,
+    "seen": 1795673213.9235358,
+    "ast_hash": "eaae6dda342eae9c01f8d9da4dd58576",
+    "semantic_hash": "eaae6dda342eae9c01f8d9da4dd58576"
+  },
+  "week09/codex\u7248\u672c/teacher/SampleReportDemo.java": {
+    "mtime": 1794457400.4070003,
+    "seen": 1795673213.9235375,
+    "ast_hash": "970197d19e91f1f67d2da7895c422f2d",
+    "semantic_hash": "970197d19e91f1f67d2da7895c422f2d"
+  },
+  "week09/codex\u7248\u672c/teacher/SampleSource.java": {
+    "mtime": 1794457400.408998,
+    "seen": 1795673213.923539,
+    "ast_hash": "7862c787ca7b352804b9eb4a59a61c6d",
+    "semantic_hash": "7862c787ca7b352804b9eb4a59a61c6d"
+  },
+  "week09/codex\u7248\u672c/teacher/SampleTray.java": {
+    "mtime": 1794457400.410003,
+    "seen": 1795673213.9235406,
+    "ast_hash": "dacedb79c1788de121edede4c2436d16",
+    "semantic_hash": "dacedb79c1788de121edede4c2436d16"
+  },
+  "week09/codex\u7248\u672c/teacher/StandardRover.java": {
+    "mtime": 1794457400.411001,
+    "seen": 1795673213.9235418,
+    "ast_hash": "9a23183d70934cd7bcdfa4ff01e84b34",
+    "semantic_hash": "9a23183d70934cd7bcdfa4ff01e84b34"
+  },
+  "week09/codex\u7248\u672c/teacher/StepListenerDemo.java": {
+    "mtime": 1794457512.7910137,
+    "seen": 1795673213.9235432,
+    "ast_hash": "b60c3ee4e62e8d47d20c9e7c322db2d6",
+    "semantic_hash": "b60c3ee4e62e8d47d20c9e7c322db2d6"
+  },
+  "week09/codex\u7248\u672c/teacher/transfer/SampleBatch.java": {
+    "mtime": 1794457400.4149995,
+    "seen": 1795673213.923545,
+    "ast_hash": "b5cf7afd3acb51ff0c94e84daa8faf45",
+    "semantic_hash": "b5cf7afd3acb51ff0c94e84daa8faf45"
+  },
+  "week09/codex\u7248\u672c/teacher/transfer/SampleBatchDemo.java": {
+    "mtime": 1794457400.415998,
+    "seen": 1795673213.923546,
+    "ast_hash": "17cd751ec2cb5ef805d9de92f3d31d25",
+    "semantic_hash": "17cd751ec2cb5ef805d9de92f3d31d25"
+  },
+  "week09/codex\u7248\u672c/tools/verify.py": {
+    "mtime": 1795063566.002031,
+    "seen": 1795673213.9235477,
+    "ast_hash": "3adaf08c0faab734242e3dc6fc874fc6",
+    "semantic_hash": "3adaf08c0faab734242e3dc6fc874fc6"
+  },
+  "week10/codex\u7248\u672c/ai/SampleReport.java": {
+    "mtime": 1794453525.6200962,
+    "seen": 1795673213.9235492,
+    "ast_hash": "06e7d0da38ac4651a3991a240dfff5af",
+    "semantic_hash": "06e7d0da38ac4651a3991a240dfff5af"
+  },
+  "week10/codex\u7248\u672c/examples/MemberOverloadDemo.java": {
+    "mtime": 1794457476.88897,
+    "seen": 1795673213.9235506,
+    "ast_hash": "09491ae76954681b45827875c83051de",
+    "semantic_hash": "09491ae76954681b45827875c83051de"
+  },
+  "week10/codex\u7248\u672c/starter/CompareMissions.java": {
+    "mtime": 1794457476.891483,
+    "seen": 1795673213.9235523,
+    "ast_hash": "90f12dcd73c0b8551b61ca52fcade4bb",
+    "semantic_hash": "90f12dcd73c0b8551b61ca52fcade4bb"
+  },
+  "week10/codex\u7248\u672c/starter/HeavyRover.java": {
+    "mtime": 1795063536.5848048,
+    "seen": 1795673213.9235537,
+    "ast_hash": "022a00fd8cf6d7f442337120c5265266",
+    "semantic_hash": "022a00fd8cf6d7f442337120c5265266"
+  },
+  "week10/codex\u7248\u672c/starter/HeavyRoverTry.java": {
+    "mtime": 1794457305.942597,
+    "seen": 1795673213.9235554,
+    "ast_hash": "21529a0a3ac5673368449876c4e41768",
+    "semantic_hash": "21529a0a3ac5673368449876c4e41768"
+  },
+  "week10/codex\u7248\u672c/starter/Mission.java": {
+    "mtime": 1794457108.7500918,
+    "seen": 1795673213.9235566,
+    "ast_hash": "e0129afe1f3719a1d3f16375f7f2382c",
+    "semantic_hash": "e0129afe1f3719a1d3f16375f7f2382c"
+  },
+  "week10/codex\u7248\u672c/starter/MissionLog.java": {
+    "mtime": 1794457400.403999,
+    "seen": 1795673213.9235582,
+    "ast_hash": "ea52b60d19e9a52ddf18a76b13e77fda",
+    "semantic_hash": "ea52b60d19e9a52ddf18a76b13e77fda"
+  },
+  "week10/codex\u7248\u672c/starter/MissionStep.java": {
+    "mtime": 1794457025.166643,
+    "seen": 1795673213.9235597,
+    "ast_hash": "3e3d07a800a595e7cf1e2db0b681ea38",
+    "semantic_hash": "3e3d07a800a595e7cf1e2db0b681ea38"
+  },
+  "week10/codex\u7248\u672c/starter/Rover.java": {
+    "mtime": 1794457476.88897,
+    "seen": 1795673213.9235609,
+    "ast_hash": "d4a51d18cd7598e2c0a7cd714bb2a1e4",
+    "semantic_hash": "d4a51d18cd7598e2c0a7cd714bb2a1e4"
+  },
+  "week10/codex\u7248\u672c/starter/SampleOverloadDemo.java": {
+    "mtime": 1794457476.894483,
+    "seen": 1795673213.9235625,
+    "ast_hash": "c06a8bdfa190d68dc115e8dc8029068f",
+    "semantic_hash": "c06a8bdfa190d68dc115e8dc8029068f"
+  },
+  "week10/codex\u7248\u672c/starter/SampleReport.java": {
+    "mtime": 1794457476.8954835,
+    "seen": 1795673213.923564,
+    "ast_hash": "ba20dc5ce3ea7da8ba313614efd7b6e5",
+    "semantic_hash": "ba20dc5ce3ea7da8ba313614efd7b6e5"
+  },
+  "week10/codex\u7248\u672c/starter/SampleReportDemo.java": {
+    "mtime": 1794457476.8964818,
+    "seen": 1795673213.9235656,
+    "ast_hash": "8f0c1c4d62a350312a9bf076da3412d2",
+    "semantic_hash": "8f0c1c4d62a350312a9bf076da3412d2"
+  },
+  "week10/codex\u7248\u672c/starter/SampleSource.java": {
+    "mtime": 1794457476.891483,
+    "seen": 1795673213.923567,
+    "ast_hash": "4938d92b7019015f97795e90ac579148",
+    "semantic_hash": "4938d92b7019015f97795e90ac579148"
+  },
+  "week10/codex\u7248\u672c/starter/SampleTray.java": {
+    "mtime": 1794457476.8924837,
+    "seen": 1795673213.9235687,
+    "ast_hash": "b41924369bf4490f76ea91d5b3b94fbd",
+    "semantic_hash": "b41924369bf4490f76ea91d5b3b94fbd"
+  },
+  "week10/codex\u7248\u672c/starter/StandardRover.java": {
+    "mtime": 1794457476.8934824,
+    "seen": 1795673213.9235702,
+    "ast_hash": "66e4f8fcebb00fcff6e2b2c520edfecd",
+    "semantic_hash": "66e4f8fcebb00fcff6e2b2c520edfecd"
+  },
+  "week10/codex\u7248\u672c/teacher/CompareMissions.java": {
+    "mtime": 1794457476.891483,
+    "seen": 1795673213.9235718,
+    "ast_hash": "90f12dcd73c0b8551b61ca52fcade4bb",
+    "semantic_hash": "90f12dcd73c0b8551b61ca52fcade4bb"
+  },
+  "week10/codex\u7248\u672c/teacher/FixedScriptMission.java": {
+    "mtime": 1794457025.1686437,
+    "seen": 1795673213.923573,
+    "ast_hash": "812edf16bb42aeb22c375a44471a81a9",
+    "semantic_hash": "812edf16bb42aeb22c375a44471a81a9"
+  },
+  "week10/codex\u7248\u672c/teacher/HeavyRover.java": {
+    "mtime": 1795063536.5848048,
+    "seen": 1795673213.923576,
+    "ast_hash": "022a00fd8cf6d7f442337120c5265266",
+    "semantic_hash": "022a00fd8cf6d7f442337120c5265266"
+  },
+  "week10/codex\u7248\u672c/teacher/HeavyRoverTry.java": {
+    "mtime": 1794457305.942597,
+    "seen": 1795673213.9235775,
+    "ast_hash": "21529a0a3ac5673368449876c4e41768",
+    "semantic_hash": "21529a0a3ac5673368449876c4e41768"
+  },
+  "week10/codex\u7248\u672c/teacher/Mission.java": {
+    "mtime": 1794457108.7510905,
+    "seen": 1795673213.9235792,
+    "ast_hash": "e0129afe1f3719a1d3f16375f7f2382c",
+    "semantic_hash": "e0129afe1f3719a1d3f16375f7f2382c"
+  },
+  "week10/codex\u7248\u672c/teacher/MissionLog.java": {
+    "mtime": 1794457400.4049985,
+    "seen": 1795673213.9235806,
+    "ast_hash": "ea52b60d19e9a52ddf18a76b13e77fda",
+    "semantic_hash": "ea52b60d19e9a52ddf18a76b13e77fda"
+  },
+  "week10/codex\u7248\u672c/teacher/MissionLogCheck.java": {
+    "mtime": 1794457025.170643,
+    "seen": 1795673213.9235823,
+    "ast_hash": "baf39a172324611201147eb35938b477",
+    "semantic_hash": "baf39a172324611201147eb35938b477"
+  },
+  "week10/codex\u7248\u672c/teacher/MissionStateCheck.java": {
+    "mtime": 1794457400.4119992,
+    "seen": 1795673213.9235835,
+    "ast_hash": "1263e52f40def9b5c591041de32e41cc",
+    "semantic_hash": "1263e52f40def9b5c591041de32e41cc"
+  },
+  "week10/codex\u7248\u672c/teacher/MissionStep.java": {
+    "mtime": 1794457025.166643,
+    "seen": 1795673213.923585,
+    "ast_hash": "3e3d07a800a595e7cf1e2db0b681ea38",
+    "semantic_hash": "3e3d07a800a595e7cf1e2db0b681ea38"
+  },
+  "week10/codex\u7248\u672c/teacher/PolymorphismCheck.java": {
+    "mtime": 1794457400.414,
+    "seen": 1795673213.9235866,
+    "ast_hash": "43b8c8758e7028f7107a9febe974d39e",
+    "semantic_hash": "43b8c8758e7028f7107a9febe974d39e"
+  },
+  "week10/codex\u7248\u672c/teacher/Rover.java": {
+    "mtime": 1794457476.88897,
+    "seen": 1795673213.923588,
+    "ast_hash": "d4a51d18cd7598e2c0a7cd714bb2a1e4",
+    "semantic_hash": "d4a51d18cd7598e2c0a7cd714bb2a1e4"
+  },
+  "week10/codex\u7248\u672c/teacher/SampleOverloadDemo.java": {
+    "mtime": 1794457476.894483,
+    "seen": 1795673213.9235897,
+    "ast_hash": "aec0ab11a640bd2de6644d987cb61019",
+    "semantic_hash": "aec0ab11a640bd2de6644d987cb61019"
+  },
+  "week10/codex\u7248\u672c/teacher/SampleReport.java": {
+    "mtime": 1794457476.8954835,
+    "seen": 1795673213.923591,
+    "ast_hash": "c5cdb9545dfc2002f76e3182c852a2be",
+    "semantic_hash": "c5cdb9545dfc2002f76e3182c852a2be"
+  },
+  "week10/codex\u7248\u672c/teacher/SampleReportDemo.java": {
+    "mtime": 1794457476.8964818,
+    "seen": 1795673213.9235923,
+    "ast_hash": "3745feb07842a7708cedb7347b29dec3",
+    "semantic_hash": "3745feb07842a7708cedb7347b29dec3"
+  },
+  "week10/codex\u7248\u672c/teacher/SampleSource.java": {
+    "mtime": 1794457476.8924837,
+    "seen": 1795673213.923594,
+    "ast_hash": "4938d92b7019015f97795e90ac579148",
+    "semantic_hash": "4938d92b7019015f97795e90ac579148"
+  },
+  "week10/codex\u7248\u672c/teacher/SampleTray.java": {
+    "mtime": 1794457476.8934824,
+    "seen": 1795673213.9235954,
+    "ast_hash": "b41924369bf4490f76ea91d5b3b94fbd",
+    "semantic_hash": "b41924369bf4490f76ea91d5b3b94fbd"
+  },
+  "week10/codex\u7248\u672c/teacher/StandardRover.java": {
+    "mtime": 1794457476.8934824,
+    "seen": 1795673213.923597,
+    "ast_hash": "66e4f8fcebb00fcff6e2b2c520edfecd",
+    "semantic_hash": "66e4f8fcebb00fcff6e2b2c520edfecd"
+  },
+  "week10/codex\u7248\u672c/teacher/homework/QuickSampleDemo.java": {
+    "mtime": 1794457476.8974807,
+    "seen": 1795673213.9235985,
+    "ast_hash": "0cba6b5ad549db32bb30716325c332f4",
+    "semantic_hash": "0cba6b5ad549db32bb30716325c332f4"
+  },
+  "week10/codex\u7248\u672c/teacher/homework/SampleReport.java": {
+    "mtime": 1794457476.8974807,
+    "seen": 1795673213.9236002,
+    "ast_hash": "1daab43735b3688f56c77dbbfa9c472c",
+    "semantic_hash": "1daab43735b3688f56c77dbbfa9c472c"
+  },
+  "week10/codex\u7248\u672c/tools/verify.py": {
+    "mtime": 1795063566.0030293,
+    "seen": 1795673213.9236016,
+    "ast_hash": "d4818fb7613ca432d5b9701a7f29a938",
+    "semantic_hash": "d4818fb7613ca432d5b9701a7f29a938"
+  },
+  "week11/codex\u7248\u672c/ai/SampleGroup.java": {
+    "mtime": 1795068987.7131352,
+    "seen": 1795673213.923603,
+    "ast_hash": "c70c9b5863c26b2c418649d952541d56",
+    "semantic_hash": "c70c9b5863c26b2c418649d952541d56"
+  },
+  "week11/codex\u7248\u672c/ai/UnsafeGroupTry.java": {
+    "mtime": 1795068968.9517076,
+    "seen": 1795673213.9236045,
+    "ast_hash": "0b12d6794a7762bff3b335311aa66a74",
+    "semantic_hash": "0b12d6794a7762bff3b335311aa66a74"
+  },
+  "week11/codex\u7248\u672c/examples/Box.java": {
+    "mtime": 1795068928.4037883,
+    "seen": 1795673213.9236057,
+    "ast_hash": "6b9dc3f6ae3405a827a9ad360926355d",
+    "semantic_hash": "6b9dc3f6ae3405a827a9ad360926355d"
+  },
+  "week11/codex\u7248\u672c/examples/ObjectBox.java": {
+    "mtime": 1795068928.2789054,
+    "seen": 1795673213.9236073,
+    "ast_hash": "6edd00588088291d77dd0abb1de4e550",
+    "semantic_hash": "6edd00588088291d77dd0abb1de4e550"
+  },
+  "week11/codex\u7248\u672c/examples/TypedBoxDemo.java": {
+    "mtime": 1795068928.51494,
+    "seen": 1795673213.9236088,
+    "ast_hash": "c2e4908038d17eb92ae59df99aecca48",
+    "semantic_hash": "c2e4908038d17eb92ae59df99aecca48"
+  },
+  "week11/codex\u7248\u672c/starter/CompareMissions.java": {
+    "mtime": 1795067656.6880045,
+    "seen": 1795673213.9236107,
+    "ast_hash": "90f12dcd73c0b8551b61ca52fcade4bb",
+    "semantic_hash": "90f12dcd73c0b8551b61ca52fcade4bb"
+  },
+  "week11/codex\u7248\u672c/starter/HeavyRover.java": {
+    "mtime": 1795067656.6890082,
+    "seen": 1795673213.9236119,
+    "ast_hash": "022a00fd8cf6d7f442337120c5265266",
+    "semantic_hash": "022a00fd8cf6d7f442337120c5265266"
+  },
+  "week11/codex\u7248\u672c/starter/HeavyRoverTry.java": {
+    "mtime": 1795067656.6899724,
+    "seen": 1795673213.9236135,
+    "ast_hash": "21529a0a3ac5673368449876c4e41768",
+    "semantic_hash": "21529a0a3ac5673368449876c4e41768"
+  },
+  "week11/codex\u7248\u672c/starter/Mission.java": {
+    "mtime": 1795067656.6910126,
+    "seen": 1795673213.923615,
+    "ast_hash": "e0129afe1f3719a1d3f16375f7f2382c",
+    "semantic_hash": "e0129afe1f3719a1d3f16375f7f2382c"
+  },
+  "week11/codex\u7248\u672c/starter/MissionLog.java": {
+    "mtime": 1795067656.691972,
+    "seen": 1795673213.9236164,
+    "ast_hash": "ea52b60d19e9a52ddf18a76b13e77fda",
+    "semantic_hash": "ea52b60d19e9a52ddf18a76b13e77fda"
+  },
+  "week11/codex\u7248\u672c/starter/MissionStep.java": {
+    "mtime": 1795067656.692972,
+    "seen": 1795673213.923618,
+    "ast_hash": "3e3d07a800a595e7cf1e2db0b681ea38",
+    "semantic_hash": "3e3d07a800a595e7cf1e2db0b681ea38"
+  },
+  "week11/codex\u7248\u672c/starter/Rover.java": {
+    "mtime": 1795067656.693972,
+    "seen": 1795673213.9236195,
+    "ast_hash": "d4a51d18cd7598e2c0a7cd714bb2a1e4",
+    "semantic_hash": "d4a51d18cd7598e2c0a7cd714bb2a1e4"
+  },
+  "week11/codex\u7248\u672c/starter/SampleGroup.java": {
+    "mtime": 1795068941.638891,
+    "seen": 1795673213.9236212,
+    "ast_hash": "37bca59e66fd1d11db53d402a332c046",
+    "semantic_hash": "37bca59e66fd1d11db53d402a332c046"
+  },
+  "week11/codex\u7248\u672c/starter/SampleGroupDemo.java": {
+    "mtime": 1795069003.233256,
+    "seen": 1795673213.923624,
+    "ast_hash": "6418d080b601b178d9874a585ad5bc1f",
+    "semantic_hash": "6418d080b601b178d9874a585ad5bc1f"
+  },
+  "week11/codex\u7248\u672c/starter/SampleOverloadDemo.java": {
+    "mtime": 1795067656.6949775,
+    "seen": 1795673213.9236255,
+    "ast_hash": "aec0ab11a640bd2de6644d987cb61019",
+    "semantic_hash": "aec0ab11a640bd2de6644d987cb61019"
+  },
+  "week11/codex\u7248\u672c/starter/SampleReport.java": {
+    "mtime": 1795067656.6959743,
+    "seen": 1795673213.923627,
+    "ast_hash": "c5cdb9545dfc2002f76e3182c852a2be",
+    "semantic_hash": "c5cdb9545dfc2002f76e3182c852a2be"
+  },
+  "week11/codex\u7248\u672c/starter/SampleReportDemo.java": {
+    "mtime": 1795067656.6969714,
+    "seen": 1795673213.9236286,
+    "ast_hash": "3745feb07842a7708cedb7347b29dec3",
+    "semantic_hash": "3745feb07842a7708cedb7347b29dec3"
+  },
+  "week11/codex\u7248\u672c/starter/SampleSource.java": {
+    "mtime": 1795067656.6979764,
+    "seen": 1795673213.9236298,
+    "ast_hash": "4938d92b7019015f97795e90ac579148",
+    "semantic_hash": "4938d92b7019015f97795e90ac579148"
+  },
+  "week11/codex\u7248\u672c/starter/SampleTray.java": {
+    "mtime": 1795067656.698972,
+    "seen": 1795673213.9236317,
+    "ast_hash": "b41924369bf4490f76ea91d5b3b94fbd",
+    "semantic_hash": "b41924369bf4490f76ea91d5b3b94fbd"
+  },
+  "week11/codex\u7248\u672c/starter/StandardRover.java": {
+    "mtime": 1795067656.6999762,
+    "seen": 1795673213.9236329,
+    "ast_hash": "66e4f8fcebb00fcff6e2b2c520edfecd",
+    "semantic_hash": "66e4f8fcebb00fcff6e2b2c520edfecd"
+  },
+  "week11/codex\u7248\u672c/teacher/CompareMissions.java": {
+    "mtime": 1795067656.6699767,
+    "seen": 1795673213.9236345,
+    "ast_hash": "90f12dcd73c0b8551b61ca52fcade4bb",
+    "semantic_hash": "90f12dcd73c0b8551b61ca52fcade4bb"
+  },
+  "week11/codex\u7248\u672c/teacher/FixedScriptMission.java": {
+    "mtime": 1795067656.6709726,
+    "seen": 1795673213.923636,
+    "ast_hash": "812edf16bb42aeb22c375a44471a81a9",
+    "semantic_hash": "812edf16bb42aeb22c375a44471a81a9"
+  },
+  "week11/codex\u7248\u672c/teacher/GenericMethodDemo.java": {
+    "mtime": 1795068987.8719728,
+    "seen": 1795673213.9236374,
+    "ast_hash": "96dfd25c50b49a9dc0d884e3c3c2ef28",
+    "semantic_hash": "96dfd25c50b49a9dc0d884e3c3c2ef28"
+  },
+  "week11/codex\u7248\u672c/teacher/HeavyRover.java": {
+    "mtime": 1795067656.6729772,
+    "seen": 1795673213.923639,
+    "ast_hash": "022a00fd8cf6d7f442337120c5265266",
+    "semantic_hash": "022a00fd8cf6d7f442337120c5265266"
+  },
+  "week11/codex\u7248\u672c/teacher/HeavyRoverTry.java": {
+    "mtime": 1795067656.6739762,
+    "seen": 1795673213.9236403,
+    "ast_hash": "21529a0a3ac5673368449876c4e41768",
+    "semantic_hash": "21529a0a3ac5673368449876c4e41768"
+  },
+  "week11/codex\u7248\u672c/teacher/Mission.java": {
+    "mtime": 1795067656.6749747,
+    "seen": 1795673213.923642,
+    "ast_hash": "e0129afe1f3719a1d3f16375f7f2382c",
+    "semantic_hash": "e0129afe1f3719a1d3f16375f7f2382c"
+  },
+  "week11/codex\u7248\u672c/teacher/MissionLog.java": {
+    "mtime": 1795067656.6759732,
+    "seen": 1795673213.9236434,
+    "ast_hash": "ea52b60d19e9a52ddf18a76b13e77fda",
+    "semantic_hash": "ea52b60d19e9a52ddf18a76b13e77fda"
+  },
+  "week11/codex\u7248\u672c/teacher/MissionLogCheck.java": {
+    "mtime": 1795067656.6769722,
+    "seen": 1795673213.923645,
+    "ast_hash": "baf39a172324611201147eb35938b477",
+    "semantic_hash": "baf39a172324611201147eb35938b477"
+  },
+  "week11/codex\u7248\u672c/teacher/MissionStateCheck.java": {
+    "mtime": 1795067656.677974,
+    "seen": 1795673213.9236462,
+    "ast_hash": "1263e52f40def9b5c591041de32e41cc",
+    "semantic_hash": "1263e52f40def9b5c591041de32e41cc"
+  },
+  "week11/codex\u7248\u672c/teacher/MissionStep.java": {
+    "mtime": 1795067656.6789758,
+    "seen": 1795673213.9236476,
+    "ast_hash": "3e3d07a800a595e7cf1e2db0b681ea38",
+    "semantic_hash": "3e3d07a800a595e7cf1e2db0b681ea38"
+  },
+  "week11/codex\u7248\u672c/teacher/PolymorphismCheck.java": {
+    "mtime": 1795067656.680974,
+    "seen": 1795673213.9236493,
+    "ast_hash": "43b8c8758e7028f7107a9febe974d39e",
+    "semantic_hash": "43b8c8758e7028f7107a9febe974d39e"
+  },
+  "week11/codex\u7248\u672c/teacher/Rover.java": {
+    "mtime": 1795067656.680974,
+    "seen": 1795673213.9236507,
+    "ast_hash": "d4a51d18cd7598e2c0a7cd714bb2a1e4",
+    "semantic_hash": "d4a51d18cd7598e2c0a7cd714bb2a1e4"
+  },
+  "week11/codex\u7248\u672c/teacher/SampleGroup.java": {
+    "mtime": 1795068968.6522837,
+    "seen": 1795673213.9236522,
+    "ast_hash": "d2bd53fdbc89486673ac7b27d63a81fa",
+    "semantic_hash": "d2bd53fdbc89486673ac7b27d63a81fa"
+  },
+  "week11/codex\u7248\u672c/teacher/SampleGroupCheck.java": {
+    "mtime": 1795067771.7598207,
+    "seen": 1795673213.9236536,
+    "ast_hash": "dee92153128073433960b72aa42019c2",
+    "semantic_hash": "dee92153128073433960b72aa42019c2"
+  },
+  "week11/codex\u7248\u672c/teacher/SampleGroupDemo.java": {
+    "mtime": 1795069011.7928202,
+    "seen": 1795673213.9236555,
+    "ast_hash": "6418d080b601b178d9874a585ad5bc1f",
+    "semantic_hash": "6418d080b601b178d9874a585ad5bc1f"
+  },
+  "week11/codex\u7248\u672c/teacher/SampleOverloadDemo.java": {
+    "mtime": 1795067656.6819718,
+    "seen": 1795673213.9236567,
+    "ast_hash": "aec0ab11a640bd2de6644d987cb61019",
+    "semantic_hash": "aec0ab11a640bd2de6644d987cb61019"
+  },
+  "week11/codex\u7248\u672c/teacher/SampleReport.java": {
+    "mtime": 1795067656.6829739,
+    "seen": 1795673213.9236586,
+    "ast_hash": "c5cdb9545dfc2002f76e3182c852a2be",
+    "semantic_hash": "c5cdb9545dfc2002f76e3182c852a2be"
+  },
+  "week11/codex\u7248\u672c/teacher/SampleReportDemo.java": {
+    "mtime": 1795067656.6840036,
+    "seen": 1795673213.9236598,
+    "ast_hash": "3745feb07842a7708cedb7347b29dec3",
+    "semantic_hash": "3745feb07842a7708cedb7347b29dec3"
+  },
+  "week11/codex\u7248\u672c/teacher/SampleSource.java": {
+    "mtime": 1795067656.6849725,
+    "seen": 1795673213.9236612,
+    "ast_hash": "4938d92b7019015f97795e90ac579148",
+    "semantic_hash": "4938d92b7019015f97795e90ac579148"
+  },
+  "week11/codex\u7248\u672c/teacher/SampleTray.java": {
+    "mtime": 1795067656.6859767,
+    "seen": 1795673213.9236627,
+    "ast_hash": "b41924369bf4490f76ea91d5b3b94fbd",
+    "semantic_hash": "b41924369bf4490f76ea91d5b3b94fbd"
+  },
+  "week11/codex\u7248\u672c/teacher/StandardRover.java": {
+    "mtime": 1795067656.686972,
+    "seen": 1795673213.923664,
+    "ast_hash": "66e4f8fcebb00fcff6e2b2c520edfecd",
+    "semantic_hash": "66e4f8fcebb00fcff6e2b2c520edfecd"
+  },
+  "week11/codex\u7248\u672c/teacher/homework/MostSamplesDemo.java": {
+    "mtime": 1795068987.9833238,
+    "seen": 1795673213.9236658,
+    "ast_hash": "38fe357b8d17484d39879831cc31f7f7",
+    "semantic_hash": "38fe357b8d17484d39879831cc31f7f7"
+  },
+  "week11/codex\u7248\u672c/teacher/homework/SampleGroup.java": {
+    "mtime": 1795068968.757716,
+    "seen": 1795673213.9236672,
+    "ast_hash": "131ed1084b38cd79f5d9fe58989e74d0",
+    "semantic_hash": "131ed1084b38cd79f5d9fe58989e74d0"
+  },
+  "week11/codex\u7248\u672c/tools/verify.py": {
+    "mtime": 1795069063.0714955,
+    "seen": 1795673213.9236686,
+    "ast_hash": "17000dc3a33deffcea2841eae28f3ad0",
+    "semantic_hash": "17000dc3a33deffcea2841eae28f3ad0"
+  },
+  "week12/codex\u7248\u672c/ai/PrintQuota.java": {
+    "mtime": 1795145145.4871767,
+    "seen": 1795673213.9236703,
+    "ast_hash": "5cce298c926e8d338bf96d3e48f903b8",
+    "semantic_hash": "5cce298c926e8d338bf96d3e48f903b8"
+  },
+  "week12/codex\u7248\u672c/examples/FinallyTrace.java": {
+    "mtime": 1795145145.4831748,
+    "seen": 1795673213.9236717,
+    "ast_hash": "203dfd1052ae0f44742707ac6d481a37",
+    "semantic_hash": "203dfd1052ae0f44742707ac6d481a37"
+  },
+  "week12/codex\u7248\u672c/examples/ParseDemo.java": {
+    "mtime": 1795145145.4831748,
+    "seen": 1795673213.9236732,
+    "ast_hash": "3bedb3b08f8d4e351077081a86073f83",
+    "semantic_hash": "3bedb3b08f8d4e351077081a86073f83"
+  },
+  "week12/codex\u7248\u672c/starter/quota/PrintQuota.java": {
+    "mtime": 1795145145.4841797,
+    "seen": 1795673213.9236748,
+    "ast_hash": "9cab9d3ed58e98fe3e3453321d9918b3",
+    "semantic_hash": "9cab9d3ed58e98fe3e3453321d9918b3"
+  },
+  "week12/codex\u7248\u672c/starter/quota/PrintQuotaDemo.java": {
+    "mtime": 1795145145.4841797,
+    "seen": 1795673213.9236765,
+    "ast_hash": "98479bd9ac487dd0346712151c722ef7",
+    "semantic_hash": "98479bd9ac487dd0346712151c722ef7"
+  },
+  "week12/codex\u7248\u672c/starter/threads/PrintTask.java": {
+    "mtime": 1795145145.485178,
+    "seen": 1795673213.923678,
+    "ast_hash": "8e1787c66f8e82ebc41ca2ad2283bd9a",
+    "semantic_hash": "8e1787c66f8e82ebc41ca2ad2283bd9a"
+  },
+  "week12/codex\u7248\u672c/starter/threads/ThreadStartDemo.java": {
+    "mtime": 1795145145.4861786,
+    "seen": 1795673213.9236796,
+    "ast_hash": "5d54af5153b1c80359eb45490f7e2797",
+    "semantic_hash": "5d54af5153b1c80359eb45490f7e2797"
+  },
+  "week12/codex\u7248\u672c/teacher/homework/PrintQuotaDemo.java": {
+    "mtime": 1795145145.4871767,
+    "seen": 1795673213.923681,
+    "ast_hash": "a4dd95fbaeae9943a1c76939b3f7bec7",
+    "semantic_hash": "a4dd95fbaeae9943a1c76939b3f7bec7"
+  },
+  "week12/codex\u7248\u672c/teacher/quota/PrintQuota.java": {
+    "mtime": 1795145145.4841797,
+    "seen": 1795673213.9236825,
+    "ast_hash": "def7b320355d6fc2465f94212d1903b1",
+    "semantic_hash": "def7b320355d6fc2465f94212d1903b1"
+  },
+  "week12/codex\u7248\u672c/teacher/quota/PrintQuotaDemo.java": {
+    "mtime": 1795145145.485178,
+    "seen": 1795673213.9236841,
+    "ast_hash": "c2a11e9563fc1d44c828468b9645a002",
+    "semantic_hash": "c2a11e9563fc1d44c828468b9645a002"
+  },
+  "week12/codex\u7248\u672c/teacher/threads/PrintTask.java": {
+    "mtime": 1795145145.4861786,
+    "seen": 1795673213.9236856,
+    "ast_hash": "938bc7abf2019983c7dfb20f299b73dc",
+    "semantic_hash": "938bc7abf2019983c7dfb20f299b73dc"
+  },
+  "week12/codex\u7248\u672c/teacher/threads/ThreadStartDemo.java": {
+    "mtime": 1795145145.4871767,
+    "seen": 1795673213.9236872,
+    "ast_hash": "d5802c2d0e028c1004f103f0199e2d07",
+    "semantic_hash": "d5802c2d0e028c1004f103f0199e2d07"
+  },
+  "week12/codex\u7248\u672c/tools/verify.py": {
+    "mtime": 1795084916.7438133,
+    "seen": 1795673213.9236887,
+    "ast_hash": "06f438bb52e8aca6eb84354234f6ef8b",
+    "semantic_hash": "06f438bb52e8aca6eb84354234f6ef8b"
+  }
+}
